@@ -71,77 +71,80 @@ namespace ConsolePort_AdvHaptics
 
             while (true)
             {
+
                 if (wowDataReader.Attached)
                 {
+                    // Check if player is logged in
                     if (wowDataReader.ReadState() == WoWState.LoggedIn)
                     {
+                        // Read player data from memory
+                        PlayerInfo playerInfo = wowDataReader.GetPlayerInfo();
+                        
                         // Buzz on change target
                         var target = wowDataReader.GetTargetGuid();
 
-                        if (lastTarget != null)
-                            if (!target.SequenceEqual(lastTarget) && !target.SequenceEqual(new byte[16])) // same target or null target
+                        if (lastTarget != null) // if previous target exists
+                            if (!target.SequenceEqual(lastTarget) && !target.SequenceEqual(new byte[16])) // ignore same target or null target
                             {
                                 hapticDevice.RumbleSmall(200, 200);
                             }
-                        lastTarget = target;
 
-                        // Retrieve data about game
-                        playerMaxHealth = wowDataReader.ReadPlayerData<uint>(Constants.PlayerDataType.MaxHealth);
-                        playerHealth = wowDataReader.ReadPlayerData<uint>(Constants.PlayerDataType.Health);
+                        lastTarget = target; // set last target
 
-                        float currentHealthPct = ((float)playerHealth / (float)playerMaxHealth) * 100;
+                        float currentHealthPct = ((float)playerInfo.CurrentHP / (float)playerInfo.MaxHP) * 100;
 
-                        if (healthPercent != currentHealthPct)
+                        // Rumble controller on health loss
+                        var healthLoss = healthPercent - currentHealthPct;
+                        if (healthLoss > 50)
                         {
-                            // Rumble controller on health loss
-                            var healthLoss = healthPercent - currentHealthPct;
-                            if (healthLoss > 50)
-                            {
-                                hapticDevice.Rumble(255, 255, 1200);
-                            }
-                            else if (healthLoss > 30)
-                            {
-                                hapticDevice.Rumble(150, 150, 800);
-                            }
-                            else if (healthLoss > 10)
-                            {
-                                hapticDevice.Rumble(100, 100, 500);
-                            }
-                            else if (healthLoss > 0)
-                            {
-                                hapticDevice.Rumble(50, 50, 500);
-                            }
-
-                            // Update lightbar based on player health
-                            if (currentHealthPct > 90)
-                            {
-                                if (LightbarClass)
-                                {
-                                    // TODO: colour lightbar by class
-                                    hapticDevice.LightBarOn(this.HealthColors.High);
-                                }
-                                else
-                                {
-                                    hapticDevice.LightBarOn(this.HealthColors.High);
-                                }
-                            }
-                            else
-                            if (currentHealthPct > 50)
-                            {
-                                hapticDevice.LightBarOn(HealthColors.Medium);
-                            }
-                            else
-                            if (currentHealthPct > 20)
-                            {
-                                hapticDevice.LightBarOn(HealthColors.Low);
-                            }
-                            else if (currentHealthPct < 20)
-                            {
-                                hapticDevice.LightBarFlash(HealthColors.Critical, 50, 50);
-                            }
-
-                            healthPercent = currentHealthPct;
+                            hapticDevice.Rumble(255, 255, 1200);
                         }
+                        else if (healthLoss > 30)
+                        {
+                            hapticDevice.Rumble(150, 150, 800);
+                        }
+                        else if (healthLoss > 10)
+                        {
+                            hapticDevice.Rumble(100, 100, 500);
+                        }
+                        else if (healthLoss > 0)
+                        {
+                            hapticDevice.Rumble(50, 50, 500);
+                        }
+
+                        // Update lightbar based on player health
+                        if (currentHealthPct > 90)
+                        {
+                            if (LightbarClass)
+                            {
+                                // TODO: colour lightbar by class
+                                var col = ConsolePort.ClassColors.GetClassColor(playerInfo.Class);
+                                hapticDevice.LightBarOn(col);
+                            }
+                            else
+                            {
+                                hapticDevice.LightBarOn(this.HealthColors.High);
+                            }
+                        }
+                        else
+                        if (currentHealthPct > 50)
+                        {
+                            hapticDevice.LightBarOn(HealthColors.Medium);
+                        }
+                        else
+                        if (currentHealthPct > 20)
+                        {
+                            hapticDevice.LightBarOn(HealthColors.Low);
+                        }
+                        else if (currentHealthPct < 20)
+                        {
+                            hapticDevice.LightBarFlash(HealthColors.Critical, 50, 50);
+                        }
+
+                        healthPercent = currentHealthPct;
+                    } else
+                    {
+                        hapticDevice.LightBarOff();
                     }
                 }
                 else

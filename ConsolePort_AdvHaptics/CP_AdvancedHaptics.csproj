@@ -48,8 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WoWData\Constants.cs" />
     <Compile Include="WoWData\Offsets.cs" />
-    <Compile Include="WoWData\WoWData.cs" />
-    <Compile Include="WoWData\WoWReader.cs" />
+    <Compile Include="WoWData\WoWDataReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DS4Windows_Driver\DS4Driver.csproj">
