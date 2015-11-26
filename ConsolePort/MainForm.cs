@@ -20,7 +20,7 @@ namespace ConsolePort
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
         private int intRightDead = 15;
-        private int intRightCurve = 1;
+        private int intRightCurve = 15;
 
         public void MouseLeftClick()
         {
