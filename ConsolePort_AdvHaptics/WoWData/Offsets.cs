@@ -19,6 +19,8 @@ namespace ConsolePort.WoWData
             public static IntPtr IsTexting = (IntPtr)0x1454030;
             public static IntPtr Name = (IntPtr)0x17EE040;
             public static IntPtr Class = (IntPtr)0x17EE1D5;
+            public static IntPtr RealmName = (IntPtr)0x17EE018;
+            public static IntPtr AccountName = (IntPtr)0x17ED6C0;
         }
 
             //General

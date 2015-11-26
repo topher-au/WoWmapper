@@ -424,9 +424,9 @@ namespace DS4Wrapper
         {
             if (Controller != null)
             {
-                    Controller.LightBarColor = new DS4Color(c);
-                    Controller.LightBarOffDuration = 0x01;
-                    Controller.LightBarOnDuration = 0xFF;
+                Controller.LightBarColor = new DS4Color(c);
+                Controller.LightBarOnDuration = 0xFF;
+                Controller.LightBarOffDuration = 0x00;
             }
         }
 

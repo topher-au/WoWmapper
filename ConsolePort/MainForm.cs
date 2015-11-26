@@ -357,8 +357,8 @@ namespace ConsolePort
 
                     float tiltPercent = (rightVal / rightMax);
 
-                    // moveMath = 2x^2 + curve*x
-                    double moveMath = Math.Pow(3 * tiltPercent, 2) + (intRightCurve * tiltPercent) + 1;
+                    // moveMath = 3x^2 + curve*x
+                    double moveMath = Math.Pow(2 * tiltPercent, 2) + (intRightCurve * tiltPercent) + 1;
 
                     int moveVal = (int)moveMath; // y = ax^2 + bx where a=
 
@@ -382,7 +382,7 @@ namespace ConsolePort
 
                 Cursor.Position = curPos;
 
-                Thread.Sleep(5);
+                Thread.Sleep(10);
             }
         }
 
@@ -408,7 +408,8 @@ namespace ConsolePort
                 {
                     if(advHaptics.GameState == WoWState.LoggedIn)
                     {
-                        label3.Text = advHaptics.wowDataReader.rsdgf().ToString();
+                        var pi = advHaptics.wowDataReader.GetPlayerInfo();
+                        label3.Text = String.Format("{0} - {1} ({2})\nLevel {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
                     }
                     checkBox3.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
                 }

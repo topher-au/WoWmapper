@@ -39,6 +39,7 @@
             this.labelControllerState = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabConsolePort = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupAxisReading = new System.Windows.Forms.GroupBox();
@@ -88,7 +89,6 @@
             this.textL2 = new System.Windows.Forms.TextBox();
             this.textL1 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.statusBar.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabConsolePort.SuspendLayout();
@@ -222,6 +222,15 @@
             this.tabConsolePort.Text = "ConsolePort";
             this.tabConsolePort.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(211, 7);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(38, 15);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "label3";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -243,7 +252,7 @@
             // groupAxisReading
             // 
             this.groupAxisReading.Controls.Add(this.labelAxisReading);
-            this.groupAxisReading.Location = new System.Drawing.Point(308, 6);
+            this.groupAxisReading.Location = new System.Drawing.Point(372, 134);
             this.groupAxisReading.Name = "groupAxisReading";
             this.groupAxisReading.Size = new System.Drawing.Size(103, 87);
             this.groupAxisReading.TabIndex = 9;
@@ -319,10 +328,10 @@
             this.tabKeybinds.Controls.Add(this.textL2);
             this.tabKeybinds.Controls.Add(this.textL1);
             this.tabKeybinds.Controls.Add(this.pictureBox1);
-            this.tabKeybinds.Location = new System.Drawing.Point(4, 24);
+            this.tabKeybinds.Location = new System.Drawing.Point(4, 22);
             this.tabKeybinds.Name = "tabKeybinds";
             this.tabKeybinds.Padding = new System.Windows.Forms.Padding(3);
-            this.tabKeybinds.Size = new System.Drawing.Size(790, 553);
+            this.tabKeybinds.Size = new System.Drawing.Size(790, 555);
             this.tabKeybinds.TabIndex = 1;
             this.tabKeybinds.Text = "Keybinds";
             this.tabKeybinds.Click += new System.EventHandler(this.tabKeybinds_Click);
@@ -726,15 +735,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(497, 322);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(402, 306);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(38, 15);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "label3";
             // 
             // MainForm
             // 

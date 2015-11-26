@@ -79,13 +79,17 @@ namespace ConsolePort.WoWData
                     var playerLevel = ReadPlayerData<uint>(Constants.PlayerDataType.Level);
                     var playerCurrentHP = ReadPlayerData<uint>(Constants.PlayerDataType.Health);
                     var playerMaxHP = ReadPlayerData<uint>(Constants.PlayerDataType.MaxHealth);
+                    var playerRealm = wowMemory.ReadString(wowMemory.Read<IntPtr>(Offsets.Player.RealmName, true)+8);
+                    var playerAccount = wowMemory.ReadString(Offsets.Player.AccountName, true);
                     return new PlayerInfo()
                     {
                         Name = playerName,
                         Class = playerClass,
                         Level = playerLevel,
                         CurrentHP = playerCurrentHP,
-                        MaxHP = playerMaxHP
+                        MaxHP = playerMaxHP,
+                        AccountName = playerAccount,
+                        RealmName = playerRealm
                     };
                 } catch (Exception ex)
                 {
@@ -161,6 +165,7 @@ namespace ConsolePort.WoWData
         public uint Level;
         public uint CurrentHP;
         public uint MaxHP;
-
+        public string RealmName;
+        public string AccountName;
     }
 }
