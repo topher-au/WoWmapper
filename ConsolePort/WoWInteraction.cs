@@ -22,19 +22,35 @@ namespace ConsolePort
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         internal static extern short GetKeyState(int virtualKeyCode);
 
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(IntPtr hWnd, Rectangle rect);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Rectangle
+        {
+            public int Left;        // x position of upper-left corner
+            public int Top;         // y position of upper-left corner
+            public int Right;       // x position of lower-right corner
+            public int Bottom;      // y position of lower-right corner
+        }
+
         const uint WM_KEYDOWN = 0x0100;
         const uint WM_KEYUP = 0x0101;
+        const uint WM_LBUTTONDOWN = 0x0201;
+        const uint WM_LBUTTONUP = 0x0202;
+        const uint WM_RBUTTONDOWN = 0x0204;
+        const uint WM_RBUTTONUP = 0x0205;
 
         public bool  IsAttached { get; private set; }
 
-        IntPtr hWnd;
+        IntPtr wowHandle;
         Thread scannerThread;
         KeyBind bindings;
         bool[] moveKeys;
 
         public WoWInteraction(KeyBind Bindings)
         {
-            scannerThread = new Thread(WoWScanner);
+            scannerThread = new Thread(WindowScanner);
             scannerThread.Start();
 
             moveKeys = new bool[Enum.GetNames(typeof(Direction)).Length];
@@ -47,32 +63,65 @@ namespace ConsolePort
                 scannerThread.Abort();
         }
 
-        private void WoWScanner()
+        private void WindowScanner()
         {
             while(true)
             {
                 var wowWindow = FindWindow(IntPtr.Zero, "World of Warcraft");
                 if (wowWindow != IntPtr.Zero)
                 {
-                    hWnd = wowWindow;
+                    wowHandle = wowWindow;
                     IsAttached = true;
                 } else
                 {
-                    hWnd = IntPtr.Zero;
+                    wowHandle = IntPtr.Zero;
                     IsAttached = false;
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(5000);
             }
         }
 
         public void SendKeyDown(Keys Key)
         {
-            PostMessage(hWnd, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
+            PostMessage(wowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
         }
 
         public void SendKeyUp(Keys Key)
         {
-            PostMessage(hWnd, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
+            PostMessage(wowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
+        }
+
+        private IntPtr MakeLParam(int LoWord, int HiWord)
+        {
+            return (IntPtr)((HiWord << 16) | (LoWord & 0xFFFF));
+        }
+
+
+        public void SendClick(MouseButton Button)
+        {
+            Rectangle wowRect = new Rectangle();
+            GetWindowRect(wowHandle, wowRect);
+
+            var relX = Cursor.Position.X - wowRect.Left;
+            var relY = Cursor.Position.Y - wowRect.Top;
+
+            switch(Button)
+            {
+                case MouseButton.Left:
+                    PostMessage(wowHandle, WM_LBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
+                    PostMessage(wowHandle, WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    break;
+                case MouseButton.Right:
+                    PostMessage(wowHandle, WM_RBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
+                    PostMessage(wowHandle, WM_RBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    break;
+            }
+        }
+
+        public enum MouseButton
+        {
+            Left,
+            Right
         }
 
         public void Move(Direction Dir)

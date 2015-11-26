@@ -89,6 +89,9 @@ namespace ConsolePort
             new Binding("R1", DS4Button.R1, Keys.F8),
             new Binding("L2", DS4Button.L2, Keys.LShiftKey),
             new Binding("R2", DS4Button.R2, Keys.LControlKey),
+            new Binding("Share", DS4Button.Share, Keys.F6),
+            new Binding("Options", DS4Button.Options, Keys.F5),
+            new Binding("PS", DS4Button.PS, Keys.Multiply),
         };
     }
 }

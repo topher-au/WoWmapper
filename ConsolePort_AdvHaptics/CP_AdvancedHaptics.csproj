@@ -51,9 +51,9 @@
     <Compile Include="WoWData\WoWData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DS4Windows\DS4Wrapper.csproj">
+    <ProjectReference Include="..\..\..\..\..\Libraries\Documents\ConsolePort\ConsolePort\DS4Windows_Driver\DS4Driver.csproj">
       <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
-      <Name>DS4Wrapper</Name>
+      <Name>DS4Driver</Name>
     </ProjectReference>
     <ProjectReference Include="..\MemorySharp\MemorySharp_CP.csproj">
       <Project>{78a6f97d-5ca8-4e92-8e17-2545983c9555}</Project>

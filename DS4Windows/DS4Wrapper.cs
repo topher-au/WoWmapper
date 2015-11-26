@@ -160,57 +160,56 @@ namespace DS4Wrapper
                     {
                         // Update controller state
                         state = Controller.getCurrentState();
-                        var lState = Controller.getPreviousState();
-                        Controller.FlushHID();
+
                         // Face Buttons
-                        if (state.Circle && lState.Circle)
+                        if (state.Circle)
                             DoButtonDown(DS4Button.Circle);
                         if (!state.Circle && buttonStates[(int)DS4Button.Circle])
                             DoButtonUp(DS4Button.Circle);
 
-                        if (state.Cross && lState.Cross)
+                        if (state.Cross)
                             DoButtonDown(DS4Button.Cross);
                         if (!state.Cross && buttonStates[(int)DS4Button.Cross])
                             DoButtonUp(DS4Button.Cross);
 
-                        if (state.Triangle && lState.Triangle)
+                        if (state.Triangle)
                             DoButtonDown(DS4Button.Triangle);
                         if (!state.Triangle && buttonStates[(int)DS4Button.Triangle])
                             DoButtonUp(DS4Button.Triangle);
 
-                        if (state.Square && lState.Square)
+                        if (state.Square)
                             DoButtonDown(DS4Button.Square);
                         if (!state.Square && buttonStates[(int)DS4Button.Square])
                             DoButtonUp(DS4Button.Square);
 
                         // D-Pad Directions
-                        if (state.DpadDown && lState.DpadDown)
+                        if (state.DpadDown)
                             DoButtonDown(DS4Button.DpadDown);
                         if (!state.DpadDown && buttonStates[(int)DS4Button.DpadDown])
                             DoButtonUp(DS4Button.DpadDown);
 
-                        if (state.DpadUp && lState.DpadUp)
+                        if (state.DpadUp)
                             DoButtonDown(DS4Button.DpadUp);
                         if (!state.DpadUp && buttonStates[(int)DS4Button.DpadUp])
                             DoButtonUp(DS4Button.DpadUp);
 
-                        if (state.DpadLeft && lState.DpadLeft)
+                        if (state.DpadLeft)
                             DoButtonDown(DS4Button.DpadLeft);
                         if (!state.DpadLeft && buttonStates[(int)DS4Button.DpadLeft])
                             DoButtonUp(DS4Button.DpadLeft);
 
-                        if (state.DpadRight && lState.DpadRight)
+                        if (state.DpadRight)
                             DoButtonDown(DS4Button.DpadRight);
                         if (!state.DpadRight && buttonStates[(int)DS4Button.DpadRight])
                             DoButtonUp(DS4Button.DpadRight);
 
                         // L1/R1 triggers
-                        if (state.L1 && lState.L1)
+                        if (state.L1)
                             DoButtonDown(DS4Button.L1);
                         if (!state.L1 && buttonStates[(int)DS4Button.L1])
                             DoButtonUp(DS4Button.L1);
 
-                        if (state.R1 && lState.R1)
+                        if (state.R1)
                             DoButtonDown(DS4Button.R1);
                         if (!state.R1 && buttonStates[(int)DS4Button.R1])
                             DoButtonUp(DS4Button.R1);
@@ -229,28 +228,28 @@ namespace DS4Wrapper
                         }
 
                         // L3/R3
-                        if (state.L3 && lState.L3)
+                        if (state.L3)
                             DoButtonDown(DS4Button.L3);
                         if (!state.L3 && buttonStates[(int)DS4Button.L3])
                             DoButtonUp(DS4Button.L3);
 
-                        if (state.R3 && lState.R3)
+                        if (state.R3)
                             DoButtonDown(DS4Button.R3);
                         if (!state.R3 && buttonStates[(int)DS4Button.R3])
                             DoButtonUp(DS4Button.R3);
 
                         // Share, Options, PS
-                        if (state.Share && lState.Share)
+                        if (state.Share)
                             DoButtonDown(DS4Button.Share);
                         if (!state.Share && buttonStates[(int)DS4Button.Share])
                             DoButtonUp(DS4Button.Share);
 
-                        if (state.Options && lState.Options)
+                        if (state.Options)
                             DoButtonDown(DS4Button.Options);
                         if (!state.Options && buttonStates[(int)DS4Button.Options])
                             DoButtonUp(DS4Button.Options);
 
-                        if (state.PS && lState.PS)
+                        if (state.PS)
                             DoButtonDown(DS4Button.PS);
                         if (!state.PS && buttonStates[(int)DS4Button.PS])
                             DoButtonUp(DS4Button.PS);
