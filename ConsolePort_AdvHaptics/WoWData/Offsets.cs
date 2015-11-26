@@ -17,6 +17,8 @@ namespace ConsolePort.WoWData
             public static IntPtr LocalZone = (IntPtr)0x13E1674;
             public static IntPtr IsLooting = (IntPtr)0x1715264;
             public static IntPtr IsTexting = (IntPtr)0x1454030;
+            public static IntPtr Name = (IntPtr)0x17EE040;
+            public static IntPtr Class = (IntPtr)0x17EE1D5;
         }
 
             //General
