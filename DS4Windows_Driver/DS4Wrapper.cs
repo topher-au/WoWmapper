@@ -422,21 +422,17 @@ namespace DS4Wrapper
 
         public void LightBarOn(Color c)
         {
-            if (Controller != null && !Controller.LightBarColor.Equals(new DS4Color(c)))
+            if (Controller != null)
             {
                     Controller.LightBarColor = new DS4Color(c);
-                    Controller.LightBarOffDuration = 0;
-                    Controller.LightBarOnDuration = 255;
+                    Controller.LightBarOffDuration = 0x01;
+                    Controller.LightBarOnDuration = 0xFF;
             }
         }
 
         public void LightBarFlash(Color c, byte On, byte Off)
         {
-            if (Controller != null && !(
-                Controller.LightBarColor.Equals(new DS4Color(c)) &&
-                Controller.LightBarOffDuration == Off &&
-                Controller.LightBarOnDuration == On
-                ))
+            if (Controller != null)
             {
                 Controller.LightBarColor = new DS4Color(c);
                 Controller.LightBarOffDuration = Off;
