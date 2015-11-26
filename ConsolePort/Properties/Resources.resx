@@ -121,6 +121,114 @@
   <data name="BT" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\b_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Cross" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\a_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPad" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_none.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPadAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_all.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DpadDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPadLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPadLeftRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_leftright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPadRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPadUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DPadUpDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dpad_updown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DS4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DS4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="L1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lb_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="L2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lt_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_none.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_All" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_all.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_X" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_leftright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LStick_Y" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lstick_updown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Options" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\start_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="R1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rb_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="R2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rt_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStick" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_none.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_all.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickX" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_leftright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RStickY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rstick_updown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Share" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\back_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Square" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Triangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\y_butt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\USB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

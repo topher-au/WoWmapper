@@ -84,7 +84,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Libraries\Documents\ConsolePort\ConsolePort\DS4Windows_Driver\DS4Driver.csproj">
+    <ProjectReference Include="..\DS4Windows_Driver\DS4Driver.csproj">
       <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
       <Name>DS4Driver</Name>
     </ProjectReference>
@@ -98,6 +98,114 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\USB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DS4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\a_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_leftright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_updown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lb_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_leftright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_updown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lt_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rb_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_leftright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_updown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rt_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\start_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\y_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

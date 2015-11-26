@@ -9,7 +9,7 @@ namespace ConsolePort_AdvHaptics
 {
     public class Haptics : IDisposable
     {
-        private DataReader wowDataReader;
+        public DataReader wowDataReader;
         private DS4 hapticDevice;
         private Thread hapticThread;
 

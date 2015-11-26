@@ -49,9 +49,10 @@
     <Compile Include="WoWData\Constants.cs" />
     <Compile Include="WoWData\Offsets.cs" />
     <Compile Include="WoWData\WoWData.cs" />
+    <Compile Include="WoWData\WoWReader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Libraries\Documents\ConsolePort\ConsolePort\DS4Windows_Driver\DS4Driver.csproj">
+    <ProjectReference Include="..\DS4Windows_Driver\DS4Driver.csproj">
       <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
       <Name>DS4Driver</Name>
     </ProjectReference>

@@ -65,6 +65,29 @@ namespace ConsolePort
             trackRightDead.Value = intRightDead;
         }
 
+        private void RefreshKeyBindings()
+        {
+            textL1.Text = settings.KeyBinds.FromName("L1").Key.Value.ToString();
+            textL2.Text = settings.KeyBinds.FromName("L2").Key.Value.ToString();
+            textR1.Text = settings.KeyBinds.FromName("R1").Key.Value.ToString();
+            textR2.Text = settings.KeyBinds.FromName("R2").Key.Value.ToString();
+            textDpadUp.Text = settings.KeyBinds.FromName("DpadUp").Key.Value.ToString();
+            textDpadRight.Text = settings.KeyBinds.FromName("DpadRight").Key.Value.ToString();
+            textDpadDown.Text = settings.KeyBinds.FromName("DpadDown").Key.Value.ToString();
+            textDpadLeft.Text = settings.KeyBinds.FromName("DpadLeft").Key.Value.ToString();
+            textTriangle.Text = settings.KeyBinds.FromName("Triangle").Key.Value.ToString();
+            textCircle.Text = settings.KeyBinds.FromName("Circle").Key.Value.ToString();
+            textCross.Text = settings.KeyBinds.FromName("Cross").Key.Value.ToString();
+            textSquare.Text = settings.KeyBinds.FromName("Square").Key.Value.ToString();
+            textPS.Text = settings.KeyBinds.FromName("PS").Key.Value.ToString();
+            textShare.Text = settings.KeyBinds.FromName("Share").Key.Value.ToString();
+            textOptions.Text = settings.KeyBinds.FromName("Options").Key.Value.ToString();
+            textMoveForward.Text = settings.KeyBinds.FromName("MoveForward").Key.Value.ToString();
+            textMoveRight.Text = settings.KeyBinds.FromName("MoveRight").Key.Value.ToString();
+            textMoveBackward.Text = settings.KeyBinds.FromName("MoveBackward").Key.Value.ToString();
+            textMoveLeft.Text = settings.KeyBinds.FromName("MoveLeft").Key.Value.ToString();
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             DS4.ControllerConnected += () =>
@@ -235,6 +258,8 @@ namespace ConsolePort
                             break;
                     }
             };
+
+            RefreshKeyBindings();
         }
 
         private void MovementWatcher()
@@ -381,14 +406,20 @@ namespace ConsolePort
                 checkBox2.Checked = advHaptics.IsWoWAttached;
                 if (advHaptics.IsWoWAttached)
                 {
+                    if(advHaptics.GameState == WoWState.LoggedIn)
+                    {
+                        label3.Text = advHaptics.wowDataReader.rsdgf().ToString();
+                    }
                     checkBox3.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
                 }
+                
             }
             else
             {
                 checkBox2.Checked = false;
                 checkBox3.Checked = false;
             }
+            
         }
 
         private void trackRightCurve_Scroll(object sender, EventArgs e)
@@ -401,6 +432,11 @@ namespace ConsolePort
         {
             intRightDead = trackRightDead.Value;
             labelRightDeadValue.Text = intRightDead.ToString();
+        }
+
+        private void tabKeybinds_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

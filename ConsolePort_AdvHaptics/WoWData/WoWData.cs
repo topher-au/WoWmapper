@@ -66,6 +66,21 @@ namespace ConsolePort.WoWData
             }
         }
 
+        public uint rsdgf()
+        {
+
+            uint result = 0;
+            if (wowMemory != null && wowMemory.IsRunning)
+            {
+                
+                
+                
+
+            }
+
+            return result;
+        }
+
         public T ReadPlayerData<T>(Constants.PlayerDataType PlayerData)
         {
             try
@@ -105,8 +120,7 @@ namespace ConsolePort.WoWData
             var WoWProcesses = Process.GetProcessesByName("WoW-64");
             if (WoWProcesses.Length > 0)
             {
-                if (WoWProcesses[0].Id == pidWow) return false;
-                wowMemory = new MemorySharp(WoWProcesses[0]);
+                wowMemory = new MemorySharp(WoWProcesses.First());
                 PlayerBase = wowMemory.Read<IntPtr>(Offsets.Player.LocalPlayer, true);
                 //var MyHealth = wowMemory.Read<uint>(wowMemory.Read<IntPtr>(MyBase + 0x8) + 0xF0);
                 //var MaxHealth = wowMemory.Read<uint>(wowMemory.Read<IntPtr>(MyBase + 0x8) + 0x10C);
