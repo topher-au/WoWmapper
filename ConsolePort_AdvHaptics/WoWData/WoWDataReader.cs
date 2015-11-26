@@ -66,34 +66,53 @@ namespace ConsolePort.WoWData
             }
         }
 
-        public uint rsdgf()
+        public PlayerInfo GetPlayerInfo()
         {
-
-            uint result = 0;
             if (wowMemory != null && wowMemory.IsRunning)
             {
+                try
+                {
+                    // Read player info from memory
+                    PlayerBase = wowMemory.Read<IntPtr>(Offsets.Player.LocalPlayer, true);
+                    var playerName = wowMemory.ReadString(Offsets.Player.Name, true);
+                    var playerClass = (Constants.WoWClass)wowMemory.Read<byte>(Offsets.Player.Class, true);
+                    var playerLevel = ReadPlayerData<uint>(Constants.PlayerDataType.Level);
+                    var playerCurrentHP = ReadPlayerData<uint>(Constants.PlayerDataType.Health);
+                    var playerMaxHP = ReadPlayerData<uint>(Constants.PlayerDataType.MaxHealth);
+                    return new PlayerInfo()
+                    {
+                        Name = playerName,
+                        Class = playerClass,
+                        Level = playerLevel,
+                        CurrentHP = playerCurrentHP,
+                        MaxHP = playerMaxHP
+                    };
+                } catch (Exception ex)
+                {
+                    Console.WriteLine(String.Format("Exception reading memory: {0}", ex.Message));
+                }
                 
-                
-                
-
             }
 
-            return result;
+            return default(PlayerInfo);
         }
+
 
         public T ReadPlayerData<T>(Constants.PlayerDataType PlayerData)
         {
-            try
+            if (wowMemory != null && wowMemory.IsRunning)
             {
-                T ReadData = wowMemory.Read<T>(wowMemory.Read<IntPtr>(PlayerBase + 0x08) + (int)PlayerData);
-                return ReadData;
-                
-            } catch
-            {
-                return default(T);
+                try
+                {
+                    T ReadData = wowMemory.Read<T>(wowMemory.Read<IntPtr>(PlayerBase + 0x08) + (int)PlayerData);
+                    return ReadData;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(String.Format("Exception reading memory: {0}", ex.Message));
+                }
             }
-            
-            
+            return default(T);
         }
 
         public byte[] GetTargetGuid()
@@ -121,9 +140,6 @@ namespace ConsolePort.WoWData
             if (WoWProcesses.Length > 0)
             {
                 wowMemory = new MemorySharp(WoWProcesses.First());
-                PlayerBase = wowMemory.Read<IntPtr>(Offsets.Player.LocalPlayer, true);
-                //var MyHealth = wowMemory.Read<uint>(wowMemory.Read<IntPtr>(MyBase + 0x8) + 0xF0);
-                //var MaxHealth = wowMemory.Read<uint>(wowMemory.Read<IntPtr>(MyBase + 0x8) + 0x10C);
                 pidWow = wowMemory.Pid;
                 return true;
             }
@@ -140,7 +156,11 @@ namespace ConsolePort.WoWData
 
     public struct PlayerInfo
     {
-        int CurrentHP;
-        int MaxHP;
+        public string Name;
+        public Constants.WoWClass Class;
+        public uint Level;
+        public uint CurrentHP;
+        public uint MaxHP;
+
     }
 }
