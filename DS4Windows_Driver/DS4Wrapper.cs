@@ -39,7 +39,18 @@ namespace DS4Wrapper
         Thread controllerThread, stateThread;
         bool[] buttonStates, axisStates;
         float[] axisThresholds;
+
+        bool Suspended = false;
         
+        public void Suspend()
+        {
+            Suspended = true;
+        }
+
+        public void Resume()
+        {
+            Suspended = false;
+        }
 
         public DS4()
         {
@@ -154,14 +165,14 @@ namespace DS4Wrapper
             DS4State state = new DS4State();
             while(true)
             {
-                if(Controller != null)
+                if(Controller != null && !Suspended)
                 {
                     try
                     {
                         // Update controller state
                         state = Controller.getCurrentState();
                         var lState = Controller.getPreviousState();
-                        Controller.FlushHID();
+                        
                         // Face Buttons
                         if (state.Circle && lState.Circle)
                             DoButtonDown(DS4Button.Circle);
@@ -534,7 +545,11 @@ namespace DS4Wrapper
         Options,
         PS,
         TouchClickLeft,
-        TouchClickRight
+        TouchClickRight,
+        LStickUp,
+        LStickDown,
+        LStickRight,
+        LStickLeft
     }
 
     public enum DS4Axis : int

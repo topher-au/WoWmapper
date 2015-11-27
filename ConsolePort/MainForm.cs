@@ -1,11 +1,12 @@
 ﻿using ConsolePort.WoWData;
-using ConsolePort_AdvHaptics;
+using ConsolePort.AdvancedHaptics;
 using DS4Wrapper;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace ConsolePort
 {
@@ -20,8 +21,10 @@ namespace ConsolePort
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
         private int intRightDead = 15;
-        private int intRightCurve = 15;
-
+        private int intRightCurve = 5;
+        private int intRightSpeed = 2;
+        Point ptRightStick;
+        Point ptLeftStick;
         public void MouseLeftClick()
         {
             wowInteraction.SendClick(WoWInteraction.MouseButton.Left);
@@ -32,7 +35,7 @@ namespace ConsolePort
             wowInteraction.SendClick(WoWInteraction.MouseButton.Right);
         }
 
-        private DS4 DS4 = new DS4();
+        private DS4 DS4;
         private Haptics advHaptics;
         private Settings settings = new Settings();
         private WoWInteraction wowInteraction;
@@ -43,13 +46,19 @@ namespace ConsolePort
         {
             InitializeComponent();
 
+            // Set right stick panel to double buffered
+            typeof(Panel).InvokeMember("DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null, panelRStickAxis, new object[] { true });
+
             // Enable advanced haptics
             if (Environment.GetCommandLineArgs().Length > 1)
                 advHaptics = new Haptics(DS4);
 
             // Load default keybinds
-            settings.KeyBinds.Bindings = Defaults.Bindings;
-            settings.Save();
+            //settings.KeyBinds.Bindings = Defaults.Bindings;
+            //settings.Save();
+            settings.Load();
 
             wowInteraction = new WoWInteraction(settings.KeyBinds);
 
@@ -61,8 +70,10 @@ namespace ConsolePort
 
             labelRightCurveValue.Text = intRightCurve.ToString();
             labelRightDeadValue.Text = intRightDead.ToString();
+            labelRightSpeedValue.Text = intRightSpeed.ToString();
             trackRightCurve.Value = intRightCurve;
             trackRightDead.Value = intRightDead;
+            trackRightSpeed.Value = intRightSpeed;
         }
 
         private void RefreshKeyBindings()
@@ -82,14 +93,16 @@ namespace ConsolePort
             textPS.Text = settings.KeyBinds.FromName("PS").Key.Value.ToString();
             textShare.Text = settings.KeyBinds.FromName("Share").Key.Value.ToString();
             textOptions.Text = settings.KeyBinds.FromName("Options").Key.Value.ToString();
-            textMoveForward.Text = settings.KeyBinds.FromName("MoveForward").Key.Value.ToString();
-            textMoveRight.Text = settings.KeyBinds.FromName("MoveRight").Key.Value.ToString();
-            textMoveBackward.Text = settings.KeyBinds.FromName("MoveBackward").Key.Value.ToString();
-            textMoveLeft.Text = settings.KeyBinds.FromName("MoveLeft").Key.Value.ToString();
+            textMoveForward.Text = settings.KeyBinds.FromName("LStickUp").Key.Value.ToString();
+            textMoveRight.Text = settings.KeyBinds.FromName("LStickRight").Key.Value.ToString();
+            textMoveBackward.Text = settings.KeyBinds.FromName("LStickDown").Key.Value.ToString();
+            textMoveLeft.Text = settings.KeyBinds.FromName("LStickLeft").Key.Value.ToString();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            DS4 = new DS4();
+            
             DS4.ControllerConnected += () =>
             {
                 this.Invoke((MethodInvoker)delegate
@@ -266,34 +279,38 @@ namespace ConsolePort
         {
             while (true)
             {
-                var leftStick = DS4.GetStickPoint(DS4Stick.Left);
-                if (leftStick.Y < -40)
+                if(wowInteraction.IsAttached && DS4 != null)
                 {
-                    wowInteraction.Move(WoWInteraction.Direction.Forward);
+                    var leftStick = DS4.GetStickPoint(DS4Stick.Left);
+                    if (leftStick.Y < -40)
+                    {
+                        wowInteraction.Move(WoWInteraction.Direction.Forward);
+                    }
+
+                    if (leftStick.Y > 40)
+                    {
+                        wowInteraction.Move(WoWInteraction.Direction.Backward);
+                    }
+
+                    if (leftStick.X < -40)
+                    {
+                        wowInteraction.Move(WoWInteraction.Direction.Left);
+                    }
+
+                    if (leftStick.X > 40)
+                    {
+                        wowInteraction.Move(WoWInteraction.Direction.Right);
+                    }
+
+                    if (leftStick.Y > -40)
+                        if (leftStick.Y < 40)
+                            wowInteraction.Move(WoWInteraction.Direction.StopY);
+
+                    if (leftStick.X > -40)
+                        if (leftStick.X < 40)
+                            wowInteraction.Move(WoWInteraction.Direction.StopX);
                 }
-
-                if (leftStick.Y > 40)
-                {
-                    wowInteraction.Move(WoWInteraction.Direction.Backward);
-                }
-
-                if (leftStick.X < -40)
-                {
-                    wowInteraction.Move(WoWInteraction.Direction.Left);
-                }
-
-                if (leftStick.X > 40)
-                {
-                    wowInteraction.Move(WoWInteraction.Direction.Right);
-                }
-
-                if (leftStick.Y > -40)
-                    if (leftStick.Y < 40)
-                        wowInteraction.Move(WoWInteraction.Direction.StopY);
-
-                if (leftStick.X > -40)
-                    if (leftStick.X < 40)
-                        wowInteraction.Move(WoWInteraction.Direction.StopX);
+                
                 Thread.Sleep(10);
             }
         }
@@ -304,83 +321,80 @@ namespace ConsolePort
             bool movingY = false;
             while (true)
             {
-                var rightStick = DS4.GetStickPoint(DS4Stick.Right);
-                var curPos = Cursor.Position;
-
-                // Process X-axis
-                var rightX = rightStick.X;
-                if (rightX < 0) rightX = -rightX; // flip to positive value
-
-                if (true)
+                if(wowInteraction.IsAttached && DS4 != null)
                 {
-                    float rightMax = 127 - intRightDead;
-                    float rightVal = rightX;
-                    if (rightX > intRightDead)
-                        rightVal = rightX - intRightDead;    // decrease by deadzone value
+                    var rightStick = DS4.GetStickPoint(DS4Stick.Right);
+                    var curPos = Cursor.Position;
 
-                    float tiltPercent = (rightVal / rightMax);
+                    // Process X-axis
+                    var rightX = rightStick.X;
+                    if (rightX < 0) rightX = -rightX; // flip to positive value
 
-                    // moveMath = 2x^2 + curve*x
-                    double moveMath = Math.Pow(3 * tiltPercent, 2) + (intRightCurve * tiltPercent) + 1;
-
-                    int moveVal = (int)moveMath; // y = ax^2 + bx where a=
-
-                    Console.WriteLine("X:" + moveVal);
-
-                    if (rightStick.X < -intRightDead || (rightStick.X < -10 && movingY))
+                    if (true)
                     {
-                        curPos.X -= moveVal;
-                        movingX = true;
+                        float rightMax = 127 - intRightDead;
+                        float rightVal = rightX;
+                        if (rightX > intRightDead)
+                            rightVal = rightX - intRightDead;    // decrease by deadzone value
+
+                        float tiltPercent = (rightVal / rightMax);
+
+                        double moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
+
+                        int moveVal = (int)moveMath; // y = ax^2 + bx where a=
+
+                        if (rightStick.X < -intRightDead || (rightStick.X < -10 && movingY))
+                        {
+                            curPos.X -= moveVal;
+                            movingX = true;
+                        }
+                        else if (rightStick.X > intRightDead || (rightStick.X > 10 && movingY))
+                        {
+                            curPos.X += moveVal;
+                            movingX = true;
+                        }
+                        else
+                        {
+                            movingX = false;
+                        }
                     }
-                    else if (rightStick.X > intRightDead || (rightStick.X > 10 && movingY))
+
+                    // Process Y-axis
+
+                    var rightY = rightStick.Y;
+                    if (rightY < 0) rightY = -rightY; // flip to positive value
+
+                    if (true)
                     {
-                        curPos.X += moveVal;
-                        movingX = true;
+                        float rightMax = 127 - intRightDead;
+                        float rightVal = rightY;
+                        if (rightY > intRightDead)
+                            rightVal = rightY - intRightDead;    // decrease by deadzone value
+
+                        float tiltPercent = (rightVal / rightMax);
+
+                        double moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
+
+                        int moveVal = (int)moveMath; // y = ax^2 + bx where a=
+
+                        if (rightStick.Y < -intRightDead || (rightStick.Y < -10 && movingX))
+                        {
+                            curPos.Y -= moveVal;
+                            movingY = true;
+                        }
+                        else if (rightStick.Y > intRightDead || (rightStick.Y > 10 && movingX))
+                        {
+                            curPos.Y += moveVal;
+                            movingY = true;
+                        }
+                        else
+                        {
+                            movingY = false;
+                        }
                     }
-                    else
-                    {
-                        movingX = false;
-                    }
+
+                    Cursor.Position = curPos;
                 }
-
-                // Process Y-axis
-
-                var rightY = rightStick.Y;
-                if (rightY < 0) rightY = -rightY; // flip to positive value
-
-                if (true)
-                {
-                    float rightMax = 127 - intRightDead;
-                    float rightVal = rightY;
-                    if (rightY > intRightDead)
-                        rightVal = rightY - intRightDead;    // decrease by deadzone value
-
-                    float tiltPercent = (rightVal / rightMax);
-
-                    // moveMath = 3x^2 + curve*x
-                    double moveMath = Math.Pow(2 * tiltPercent, 2) + (intRightCurve * tiltPercent) + 1;
-
-                    int moveVal = (int)moveMath; // y = ax^2 + bx where a=
-
-                    Console.WriteLine("Y:" + moveVal);
-
-                    if (rightStick.Y < -intRightDead || (rightStick.Y < -10 && movingX))
-                    {
-                        curPos.Y -= moveVal;
-                        movingY = true;
-                    }
-                    else if (rightStick.Y > intRightDead || (rightStick.Y > 10 && movingX))
-                    {
-                        curPos.Y += moveVal;
-                        movingY = true;
-                    }
-                    else
-                    {
-                        movingY = false;
-                    }
-                }
-
-                Cursor.Position = curPos;
 
                 Thread.Sleep(10);
             }
@@ -395,30 +409,35 @@ namespace ConsolePort
             mouseThread.Abort();
         }
 
-        private void timerUpdate_Tick(object sender, EventArgs e)
+        private void timerUpdateUI_Tick(object sender, EventArgs e)
         {
-            var Left = DS4.GetStickPoint(DS4Stick.Left);
-            var Right = DS4.GetStickPoint(DS4Stick.Right);
-            labelAxisReading.Text = string.Format("X: {0}\nY: {1}\nRx: {2}\nRy: {3}", Left.X, Left.Y, Right.X, Right.Y);
+            // Display axis readings
+            ptLeftStick = DS4.GetStickPoint(DS4Stick.Left);
+            ptRightStick = DS4.GetStickPoint(DS4Stick.Right);
+
+            labelAxisReading.Text = string.Format("Lx: {0}\nLy: {1}\nRx: {2}\nRy: {3}", ptLeftStick.X, ptLeftStick.Y, ptRightStick.X, ptRightStick.Y);
             checkWindowAttached.Checked = wowInteraction.IsAttached;
+
+            panelRStickAxis.Refresh();
+
             if (advHaptics != null)
             {
-                checkBox2.Checked = advHaptics.IsWoWAttached;
+                checkHapticsAttached.Checked = advHaptics.IsWoWAttached;
                 if (advHaptics.IsWoWAttached)
                 {
                     if(advHaptics.GameState == WoWState.LoggedIn)
                     {
                         var pi = advHaptics.wowDataReader.GetPlayerInfo();
-                        label3.Text = String.Format("{0} - {1} ({2})\nLevel {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
+                        labelPlayerInfo.Text = String.Format("{0} - {1} ({2})\nLevel {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
                     }
-                    checkBox3.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
+                    checkHapticsUserLoggedIn.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
                 }
                 
             }
             else
             {
-                checkBox2.Checked = false;
-                checkBox3.Checked = false;
+                checkHapticsAttached.Checked = false;
+                checkHapticsUserLoggedIn.Checked = false;
             }
             
         }
@@ -438,6 +457,64 @@ namespace ConsolePort
         private void tabKeybinds_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void trackRightSpeed_Scroll(object sender, EventArgs e)
+        {
+            intRightSpeed = trackRightSpeed.Value;
+            labelRightSpeedValue.Text = intRightSpeed.ToString();
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+            var deadDisplay = intRightDead - 4;
+            Rectangle rectRightBounds = panelRStickAxis.DisplayRectangle;
+            Rectangle rectStickOutline = new Rectangle(
+                rectRightBounds.X,
+                rectRightBounds.Y,
+                rectRightBounds.Width - 1,
+                rectRightBounds.Height - 1);
+            Rectangle rectStickDeadzone = new Rectangle(
+                rectRightBounds.X + rectRightBounds.Width / 2 - (deadDisplay / 2),
+                rectRightBounds.Y + rectRightBounds.Width / 2 - (deadDisplay / 2),
+                deadDisplay,
+                deadDisplay);
+            Rectangle rectStickIndicator = new Rectangle(
+                (rectRightBounds.Width / 2) + (ptRightStick.X / 4) - 2,
+                (rectRightBounds.Height / 2) + (ptRightStick.Y / 4) - 2,
+                4,
+                4);
+
+            e.Graphics.DrawEllipse(Pens.Black, rectStickOutline);
+            e.Graphics.DrawEllipse(Pens.Red, rectStickDeadzone);
+            e.Graphics.DrawEllipse(Pens.Blue, rectStickIndicator);
+        }
+
+        private void BindBox_DoubleClick(object sender, EventArgs e)
+        {
+            var bindBox = sender as TextBox;
+
+            // Attempt to find button name from tag
+            DS4Button button;
+            Enum.TryParse<DS4Button>(bindBox.Tag.ToString(), out button);
+
+            DoKeyBind(bindBox, 
+                Properties.Resources.ResourceManager.GetObject(bindBox.Tag.ToString()) as Bitmap, 
+                button, 
+                settings.KeyBinds.FromName(bindBox.Tag.ToString()).Key.Value);
+        }
+
+        private void DoKeyBind(TextBox BindBox, Bitmap Image, DS4Button Button, Keys Key)
+        {
+            var BindForm = new BindKeyForm(Image, Button, Key, settings.KeyBinds);
+            BindForm.ShowDialog();
+            if (BindForm.DialogResult == DialogResult.OK)
+            {
+                var bindKey = BindForm.Key;
+                BindBox.Text = bindKey.ToString();
+                settings.KeyBinds.Update(BindBox.Tag.ToString(), bindKey);
+                settings.Save();
+            }
         }
     }
 }

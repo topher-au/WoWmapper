@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 
-namespace ConsolePort_AdvHaptics
+namespace ConsolePort.AdvancedHaptics
 {
     public class Haptics : IDisposable
     {
@@ -71,7 +71,7 @@ namespace ConsolePort_AdvHaptics
 
             while (true)
             {
-
+                if(hapticDevice != null)
                 if (wowDataReader.Attached)
                 {
                     // Check if player is logged in

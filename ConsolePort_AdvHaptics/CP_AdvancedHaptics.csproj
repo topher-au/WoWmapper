@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ConsolePort_AdvHaptics</RootNamespace>
-    <AssemblyName>AdvHaptics</AssemblyName>
+    <AssemblyName>CPAdvancedHaptics</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

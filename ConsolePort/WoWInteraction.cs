@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ConsolePort;
+using ConsolePort.AdvancedHaptics;
 using System.Windows.Forms;
 
 namespace ConsolePort
@@ -41,7 +43,9 @@ namespace ConsolePort
         const uint WM_RBUTTONDOWN = 0x0204;
         const uint WM_RBUTTONUP = 0x0205;
 
-        public bool  IsAttached { get; private set; }
+        public bool IsAttached { get; private set; }
+        public bool AdvancedHapticsEnabled { get; private set; }
+        public bool AdvancedHapticsAttached { get; private set; }
 
         IntPtr wowHandle;
         Thread scannerThread;
@@ -70,10 +74,12 @@ namespace ConsolePort
                 var wowWindow = FindWindow(IntPtr.Zero, "World of Warcraft");
                 if (wowWindow != IntPtr.Zero)
                 {
+                    // WoW window found
                     wowHandle = wowWindow;
                     IsAttached = true;
                 } else
                 {
+                    // WoW window not found
                     wowHandle = IntPtr.Zero;
                     IsAttached = false;
                 }
@@ -129,38 +135,38 @@ namespace ConsolePort
             switch(Dir)
             {
                 case Direction.Forward:
-                    SendKeyDown(bindings.FromName("MoveForward").Key.Value);
-                    SendKeyUp(bindings.FromName("MoveBackward").Key.Value);
+                    SendKeyDown(bindings.FromName("LStickUp").Key.Value);
+                    SendKeyUp(bindings.FromName("LStickDown").Key.Value);
                     moveKeys[(int)Direction.Forward] = true;
                     moveKeys[(int)Direction.Backward] = false;
                     break;
                 case Direction.Backward:
-                    SendKeyDown(bindings.FromName("MoveBackward").Key.Value);
-                    SendKeyUp(bindings.FromName("MoveForward").Key.Value);
+                    SendKeyDown(bindings.FromName("LStickDown").Key.Value);
+                    SendKeyUp(bindings.FromName("LStickUp").Key.Value);
                     moveKeys[(int)Direction.Backward] = true;
                     moveKeys[(int)Direction.Forward] = false;
                     break;
                 case Direction.Left:
-                    SendKeyDown(bindings.FromName("MoveLeft").Key.Value);
-                    SendKeyUp(bindings.FromName("MoveRight").Key.Value);
+                    SendKeyDown(bindings.FromName("LStickLeft").Key.Value);
+                    SendKeyUp(bindings.FromName("LStickRight").Key.Value);
                     moveKeys[(int)Direction.Left] = true;
                     moveKeys[(int)Direction.Right] = false;
                     break;
                 case Direction.Right:
-                    SendKeyDown(bindings.FromName("MoveRight").Key.Value);
-                    SendKeyUp(bindings.FromName("MoveLeft").Key.Value);
+                    SendKeyDown(bindings.FromName("LStickRight").Key.Value);
+                    SendKeyUp(bindings.FromName("LStickLeft").Key.Value);
                     moveKeys[(int)Direction.Right] = true;
                     moveKeys[(int)Direction.Left] = false;
                     break;
                 case Direction.StopX:
                     if (moveKeys[(int)Direction.Left])
                     {
-                        SendKeyUp(bindings.FromName("MoveLeft").Key.Value);
+                        SendKeyUp(bindings.FromName("LStickLeft").Key.Value);
                         moveKeys[(int)Direction.Left] = false;
                     }
                     if (moveKeys[(int)Direction.Right])
                     {
-                        SendKeyUp(bindings.FromName("MoveRight").Key.Value);
+                        SendKeyUp(bindings.FromName("LStickRight").Key.Value);
                         moveKeys[(int)Direction.Right] = false;
                     }
                     break;
@@ -168,12 +174,12 @@ namespace ConsolePort
                 case Direction.StopY:
                     if (moveKeys[(int)Direction.Forward])
                     {
-                        SendKeyUp(bindings.FromName("MoveForward").Key.Value);
+                        SendKeyUp(bindings.FromName("LStickUp").Key.Value);
                         moveKeys[(int)Direction.Forward] = false;
                     }
                     if (moveKeys[(int)Direction.Backward])
                     {
-                        SendKeyUp(bindings.FromName("MoveBackward").Key.Value);
+                        SendKeyUp(bindings.FromName("LStickDown").Key.Value);
                         moveKeys[(int)Direction.Backward] = false;
                     }
                     break;

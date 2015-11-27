@@ -61,6 +61,33 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is already bound to {1}!.
+        /// </summary>
+        internal static string BINDING_EXISTS {
+            get {
+                return ResourceManager.GetString("BINDING_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a valid keybind!.
+        /// </summary>
+        internal static string BINDING_ILLEGAL {
+            get {
+                return ResourceManager.GetString("BINDING_ILLEGAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press the keyboard key for {0}.
+        /// </summary>
+        internal static string BINDING_SET {
+            get {
+                return ResourceManager.GetString("BINDING_SET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BT {
@@ -223,9 +250,9 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LStick_Down {
+        internal static System.Drawing.Bitmap LStickDown {
             get {
-                object obj = ResourceManager.GetObject("LStick_Down", resourceCulture);
+                object obj = ResourceManager.GetObject("LStickDown", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +260,9 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LStick_Left {
+        internal static System.Drawing.Bitmap LStickLeft {
             get {
-                object obj = ResourceManager.GetObject("LStick_Left", resourceCulture);
+                object obj = ResourceManager.GetObject("LStickLeft", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +270,9 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LStick_Right {
+        internal static System.Drawing.Bitmap LStickRight {
             get {
-                object obj = ResourceManager.GetObject("LStick_Right", resourceCulture);
+                object obj = ResourceManager.GetObject("LStickRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +280,9 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LStick_Up {
+        internal static System.Drawing.Bitmap LStickUp {
             get {
-                object obj = ResourceManager.GetObject("LStick_Up", resourceCulture);
+                object obj = ResourceManager.GetObject("LStickUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +290,9 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LStick_X {
+        internal static System.Drawing.Bitmap LStickX {
             get {
-                object obj = ResourceManager.GetObject("LStick_X", resourceCulture);
+                object obj = ResourceManager.GetObject("LStickX", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +300,9 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap LStick_Y {
+        internal static System.Drawing.Bitmap LStickY {
             get {
-                object obj = ResourceManager.GetObject("LStick_Y", resourceCulture);
+                object obj = ResourceManager.GetObject("LStickY", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

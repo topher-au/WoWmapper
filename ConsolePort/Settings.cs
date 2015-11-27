@@ -21,11 +21,30 @@ namespace ConsolePort
 
         public void Save()
         {
-            using (FileStream f = new FileStream("test.xml", FileMode.Create))
+            using (FileStream f = new FileStream("settings.xml", FileMode.Create))
             {
                 XmlSerializer x = new XmlSerializer(typeof(Settings));
                 x.Serialize(f, this);
             }
+        }
+
+        public void Load()
+        {
+            try
+            {
+                using (FileStream f = new FileStream("settings.xml", FileMode.Open))
+                {
+                    XmlSerializer x = new XmlSerializer(typeof(Settings));
+                    var s = (Settings)x.Deserialize(f);
+                    this.Version = s.Version;
+                    this.KeyBinds = s.KeyBinds;
+                }
+            } catch
+            {
+                this.Version = "0.0.0.0";
+                this.KeyBinds.Bindings = Defaults.Bindings;
+            }
+            
         }
 
 
@@ -46,9 +65,39 @@ namespace ConsolePort
             return Bindings.FirstOrDefault(bind => bind.Button == Button);
         }
 
+        public Binding FromKey(Keys Key)
+        {
+            return Bindings.FirstOrDefault(bind => bind.Key == Key);
+        }
+
         public void Add(string Name, Keys? Key, DS4Button? Button = null)
         {
             Bindings.Add(new Binding() { Name = Name, Button = Button, Key = Key });
+        }
+
+        public void Update(string Name, Keys Key, DS4Button Button)
+        {
+            var bind = Bindings.IndexOf(Bindings.First(b => b.Name == Name));
+            var bb = Bindings[bind];
+            bb.Button = Button;
+            bb.Key = Key;
+            Bindings[bind] = bb;
+        }
+
+        public void Update(string Name, Keys Key)
+        {
+            var bind = Bindings.IndexOf(Bindings.First(b => b.Name == Name));
+            var bb = Bindings[bind];
+            bb.Key = Key;
+            Bindings[bind] = bb;
+        }
+
+        public void Update(string Name, DS4Button Button)
+        {
+            var bind = Bindings.IndexOf(Bindings.First(b => b.Name == Name));
+            var bb = Bindings[bind];
+            bb.Button = Button;
+            Bindings[bind] = bb;
         }
 
     }
@@ -73,10 +122,10 @@ namespace ConsolePort
     {
         public static List<Binding> Bindings = new List<Binding>()
         {
-            new Binding("MoveForward", null, Keys.W),
-            new Binding("MoveBackward", null, Keys.S),
-            new Binding("MoveLeft", null, Keys.A),
-            new Binding("MoveRight",null, Keys.D),
+            new Binding("LStickUp", null, Keys.W),
+            new Binding("LStickDown", null, Keys.S),
+            new Binding("LStickLeft", null, Keys.A),
+            new Binding("LStickRight",null, Keys.D),
             new Binding("Cross", DS4Button.Cross, Keys.F11),
             new Binding("Triangle", DS4Button.Triangle, Keys.F9),
             new Binding("Square", DS4Button.Square, Keys.F12),
@@ -92,6 +141,22 @@ namespace ConsolePort
             new Binding("Share", DS4Button.Share, Keys.F6),
             new Binding("Options", DS4Button.Options, Keys.F5),
             new Binding("PS", DS4Button.PS, Keys.Multiply),
+        };
+
+        public static List<Keys> IllegalKeyCodes = new List<Keys>()
+        {
+            Keys.Escape,
+            Keys.Alt,
+            Keys.Shift,
+            Keys.ControlKey,
+            Keys.ShiftKey,
+            Keys.LShiftKey,
+            Keys.RShiftKey,
+            Keys.Control,
+            Keys.LControlKey,
+            Keys.RControlKey,
+            Keys.LWin, Keys.RWin,
+            Keys.Menu
         };
     }
 }

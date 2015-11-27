@@ -166,22 +166,22 @@
   <data name="LStick_All" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_all.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LStick_Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="LStickDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_down.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LStick_Left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="LStickLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LStick_Right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="LStickRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LStick_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="LStickUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LStick_X" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="LStickX" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_leftright.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LStick_Y" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="LStickY" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lstick_updown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Options" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -231,5 +231,14 @@
   </data>
   <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\USB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BINDING_EXISTS" xml:space="preserve">
+    <value>{0} is already bound to {1}!</value>
+  </data>
+  <data name="BINDING_ILLEGAL" xml:space="preserve">
+    <value>{0} is not a valid keybind!</value>
+  </data>
+  <data name="BINDING_SET" xml:space="preserve">
+    <value>Press the keyboard key for {0}</value>
   </data>
 </root>
