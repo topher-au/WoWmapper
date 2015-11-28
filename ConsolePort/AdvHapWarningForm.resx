@@ -117,10 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="timerUpdateUI.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="statusBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>137, 17</value>
-  </metadata>
+  <data name="labelWarning.Text" xml:space="preserve">
+    <value>Advanced haptics uses passive memory reading to access information about your character including, but not limited to:
+
+- Character name and class
+- Current and maximum health
+
+Although no data is modified, memory reading is against the WoW Terms of Service and by continuing you agree that you are the sole party responsible for any damages or actions taken against your account.
+
+For more information, please visit:</value>
+  </data>
 </root>

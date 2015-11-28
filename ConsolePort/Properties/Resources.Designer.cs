@@ -448,6 +448,78 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced haptics attached.
+        /// </summary>
+        internal static string STRING_HAPTIC_ATTACHED {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_ATTACHED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Character logged in.
+        /// </summary>
+        internal static string STRING_HAPTIC_CHARLOGGEDIN {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_CHARLOGGEDIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Advanced Haptics.
+        /// </summary>
+        internal static string STRING_HAPTIC_ENABLE {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_ENABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color Lightbar by class.
+        /// </summary>
+        internal static string STRING_HAPTIC_LBCLASS {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_LBCLASS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color Lightbar by health.
+        /// </summary>
+        internal static string STRING_HAPTIC_LBHEALTH {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_LBHEALTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibrate on damage taken.
+        /// </summary>
+        internal static string STRING_HAPTIC_RUMBLEDAMAGE {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_RUMBLEDAMAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibrate when switching targets.
+        /// </summary>
+        internal static string STRING_HAPTIC_RUMBLETARGET {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_RUMBLETARGET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feedback Settings.
+        /// </summary>
+        internal static string STRING_HAPTIC_SETTINGS {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Triangle {

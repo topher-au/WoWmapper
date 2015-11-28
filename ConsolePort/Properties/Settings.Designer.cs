@@ -82,5 +82,65 @@ namespace ConsolePort.Properties {
                 this["LastCharacter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAdvancedHaptics {
+            get {
+                return ((bool)(this["EnableAdvancedHaptics"]));
+            }
+            set {
+                this["EnableAdvancedHaptics"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableLightbarClass {
+            get {
+                return ((bool)(this["EnableLightbarClass"]));
+            }
+            set {
+                this["EnableLightbarClass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableLightbarHealth {
+            get {
+                return ((bool)(this["EnableLightbarHealth"]));
+            }
+            set {
+                this["EnableLightbarHealth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableRumbleTarget {
+            get {
+                return ((bool)(this["EnableRumbleTarget"]));
+            }
+            set {
+                this["EnableRumbleTarget"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableRumbleDamage {
+            get {
+                return ((bool)(this["EnableRumbleDamage"]));
+            }
+            set {
+                this["EnableRumbleDamage"] = value;
+            }
+        }
     }
 }

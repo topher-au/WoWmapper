@@ -15,7 +15,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,6 +54,13 @@
     <Compile Include="BindKeyForm.Designer.cs">
       <DependentUpon>BindKeyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdvHapWarningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdvHapWarningForm.Designer.cs">
+      <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Functions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +73,9 @@
     <Compile Include="WoWInteraction.cs" />
     <EmbeddedResource Include="BindKeyForm.resx">
       <DependentUpon>BindKeyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdvHapWarningForm.resx">
+      <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

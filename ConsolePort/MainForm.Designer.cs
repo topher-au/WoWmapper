@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timerUpdate = new System.Windows.Forms.Timer(this.components);
+            this.timerUpdateUI = new System.Windows.Forms.Timer(this.components);
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.labelSpacer = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelControllerState = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabConsolePort = new System.Windows.Forms.TabPage();
             this.tabKeybinds = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelChangeBindings = new System.Windows.Forms.Label();
             this.panelCamera = new System.Windows.Forms.Panel();
             this.labelRightSpeedValue = new System.Windows.Forms.Label();
             this.picRStick = new System.Windows.Forms.PictureBox();
@@ -57,12 +57,12 @@
             this.textDpadDown = new System.Windows.Forms.TextBox();
             this.textDpadRight = new System.Windows.Forms.TextBox();
             this.textDpadUp = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.pictureBox16 = new System.Windows.Forms.PictureBox();
+            this.panelCenterButtons = new System.Windows.Forms.Panel();
+            this.picPS = new System.Windows.Forms.PictureBox();
             this.textPS = new System.Windows.Forms.TextBox();
             this.textShare = new System.Windows.Forms.TextBox();
-            this.pictureBox14 = new System.Windows.Forms.PictureBox();
-            this.pictureBox15 = new System.Windows.Forms.PictureBox();
+            this.picShare = new System.Windows.Forms.PictureBox();
+            this.picOptions = new System.Windows.Forms.PictureBox();
             this.textOptions = new System.Windows.Forms.TextBox();
             this.panelMovement = new System.Windows.Forms.Panel();
             this.picLStickLeft = new System.Windows.Forms.PictureBox();
@@ -91,12 +91,19 @@
             this.textL1 = new System.Windows.Forms.TextBox();
             this.picDS4 = new System.Windows.Forms.PictureBox();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
+            this.panelAdvancedHaptics = new System.Windows.Forms.Panel();
+            this.groupHapticSettings = new System.Windows.Forms.GroupBox();
+            this.checkRumbleDamage = new System.Windows.Forms.CheckBox();
+            this.checkRumbleTarget = new System.Windows.Forms.CheckBox();
+            this.checkLightbarHealth = new System.Windows.Forms.CheckBox();
+            this.checkLightbarClass = new System.Windows.Forms.CheckBox();
+            this.checkHapticsAttached = new System.Windows.Forms.CheckBox();
             this.labelPlayerInfo = new System.Windows.Forms.Label();
+            this.checkHapticsUserLoggedIn = new System.Windows.Forms.CheckBox();
             this.groupAxisReading = new System.Windows.Forms.GroupBox();
             this.labelAxisReading = new System.Windows.Forms.Label();
-            this.checkHapticsUserLoggedIn = new System.Windows.Forms.CheckBox();
             this.checkWindowAttached = new System.Windows.Forms.CheckBox();
-            this.checkHapticsAttached = new System.Windows.Forms.CheckBox();
+            this.buttonEnableAdvancedHaptics = new System.Windows.Forms.Button();
             this.statusBar.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabKeybinds.SuspendLayout();
@@ -105,10 +112,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackRightSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackRightDead)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackRightCurve)).BeginInit();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
+            this.panelCenterButtons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picShare)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOptions)).BeginInit();
             this.panelMovement.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLStickLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLStickDown)).BeginInit();
@@ -128,14 +135,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.picL1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDS4)).BeginInit();
             this.tabAdvanced.SuspendLayout();
+            this.panelAdvancedHaptics.SuspendLayout();
+            this.groupHapticSettings.SuspendLayout();
             this.groupAxisReading.SuspendLayout();
             this.SuspendLayout();
             // 
-            // timerUpdate
+            // timerUpdateUI
             // 
-            this.timerUpdate.Enabled = true;
-            this.timerUpdate.Interval = 5;
-            this.timerUpdate.Tick += new System.EventHandler(this.timerUpdateUI_Tick);
+            this.timerUpdateUI.Enabled = true;
+            this.timerUpdateUI.Interval = 5;
+            this.timerUpdateUI.Tick += new System.EventHandler(this.timerUpdateUI_Tick);
             // 
             // statusBar
             // 
@@ -186,8 +195,7 @@
             // 
             // tabKeybinds
             // 
-            this.tabKeybinds.BackColor = System.Drawing.Color.Transparent;
-            this.tabKeybinds.Controls.Add(this.label1);
+            this.tabKeybinds.Controls.Add(this.labelChangeBindings);
             this.tabKeybinds.Controls.Add(this.panelCamera);
             this.tabKeybinds.Controls.Add(this.textSquare);
             this.tabKeybinds.Controls.Add(this.textCross);
@@ -197,7 +205,7 @@
             this.tabKeybinds.Controls.Add(this.textDpadDown);
             this.tabKeybinds.Controls.Add(this.textDpadRight);
             this.tabKeybinds.Controls.Add(this.textDpadUp);
-            this.tabKeybinds.Controls.Add(this.panel2);
+            this.tabKeybinds.Controls.Add(this.panelCenterButtons);
             this.tabKeybinds.Controls.Add(this.panelMovement);
             this.tabKeybinds.Controls.Add(this.picSquare);
             this.tabKeybinds.Controls.Add(this.picCross);
@@ -222,16 +230,15 @@
             this.tabKeybinds.Size = new System.Drawing.Size(790, 553);
             this.tabKeybinds.TabIndex = 1;
             this.tabKeybinds.Text = "Keybinds";
-            this.tabKeybinds.Click += new System.EventHandler(this.tabKeybinds_Click);
             // 
-            // label1
+            // labelChangeBindings
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(306, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(172, 15);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "Double click binding to change";
+            this.labelChangeBindings.AutoSize = true;
+            this.labelChangeBindings.Location = new System.Drawing.Point(306, 17);
+            this.labelChangeBindings.Name = "labelChangeBindings";
+            this.labelChangeBindings.Size = new System.Drawing.Size(172, 15);
+            this.labelChangeBindings.TabIndex = 37;
+            this.labelChangeBindings.Text = "Double click binding to change";
             // 
             // panelCamera
             // 
@@ -297,7 +304,7 @@
             this.panelRStickAxis.Name = "panelRStickAxis";
             this.panelRStickAxis.Size = new System.Drawing.Size(65, 65);
             this.panelRStickAxis.TabIndex = 26;
-            this.panelRStickAxis.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            this.panelRStickAxis.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRStick_Paint);
             // 
             // trackRightDead
             // 
@@ -442,29 +449,29 @@
             this.textDpadUp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textDpadUp.DoubleClick += new System.EventHandler(this.BindBox_DoubleClick);
             // 
-            // panel2
+            // panelCenterButtons
             // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.pictureBox16);
-            this.panel2.Controls.Add(this.textPS);
-            this.panel2.Controls.Add(this.textShare);
-            this.panel2.Controls.Add(this.pictureBox14);
-            this.panel2.Controls.Add(this.pictureBox15);
-            this.panel2.Controls.Add(this.textOptions);
-            this.panel2.Location = new System.Drawing.Point(325, 225);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(139, 92);
-            this.panel2.TabIndex = 26;
+            this.panelCenterButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelCenterButtons.Controls.Add(this.picPS);
+            this.panelCenterButtons.Controls.Add(this.textPS);
+            this.panelCenterButtons.Controls.Add(this.textShare);
+            this.panelCenterButtons.Controls.Add(this.picShare);
+            this.panelCenterButtons.Controls.Add(this.picOptions);
+            this.panelCenterButtons.Controls.Add(this.textOptions);
+            this.panelCenterButtons.Location = new System.Drawing.Point(325, 225);
+            this.panelCenterButtons.Name = "panelCenterButtons";
+            this.panelCenterButtons.Size = new System.Drawing.Size(139, 92);
+            this.panelCenterButtons.TabIndex = 26;
             // 
-            // pictureBox16
+            // picPS
             // 
-            this.pictureBox16.Image = global::ConsolePort.Properties.Resources.PS;
-            this.pictureBox16.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox16.Name = "pictureBox16";
-            this.pictureBox16.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox16.TabIndex = 28;
-            this.pictureBox16.TabStop = false;
+            this.picPS.Image = global::ConsolePort.Properties.Resources.PS;
+            this.picPS.Location = new System.Drawing.Point(3, 3);
+            this.picPS.Name = "picPS";
+            this.picPS.Size = new System.Drawing.Size(24, 24);
+            this.picPS.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picPS.TabIndex = 28;
+            this.picPS.TabStop = false;
             // 
             // textPS
             // 
@@ -488,25 +495,25 @@
             this.textShare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textShare.DoubleClick += new System.EventHandler(this.BindBox_DoubleClick);
             // 
-            // pictureBox14
+            // picShare
             // 
-            this.pictureBox14.Image = global::ConsolePort.Properties.Resources.Share;
-            this.pictureBox14.Location = new System.Drawing.Point(3, 32);
-            this.pictureBox14.Name = "pictureBox14";
-            this.pictureBox14.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox14.TabIndex = 19;
-            this.pictureBox14.TabStop = false;
+            this.picShare.Image = global::ConsolePort.Properties.Resources.Share;
+            this.picShare.Location = new System.Drawing.Point(3, 32);
+            this.picShare.Name = "picShare";
+            this.picShare.Size = new System.Drawing.Size(24, 24);
+            this.picShare.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picShare.TabIndex = 19;
+            this.picShare.TabStop = false;
             // 
-            // pictureBox15
+            // picOptions
             // 
-            this.pictureBox15.Image = global::ConsolePort.Properties.Resources.Options;
-            this.pictureBox15.Location = new System.Drawing.Point(3, 62);
-            this.pictureBox15.Name = "pictureBox15";
-            this.pictureBox15.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox15.TabIndex = 20;
-            this.pictureBox15.TabStop = false;
+            this.picOptions.Image = global::ConsolePort.Properties.Resources.Options;
+            this.picOptions.Location = new System.Drawing.Point(3, 62);
+            this.picOptions.Name = "picOptions";
+            this.picOptions.Size = new System.Drawing.Size(24, 24);
+            this.picOptions.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picOptions.TabIndex = 20;
+            this.picOptions.TabStop = false;
             // 
             // textOptions
             // 
@@ -794,31 +801,114 @@
             // 
             // tabAdvanced
             // 
-            this.tabAdvanced.Controls.Add(this.labelPlayerInfo);
-            this.tabAdvanced.Controls.Add(this.groupAxisReading);
-            this.tabAdvanced.Controls.Add(this.checkHapticsUserLoggedIn);
+            this.tabAdvanced.Controls.Add(this.buttonEnableAdvancedHaptics);
+            this.tabAdvanced.Controls.Add(this.panelAdvancedHaptics);
             this.tabAdvanced.Controls.Add(this.checkWindowAttached);
-            this.tabAdvanced.Controls.Add(this.checkHapticsAttached);
-            this.tabAdvanced.Location = new System.Drawing.Point(4, 22);
+            this.tabAdvanced.Location = new System.Drawing.Point(4, 24);
             this.tabAdvanced.Name = "tabAdvanced";
-            this.tabAdvanced.Size = new System.Drawing.Size(790, 555);
+            this.tabAdvanced.Size = new System.Drawing.Size(790, 553);
             this.tabAdvanced.TabIndex = 2;
             this.tabAdvanced.Text = "Advanced";
             this.tabAdvanced.UseVisualStyleBackColor = true;
             // 
+            // panelAdvancedHaptics
+            // 
+            this.panelAdvancedHaptics.Controls.Add(this.groupHapticSettings);
+            this.panelAdvancedHaptics.Controls.Add(this.checkHapticsAttached);
+            this.panelAdvancedHaptics.Controls.Add(this.labelPlayerInfo);
+            this.panelAdvancedHaptics.Controls.Add(this.checkHapticsUserLoggedIn);
+            this.panelAdvancedHaptics.Controls.Add(this.groupAxisReading);
+            this.panelAdvancedHaptics.Location = new System.Drawing.Point(12, 28);
+            this.panelAdvancedHaptics.Name = "panelAdvancedHaptics";
+            this.panelAdvancedHaptics.Size = new System.Drawing.Size(765, 223);
+            this.panelAdvancedHaptics.TabIndex = 24;
+            // 
+            // groupHapticSettings
+            // 
+            this.groupHapticSettings.Controls.Add(this.checkRumbleDamage);
+            this.groupHapticSettings.Controls.Add(this.checkRumbleTarget);
+            this.groupHapticSettings.Controls.Add(this.checkLightbarHealth);
+            this.groupHapticSettings.Controls.Add(this.checkLightbarClass);
+            this.groupHapticSettings.Location = new System.Drawing.Point(3, 93);
+            this.groupHapticSettings.Name = "groupHapticSettings";
+            this.groupHapticSettings.Size = new System.Drawing.Size(200, 122);
+            this.groupHapticSettings.TabIndex = 24;
+            this.groupHapticSettings.TabStop = false;
+            this.groupHapticSettings.Text = "Feedback Settings";
+            // 
+            // checkRumbleDamage
+            // 
+            this.checkRumbleDamage.AutoSize = true;
+            this.checkRumbleDamage.Location = new System.Drawing.Point(6, 97);
+            this.checkRumbleDamage.Name = "checkRumbleDamage";
+            this.checkRumbleDamage.Size = new System.Drawing.Size(158, 19);
+            this.checkRumbleDamage.TabIndex = 3;
+            this.checkRumbleDamage.Text = global::ConsolePort.Properties.Resources.STRING_HAPTIC_RUMBLEDAMAGE;
+            this.checkRumbleDamage.UseVisualStyleBackColor = true;
+            // 
+            // checkRumbleTarget
+            // 
+            this.checkRumbleTarget.AutoSize = true;
+            this.checkRumbleTarget.Location = new System.Drawing.Point(6, 72);
+            this.checkRumbleTarget.Name = "checkRumbleTarget";
+            this.checkRumbleTarget.Size = new System.Drawing.Size(188, 19);
+            this.checkRumbleTarget.TabIndex = 2;
+            this.checkRumbleTarget.Text = global::ConsolePort.Properties.Resources.STRING_HAPTIC_RUMBLETARGET;
+            this.checkRumbleTarget.UseVisualStyleBackColor = true;
+            // 
+            // checkLightbarHealth
+            // 
+            this.checkLightbarHealth.AutoSize = true;
+            this.checkLightbarHealth.Location = new System.Drawing.Point(6, 47);
+            this.checkLightbarHealth.Name = "checkLightbarHealth";
+            this.checkLightbarHealth.Size = new System.Drawing.Size(154, 19);
+            this.checkLightbarHealth.TabIndex = 1;
+            this.checkLightbarHealth.Text = global::ConsolePort.Properties.Resources.STRING_HAPTIC_LBHEALTH;
+            this.checkLightbarHealth.UseVisualStyleBackColor = true;
+            // 
+            // checkLightbarClass
+            // 
+            this.checkLightbarClass.AutoSize = true;
+            this.checkLightbarClass.Location = new System.Drawing.Point(6, 22);
+            this.checkLightbarClass.Name = "checkLightbarClass";
+            this.checkLightbarClass.Size = new System.Drawing.Size(146, 19);
+            this.checkLightbarClass.TabIndex = 0;
+            this.checkLightbarClass.Text = global::ConsolePort.Properties.Resources.STRING_HAPTIC_LBCLASS;
+            this.checkLightbarClass.UseVisualStyleBackColor = true;
+            // 
+            // checkHapticsAttached
+            // 
+            this.checkHapticsAttached.AutoSize = true;
+            this.checkHapticsAttached.Location = new System.Drawing.Point(3, 3);
+            this.checkHapticsAttached.Name = "checkHapticsAttached";
+            this.checkHapticsAttached.Size = new System.Drawing.Size(169, 19);
+            this.checkHapticsAttached.TabIndex = 14;
+            this.checkHapticsAttached.Text = global::ConsolePort.Properties.Resources.STRING_HAPTIC_ATTACHED;
+            this.checkHapticsAttached.UseVisualStyleBackColor = true;
+            // 
             // labelPlayerInfo
             // 
             this.labelPlayerInfo.AutoSize = true;
-            this.labelPlayerInfo.Location = new System.Drawing.Point(215, 19);
+            this.labelPlayerInfo.Location = new System.Drawing.Point(17, 62);
             this.labelPlayerInfo.Name = "labelPlayerInfo";
-            this.labelPlayerInfo.Size = new System.Drawing.Size(38, 15);
+            this.labelPlayerInfo.Size = new System.Drawing.Size(89, 15);
             this.labelPlayerInfo.TabIndex = 23;
-            this.labelPlayerInfo.Text = "label3";
+            this.labelPlayerInfo.Text = "Player info here";
+            // 
+            // checkHapticsUserLoggedIn
+            // 
+            this.checkHapticsUserLoggedIn.AutoSize = true;
+            this.checkHapticsUserLoggedIn.Location = new System.Drawing.Point(3, 28);
+            this.checkHapticsUserLoggedIn.Name = "checkHapticsUserLoggedIn";
+            this.checkHapticsUserLoggedIn.Size = new System.Drawing.Size(130, 19);
+            this.checkHapticsUserLoggedIn.TabIndex = 15;
+            this.checkHapticsUserLoggedIn.Text = global::ConsolePort.Properties.Resources.STRING_HAPTIC_CHARLOGGEDIN;
+            this.checkHapticsUserLoggedIn.UseVisualStyleBackColor = true;
             // 
             // groupAxisReading
             // 
             this.groupAxisReading.Controls.Add(this.labelAxisReading);
-            this.groupAxisReading.Location = new System.Drawing.Point(524, 139);
+            this.groupAxisReading.Location = new System.Drawing.Point(659, 0);
             this.groupAxisReading.Name = "groupAxisReading";
             this.groupAxisReading.Size = new System.Drawing.Size(103, 87);
             this.groupAxisReading.TabIndex = 20;
@@ -834,35 +924,25 @@
             this.labelAxisReading.TabIndex = 1;
             this.labelAxisReading.Text = "Lx: 127\r\nLy: -127\r\nRx: 127\r\nRy: -127";
             // 
-            // checkHapticsUserLoggedIn
-            // 
-            this.checkHapticsUserLoggedIn.AutoSize = true;
-            this.checkHapticsUserLoggedIn.Location = new System.Drawing.Point(36, 68);
-            this.checkHapticsUserLoggedIn.Name = "checkHapticsUserLoggedIn";
-            this.checkHapticsUserLoggedIn.Size = new System.Drawing.Size(130, 19);
-            this.checkHapticsUserLoggedIn.TabIndex = 15;
-            this.checkHapticsUserLoggedIn.Text = "Character logged in";
-            this.checkHapticsUserLoggedIn.UseVisualStyleBackColor = true;
-            // 
             // checkWindowAttached
             // 
             this.checkWindowAttached.AutoSize = true;
-            this.checkWindowAttached.Location = new System.Drawing.Point(10, 18);
+            this.checkWindowAttached.Location = new System.Drawing.Point(3, 3);
             this.checkWindowAttached.Name = "checkWindowAttached";
             this.checkWindowAttached.Size = new System.Drawing.Size(135, 19);
             this.checkWindowAttached.TabIndex = 13;
             this.checkWindowAttached.Text = "WoW window found";
             this.checkWindowAttached.UseVisualStyleBackColor = true;
             // 
-            // checkHapticsAttached
+            // buttonEnableAdvancedHaptics
             // 
-            this.checkHapticsAttached.AutoSize = true;
-            this.checkHapticsAttached.Location = new System.Drawing.Point(10, 43);
-            this.checkHapticsAttached.Name = "checkHapticsAttached";
-            this.checkHapticsAttached.Size = new System.Drawing.Size(169, 19);
-            this.checkHapticsAttached.TabIndex = 14;
-            this.checkHapticsAttached.Text = "Advanced haptics attached";
-            this.checkHapticsAttached.UseVisualStyleBackColor = true;
+            this.buttonEnableAdvancedHaptics.Location = new System.Drawing.Point(268, 3);
+            this.buttonEnableAdvancedHaptics.Name = "buttonEnableAdvancedHaptics";
+            this.buttonEnableAdvancedHaptics.Size = new System.Drawing.Size(233, 23);
+            this.buttonEnableAdvancedHaptics.TabIndex = 25;
+            this.buttonEnableAdvancedHaptics.Text = "ENABLE ADVANCED HAPTICS";
+            this.buttonEnableAdvancedHaptics.UseVisualStyleBackColor = true;
+            this.buttonEnableAdvancedHaptics.Click += new System.EventHandler(this.buttonEnableAdvancedHaptics_Click);
             // 
             // MainForm
             // 
@@ -873,9 +953,10 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WoWConsolePort";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusBar.ResumeLayout(false);
             this.statusBar.PerformLayout();
             this.tabControl.ResumeLayout(false);
@@ -887,11 +968,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackRightSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackRightDead)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackRightCurve)).EndInit();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
+            this.panelCenterButtons.ResumeLayout(false);
+            this.panelCenterButtons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picPS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picShare)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picOptions)).EndInit();
             this.panelMovement.ResumeLayout(false);
             this.panelMovement.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLStickLeft)).EndInit();
@@ -913,6 +994,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picDS4)).EndInit();
             this.tabAdvanced.ResumeLayout(false);
             this.tabAdvanced.PerformLayout();
+            this.panelAdvancedHaptics.ResumeLayout(false);
+            this.panelAdvancedHaptics.PerformLayout();
+            this.groupHapticSettings.ResumeLayout(false);
+            this.groupHapticSettings.PerformLayout();
             this.groupAxisReading.ResumeLayout(false);
             this.groupAxisReading.PerformLayout();
             this.ResumeLayout(false);
@@ -922,7 +1007,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer timerUpdate;
+        private System.Windows.Forms.Timer timerUpdateUI;
         private System.Windows.Forms.StatusStrip statusBar;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabConsolePort;
@@ -938,8 +1023,8 @@
         private System.Windows.Forms.TextBox textR1;
         private System.Windows.Forms.PictureBox picR2;
         private System.Windows.Forms.PictureBox picR1;
-        private System.Windows.Forms.PictureBox pictureBox15;
-        private System.Windows.Forms.PictureBox pictureBox14;
+        private System.Windows.Forms.PictureBox picOptions;
+        private System.Windows.Forms.PictureBox picShare;
         private System.Windows.Forms.PictureBox picSquare;
         private System.Windows.Forms.PictureBox picCross;
         private System.Windows.Forms.PictureBox picCircle;
@@ -959,8 +1044,8 @@
         private System.Windows.Forms.TextBox textMoveRight;
         private System.Windows.Forms.PictureBox picLStickUp;
         private System.Windows.Forms.TextBox textMoveForward;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.PictureBox pictureBox16;
+        private System.Windows.Forms.Panel panelCenterButtons;
+        private System.Windows.Forms.PictureBox picPS;
         private System.Windows.Forms.TextBox textPS;
         private System.Windows.Forms.TextBox textSquare;
         private System.Windows.Forms.TextBox textCross;
@@ -989,7 +1074,14 @@
         private System.Windows.Forms.Panel panelRStickAxis;
         private System.Windows.Forms.Panel panelCamera;
         private System.Windows.Forms.PictureBox picRStick;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelChangeBindings;
+        private System.Windows.Forms.Panel panelAdvancedHaptics;
+        private System.Windows.Forms.GroupBox groupHapticSettings;
+        private System.Windows.Forms.CheckBox checkRumbleDamage;
+        private System.Windows.Forms.CheckBox checkRumbleTarget;
+        private System.Windows.Forms.CheckBox checkLightbarHealth;
+        private System.Windows.Forms.CheckBox checkLightbarClass;
+        private System.Windows.Forms.Button buttonEnableAdvancedHaptics;
     }
 }
 

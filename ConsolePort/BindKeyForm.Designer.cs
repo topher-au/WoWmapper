@@ -112,7 +112,7 @@
             this.Name = "BindKeyForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "BindKeyForm";
+            this.Text = "Set Key Binding";
             ((System.ComponentModel.ISupportInitialize)(this.picBindImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

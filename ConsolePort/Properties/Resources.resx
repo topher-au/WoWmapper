@@ -241,4 +241,28 @@
   <data name="BINDING_SET" xml:space="preserve">
     <value>Press the keyboard key for {0}</value>
   </data>
+  <data name="STRING_HAPTIC_ATTACHED" xml:space="preserve">
+    <value>Advanced haptics attached</value>
+  </data>
+  <data name="STRING_HAPTIC_CHARLOGGEDIN" xml:space="preserve">
+    <value>Character logged in</value>
+  </data>
+  <data name="STRING_HAPTIC_ENABLE" xml:space="preserve">
+    <value>Enable Advanced Haptics</value>
+  </data>
+  <data name="STRING_HAPTIC_LBCLASS" xml:space="preserve">
+    <value>Color Lightbar by class</value>
+  </data>
+  <data name="STRING_HAPTIC_LBHEALTH" xml:space="preserve">
+    <value>Color Lightbar by health</value>
+  </data>
+  <data name="STRING_HAPTIC_RUMBLEDAMAGE" xml:space="preserve">
+    <value>Vibrate on damage taken</value>
+  </data>
+  <data name="STRING_HAPTIC_RUMBLETARGET" xml:space="preserve">
+    <value>Vibrate when switching targets</value>
+  </data>
+  <data name="STRING_HAPTIC_SETTINGS" xml:space="preserve">
+    <value>Feedback Settings</value>
+  </data>
 </root>
