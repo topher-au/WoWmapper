@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Windows;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Binarysharp.MemoryManagement.Core.Windows;
 
 namespace Binarysharp.MemoryManagement.Core.Helpers
 {
@@ -12,6 +12,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
     public static class ApplicationFinder
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets all top-level windows on the screen.
         /// </summary>
@@ -21,7 +22,8 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         ///     Gets all the windows on the screen.
         /// </summary>
         public static IEnumerable<IntPtr> Windows => WindowCore.EnumAllWindows();
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Returns a new <see cref="Process" /> component, given the identifier of a process.
@@ -35,7 +37,6 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         {
             return Process.GetProcessById(processId);
         }
-
 
         /// <summary>
         ///     Creates an collection of new <see cref="Process" /> components and associates them with all the process resources

@@ -1,12 +1,9 @@
-﻿using System;
+﻿using DS4Wrapper;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DS4Wrapper;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.IO;
 
 namespace ConsolePort
 {
@@ -39,15 +36,13 @@ namespace ConsolePort
                     this.Version = s.Version;
                     this.KeyBinds = s.KeyBinds;
                 }
-            } catch
+            }
+            catch
             {
                 this.Version = "0.0.0.0";
                 this.KeyBinds.Bindings = Defaults.Bindings;
             }
-            
         }
-
-
     }
 
     public class KeyBind
@@ -99,7 +94,6 @@ namespace ConsolePort
             bb.Button = Button;
             Bindings[bind] = bb;
         }
-
     }
 
     public struct Binding
@@ -113,15 +107,19 @@ namespace ConsolePort
 
         [XmlAttribute("Name")]
         public string Name;
+
         [XmlElement("Button")]
         public DS4Button? Button;
+
         [XmlElement("Key")]
         public Keys? Key;
     }
+
     public static class Defaults
     {
         public static List<Binding> Bindings = new List<Binding>()
         {
+            // TODO fix request unknown bindings
             new Binding("LStickUp", null, Keys.W),
             new Binding("LStickDown", null, Keys.S),
             new Binding("LStickLeft", null, Keys.A),
@@ -141,6 +139,8 @@ namespace ConsolePort
             new Binding("Share", DS4Button.Share, Keys.F6),
             new Binding("Options", DS4Button.Options, Keys.F5),
             new Binding("PS", DS4Button.PS, Keys.Multiply),
+            new Binding("TouchLeft", DS4Button.TouchLeft, Keys.Subtract),
+            new Binding("TouchRight", DS4Button.TouchRight, Keys.Add)
         };
 
         public static List<Keys> IllegalKeyCodes = new List<Keys>()

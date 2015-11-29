@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Native;
 
 namespace Binarysharp.MemoryManagement.Core.Marshaling
 {
@@ -17,6 +17,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
     public static class UnsafeMarshal<T>
     {
         #region Fields, Private Properties
+
         /// <summary> The size of the Type </summary>
         public static int Size;
 
@@ -41,40 +42,42 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
         ///     The get unsafe PTR.
         /// </summary>
         internal static readonly GetUnsafePtrDelegate GetUnsafePtr;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes static members of the <see cref="UnsafeMarshal{T}" /> class.
         /// </summary>
         static UnsafeMarshal()
         {
-            TypeCode = Type.GetTypeCode(typeof (T));
+            TypeCode = Type.GetTypeCode(typeof(T));
 
             // Bools = 1 char.
-            if (typeof (T) == typeof (bool))
+            if (typeof(T) == typeof(bool))
             {
                 Size = 1;
-                RealType = typeof (T);
+                RealType = typeof(T);
             }
-            else if (typeof (T).IsEnum)
+            else if (typeof(T).IsEnum)
             {
-                var underlying = typeof (T).GetEnumUnderlyingType();
+                var underlying = typeof(T).GetEnumUnderlyingType();
                 Size = Marshal.SizeOf(underlying);
                 RealType = underlying;
                 TypeCode = Type.GetTypeCode(underlying);
             }
             else
             {
-                Size = Marshal.SizeOf(typeof (T));
-                RealType = typeof (T);
+                Size = Marshal.SizeOf(typeof(T));
+                RealType = typeof(T);
             }
 
-            IsIntPtr = RealType == typeof (IntPtr);
+            IsIntPtr = RealType == typeof(IntPtr);
 
-            SizeU = (uint) Size;
+            SizeU = (uint)Size;
 
-            Debug.Write("[SafeMarshal] " + typeof (T) + " Size: " + SizeU);
+            Debug.Write("[SafeMarshal] " + typeof(T) + " Size: " + SizeU);
 
             // Basically, if any members of the type have a MarshalAs attrib, then we can't just pointer deref. :(
             // This literally means any kind of MarshalAs. Strings, arrays, custom type sizes, etc.
@@ -82,18 +85,19 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
             // lib where we need the best speed possible, we do things manually when possible!
             TypeRequiresMarshal =
                 RealType.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Any(
-                    m => m.GetCustomAttributes(typeof (MarshalAsAttribute), true).Any());
+                    m => m.GetCustomAttributes(typeof(MarshalAsAttribute), true).Any());
 
             // Generate a method to get the address of a generic type. We'll be using this for RtlMoveMemory later for much faster structure reads.
-            var method = new DynamicMethod($"GetPinnedPtr<{typeof (T).FullName.Replace(".", "<>")}>",
-                typeof (void*), new[] {typeof (T).MakeByRefType()}, typeof (UnsafeMarshal<>).Module);
+            var method = new DynamicMethod($"GetPinnedPtr<{typeof(T).FullName.Replace(".", "<>")}>",
+                typeof(void*), new[] { typeof(T).MakeByRefType() }, typeof(UnsafeMarshal<>).Module);
             var generator = method.GetILGenerator();
             generator.Emit(OpCodes.Ldarg_0);
             generator.Emit(OpCodes.Conv_U);
             generator.Emit(OpCodes.Ret);
-            GetUnsafePtr = (GetUnsafePtrDelegate) method.CreateDelegate(typeof (GetUnsafePtrDelegate));
+            GetUnsafePtr = (GetUnsafePtrDelegate)method.CreateDelegate(typeof(GetUnsafePtrDelegate));
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         /// <summary>
         ///     Converts a <see cref="IntPtr" /> to a structure.
@@ -119,7 +123,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
 
                         if (IsIntPtr)
                         {
-                            return (T) (object) *(IntPtr*) address;
+                            return (T)(object)*(IntPtr*)address;
                         }
 
                         // If the type doesn't require an explicit Marshal call, then ignore it and memcpy the fuckin thing.
@@ -128,61 +132,75 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
                             var o = default(T);
                             var ptr = GetUnsafePtr(ref o);
 
-                            UnsafeNativeMethods.MoveMemory(ptr, (void*) address, Size);
+                            UnsafeNativeMethods.MoveMemory(ptr, (void*)address, Size);
 
                             return o;
                         }
 
                         // All System.Object's require marshaling!
-                        ptrToStructure = Marshal.PtrToStructure(address, typeof (T));
+                        ptrToStructure = Marshal.PtrToStructure(address, typeof(T));
                         break;
+
                     case TypeCode.Boolean:
-                        ptrToStructure = *(byte*) address != 0;
+                        ptrToStructure = *(byte*)address != 0;
                         break;
+
                     case TypeCode.Char:
-                        ptrToStructure = *(char*) address;
+                        ptrToStructure = *(char*)address;
                         break;
+
                     case TypeCode.SByte:
-                        ptrToStructure = *(sbyte*) address;
+                        ptrToStructure = *(sbyte*)address;
                         break;
+
                     case TypeCode.Byte:
-                        ptrToStructure = *(byte*) address;
+                        ptrToStructure = *(byte*)address;
                         break;
+
                     case TypeCode.Int16:
-                        ptrToStructure = *(short*) address;
+                        ptrToStructure = *(short*)address;
                         break;
+
                     case TypeCode.UInt16:
-                        ptrToStructure = *(ushort*) address;
+                        ptrToStructure = *(ushort*)address;
                         break;
+
                     case TypeCode.Int32:
-                        ptrToStructure = *(int*) address;
+                        ptrToStructure = *(int*)address;
                         break;
+
                     case TypeCode.UInt32:
-                        ptrToStructure = *(uint*) address;
+                        ptrToStructure = *(uint*)address;
                         break;
+
                     case TypeCode.Int64:
-                        ptrToStructure = *(long*) address;
+                        ptrToStructure = *(long*)address;
                         break;
+
                     case TypeCode.UInt64:
-                        ptrToStructure = *(ulong*) address;
+                        ptrToStructure = *(ulong*)address;
                         break;
+
                     case TypeCode.Single:
-                        ptrToStructure = *(float*) address;
+                        ptrToStructure = *(float*)address;
                         break;
+
                     case TypeCode.Double:
-                        ptrToStructure = *(double*) address;
+                        ptrToStructure = *(double*)address;
                         break;
+
                     case TypeCode.Decimal:
-                        ptrToStructure = *(decimal*) address;
+                        ptrToStructure = *(decimal*)address;
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                return (T) ptrToStructure;
+                return (T)ptrToStructure;
             }
             catch (AccessViolationException)
             {
-                Trace.WriteLine("Access Violation on " + address + " with type " + typeof (T).Name);
+                Trace.WriteLine("Access Violation on " + address + " with type " + typeof(T).Name);
                 return default(T);
             }
         }
@@ -202,51 +220,51 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
             switch (TypeCode)
             {
                 case TypeCode.Boolean:
-                    *(bool*) pointer = (bool) structureToPtr;
+                    *(bool*)pointer = (bool)structureToPtr;
                     break;
 
                 case TypeCode.Byte:
-                    *(byte*) pointer = (byte) structureToPtr;
+                    *(byte*)pointer = (byte)structureToPtr;
                     break;
 
                 case TypeCode.SByte:
-                    *(sbyte*) pointer = (sbyte) structureToPtr;
+                    *(sbyte*)pointer = (sbyte)structureToPtr;
                     break;
 
                 case TypeCode.Char:
-                    *(char*) pointer = (char) structureToPtr;
+                    *(char*)pointer = (char)structureToPtr;
                     break;
 
                 case TypeCode.Int16:
-                    *(short*) pointer = (short) structureToPtr;
+                    *(short*)pointer = (short)structureToPtr;
                     break;
 
                 case TypeCode.UInt16:
-                    *(ushort*) pointer = (ushort) structureToPtr;
+                    *(ushort*)pointer = (ushort)structureToPtr;
                     break;
 
                 case TypeCode.Int32:
-                    *(int*) pointer = (int) structureToPtr;
+                    *(int*)pointer = (int)structureToPtr;
                     break;
 
                 case TypeCode.UInt32:
-                    *(uint*) pointer = (uint) structureToPtr;
+                    *(uint*)pointer = (uint)structureToPtr;
                     break;
 
                 case TypeCode.Int64:
-                    *(long*) pointer = (long) structureToPtr;
+                    *(long*)pointer = (long)structureToPtr;
                     break;
 
                 case TypeCode.UInt64:
-                    *(ulong*) pointer = (ulong) structureToPtr;
+                    *(ulong*)pointer = (ulong)structureToPtr;
                     break;
 
                 case TypeCode.Single:
-                    *(float*) pointer = (float) structureToPtr;
+                    *(float*)pointer = (float)structureToPtr;
                     break;
 
                 case TypeCode.Double:
-                    *(double*) pointer = (double) structureToPtr;
+                    *(double*)pointer = (double)structureToPtr;
                     break;
 
                 default:
@@ -268,7 +286,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
         {
             T structure;
             fixed (byte* b = data)
-                structure = (T) Marshal.PtrToStructure((IntPtr) b, typeof (T));
+                structure = (T)Marshal.PtrToStructure((IntPtr)b, typeof(T));
             return structure;
         }
 
@@ -282,7 +300,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
         /// <returns></returns>
         public static T ByteArrayToObject(byte[] data, int index, T defVal = default(T))
         {
-            var size = Marshal.SizeOf(typeof (T));
+            var size = Marshal.SizeOf(typeof(T));
             var tmp = new byte[size];
             Array.Copy(data, index, tmp, 0, size);
             return ByteArrayToObject(tmp, defVal);
@@ -295,10 +313,10 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling
         /// <returns></returns>
         public static unsafe byte[] ObjectToByteArray(T value)
         {
-            var size = Marshal.SizeOf(typeof (T));
+            var size = Marshal.SizeOf(typeof(T));
             var data = new byte[size];
             fixed (byte* b = data)
-                Marshal.StructureToPtr(value, (IntPtr) b, true);
+                Marshal.StructureToPtr(value, (IntPtr)b, true);
             return data;
         }
 

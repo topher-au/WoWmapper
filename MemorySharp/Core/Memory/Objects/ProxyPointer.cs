@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
 
 namespace Binarysharp.MemoryManagement.Core.Memory.Objects
 {
@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class ProxyPointer : IEquatable<ProxyPointer>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProxyPointer" /> class.
         /// </summary>
@@ -20,9 +21,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             BaseAddress = address;
             ProcessHandle = processHandle;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The address of the pointer in the remote process.
         /// </summary>
@@ -38,9 +41,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         ///     Gets if the <see cref="ProxyPointer" /> is valid.
         /// </summary>
         public virtual bool IsValid => BaseAddress != IntPtr.Zero;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Returns a value indicating whether this instance is equal to a specified object.
         /// </summary>
@@ -50,7 +55,8 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             return ReferenceEquals(this, other) ||
                    (BaseAddress.Equals(other.BaseAddress));
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Changes the protection of the n next bytes in remote process.
@@ -73,9 +79,8 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((ProxyPointer) obj);
+            return obj.GetType() == GetType() && Equals((ProxyPointer)obj);
         }
-
 
         /// <summary>
         ///     Serves as a hash function for a particular type.
@@ -193,7 +198,6 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         {
             return ReadString(Convert.ToInt32(offset), encoding, maxLength);
         }
-
 
         /// <summary>
         ///     Returns a string that represents the current object.

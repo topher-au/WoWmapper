@@ -8,6 +8,7 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
     public interface IDisposableState : IDisposable
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -17,6 +18,7 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
         ///     Gets a value indicating whether the element must be disposed when the Garbage Collector collects the object.
         /// </summary>
         bool MustBeDisposed { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

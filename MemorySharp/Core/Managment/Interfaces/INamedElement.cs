@@ -6,10 +6,12 @@
     public interface INamedElement : IApplicableElement
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The name of the element.
         /// </summary>
         string Name { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

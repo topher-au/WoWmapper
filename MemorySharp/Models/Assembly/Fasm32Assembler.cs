@@ -1,6 +1,6 @@
-﻿using System;
-//using Binarysharp.Assemblers.Fasm;
+﻿//using Binarysharp.Assemblers.Fasm;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces;
+using System;
 
 namespace Binarysharp.MemoryManagement.Models.Assembly
 {
@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
     public class Fasm32Assembler : IAssembler
     {
         #region Interface Implementations
+
         /// <summary>
         ///     Assemble the specified assembly code.
         /// </summary>
@@ -35,6 +36,7 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
             // Assemble and return the code
             return new byte[1]; // FasmNet.Assemble(asm);
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

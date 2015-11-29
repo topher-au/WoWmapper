@@ -63,7 +63,7 @@ namespace Binarysharp.MemoryManagement.Core.Extensions
         /// <param name="args">The arguments.</param>
         private static void InvokeAppendText(this RichTextBox box, string text, Color color, params object[] args)
         {
-            box.Invoke((MethodInvoker) delegate { box.AppendText(text, color, args); });
+            box.Invoke((MethodInvoker)delegate { box.AppendText(text, color, args); });
         }
     }
 }

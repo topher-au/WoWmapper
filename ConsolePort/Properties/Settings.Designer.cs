@@ -49,42 +49,6 @@ namespace ConsolePort.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastAccount {
-            get {
-                return ((string)(this["LastAccount"]));
-            }
-            set {
-                this["LastAccount"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastRealm {
-            get {
-                return ((string)(this["LastRealm"]));
-            }
-            set {
-                this["LastRealm"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastCharacter {
-            get {
-                return ((string)(this["LastCharacter"]));
-            }
-            set {
-                this["LastCharacter"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool EnableAdvancedHaptics {
             get {
@@ -140,6 +104,54 @@ namespace ConsolePort.Properties {
             }
             set {
                 this["EnableRumbleDamage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TouchMode {
+            get {
+                return ((int)(this["TouchMode"]));
+            }
+            set {
+                this["TouchMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int RStickDeadzone {
+            get {
+                return ((int)(this["RStickDeadzone"]));
+            }
+            set {
+                this["RStickDeadzone"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int RStickCurve {
+            get {
+                return ((int)(this["RStickCurve"]));
+            }
+            set {
+                this["RStickCurve"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int RStickSpeed {
+            get {
+                return ((int)(this["RStickSpeed"]));
+            }
+            set {
+                this["RStickSpeed"] = value;
             }
         }
     }

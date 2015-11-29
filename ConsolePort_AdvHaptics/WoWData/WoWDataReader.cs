@@ -1,35 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Binarysharp.MemoryManagement;
+﻿using Binarysharp.MemoryManagement;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
-using System.IO;
 
 namespace ConsolePort.WoWData
 {
     public class DataReader : IDisposable
     {
-        MemorySharp wowMemory;
-        int pidWow;
-        IntPtr PlayerBase;
+        private MemorySharp wowMemory;
+        private int pidWow;
+        private IntPtr PlayerBase;
 
         public bool Attached { get; private set; }
-        Thread watcher;
+        private Thread watcher;
 
         public DataReader()
         {
             watcher = new Thread(WoWWatcher);
             watcher.Start();
-            
         }
 
         public void Dispose()
         {
             watcher.Abort();
-            if(wowMemory != null)
+            if (wowMemory != null)
             {
                 wowMemory.Dispose();
             }
@@ -37,15 +32,12 @@ namespace ConsolePort.WoWData
 
         public void WoWWatcher()
         {
-            while(true && watcher.IsAlive)
+            while (true)
             {
                 if (wowMemory == null)
                 {
-                    Attached = TryAttach();
-                } else if(!wowMemory.IsRunning)
-                {
-                    Attached = TryAttach();
-                }                    
+                    TryAttach();
+                }
 
                 Thread.Sleep(1000);
             }
@@ -53,14 +45,16 @@ namespace ConsolePort.WoWData
 
         public WoWState ReadState()
         {
-            if(wowMemory != null && wowMemory.IsRunning)
+            if (wowMemory != null && wowMemory.IsRunning)
             {
-                try {
+                try
+                {
                     byte b = wowMemory.Read<byte>(Offsets.GameState, true);
                     return (WoWState)b;
-                } catch { return WoWState.NotRunning; }
-                
-            } else
+                }
+                catch { return WoWState.NotRunning; }
+            }
+            else
             {
                 return WoWState.NotRunning;
             }
@@ -68,7 +62,7 @@ namespace ConsolePort.WoWData
 
         public PlayerInfo GetPlayerInfo()
         {
-            if (wowMemory != null && wowMemory.IsRunning)
+            if (wowMemory != null && wowMemory.IsRunning && ReadState() == WoWState.LoggedIn)
             {
                 try
                 {
@@ -91,16 +85,15 @@ namespace ConsolePort.WoWData
                         AccountName = playerAccount,
                         //RealmName = playerRealm
                     };
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Console.WriteLine(String.Format("Exception reading memory: {0}", ex.Message));
                 }
-                
             }
 
             return default(PlayerInfo);
         }
-
 
         public T ReadPlayerData<T>(Constants.PlayerDataType PlayerData)
         {
@@ -126,34 +119,34 @@ namespace ConsolePort.WoWData
                 var bytes = new byte[16];
                 try
                 {
-                    // TODO bytes = wowMemory.ReadBytes(wowMemory.Read<IntPtr>(PlayerBase + 0x08) + (int)Constants.PlayerDataType.Target, 16);
-                } catch {
-                    
+                    bytes = wowMemory.ReadBytes(wowMemory.Read<IntPtr>(PlayerBase + 0x08) + (int)Constants.PlayerDataType.Target, 16);
                 }
-                
+                catch
+                {
+                }
+
                 return bytes;
-            } else
+            }
+            else
             {
                 return null;
             }
         }
 
-        private bool TryAttach()
+        private void TryAttach()
         {
-            try
+            var WoWProcesses = Process.GetProcessesByName("WoW-64");
+            if (WoWProcesses.Length > 0)
             {
-                var WoWProcesses = Process.GetProcessesByName("WoW-64");
-                if (WoWProcesses.Length > 0)
-                {
-                    wowMemory = new MemorySharp(WoWProcesses.First());
-                    pidWow = wowMemory.Pid;
-                    return true;
-                }
-            } catch (Exception ex)
-            {
-                Console.WriteLine(String.Format("Error attaching to WoW: {0}", ex.Message));
+                wowMemory = new MemorySharp(WoWProcesses.First());
+                pidWow = wowMemory.Pid;
+                Attached = true;
             }
-            return false;
+            else
+            {
+                Attached = false;
+            }
+            return;
         }
     }
 

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System.Collections.Generic;
 
 namespace Binarysharp.MemoryManagement.Core.Managment.BaseClasses
 {
@@ -9,17 +9,18 @@ namespace Binarysharp.MemoryManagement.Core.Managment.BaseClasses
     public abstract class BaseManager<T>
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The collection of the elements.
         /// </summary>
         protected Dictionary<string, T> InternalItems { get; set; } = new Dictionary<string, T>();
 
-
         /// <summary>
         ///     The collection of the elements.
         /// </summary>
         public IEnumerable<T> Items => InternalItems.Values;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Disables all items in the manager.

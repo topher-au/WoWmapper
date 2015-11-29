@@ -1,6 +1,6 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
+﻿using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Memory.Objects
 {
@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class ProxyRegion : ProxyPointer, IEquatable<ProxyRegion>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProxyRegion" /> class.
         /// </summary>
@@ -18,9 +19,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         public ProxyRegion(IntPtr processHandle, IntPtr baseAddress) : base(processHandle, baseAddress)
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Contains information about the memory.
         /// </summary>
@@ -31,9 +34,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         ///     Gets if the <see cref="ProxyRegion" /> is valid.
         /// </summary>
         public override bool IsValid => base.IsValid && Information.State != MemoryStateFlags.Free;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Returns a value indicating whether this instance is equal to a specified object.
         /// </summary>
@@ -44,7 +49,8 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
                    (BaseAddress.Equals(other.BaseAddress) && ProcessHandle.Equals(other.ProcessHandle) &&
                     Information.RegionSize.Equals(other.Information.RegionSize));
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Changes the protection of the n next bytes in remote process.
@@ -65,7 +71,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((ProxyRegion) obj);
+            return obj.GetType() == GetType() && Equals((ProxyRegion)obj);
         }
 
         /// <summary>

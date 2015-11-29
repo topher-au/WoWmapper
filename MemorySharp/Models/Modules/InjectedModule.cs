@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System;
 using System.Diagnostics;
 using System.Linq;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 
 namespace Binarysharp.MemoryManagement.Models.Modules
 {
@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Models.Modules
     public class InjectedModule : RemoteModule, IDisposableState
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="InjectedModule" /> class.
         /// </summary>
@@ -32,9 +33,11 @@ namespace Binarysharp.MemoryManagement.Models.Modules
             if (MustBeDisposed)
                 Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -44,9 +47,11 @@ namespace Binarysharp.MemoryManagement.Models.Modules
         ///     Gets a value indicating whether the element must be disposed when the Garbage Collector collects the object.
         /// </summary>
         public bool MustBeDisposed { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="InjectedModule" /> object.
         /// </summary>
@@ -58,11 +63,12 @@ namespace Binarysharp.MemoryManagement.Models.Modules
                 IsDisposed = true;
                 // Eject the module
                 MemorySharp.Factories.ModuleFactory.Eject(this);
-                // Avoid the finalizer 
+                // Avoid the finalizer
                 GC.SuppressFinalize(this);
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Injects the specified module into the address space of the remote process.

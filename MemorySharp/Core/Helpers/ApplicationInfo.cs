@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
     public static class ApplicationInfo
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the application path.
         ///     <value>The application path.</value>
@@ -22,6 +23,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// </summary>
         public static Version ApplicationVersion => Assembly.GetExecutingAssembly().
                                                              GetName().Version;
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

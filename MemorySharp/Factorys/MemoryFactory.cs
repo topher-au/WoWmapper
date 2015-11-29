@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Core.Memory;
 using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -14,6 +14,7 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class MemoryFactory : IFactory
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The list containing all allocated memory.
         /// </summary>
@@ -23,9 +24,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         ///     The reference of the <see cref="MemorySharp" /> object.
         /// </summary>
         protected readonly MemorySharp MemorySharp;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="MemoryFactory" /> class.
         /// </summary>
@@ -45,9 +48,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     A collection containing all allocated memory in the remote process.
         /// </summary>
@@ -66,9 +71,11 @@ namespace Binarysharp.MemoryManagement.Factorys
                                       .Select(page => new ProxyRegion(MemorySharp.Handle, page.BaseAddress));
             }
         }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="MemoryFactory" /> object.
         /// </summary>
@@ -82,7 +89,8 @@ namespace Binarysharp.MemoryManagement.Factorys
             // Avoid the finalizer
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Allocates a region of memory within the virtual address space of the remote process.

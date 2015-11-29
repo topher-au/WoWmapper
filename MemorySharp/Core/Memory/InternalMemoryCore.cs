@@ -1,9 +1,9 @@
+using Binarysharp.MemoryManagement.Core.Extensions;
+using Binarysharp.MemoryManagement.Core.Marshaling;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Extensions;
-using Binarysharp.MemoryManagement.Core.Marshaling;
 
 namespace Binarysharp.MemoryManagement.Core.Memory
 {
@@ -13,8 +13,10 @@ namespace Binarysharp.MemoryManagement.Core.Memory
     public static class InternalMemoryCore
     {
         #region Fields, Private Properties
+
         private static readonly IntPtr ImageBase = Process.GetCurrentProcess().MainModule.BaseAddress;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         private static IntPtr Rebase(this IntPtr address) => ImageBase.Add(address);
 
@@ -60,7 +62,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
                 address = Rebase(address);
             }
             var buffer = new byte[count];
-            var ptr = (byte*) address;
+            var ptr = (byte*)address;
 
             for (var i = 0; i < count; i++)
             {
@@ -88,7 +90,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
             var ret = new T[count];
             for (var i = 0; i < count; i++)
             {
-                ret[i] = Read<T>(address + (i*size));
+                ret[i] = Read<T>(address + (i * size));
             }
             return ret;
         }
@@ -136,7 +138,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
             {
                 address = Rebase(address);
             }
-            var ptr = (byte*) address;
+            var ptr = (byte*)address;
             for (var i = 0; i < byteArray.Length; i++)
             {
                 ptr[i] = byteArray[i];
@@ -156,7 +158,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
             for (var i = 0; i < value.Length; i++)
             {
                 var val = value[i];
-                Write(address + (i*size), val);
+                Write(address + (i * size), val);
             }
         }
 
@@ -195,7 +197,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
         /// <returns>System.IntPtr.</returns>
         public static IntPtr GetVTablePointer(IntPtr address, int index)
         {
-            return Read<IntPtr>(Read<IntPtr>(address) + (index*4));
+            return Read<IntPtr>(Read<IntPtr>(address) + (index * 4));
         }
 
         /// <summary>
@@ -209,7 +211,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
         /// <returns>(T)</returns>
         public static T RegisterDelegate<T>(IntPtr address) where T : class
         {
-            return Marshal.GetDelegateForFunctionPointer(address, typeof (T)) as T;
+            return Marshal.GetDelegateForFunctionPointer(address, typeof(T)) as T;
         }
     }
 }

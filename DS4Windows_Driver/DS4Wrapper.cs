@@ -1,6 +1,5 @@
 ﻿using DS4Windows;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -11,37 +10,45 @@ namespace DS4Wrapper
     {
         // Events
         public event ControllerConnectedHandler ControllerConnected;
+
         public delegate void ControllerConnectedHandler();
 
         public event ControllerDisconnectedHandler ControllerDisconnected;
+
         public delegate void ControllerDisconnectedHandler();
 
         public event ButtonDownHandler ButtonDown;
+
         public delegate void ButtonDownHandler(DS4Button Button);
 
         public event ButtonDownHandler ButtonUp;
+
         public delegate void ButtonUpHandler(DS4Button Button);
 
         public event AxisThresholdHandler AxisThresholdReached;
+
         public delegate void AxisThresholdHandler(DS4Axis Axis);
 
         public event AxisThresholdDroppedHandler AxisThresholdDropped;
+
         public delegate void AxisThresholdDroppedHandler(DS4Axis Axis);
 
         // Public objects
         public DS4Device Controller; // the active controller
+
         public bool IsConnected; // is a controller connected?
 
         // Settings
         public TriggerMode TriggerMode { get; set; } // Triggers analog/digital
+
         public float TriggerSensitivity { get; set; } // Trigger sensitivity
 
-        Thread controllerThread, stateThread;
-        bool[] buttonStates, axisStates;
-        float[] axisThresholds;
+        private Thread controllerThread, stateThread;
+        private bool[] buttonStates, axisStates;
+        private float[] axisThresholds;
 
-        bool Suspended = false;
-        
+        private bool Suspended = false;
+
         public void Suspend()
         {
             Suspended = true;
@@ -83,7 +90,7 @@ namespace DS4Wrapper
             axisThresholds = new float[axisNames.Length];
             axisStates = new bool[axisNames.Length];
 
-            for(int i = 0; i<axisThresholds.Length;i++)
+            for (int i = 0; i < axisThresholds.Length; i++)
             {
                 axisThresholds[i] = 0.8f; // default threshold
             }
@@ -98,7 +105,6 @@ namespace DS4Wrapper
         /// <param name="Button">The DS4Button that was released.</param>
         private void OnButtonUp(DS4Button Button)
         {
-
         }
 
         /// <summary>
@@ -107,16 +113,13 @@ namespace DS4Wrapper
         /// <param name="Button">The DS4Button that was pressed.</param>
         private void OnButtonDown(DS4Button Button)
         {
-
         }
-        
 
         /// <summary>
         /// Raised whenever a controller is connected.
         /// </summary>
         public void OnControllerConnected()
         {
-
         }
 
         /// <summary>
@@ -124,7 +127,6 @@ namespace DS4Wrapper
         /// </summary>
         private void OnControllerDisconnected()
         {
-            
         }
 
         /// <summary>
@@ -133,7 +135,6 @@ namespace DS4Wrapper
         /// <param name="Axis"></param>
         private void OnAxisOver(DS4Axis Axis)
         {
-
         }
 
         /// <summary>
@@ -142,7 +143,6 @@ namespace DS4Wrapper
         /// <param name="Axis"></param>
         private void OnAxisUnder(DS4Axis Axis)
         {
-
         }
 
         public void SetThreshold(DS4Axis Axis, float Threshold)
@@ -163,16 +163,16 @@ namespace DS4Wrapper
         private void StateMonitor()
         {
             DS4State state = new DS4State();
-            while(true)
+            while (true)
             {
-                if(Controller != null && !Suspended)
+                if (Controller != null && !Suspended)
                 {
                     try
                     {
                         // Update controller state
                         state = Controller.getCurrentState();
                         var lState = Controller.getPreviousState();
-                        
+
                         // Face Buttons
                         if (state.Circle && lState.Circle)
                             DoButtonDown(DS4Button.Circle);
@@ -266,19 +266,28 @@ namespace DS4Wrapper
                         if (!state.PS && buttonStates[(int)DS4Button.PS])
                             DoButtonUp(DS4Button.PS);
 
-                        // Touchpad click left/right
-                        if (state.TouchLeft && state.TouchButton)
-                            DoButtonDown(DS4Button.TouchClickLeft);
-                        if (!state.TouchButton && buttonStates[(int)DS4Button.TouchClickLeft])
-                            DoButtonUp(DS4Button.TouchClickLeft);
+                        bool didTouch = false;
 
-                        if (state.TouchRight && state.TouchButton)
-                            DoButtonDown(DS4Button.TouchClickRight);
-                        if (!state.TouchButton && buttonStates[(int)DS4Button.TouchClickRight])
-                            DoButtonUp(DS4Button.TouchClickRight);
+                        if (Controller.Touchpad.lastTouchPadY1 < 200 && state.TouchButton)
+                        { DoButtonDown(DS4Button.TouchUpper); didTouch = true; }
+                        if (!state.TouchButton && buttonStates[(int)DS4Button.TouchUpper])
+                        { DoButtonUp(DS4Button.TouchUpper); didTouch = true; }
+
+                        if (!didTouch)
+                        {
+                            // Touchpad click left/right
+                            if (state.TouchLeft && state.TouchButton)
+                                DoButtonDown(DS4Button.TouchLeft);
+                            if (!state.TouchButton && buttonStates[(int)DS4Button.TouchLeft])
+                                DoButtonUp(DS4Button.TouchLeft);
+
+                            if (state.TouchRight && state.TouchButton)
+                                DoButtonDown(DS4Button.TouchRight);
+                            if (!state.TouchButton && buttonStates[(int)DS4Button.TouchRight])
+                                DoButtonUp(DS4Button.TouchRight);
+                        }
 
                         // Process axis threshold states
-
                         if (EvaluateThreshold(GetStickAxis(state.LX), axisThresholds[(int)DS4Axis.Lx]) && !axisStates[(int)DS4Axis.Lx])
                         {
                             AxisThresholdReached(DS4Axis.Lx);
@@ -326,20 +335,20 @@ namespace DS4Wrapper
                             AxisThresholdDropped(DS4Axis.Ry);
                             axisStates[(int)DS4Axis.Ry] = false;
                         }
-                    } catch
+                    }
+                    catch
                     {
                         // the controller was probably removed
                     }
-                    
                 }
-                
+
                 Thread.Sleep(5);
             }
         }
 
         public Point GetStickPoint(DS4Stick Stick)
         {
-            if(Controller != null)
+            if (Controller != null)
             {
                 var state = Controller.getCurrentState();
                 switch (Stick)
@@ -350,6 +359,7 @@ namespace DS4Wrapper
                             X = state.LX - 128,
                             Y = state.LY - 128
                         };
+
                     case DS4Stick.Right:
                         return new Point()
                         {
@@ -358,8 +368,8 @@ namespace DS4Wrapper
                         };
                 }
             }
-            
-            return new Point(0,0);
+
+            return new Point(0, 0);
         }
 
         public float GetStickAxis(byte Axis)
@@ -412,7 +422,7 @@ namespace DS4Wrapper
         public void Dispose()
         {
             // Disconnect controller and abort thread
-            if(Controller != null)
+            if (Controller != null)
             {
                 Controller.pushHapticState(new DS4HapticState()
                 {
@@ -426,7 +436,7 @@ namespace DS4Wrapper
                     Controller.DisconnectBT();
                 Controller = null;
             }
-            
+
             controllerThread.Abort();
             stateThread.Abort();
         }
@@ -457,17 +467,17 @@ namespace DS4Wrapper
             {
                 Controller.LightBarColor = new DS4Color(Color.Black);
                 Controller.LightBarOnDuration = 0x00;
-                Controller.LightBarOffDuration = 0xFF;
+                Controller.LightBarOffDuration = 0x00;
             }
         }
 
         public void Rumble(byte strengthL, byte strengthR, int duration)
         {
-            if(Controller != null)
+            if (Controller != null)
             {
-                    Controller.setRumble(strengthL, strengthR);
-                    Thread.Sleep(duration);
-                    Controller.setRumble(0, 0);
+                Controller.setRumble(strengthL, strengthR);
+                Thread.Sleep(duration);
+                Controller.setRumble(0, 0);
             }
         }
 
@@ -475,9 +485,9 @@ namespace DS4Wrapper
         {
             if (Controller != null)
             {
-                    Controller.setRumble(0, strength);
-                    Thread.Sleep(duration);
-                    Controller.setRumble(0, 0);
+                Controller.setRumble(0, strength);
+                Thread.Sleep(duration);
+                Controller.setRumble(0, 0);
             }
         }
 
@@ -485,9 +495,9 @@ namespace DS4Wrapper
         {
             if (Controller != null)
             {
-                    Controller.setRumble(strength, 0);
-                    Thread.Sleep(duration);
-                    Controller.setRumble(0, 0);
+                Controller.setRumble(strength, 0);
+                Thread.Sleep(duration);
+                Controller.setRumble(0, 0);
             }
         }
 
@@ -519,6 +529,7 @@ namespace DS4Wrapper
             }
         }
     }
+
     public enum TriggerMode
     {
         Analog,
@@ -544,8 +555,9 @@ namespace DS4Wrapper
         Share,
         Options,
         PS,
-        TouchClickLeft,
-        TouchClickRight,
+        TouchLeft,
+        TouchRight,
+        TouchUpper,
         LStickUp,
         LStickDown,
         LStickRight,

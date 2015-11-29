@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native;
+using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using Binarysharp.MemoryManagement.Core.Native;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
 
 namespace Binarysharp.MemoryManagement.Core.Helpers
 {
@@ -12,6 +12,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
     public static class ArchitectureHelper
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Determines whether the current process is a 32-bit process.
         /// </summary>
@@ -31,7 +32,8 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         ///     Determines whether the current operating system is a 64-bit operating system.
         /// </summary>
         public static bool Is64BitOperatingSystem => Environment.Is64BitOperatingSystem;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Determines whether the specified process is running under WOW64.

@@ -139,7 +139,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
-            var vec = (Vector3) obj;
+            var vec = (Vector3)obj;
             return GetHashCode() == vec.GetHashCode();
         }
 
@@ -196,7 +196,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <returns>The result of the operator.</returns>
         public static Vector3 operator *(Vector3 v1, float scalar)
         {
-            return new Vector3(v1.X*scalar, v1.Y*scalar, v1.Z*scalar);
+            return new Vector3(v1.X * scalar, v1.Y * scalar, v1.Z * scalar);
         }
 
         /// <summary>

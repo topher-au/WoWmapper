@@ -1,9 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace ConsolePort
@@ -26,11 +23,11 @@ namespace ConsolePort
             string wowRegPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Blizzard Entertainment\\World of Warcraft", "InstallPath", String.Empty).ToString();
 
             var testPaths = wowDefaultPaths;
-            if(wowRegPath != string.Empty)
+            if (wowRegPath != string.Empty)
                 testPaths.Insert(0, wowRegPath);
 
             // Find install path
-            foreach(string Path in testPaths)
+            foreach (string Path in testPaths)
             {
                 if (CheckWoWFolder(Path))
                 {
@@ -51,33 +48,38 @@ namespace ConsolePort
         public static TocInfo ReadTocInfo(string TocFile)
         {
             if (!File.Exists(TocFile)) return default(TocInfo);
-            using(StreamReader s = new StreamReader(TocFile))
+            using (StreamReader s = new StreamReader(TocFile))
             {
                 string line = "##";
-                TocInfo outinfo = new TocInfo() {  SavedVariables = new List<string>(), SavedVariablesPerCharacter = new List<string>() };
-                while(line.StartsWith("##"))
+                TocInfo outinfo = new TocInfo() { SavedVariables = new List<string>(), SavedVariablesPerCharacter = new List<string>() };
+                while (line.StartsWith("##"))
                 {
                     line = s.ReadLine();
                     var ls = line.Split(':');
-                    switch(ls[0])
+                    switch (ls[0])
                     {
                         case "## Interface":
                             outinfo.Interface = line.Substring(line.IndexOf(":") + 1).Trim();
                             break;
+
                         case "## Title":
                             outinfo.Title = line.Substring(line.IndexOf(":") + 1).Trim();
                             break;
+
                         case "## Notes":
                             outinfo.Notes = line.Substring(line.IndexOf(":") + 1).Trim();
                             break;
+
                         case "## Version":
                             outinfo.Version = new Version(line.Substring(line.IndexOf(":") + 1));
                             break;
+
                         case "## SavedVariables":
                             var ps = line.Substring(line.IndexOf(":") + 1);
                             var svs = ps.Split(',');
                             foreach (var x in svs) outinfo.SavedVariables.Add(x.Trim());
                             break;
+
                         case "## SavedVariablesPerCharacter":
                             var split = line.Substring(line.IndexOf(":") + 1);
                             var varNames = split.Split(',');
@@ -87,16 +89,28 @@ namespace ConsolePort
                 }
                 return outinfo;
             }
-            
+        }
+
+        public static Version CheckAddonVersion(string WowPath, string AddonName)
+        {
+            var AddonPath = Path.Combine(WowPath, "Interface\\AddOns", AddonName);
+            var AddonToc = Path.Combine(AddonPath, AddonName + ".toc");
+            if (File.Exists(AddonToc))
+            {
+                var AddonInfo = ReadTocInfo(AddonToc);
+                return AddonInfo.Version;
+            }
+            return default(Version);
         }
     }
+
     public struct TocInfo
     {
-        public  string Interface;
-        public  string Title;
-        public  string Notes;
-        public  Version Version;
-        public  List<string> SavedVariables;
-        public  List<string> SavedVariablesPerCharacter;
+        public string Interface;
+        public string Title;
+        public string Notes;
+        public Version Version;
+        public List<string> SavedVariables;
+        public List<string> SavedVariablesPerCharacter;
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Memory;
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Memory;
 
 namespace Binarysharp.MemoryManagement.Core.Extensions
 {
@@ -28,7 +28,7 @@ namespace Binarysharp.MemoryManagement.Core.Extensions
         /// <param name="pointer">The pointer.</param>
         /// <param name="offset">The offset.</param>
         /// <returns>System.IntPtr.</returns>
-        public static IntPtr Add(this IntPtr pointer, uint offset) => IntPtr.Add(pointer, (int) offset);
+        public static IntPtr Add(this IntPtr pointer, uint offset) => IntPtr.Add(pointer, (int)offset);
 
         /// <summary>
         ///     Adds the specified pointer.
@@ -179,7 +179,6 @@ namespace Binarysharp.MemoryManagement.Core.Extensions
         {
             return InternalMemoryCore.GetVTablePointer(address, index);
         }
-
 
         /// <summary>
         ///     Convert a function pointer a managed delegate.

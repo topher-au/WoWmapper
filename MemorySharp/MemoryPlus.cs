@@ -1,11 +1,11 @@
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using Binarysharp.MemoryManagement.Core.Memory;
 using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Managers;
 using Binarysharp.MemoryManagement.Models.Memory;
 using Binarysharp.MemoryManagement.Models.Modules;
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement
 {
@@ -15,6 +15,7 @@ namespace Binarysharp.MemoryManagement
     public sealed class MemoryPlus : ProcessMemory, IEquatable<MemoryPlus>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProcessMemory" /> class.
         /// </summary>
@@ -24,15 +25,16 @@ namespace Binarysharp.MemoryManagement
             Factories = new InternalFactoryManager(this);
             Factories.EnableAll();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the factory manager instance.
         /// </summary>
         /// <value>The instance for managing factories.</value>
         public InternalFactoryManager Factories { get; }
-
 
         /// <summary>
         ///     Gets or sets the <see cref="PatternScanner" /> with the specified module name.
@@ -48,9 +50,11 @@ namespace Binarysharp.MemoryManagement
         /// <param name="isRelative">[Optional] State if the address is relative to the main module.</param>
         /// <returns>Binarysharp.MemoryManagement.LocalProcess.Objects.ProxyPointer.</returns>
         public ProxyPointer this[IntPtr address, bool isRelative = false] => CreateProxyPointer(address, isRelative);
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Returns a value indicating whether this instance is equal to a specified object.
         /// </summary>
@@ -59,7 +63,8 @@ namespace Binarysharp.MemoryManagement
             if (ReferenceEquals(null, other)) return false;
             return ReferenceEquals(this, other) || Handle.Equals(other.Handle);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Reads the specified amount of bytes from the specified address.
@@ -184,7 +189,7 @@ namespace Binarysharp.MemoryManagement
         {
             if (name == "Default")
             {
-                name = typeof (T).Name;
+                name = typeof(T).Name;
             }
             return new ProcessFunction<T>(name, address);
         }
@@ -210,7 +215,7 @@ namespace Binarysharp.MemoryManagement
         /// <remarks>Created 2012-01-16 20:40 by Nesox.</remarks>
         public T RegisterDelegate<T>(IntPtr address, bool isRelative = false) where T : class
         {
-            return Marshal.GetDelegateForFunctionPointer(isRelative ? ToAbsolute(address) : address, typeof (T)) as T;
+            return Marshal.GetDelegateForFunctionPointer(isRelative ? ToAbsolute(address) : address, typeof(T)) as T;
         }
 
         /// <summary>
@@ -228,7 +233,7 @@ namespace Binarysharp.MemoryManagement
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((MemoryPlus) obj);
+            return obj.GetType() == GetType() && Equals((MemoryPlus)obj);
         }
 
         /// <summary>

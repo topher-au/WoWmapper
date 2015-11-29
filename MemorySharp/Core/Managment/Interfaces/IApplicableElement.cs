@@ -6,11 +6,13 @@
     public interface IApplicableElement : IDisposableState
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     States if the element is enabled.
         /// </summary>
         bool IsEnabled { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Disables the element.

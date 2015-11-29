@@ -9,6 +9,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
     public class MouseEventExtArgs : MouseEventArgs
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the MouseEventArgs class.
         /// </summary>
@@ -29,14 +30,17 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
         internal MouseEventExtArgs(MouseEventArgs e) : base(e.Button, e.Clicks, e.X, e.Y, e.Delta)
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Set this property to <b>true</b> inside your event handler to prevent further processing of the event in other
         ///     applications.
         /// </summary>
         public bool Handled { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

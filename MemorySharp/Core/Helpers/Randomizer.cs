@@ -9,6 +9,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
     public static class Randomizer
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     Provides random engine.
         /// </summary>
@@ -19,7 +20,8 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// </summary>
         private static readonly char[] AllowedChars =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
-        #endregion
+
+        #endregion Fields, Private Properties
 
         /// <summary>
         ///     Returns a random number within a specified range.

@@ -1,7 +1,7 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Extensions;
+﻿using Binarysharp.MemoryManagement.Core.Extensions;
 using Binarysharp.MemoryManagement.Core.Managment.BaseClasses;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Managment
 {
@@ -15,6 +15,7 @@ namespace Binarysharp.MemoryManagement.Core.Managment
     public abstract class SafeManager<T> : BaseManager<T> where T : INamedElement
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="SafeManager{T}" /> class.
         /// </summary>
@@ -23,14 +24,17 @@ namespace Binarysharp.MemoryManagement.Core.Managment
         {
             Log = log;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The ILog implementation to use for the manager.
         /// </summary>
         protected ILog Log { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Disables all elements.
@@ -87,12 +91,10 @@ namespace Binarysharp.MemoryManagement.Core.Managment
             {
                 InternalItems[name].Dispose();
             }
-
             catch (Exception exception)
             {
                 Log.LogError(exception.ExtractDetailedInformation());
             }
-
             finally
             {
                 InternalItems.Remove(name);

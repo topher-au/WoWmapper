@@ -119,7 +119,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
         private const byte VkShift = 0x10;
         private const byte VkCapital = 0x14;
         private const byte VkNumlock = 0x90;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         /// <summary>
         ///     The CallNextHookEx function passes the hook information to the next hook procedure in the current hook chain.
@@ -153,7 +154,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
             int nCode,
             int wParam,
             IntPtr lParam);
-
 
         /// <summary>
         ///     The SetWindowsHookEx function installs an application-defined hook procedure into a hook chain.

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Managment.BaseClasses;
+﻿using Binarysharp.MemoryManagement.Core.Managment.BaseClasses;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Factorys;
+using System;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Managers
 {
@@ -12,14 +12,17 @@ namespace Binarysharp.MemoryManagement.Managers
     public class InternalFactoryManager : BaseManager<IFactory>, IDisposable
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     Gets the memory sharp reference for this instance.
         /// </summary>
         /// <value>The memory sharp reference for this instance.</value>
         private MemoryPlus MemorySharp { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ExternalFactoryManager" /> class.
         /// </summary>
@@ -28,9 +31,11 @@ namespace Binarysharp.MemoryManagement.Managers
         {
             MemorySharp = memorySharp;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     A manager for Instances of the <see cref="Factorys.DetourFactory" /> class.
         /// </summary>
@@ -48,14 +53,17 @@ namespace Binarysharp.MemoryManagement.Managers
         /// </summary>
         /// <value>The Instance of <see cref="Factorys.HookFactory" />.</value>
         public PatchFactory PatchFactory { get; private set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         public void Dispose()
         {
             RemoveAll();
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Disables all items in the manager by removing from the managers items and then disposing them.

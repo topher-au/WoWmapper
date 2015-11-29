@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native;
+using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 using System.Collections;
 using System.Linq;
-using Binarysharp.MemoryManagement.Core.Native;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
 
 namespace Binarysharp.MemoryManagement.Core.Helpers
 {
@@ -14,6 +14,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
     public class KeyBoardHelper
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The ke y_ pressed
         /// </summary>
@@ -22,9 +23,11 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         private short[] AllKeys { get; }
         private Hashtable Keys { get; }
         private Hashtable PrevKeys { get; set; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="KeyBoardHelper" /> class.
         /// </summary>
@@ -32,11 +35,11 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         {
             Keys = new Hashtable();
             PrevKeys = new Hashtable();
-            var myKeys = (Keys[]) Enum.GetValues(typeof (Keys));
+            var myKeys = (Keys[])Enum.GetValues(typeof(Keys));
             AllKeys = new short[myKeys.Length];
             for (var i = 0; i < AllKeys.Length; i++)
             {
-                AllKeys[i] = (short) myKeys[i];
+                AllKeys[i] = (short)myKeys[i];
             }
             Init();
         }
@@ -50,7 +53,8 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
             Keys.Clear();
             PrevKeys.Clear();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         /// <summary>
         ///     Gets the key down.
@@ -69,7 +73,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool GetKeyDownAsync(int key)
         {
-            return GetKeyDownAsync((Keys) key);
+            return GetKeyDownAsync((Keys)key);
         }
 
         /// <summary>
@@ -99,7 +103,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// </summary>
         public void Update()
         {
-            PrevKeys = (Hashtable) Keys.Clone();
+            PrevKeys = (Hashtable)Keys.Clone();
             foreach (var key in AllKeys)
             {
                 Keys[key] = GetKeyDown(key);
@@ -112,7 +116,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// <returns></returns>
         public Keys[] KeysThatWentUp()
         {
-            return AllKeys.Cast<Keys>().Where(key => KeyWentUp((int) key)).ToArray();
+            return AllKeys.Cast<Keys>().Where(key => KeyWentUp((int)key)).ToArray();
         }
 
         /// <summary>
@@ -140,7 +144,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// <returns></returns>
         public bool KeyWentUp(Keys key)
         {
-            return KeyWentUp((int) key);
+            return KeyWentUp((int)key);
         }
 
         /// <summary>
@@ -152,7 +156,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         {
             if (!KeyExists(key))
                 return false;
-            return (bool) PrevKeys[key] && !(bool) Keys[key];
+            return (bool)PrevKeys[key] && !(bool)Keys[key];
         }
 
         /// <summary>
@@ -162,7 +166,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// <returns></returns>
         public bool KeyWentDown(Keys key)
         {
-            return KeyWentDown((int) key);
+            return KeyWentDown((int)key);
         }
 
         /// <summary>
@@ -174,7 +178,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         {
             if (!KeyExists(key))
                 return false;
-            return !(bool) PrevKeys[key] && (bool) Keys[key];
+            return !(bool)PrevKeys[key] && (bool)Keys[key];
         }
 
         /// <summary>
@@ -184,7 +188,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// <returns></returns>
         public bool KeyIsDown(Keys key)
         {
-            return KeyIsDown((int) key);
+            return KeyIsDown((int)key);
         }
 
         /// <summary>
@@ -196,7 +200,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         {
             if (!KeyExists(key))
                 return false;
-            return (bool) PrevKeys[key] || (bool) Keys[key];
+            return (bool)PrevKeys[key] || (bool)Keys[key];
         }
 
         /// <summary>

@@ -46,12 +46,12 @@
             // linkMoreInfo
             // 
             this.linkMoreInfo.AutoSize = true;
-            this.linkMoreInfo.Location = new System.Drawing.Point(49, 205);
+            this.linkMoreInfo.Location = new System.Drawing.Point(48, 205);
             this.linkMoreInfo.Name = "linkMoreInfo";
-            this.linkMoreInfo.Size = new System.Drawing.Size(273, 15);
+            this.linkMoreInfo.Size = new System.Drawing.Size(282, 15);
             this.linkMoreInfo.TabIndex = 1;
             this.linkMoreInfo.TabStop = true;
-            this.linkMoreInfo.Text = "http://www.github.com/topher-au/ConsolePortUI";
+            this.linkMoreInfo.Text = "http://www.github.com/topher-au/DS4ConsolePort";
             // 
             // buttonOK
             // 

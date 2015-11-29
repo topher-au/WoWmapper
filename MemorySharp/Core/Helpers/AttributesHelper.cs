@@ -19,9 +19,8 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         /// <remarks>Created 2012-01-16 19:28 by Nesox.</remarks>
         public static bool HasAttribute<T>(Type item)
         {
-            return item.GetCustomAttributes(typeof (T), true).Length != 0;
+            return item.GetCustomAttributes(typeof(T), true).Length != 0;
         }
-
 
         /// <summary>
         ///     Determines whether [has UFP attribute] [the specified d].

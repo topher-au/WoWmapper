@@ -232,13 +232,13 @@
   <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\USB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BINDING_EXISTS" xml:space="preserve">
+  <data name="STRING_BINDING_EXISTS" xml:space="preserve">
     <value>{0} is already bound to {1}!</value>
   </data>
-  <data name="BINDING_ILLEGAL" xml:space="preserve">
+  <data name="STRING_BINDING_ILLEGAL" xml:space="preserve">
     <value>{0} is not a valid keybind!</value>
   </data>
-  <data name="BINDING_SET" xml:space="preserve">
+  <data name="STRING_BINDING_SET" xml:space="preserve">
     <value>Press the keyboard key for {0}</value>
   </data>
   <data name="STRING_HAPTIC_ATTACHED" xml:space="preserve">
@@ -264,5 +264,62 @@
   </data>
   <data name="STRING_HAPTIC_SETTINGS" xml:space="preserve">
     <value>Feedback Settings</value>
+  </data>
+  <data name="CONSOLEPORTLOGO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CONSOLEPORTLOGO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DS4_Config" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DS4 Config.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_BINDING_CHANGE" xml:space="preserve">
+    <value>Double-click to change binding</value>
+  </data>
+  <data name="STRING_TOUCHPAD_BUTTONS" xml:space="preserve">
+    <value>TouchLeft/Right</value>
+  </data>
+  <data name="STRING_TOUCHPAD_MODE" xml:space="preserve">
+    <value>Touchpad Mode</value>
+  </data>
+  <data name="STRING_TOUCHPAD_MOUSE" xml:space="preserve">
+    <value>Mouse Control</value>
+  </data>
+  <data name="STRING_WOW_WINDOW_FOUND" xml:space="preserve">
+    <value>WoW window found</value>
+  </data>
+  <data name="TouchLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\left touch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TouchRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\right touch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WoWConsolePort" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WoWConsolePort.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_BIND_CAMERA" xml:space="preserve">
+    <value>Camera</value>
+  </data>
+  <data name="STRING_BIND_MOVEMENT" xml:space="preserve">
+    <value>Movement</value>
+  </data>
+  <data name="STRING_HAPTIC_STATUS" xml:space="preserve">
+    <value>Haptic Status</value>
+  </data>
+  <data name="STRING_TAB_ADVANCED" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="STRING_TAB_CONSOLEPORT" xml:space="preserve">
+    <value>ConsolePort</value>
+  </data>
+  <data name="STRING_TAB_KEYBINDS" xml:space="preserve">
+    <value>Keybinds</value>
+  </data>
+  <data name="STRING_TOUCHPAD_SHARE_OPTIONS" xml:space="preserve">
+    <value>Share/Options</value>
+  </data>
+  <data name="STRING_NOTIFY_MENU_EXIT" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="STRING_NOTIFY_TOOLTIP" xml:space="preserve">
+    <value>DS4ConsolePort</value>
   </data>
 </root>

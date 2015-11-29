@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System;
 using System.Threading;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 
 namespace Binarysharp.MemoryManagement.Core.Tools
 {
@@ -12,20 +12,25 @@ namespace Binarysharp.MemoryManagement.Core.Tools
     public class ThreadedUpdater : INamedElement
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     An event that Occurs repeatedly at the Interval for this Instance.
         /// </summary>
         public event EventHandler<DeltaEventArgs> OnUpdate;
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Fields, Private Properties
+
         private long BeginTime { get; set; }
         private long FpsTick { get; set; }
         private long LastTick { get; set; }
         private Thread WorkThread { get; set; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ThreadedUpdater" /> class.
         /// </summary>
@@ -45,9 +50,11 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets or sets the update interval [in milaseconds].
         /// </summary>
@@ -95,9 +102,11 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         ///     default value is true.
         /// </summary>
         public bool MustBeDisposed { get; set; } = true;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Enables the updater.
         /// </summary>
@@ -110,10 +119,10 @@ namespace Binarysharp.MemoryManagement.Core.Tools
             IsEnabled = true;
             BeginTime = DateTime.Now.Ticks;
             WorkThread = new Thread(WorkerLoop)
-                         {
-                             IsBackground = true,
-                             Priority = ThreadPriority.Highest
-                         };
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.Highest
+            };
             WorkThread.Start();
         }
 
@@ -142,7 +151,8 @@ namespace Binarysharp.MemoryManagement.Core.Tools
             Disable();
             IsDisposed = true;
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Calculates the average frames per second of the updater instance.
@@ -150,7 +160,7 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         /// <returns>The average frames per second.</returns>
         public int GetAverageFps()
         {
-            return (int) (TickCount/GetRuntime().TotalSeconds);
+            return (int)(TickCount / GetRuntime().TotalSeconds);
         }
 
         /// <summary>
@@ -170,7 +180,6 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         {
             OnUpdate?.Invoke(this, e);
         }
-
 
         private void CalculateFramesPerSecond()
         {
@@ -206,6 +215,7 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         public class DeltaEventArgs : EventArgs
         {
             #region Constructors, Destructors
+
             /// <summary>
             ///     Initializes a new <see cref="DeltaEventArgs" /> instance.
             /// </summary>
@@ -214,14 +224,17 @@ namespace Binarysharp.MemoryManagement.Core.Tools
             {
                 SecondsElapsed = secondsElapsed;
             }
-            #endregion
+
+            #endregion Constructors, Destructors
 
             #region Public Properties, Indexers
+
             /// <summary>
             ///     Seconds elapsed.
             /// </summary>
             public double SecondsElapsed { get; private set; }
-            #endregion
+
+            #endregion Public Properties, Indexers
         }
     }
 }

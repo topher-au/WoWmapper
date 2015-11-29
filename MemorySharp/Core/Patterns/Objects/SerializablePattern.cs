@@ -6,6 +6,7 @@
     public class SerializablePattern
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Creates a new instance of <see cref="SerializablePattern" />.
         /// </summary>
@@ -32,9 +33,11 @@
         public SerializablePattern()
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     A description of the pattern being scanned.
         /// </summary>
@@ -65,6 +68,7 @@
         ///     Tyhe type of pointer the scan results in.
         /// </summary>
         public string Comments { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

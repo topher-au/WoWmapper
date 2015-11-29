@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
     public static partial class InputHookManager
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     This field is not objectively needed but we need to keep a reference on a delegate which will be
         ///     passed to unmanaged code. To avoid GC to clean it up.
@@ -38,7 +39,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
         ///     Stores the handle to the Keyboard hook procedure.
         /// </summary>
         private static int _sKeyboardHookHandle;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         /// <summary>
         ///     A callback function which will be called every Time a mouse activity detected.
@@ -71,7 +73,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 return CallNextHookEx(_sMouseHookHandle, nCode, wParam, lParam);
             }
             //Marshall the data from callback.
-            var mouseHookStruct = (MouseLlHookStruct) Marshal.PtrToStructure(lParam, typeof (MouseLlHookStruct));
+            var mouseHookStruct = (MouseLlHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseLlHookStruct));
 
             //detect button clicked
             var button = MouseButtons.None;
@@ -88,44 +90,50 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                     button = MouseButtons.Left;
                     clickCount = 1;
                     break;
+
                 case WmLbuttonup:
                     mouseUp = true;
                     button = MouseButtons.Left;
                     clickCount = 1;
                     break;
+
                 case WmLbuttondblclk:
                     button = MouseButtons.Left;
                     clickCount = 2;
                     break;
+
                 case WmRbuttondown:
                     mouseDown = true;
                     button = MouseButtons.Right;
                     clickCount = 1;
                     break;
+
                 case WmRbuttonup:
                     mouseUp = true;
                     button = MouseButtons.Right;
                     clickCount = 1;
                     break;
+
                 case WmRbuttondblclk:
                     button = MouseButtons.Right;
                     clickCount = 2;
                     break;
+
                 case WmMousewheel:
-                    //If the message is WM_MOUSEWHEEL, the high-order word of MouseData member is the wheel delta. 
-                    //One wheel click is defined as WHEEL_DELTA, which is 120. 
+                    //If the message is WM_MOUSEWHEEL, the high-order word of MouseData member is the wheel delta.
+                    //One wheel click is defined as WHEEL_DELTA, which is 120.
                     //(value >> 16) & 0xffff; retrieves the high-order word from the given 32-bit value
-                    mouseDelta = (short) ((mouseHookStruct.MouseData >> 16) & 0xffff);
+                    mouseDelta = (short)((mouseHookStruct.MouseData >> 16) & 0xffff);
 
                     //TODO: X BUTTONS (I havent them so was unable to test)
-                    //If the message is WM_XBUTTONDOWN, WM_XBUTTONUP, WM_XBUTTONDBLCLK, WM_NCXBUTTONDOWN, WM_NCXBUTTONUP, 
-                    //or WM_NCXBUTTONDBLCLK, the high-order word specifies which X button was pressed or released, 
-                    //and the low-order word is reserved. This value can be one or more of the following values. 
-                    //Otherwise, MouseData is not used. 
+                    //If the message is WM_XBUTTONDOWN, WM_XBUTTONUP, WM_XBUTTONDBLCLK, WM_NCXBUTTONDOWN, WM_NCXBUTTONUP,
+                    //or WM_NCXBUTTONDBLCLK, the high-order word specifies which X button was pressed or released,
+                    //and the low-order word is reserved. This value can be one or more of the following values.
+                    //Otherwise, MouseData is not used.
                     break;
             }
 
-            //generate event 
+            //generate event
             var e = new MouseEventExtArgs(
                 button,
                 clickCount,
@@ -206,10 +214,10 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 0);
             //If SetWindowsHookEx fails.
             if (_sMouseHookHandle != 0) return;
-            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set.
             var errorCode = Marshal.GetLastWin32Error();
             //do cleanup
-            //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+            //Initializes and throws a new instance of the Win32Exception class with the specified error.
             throw new Win32Exception(errorCode);
         }
 
@@ -249,9 +257,9 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
             _sMouseDelegate = null;
             //if failed and exception must be thrown
             if (result != 0) return;
-            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set.
             var errorCode = Marshal.GetLastWin32Error();
-            //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+            //Initializes and throws a new instance of the Win32Exception class with the specified error.
             throw new Win32Exception(errorCode);
         }
 
@@ -288,12 +296,12 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
             {
                 //read structure KeyboardHookStruct at lParam
                 var myKeyboardHookStruct =
-                    (KeyboardHookStruct) Marshal.PtrToStructure(lParam, typeof (KeyboardHookStruct));
+                    (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
                 //raise KeyDown
                 if (SKeyDown != null &&
                     (wParam == WmKeydown || wParam == WmSyskeydown))
                 {
-                    var keyData = (Keys) myKeyboardHookStruct.VirtualKeyCode;
+                    var keyData = (Keys)myKeyboardHookStruct.VirtualKeyCode;
                     var e = new KeyEventArgs(keyData);
                     SKeyDown.Invoke(null, e);
                     handled = e.Handled;
@@ -315,7 +323,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                         inBuffer,
                         myKeyboardHookStruct.Flags) == 1)
                     {
-                        var key = (char) inBuffer[0];
+                        var key = (char)inBuffer[0];
                         if ((isDownCapslock ^ isDownShift) && char.IsLetter(key)) key = char.ToUpper(key);
                         var e = new KeyPressEventArgs(key);
                         SKeyPress.Invoke(null, e);
@@ -327,7 +335,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 if (SKeyUp != null &&
                     (wParam == WmKeyup || wParam == WmSyskeyup))
                 {
-                    var keyData = (Keys) myKeyboardHookStruct.VirtualKeyCode;
+                    var keyData = (Keys)myKeyboardHookStruct.VirtualKeyCode;
                     var e = new KeyEventArgs(keyData);
                     SKeyUp.Invoke(null, e);
                     handled = handled || e.Handled;
@@ -357,11 +365,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 0);
             //If SetWindowsHookEx fails.
             if (_sKeyboardHookHandle != 0) return;
-            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set.
             var errorCode = Marshal.GetLastWin32Error();
             //do cleanup
 
-            //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+            //Initializes and throws a new instance of the Win32Exception class with the specified error.
             throw new Win32Exception(errorCode);
         }
 
@@ -387,9 +395,9 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
             _sKeyboardDelegate = null;
             //if failed and exception must be thrown
             if (result != 0) return;
-            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set. 
+            //Returns the error code returned by the last unmanaged function called using platform invoke that has the DllImportAttribute.SetLastError flag set.
             var errorCode = Marshal.GetLastWin32Error();
-            //Initializes and throws a new instance of the Win32Exception class with the specified error. 
+            //Initializes and throws a new instance of the Win32Exception class with the specified error.
             throw new Win32Exception(errorCode);
         }
 

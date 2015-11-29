@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Extensions;
+﻿using Binarysharp.MemoryManagement.Core.Extensions;
 using Binarysharp.MemoryManagement.Core.Helpers;
 using Binarysharp.MemoryManagement.Core.Memory;
 using Binarysharp.MemoryManagement.Core.Patterns.Objects;
+using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Core.Patterns
 {
@@ -37,15 +37,15 @@ namespace Binarysharp.MemoryManagement.Core.Patterns
                 result.OriginalAddress = ExternalMemoryCore.Read<IntPtr>(handle,
                     module.BaseAddress + offset + offsetToAdd);
                 result.Address = result.OriginalAddress;
-                result.Address -= (int) module.BaseAddress;
+                result.Address -= (int)module.BaseAddress;
                 result.Offset = offset;
                 if (!isOffsetMode)
                 {
                     result.Address = reBase ? module.BaseAddress.Add(result.Address) : result.Address;
                     return result;
                 }
-                result.Offset = reBase ? (int) module.BaseAddress.Add(offset) : result.Offset;
-                result.Address = (IntPtr) result.Offset;
+                result.Offset = reBase ? (int)module.BaseAddress.Add(offset) : result.Offset;
+                result.Address = (IntPtr)result.Offset;
                 return result;
             }
             // If this is reached, the ProcessModulePattern was not found.
@@ -75,7 +75,7 @@ namespace Binarysharp.MemoryManagement.Core.Patterns
         {
             return pattern
                 .Split(' ')
-                .Select(s => s.Contains('?') ? (byte) 0 : byte.Parse(s, NumberStyles.HexNumber))
+                .Select(s => s.Contains('?') ? (byte)0 : byte.Parse(s, NumberStyles.HexNumber))
                 .ToArray();
         }
 

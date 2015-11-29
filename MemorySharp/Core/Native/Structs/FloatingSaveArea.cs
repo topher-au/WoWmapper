@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Structs
 {
@@ -42,7 +42,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Structs
         /// <summary>
         ///     The register area{CC2D43FA-BBC4-448A-9D0B-7B57ADF2655C}
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 80)] public byte[] RegisterArea;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 80)]
+        public byte[] RegisterArea;
 
         /// <summary>
         ///     The status word{CC2D43FA-BBC4-448A-9D0B-7B57ADF2655C}

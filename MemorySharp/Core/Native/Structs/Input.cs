@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Structs
 {
@@ -13,22 +13,26 @@ namespace Binarysharp.MemoryManagement.Core.Native.Structs
         /// <summary>
         ///     The information about a simulated hardware event.
         /// </summary>
-        [FieldOffset(sizeof (int))] public HardwareInput Hardware;
+        [FieldOffset(sizeof(int))]
+        public HardwareInput Hardware;
 
         /// <summary>
         ///     The information about a simulated keyboard event.
         /// </summary>
-        [FieldOffset(sizeof (int))] public KeyboardInput Keyboard;
+        [FieldOffset(sizeof(int))]
+        public KeyboardInput Keyboard;
 
         /// <summary>
         ///     The information about a simulated mouse event.
         /// </summary>
-        [FieldOffset(sizeof (int))] public MouseInput Mouse;
+        [FieldOffset(sizeof(int))]
+        public MouseInput Mouse;
 
         /// <summary>
         ///     The type of the input event.
         /// </summary>
-        [FieldOffset(0)] public InputTypes Type;
+        [FieldOffset(0)]
+        public InputTypes Type;
 
         /// <summary>
         ///     Constructor that specifies a type.

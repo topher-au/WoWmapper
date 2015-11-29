@@ -7,9 +7,6 @@
  * See the file LICENSE for more information.
 */
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Binarysharp.MemoryManagement.Core.CallingConvention;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces;
@@ -19,6 +16,9 @@ using Binarysharp.MemoryManagement.Core.Marshaling.Objects;
 using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Models.Assembly;
 using Binarysharp.MemoryManagement.Models.Threads;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -28,13 +28,16 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class AssemblyFactory : IFactory
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The reference of the <see cref="MemorySharp" /> object.
         /// </summary>
         protected readonly MemorySharp MemorySharp;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="AssemblyFactory" /> class.
         /// </summary>
@@ -46,16 +49,20 @@ namespace Binarysharp.MemoryManagement.Factorys
             // Create the tool
             Assembler = new Fasm32Assembler();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The assembler used by the factory.
         /// </summary>
         public IAssembler Assembler { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="AssemblyFactory" /> object.
         /// </summary>
@@ -63,7 +70,8 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             // Nothing to dispose... yet
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Begins a new transaction to inject and execute assembly code into the process at the specified address.
@@ -221,7 +229,7 @@ namespace Binarysharp.MemoryManagement.Factorys
         /// </returns>
         public Task<T> ExecuteAsync<T>(IntPtr address, dynamic parameter)
         {
-            return Task.Run(() => (Task<T>) Execute<T>(address, parameter));
+            return Task.Run(() => (Task<T>)Execute<T>(address, parameter));
         }
 
         /// <summary>

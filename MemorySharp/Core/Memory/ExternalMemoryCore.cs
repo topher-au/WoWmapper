@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Marshaling;
+using Binarysharp.MemoryManagement.Core.Native;
+using Binarysharp.MemoryManagement.Core.Native.Enums;
+using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Marshaling;
-using Binarysharp.MemoryManagement.Core.Native;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
-using Binarysharp.MemoryManagement.Core.Native.Structs;
 
 #pragma warning disable 1584,1711,1572,1581,1580
 
@@ -64,8 +64,8 @@ namespace Binarysharp.MemoryManagement.Core.Memory
             {
                 object ret;
                 fixed (byte* pByte = bytes)
-                    ret = new IntPtr(*(void**) pByte);
-                return (T) ret;
+                    ret = new IntPtr(*(void**)pByte);
+                return (T)ret;
             }
             return SafeMarshal<T>.ByteArrayToObject(bytes);
         }
@@ -86,7 +86,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
             // Read the array in the remote process
             for (var i = 0; i < count; i++)
             {
-                array[i] = Read<T>(processHandle, address + SafeMarshal<T>.Size*i);
+                array[i] = Read<T>(processHandle, address + SafeMarshal<T>.Size * i);
             }
             return array;
         }
@@ -169,7 +169,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory
             // Write the array in the remote process
             for (var i = 0; i < dataArray.Length; i++)
             {
-                Write(processHandle, address + SafeMarshal<T>.Size*i, dataArray[i]);
+                Write(processHandle, address + SafeMarshal<T>.Size * i, dataArray[i]);
             }
         }
 

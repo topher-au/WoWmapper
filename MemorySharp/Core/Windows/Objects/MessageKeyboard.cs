@@ -1,6 +1,6 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
+﻿using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Windows.BaseClasses;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Windows.Objects
 {
@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
     public class MessageKeyboard : BaseKeyboard
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of a child of the <see cref="BaseKeyboard" /> class.
         /// </summary>
@@ -18,15 +19,18 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         {
             ProxyWindow = proxyWindow;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the proxy window instance.
         /// </summary>
         /// <value>The proxy window instance.</value>
         public ProxyWindow ProxyWindow { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Presses the specified virtual key to the window.
@@ -34,7 +38,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         /// <param name="key">The virtual key to press.</param>
         public override void Press(Keys key)
         {
-            PostMessage(WindowsMessages.KeyDown, new UIntPtr((uint) key), MakeKeyParameter(key, false));
+            PostMessage(WindowsMessages.KeyDown, new UIntPtr((uint)key), MakeKeyParameter(key, false));
         }
 
         /// <summary>
@@ -45,7 +49,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         {
             // Call the base function
             base.Release(key);
-            PostMessage(WindowsMessages.KeyUp, new UIntPtr((uint) key), MakeKeyParameter(key, true));
+            PostMessage(WindowsMessages.KeyUp, new UIntPtr((uint)key), MakeKeyParameter(key, true));
         }
 
         /// <summary>

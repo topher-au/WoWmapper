@@ -12,6 +12,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
     public static partial class InputHookManager
     {
         #region Public Delegates/Events
+
         private static event MouseEventHandler SMouseMove;
 
         /// <summary>
@@ -155,11 +156,10 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
             }
         }
 
-
         private static event MouseEventHandler SMouseDoubleClick;
 
         //The double click event will not be provided directly from hook.
-        //To fire the double click event wee need to monitor mouse up event and when it occures 
+        //To fire the double click event wee need to monitor mouse up event and when it occures
         //Two times during the time interval which is defined in Windows as a doble click time
         //we fire this event.
 
@@ -175,13 +175,13 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 {
                     //We create a timer to monitor interval between two clicks
                     _sDoubleClickTimer = new Timer
-                                         {
-                                             //This interval will be set to the value we retrive from windows. This is a windows setting from contro planel.
-                                             Interval =
+                    {
+                        //This interval will be set to the value we retrive from windows. This is a windows setting from contro planel.
+                        Interval =
                                                  GetDoubleClickTime(),
-                                             //We do not start timer yet. It will be start when the click occures.
-                                             Enabled = false
-                                         };
+                        //We do not start timer yet. It will be start when the click occures.
+                        Enabled = false
+                    };
                     //We define the callback function for the timer
                     _sDoubleClickTimer.Tick += DoubleClickTimeElapsed;
                     //We start to monitor mouse up event.
@@ -276,15 +276,18 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 TryUnsubscribeFromGlobalKeyboardEvents();
             }
         }
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Fields, Private Properties
 
         //This field remembers mouse button pressed because in addition to the short interval it must be also the same button.
         private static MouseButtons _sPrevClickedButton;
+
         //The timer to monitor time interval between two clicks.
         private static Timer _sDoubleClickTimer;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         private static void DoubleClickTimeElapsed(object sender, EventArgs e)
         {

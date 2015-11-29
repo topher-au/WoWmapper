@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Permissions;
-using Microsoft.Win32.SafeHandles;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Objects
 {
@@ -12,6 +12,7 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
     public sealed class SafeMemoryHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Parameterless constructor for handles built by the system (like <see cref="SafeNativeMethods.OpenProcess" />).
         /// </summary>
@@ -28,7 +29,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
         {
             SetHandle(handle);
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         /// <summary>
         ///     Executes the code required to free the processHandle.

@@ -59,7 +59,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <summary>
         ///     Gets the <code>float</code> angle of the vector.
         /// </summary>
-        public float Angle => (float) Math.Atan2(Y, X);
+        public float Angle => (float)Math.Atan2(Y, X);
 
         /// <summary>
         ///     Gets a new location instance with 0,0,0 as te values.
@@ -94,9 +94,8 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         public Location Normalize()
         {
             var len = Length;
-            return new Location((float) (X/len), (float) (Y/len), (float) (Z/len));
+            return new Location((float)(X / len), (float)(Y / len), (float)(Z / len));
         }
-
 
         /// <summary>
         ///     Returns a <code>Vector3(x,y,z)</code> with using the <code>X,Y,Z</code> data from this instance.
@@ -117,10 +116,9 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
-            var loc = (Location) obj;
+            var loc = (Location)obj;
             return loc.X == X && loc.Y == Y && loc.Z == Z;
         }
-
 
         /// <summary>
         ///     Serves as the hash function for this instance.
@@ -135,7 +133,6 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
             return X.GetHashCode() | Y.GetHashCode() | Z.GetHashCode();
         }
 
-
         /// <summary>
         ///     Returns a string that represents the current object.
         /// </summary>
@@ -145,7 +142,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <filterpriority>2</filterpriority>
         public override string ToString()
         {
-            return "[" + (int) X + ", " + (int) Y + ", " + (int) Z + "]";
+            return "[" + (int)X + ", " + (int)Y + ", " + (int)Z + "]";
         }
 
         /// <summary>

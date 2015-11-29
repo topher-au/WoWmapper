@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Memory.Objects;
+﻿using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Core.Modules;
 using Binarysharp.MemoryManagement.Core.Native.Objects;
 using Binarysharp.MemoryManagement.Models.Calls;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Models.Modules
 {
@@ -15,14 +15,17 @@ namespace Binarysharp.MemoryManagement.Models.Modules
     public class RemoteModule : ProxyRegion
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The dictionary containing all cached functions of the remote module.
         /// </summary>
         internal static readonly IDictionary<Tuple<string, SafeMemoryHandle>, GenericRemoteFunction> CachedFunctions =
             new Dictionary<Tuple<string, SafeMemoryHandle>, GenericRemoteFunction>();
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="RemoteModule" /> class.
         /// </summary>
@@ -36,9 +39,11 @@ namespace Binarysharp.MemoryManagement.Models.Modules
             Native = module;
             Patterns = new PatternScanner(MemorySharp, module);
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the memory sharp reference for this instance.
         /// </summary>
@@ -95,7 +100,8 @@ namespace Binarysharp.MemoryManagement.Models.Modules
         /// <param name="functionName">The name of the function.</param>
         /// <returns>A new instance of a <see cref="RemoteFunction" /> class.</returns>
         public GenericRemoteFunction this[string functionName] => FindFunction(functionName);
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Ejects the loaded dynamic-link library (DLL) module.

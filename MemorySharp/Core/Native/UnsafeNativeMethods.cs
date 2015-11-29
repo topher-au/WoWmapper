@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native.Enums;
+using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
-using Binarysharp.MemoryManagement.Core.Native.Structs;
 
 namespace Binarysharp.MemoryManagement.Core.Native
 {
@@ -12,6 +12,7 @@ namespace Binarysharp.MemoryManagement.Core.Native
     public static class UnsafeNativeMethods
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     An application-defined callback function used with the EnumWindows or <c>EnumDesktopWindows</c> function. It
         ///     receives top-level window handles.
@@ -25,7 +26,8 @@ namespace Binarysharp.MemoryManagement.Core.Native
         ///     <c>False</c>.
         /// </returns>
         public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-        #endregion
+
+        #endregion Public Delegates/Events
 
         /// <summary>
         ///     TODO: Document.

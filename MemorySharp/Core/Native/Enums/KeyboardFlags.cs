@@ -1,5 +1,5 @@
-using System;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Enums
 {

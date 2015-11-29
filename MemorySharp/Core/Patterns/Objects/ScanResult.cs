@@ -8,6 +8,7 @@ namespace Binarysharp.MemoryManagement.Core.Patterns.Objects
     public class ScanResult
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The address found.
         /// </summary>
@@ -22,6 +23,7 @@ namespace Binarysharp.MemoryManagement.Core.Patterns.Objects
         ///     The original address found.
         /// </summary>
         public IntPtr OriginalAddress { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

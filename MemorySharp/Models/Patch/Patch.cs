@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Models.Memory;
+using System;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Models.Patch
 {
@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Models.Patch
     public class Patch : INamedElement
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="Patch" /> class.
         /// </summary>
@@ -26,9 +27,11 @@ namespace Binarysharp.MemoryManagement.Models.Patch
             PatchBytes = patchWith;
             OriginalBytes = ProcessMemory.ReadBytes(address, patchWith.Length);
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether this memory patch is applied.
         /// </summary>
@@ -70,7 +73,6 @@ namespace Binarysharp.MemoryManagement.Models.Patch
         /// <value>The name.</value>
         public string Name { get; }
 
-
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -80,9 +82,11 @@ namespace Binarysharp.MemoryManagement.Models.Patch
         ///     Gets a value indicating whether the element must be disposed when the Garbage Collector collects the object.
         /// </summary>
         public bool MustBeDisposed { get; set; } = true;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Disables the memory patch.
         /// </summary>
@@ -127,6 +131,7 @@ namespace Binarysharp.MemoryManagement.Models.Patch
                 Disable();
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

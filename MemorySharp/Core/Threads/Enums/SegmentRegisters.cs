@@ -1,7 +1,7 @@
 ﻿namespace Binarysharp.MemoryManagement.Core.Threads.Enums
 {
-
     #region SegmentRegisters
+
     /// <summary>
     ///     List of segment registers.
     /// </summary>
@@ -37,5 +37,6 @@
         /// </summary>
         Ss
     }
-    #endregion
+
+    #endregion SegmentRegisters
 }

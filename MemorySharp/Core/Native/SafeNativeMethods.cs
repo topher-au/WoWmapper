@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Text;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
+﻿using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Native.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using Keys = System.Windows.Forms.Keys;
 
 namespace Binarysharp.MemoryManagement.Core.Native
@@ -203,7 +203,6 @@ namespace Binarysharp.MemoryManagement.Core.Native
         [DllImport("user32.dll", CharSet = CharSet.Auto,
             CallingConvention = System.Runtime.InteropServices.CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
-
 
         /// <summary>
         ///     Mouse_event <code>mouse_event(MouseFlags dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo)</code>.
@@ -1202,6 +1201,7 @@ namespace Binarysharp.MemoryManagement.Core.Native
     }
 
     #region Delegate EnumWindowsProc
+
     /// <summary>
     ///     An application-defined callback function used with the EnumWindows or <c>EnumDesktopWindows</c> function. It
     ///     receives top-level window handles.
@@ -1215,5 +1215,6 @@ namespace Binarysharp.MemoryManagement.Core.Native
     ///     <c>False</c>.
     /// </returns>
     public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
     #endregion Delegate EnumWindowsProc
 }

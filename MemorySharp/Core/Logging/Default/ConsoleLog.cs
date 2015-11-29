@@ -1,5 +1,5 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Logging.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Logging.Interfaces;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Logging.Default
 {
@@ -9,6 +9,7 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
     public class ConsoleLog : IManagedLog
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -28,9 +29,11 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
         ///     The name of the element.
         /// </summary>
         public string Name { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Logs the warning.
         /// </summary>
@@ -97,6 +100,7 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
             MustBeDisposed = true;
             IsEnabled = true;
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

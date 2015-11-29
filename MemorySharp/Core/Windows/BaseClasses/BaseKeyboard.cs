@@ -1,8 +1,8 @@
+using Binarysharp.MemoryManagement.Core.Native.Enums;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
 
 namespace Binarysharp.MemoryManagement.Core.Windows.BaseClasses
 {
@@ -16,13 +16,16 @@ namespace Binarysharp.MemoryManagement.Core.Windows.BaseClasses
     public abstract class BaseKeyboard
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The collection storing the current pressed keys.
         /// </summary>
         protected static readonly List<Tuple<IntPtr, Keys>> PressedKeys = new List<Tuple<IntPtr, Keys>>();
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of a child of the <see cref="BaseKeyboard" /> class.
         /// </summary>
@@ -32,15 +35,18 @@ namespace Binarysharp.MemoryManagement.Core.Windows.BaseClasses
             // Save the parameter
             Handle = windowHandle;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the safe processHandle.
         /// </summary>
         /// <value>The safe processHandle.</value>
         protected IntPtr Handle { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Presses the specified virtual key to the window.

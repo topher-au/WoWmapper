@@ -1,7 +1,7 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Memory;
+﻿using Binarysharp.MemoryManagement.Core.Memory;
 using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Objects
 {
@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
     public class ManagedPeb32 : ProxyPointer
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ManagedPeb32" /> class.
         /// </summary>
@@ -21,9 +22,11 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
                 ExternalMemoryCore.NtQueryInformationProcess(handle).PebBaseAddress)
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets or sets the inherited address space.
         /// </summary>
@@ -663,6 +666,7 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
             get { return Read<IntPtr>(PebStructure.MinimumStackCommit); }
             set { Write(PebStructure.MinimumStackCommit, value); }
         }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

@@ -8,6 +8,7 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
     public interface IPlugin : INamedElement, IPulsableElement
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Current version of this plugin
         /// </summary>
@@ -22,7 +23,8 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
         ///     Description to display on the plugin interface
         /// </summary>
         string Description { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Work to be done when the plugin is disabled by the user

@@ -32,8 +32,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Structs
         {
             if (s != null)
             {
-                Length = (ushort) (s.Length*2);
-                MaximumLength = (ushort) (Length + 2);
+                Length = (ushort)(s.Length * 2);
+                MaximumLength = (ushort)(Length + 2);
                 Buffer = Marshal.StringToHGlobalUni(s);
             }
             else

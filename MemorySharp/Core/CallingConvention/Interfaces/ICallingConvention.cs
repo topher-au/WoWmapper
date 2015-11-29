@@ -7,8 +7,8 @@
  * See the file LICENSE for more information.
 */
 
-using System;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces
 {
@@ -18,6 +18,7 @@ namespace Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces
     public interface ICallingConvention
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The name of the calling convention.
         /// </summary>
@@ -27,7 +28,8 @@ namespace Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces
         ///     Defines which function performs the clean-up task.
         /// </summary>
         CleanupTypes Cleanup { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Formats the given parameters to call a function.

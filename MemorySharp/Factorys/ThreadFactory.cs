@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Core.Marshaling.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Threads;
 using Binarysharp.MemoryManagement.Models.Threads;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -16,13 +16,16 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class ThreadFactory : IFactory
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The reference of the <see cref="MemorySharp" /> object.
         /// </summary>
         protected readonly MemorySharp MemorySharp;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ThreadFactory" /> class.
         /// </summary>
@@ -32,9 +35,11 @@ namespace Binarysharp.MemoryManagement.Factorys
             // Save the parameter
             MemorySharp = memorySharp;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the main thread of the remote process.
         /// </summary>
@@ -78,9 +83,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             get { return new RemoteThread(MemorySharp, NativeThreads.First(t => t.Id == threadId)); }
         }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="ThreadFactory" /> object.
         /// </summary>
@@ -88,7 +95,8 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             // Nothing to dispose... yet
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Creates a thread that runs in the remote process.

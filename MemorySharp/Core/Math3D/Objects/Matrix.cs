@@ -1,5 +1,5 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Helpers;
+﻿using Binarysharp.MemoryManagement.Core.Helpers;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
 {
@@ -21,7 +21,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         {
             Rows = rows;
             Columns = columns;
-            Data = new float[rows*columns];
+            Data = new float[rows * columns];
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <returns>System.Single.</returns>
         public float this[int row, int column]
         {
-            get { return Data[row*Columns + column]; }
-            set { Data[row*Columns + column] = value; }
+            get { return Data[row * Columns + column]; }
+            set { Data[row * Columns + column] = value; }
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
             {
                 for (var x = 0; x < Columns; x++)
                 {
-                    this[y, x] = BitConverter.ToSingle(data, TypeData<float>.Size)*((y*Columns) + x);
+                    this[y, x] = BitConverter.ToSingle(data, TypeData<float>.Size) * ((y * Columns) + x);
                 }
             }
         }
@@ -68,10 +68,10 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <returns>System.Byte[].</returns>
         public byte[] ToByteArray()
         {
-            var data = new byte[Data.Length*TypeData<float>.Size];
+            var data = new byte[Data.Length * TypeData<float>.Size];
             for (var i = 0; i < Data.Length; i++)
             {
-                Array.Copy(BitConverter.GetBytes(Data[i]), 0, data, i*TypeData<float>.Size, TypeData<float>.Size);
+                Array.Copy(BitConverter.GetBytes(Data[i]), 0, data, i * TypeData<float>.Size, TypeData<float>.Size);
             }
             return data;
         }

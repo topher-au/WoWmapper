@@ -1,16 +1,16 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Binarysharp.MemoryManagement.Core.Marshaling;
+﻿using Binarysharp.MemoryManagement.Core.Marshaling;
 using Binarysharp.MemoryManagement.Core.Marshaling.Interfaces;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Native.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
 using Binarysharp.MemoryManagement.Core.Threads;
 using Binarysharp.MemoryManagement.Core.Threads.Enums;
+using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ThreadState = System.Diagnostics.ThreadState;
 
 namespace Binarysharp.MemoryManagement.Models.Threads
@@ -21,6 +21,7 @@ namespace Binarysharp.MemoryManagement.Models.Threads
     public class RemoteThread : IDisposable, IEquatable<RemoteThread>
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The parameter passed to the thread when it was created.
         /// </summary>
@@ -35,9 +36,11 @@ namespace Binarysharp.MemoryManagement.Models.Threads
         ///     The reference of the <see cref="MemoryManagement.MemorySharp" /> object.
         /// </summary>
         protected readonly MemorySharp MemorySharp;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="RemoteThread" /> class.
         /// </summary>
@@ -82,9 +85,11 @@ namespace Binarysharp.MemoryManagement.Models.Threads
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets or sets the full context of the thread.
         ///     If the thread is not already suspended, performs a <see cref="Suspend" /> and <see cref="Resume" /> call on the
@@ -201,9 +206,11 @@ namespace Binarysharp.MemoryManagement.Models.Threads
         ///     The Thread Environment Block of the thread.
         /// </summary>
         public ManagedTeb Teb { get; private set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="RemoteThread" /> object.
         /// </summary>
@@ -223,7 +230,8 @@ namespace Binarysharp.MemoryManagement.Models.Threads
             if (ReferenceEquals(null, other)) return false;
             return ReferenceEquals(this, other) || (Id == other.Id && MemorySharp.Equals(other.MemorySharp));
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Determines whether the specified object is equal to the current object.
@@ -232,7 +240,7 @@ namespace Binarysharp.MemoryManagement.Models.Threads
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((RemoteThread) obj);
+            return obj.GetType() == GetType() && Equals((RemoteThread)obj);
         }
 
         /// <summary>
@@ -268,21 +276,27 @@ namespace Binarysharp.MemoryManagement.Models.Threads
                 case SegmentRegisters.Cs:
                     entry = ThreadCore.GetThreadSelectorEntry(Handle, Context.SegCs);
                     break;
+
                 case SegmentRegisters.Ds:
                     entry = ThreadCore.GetThreadSelectorEntry(Handle, Context.SegDs);
                     break;
+
                 case SegmentRegisters.Es:
                     entry = ThreadCore.GetThreadSelectorEntry(Handle, Context.SegEs);
                     break;
+
                 case SegmentRegisters.Fs:
                     entry = ThreadCore.GetThreadSelectorEntry(Handle, Context.SegFs);
                     break;
+
                 case SegmentRegisters.Gs:
                     entry = ThreadCore.GetThreadSelectorEntry(Handle, Context.SegGs);
                     break;
+
                 case SegmentRegisters.Ss:
                     entry = ThreadCore.GetThreadSelectorEntry(Handle, Context.SegSs);
                     break;
+
                 default:
                     throw new InvalidEnumArgumentException("segment");
             }

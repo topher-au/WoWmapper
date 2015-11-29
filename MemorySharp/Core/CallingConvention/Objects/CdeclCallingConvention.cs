@@ -7,11 +7,11 @@
  * See the file LICENSE for more information.
 */
 
+using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
+using Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces;
 using System;
 using System.Linq;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
-using Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces;
 
 namespace Binarysharp.MemoryManagement.Core.CallingConvention.Objects
 {
@@ -21,6 +21,7 @@ namespace Binarysharp.MemoryManagement.Core.CallingConvention.Objects
     public class CdeclCallingConvention : ICallingConvention
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The name of the calling convention.
         /// </summary>
@@ -30,9 +31,11 @@ namespace Binarysharp.MemoryManagement.Core.CallingConvention.Objects
         ///     Defines which function performs the clean-up task.
         /// </summary>
         public CleanupTypes Cleanup => CleanupTypes.Caller;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Formats the given parameters to call a function.
         /// </summary>
@@ -68,8 +71,9 @@ namespace Binarysharp.MemoryManagement.Core.CallingConvention.Objects
         /// <returns>The mnemonics to clean a given number of parameters.</returns>
         public string FormatCleaning(int nbParameters)
         {
-            return "add esp, " + nbParameters*4;
+            return "add esp, " + nbParameters * 4;
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

@@ -7,10 +7,12 @@
     public static class Singleton<T> where T : new()
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     Gets the singleton of the given type.
         /// </summary>
         public static readonly T Instance = new T();
-        #endregion
+
+        #endregion Fields, Private Properties
     }
 }

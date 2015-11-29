@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text;
-using Binarysharp.MemoryManagement.Core.Marshaling.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Marshaling.Interfaces;
 using Binarysharp.MemoryManagement.Core.Memory.Objects;
+using System;
+using System.Text;
 
 namespace Binarysharp.MemoryManagement.Core.Marshaling.Objects
 {
@@ -35,6 +35,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Objects
     public class MarshalledValue<T> : IMarshalledValue
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="MarshalledValue{T}" /> class.
         /// </summary>
@@ -56,9 +57,11 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Objects
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         public IntPtr Handle { get; }
 
         /// <summary>
@@ -75,9 +78,11 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Objects
         ///     The reference of the value. It can be directly the value or a pointer.
         /// </summary>
         public IntPtr Reference { get; private set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="RemoteAllocation" /> object.
         /// </summary>
@@ -90,7 +95,8 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Objects
             // Avoid the finalizer
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Marshals the value into the remote process.
@@ -98,7 +104,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Objects
         private void Marshal()
         {
             // If the type is string, it's a special case
-            if (typeof (T) == typeof (string))
+            if (typeof(T) == typeof(string))
             {
                 var text = Value.ToString();
                 // Allocate memory in the remote process (string + '\0')

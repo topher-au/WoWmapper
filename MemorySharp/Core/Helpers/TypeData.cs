@@ -12,14 +12,15 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
     public static class TypeData<T>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes static information related to the specified type.
         /// </summary>
         static TypeData()
         {
             // Gather information related to the provided type
-            IsIntPtr = typeof (T) == typeof (IntPtr);
-            RealType = typeof (T);
+            IsIntPtr = typeof(T) == typeof(IntPtr);
+            RealType = typeof(T);
             Size = TypeCode == TypeCode.Boolean ? 1 : Marshal.SizeOf(RealType);
             TypeCode = Type.GetTypeCode(RealType);
             // Check if the type can be stored in registers
@@ -38,9 +39,11 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
                 TypeCode == TypeCode.UInt16 ||
                 TypeCode == TypeCode.UInt32;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets if the type can be stored in a registers (for example ACX, ECX, ...).
         /// </summary>
@@ -65,6 +68,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         ///     The typecode of the type.
         /// </summary>
         public static TypeCode TypeCode { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

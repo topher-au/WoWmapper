@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Native.Structs;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
 {
@@ -20,7 +20,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
         public int MouseData;
 
         // be careful, this must be ints, not uints (was wrong before I changed it...). regards, cmew.
-
 
         /// <summary>
         ///     The flags.

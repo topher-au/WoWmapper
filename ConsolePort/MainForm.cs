@@ -4,7 +4,6 @@ using DS4Wrapper;
 using System;
 using System.Drawing;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -24,39 +23,98 @@ namespace ConsolePort
 
         private DS4 DS4;
 
-        private int intRightCurve = 5;
+        private int intRightCurve, intRightDead, intRightSpeed;
 
-        private int intRightDead = 15;
-
-        private int intRightSpeed = 2;
-
-        private Thread mouseThread;
-
-        private Thread movementThread;
-
-        private Point ptLeftStick;
-
-        private Point ptRightStick;
+        private Thread mouseThread, movementThread;
+        private Point ptLeftStick, ptRightStick;
 
         private Settings settings = new Settings();
 
         private WoWInteraction wowInteraction;
 
+        private int touchState;
+
+        private NotifyIcon notifyIcon = new NotifyIcon();
+
+        public void DoVersionCheck()
+        {
+            // check addon version
+            var wowPath = Functions.TryFindWoWPath();
+            var addonVersion = Functions.CheckAddonVersion(wowPath, "ConsolePort");
+
+            // check website version
+        }
+
         public MainForm()
         {
             InitializeComponent();
+
+            // Load resources
+            Icon = Properties.Resources.WoWConsolePort;
+            notifyIcon.Icon = Icon;
+            notifyIcon.Text = Properties.Resources.STRING_NOTIFY_TOOLTIP;
+            tabConsolePort.Text = Properties.Resources.STRING_TAB_CONSOLEPORT;
+            tabKeybinds.Text = Properties.Resources.STRING_TAB_KEYBINDS;
+            tabAdvanced.Text = Properties.Resources.STRING_TAB_ADVANCED;
+            labelCamera.Text = Properties.Resources.STRING_BIND_CAMERA;
+            labelMovement.Text = Properties.Resources.STRING_BIND_MOVEMENT;
+            groupHapticStatus.Text = Properties.Resources.STRING_HAPTIC_STATUS;
+            checkHapticsAttached.Text = Properties.Resources.STRING_HAPTIC_ATTACHED;
+            checkHapticsUserLoggedIn.Text = Properties.Resources.STRING_HAPTIC_CHARLOGGEDIN;
+            checkLightbarClass.Text = Properties.Resources.STRING_HAPTIC_LBCLASS;
+            checkLightbarHealth.Text = Properties.Resources.STRING_HAPTIC_LBHEALTH;
+            checkRumbleDamage.Text = Properties.Resources.STRING_HAPTIC_RUMBLEDAMAGE;
+            checkRumbleTarget.Text = Properties.Resources.STRING_HAPTIC_RUMBLETARGET;
+            groupHapticSettings.Text = Properties.Resources.STRING_HAPTIC_SETTINGS;
+            checkWindowAttached.Text = Properties.Resources.STRING_WOW_WINDOW_FOUND;
+            labelChangeBindings.Text = Properties.Resources.STRING_BINDING_CHANGE;
+            checkEnableAdvancedHaptics.Text = Properties.Resources.STRING_HAPTIC_ENABLE;
+            labelTouchMode.Text = Properties.Resources.STRING_TOUCHPAD_MODE;
+            comboTouchMode.Items[0] = Properties.Resources.STRING_TOUCHPAD_MOUSE;
+            comboTouchMode.Items[1] = Properties.Resources.STRING_TOUCHPAD_BUTTONS;
+            comboTouchMode.Items[2] = Properties.Resources.STRING_TOUCHPAD_SHARE_OPTIONS;
+            picLStickUp.Image = Properties.Resources.LStickUp;
+            picLStickDown.Image = Properties.Resources.LStickDown;
+            picLStickLeft.Image = Properties.Resources.LStickLeft;
+            picLStickRight.Image = Properties.Resources.LStickRight;
+            picDS4.Image = Properties.Resources.DS4_Config;
+
+            notifyIcon.Visible = true;
+            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+            notifyIcon.ContextMenuStrip = menuNotify;
 
             // Set right stick panel to double buffered
             typeof(Panel).InvokeMember("DoubleBuffered",
                 BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                 null, panelRStickAxis, new object[] { true });
 
-            // Enable advanced haptics
-            if (Environment.GetCommandLineArgs().Length > 1)
-                advHaptics = new Haptics(DS4);
+            typeof(TabPage).InvokeMember("DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null, tabKeybinds, new object[] { true });
+
+            typeof(TabPage).InvokeMember("DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null, tabAdvanced, new object[] { true });
+
+            typeof(TabPage).InvokeMember("DoubleBuffered",
+                BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
+                null, tabConsolePort, new object[] { true });
 
             // Load settings
             settings.Load();
+            checkEnableAdvancedHaptics.Checked = Properties.Settings.Default.EnableAdvancedHaptics;
+            comboTouchMode.SelectedIndex = Properties.Settings.Default.TouchMode;
+            touchState = Properties.Settings.Default.TouchMode;
+            checkRumbleDamage.Checked = Properties.Settings.Default.EnableRumbleDamage;
+            checkRumbleTarget.Checked = Properties.Settings.Default.EnableRumbleTarget;
+            checkLightbarClass.Checked = Properties.Settings.Default.EnableLightbarClass;
+            checkLightbarHealth.Checked = Properties.Settings.Default.EnableLightbarHealth;
+            numRCurve.Value = Properties.Settings.Default.RStickCurve;
+            numRDeadzone.Value = Properties.Settings.Default.RStickDeadzone;
+            numRSpeed.Value = Properties.Settings.Default.RStickSpeed;
+            intRightCurve = Properties.Settings.Default.RStickCurve;
+            intRightDead = Properties.Settings.Default.RStickDeadzone;
+            intRightSpeed = Properties.Settings.Default.RStickSpeed;
 
             wowInteraction = new WoWInteraction(settings.KeyBinds);
 
@@ -66,12 +124,16 @@ namespace ConsolePort
             mouseThread = new Thread(CursorThread);
             mouseThread.Start();
 
-            labelRightCurveValue.Text = intRightCurve.ToString();
-            labelRightDeadValue.Text = intRightDead.ToString();
-            labelRightSpeedValue.Text = intRightSpeed.ToString();
-            trackRightCurve.Value = intRightCurve;
-            trackRightDead.Value = intRightDead;
-            trackRightSpeed.Value = intRightSpeed;
+            numRCurve.Value = intRightCurve;
+            numRDeadzone.Value = intRightDead;
+            numRSpeed.Value = intRightSpeed;
+
+            // DoVersionCheck();
+        }
+
+        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
         }
 
         public void MouseLeftClick()
@@ -83,6 +145,7 @@ namespace ConsolePort
         {
             wowInteraction.SendClick(WoWInteraction.MouseButton.Right);
         }
+
         private void BindBox_DoubleClick(object sender, EventArgs e)
         {
             var bindBox = sender as TextBox;
@@ -261,6 +324,18 @@ namespace ConsolePort
                         wowInteraction.SendKeyDown(settings.KeyBinds.FromName("Options").Key.Value);
                         break;
 
+                    case DS4Button.TouchLeft:
+                        DoTouchLeft();
+                        break;
+
+                    case DS4Button.TouchRight:
+                        DoTouchRight();
+                        break;
+
+                    case DS4Button.TouchUpper:
+                        DoTouchUpper();
+                        break;
+
                     case DS4Button.L3:
                         MouseLeftClick();
                         break;
@@ -269,6 +344,54 @@ namespace ConsolePort
                         MouseRightClick();
                         break;
                 }
+        }
+
+        private void DoTouchUpper()
+        {
+            if (touchState != 0)
+            {
+                touchState = 0;
+            }
+            else
+            {
+                touchState = Properties.Settings.Default.TouchMode;
+            }
+        }
+
+        private void DoTouchLeft()
+        {
+            switch (touchState)
+            {
+                case 0: // Mouse control
+                    wowInteraction.SendClick(WoWInteraction.MouseButton.Left);
+                    break;
+
+                case 1: // Touch left
+                    wowInteraction.SendKeyDown(settings.KeyBinds.FromName("TouchLeft").Key.Value);
+                    break;
+
+                case 2: // Emulate share
+                    wowInteraction.SendKeyPress(settings.KeyBinds.FromName("Share").Key.Value);
+                    break;
+            }
+        }
+
+        private void DoTouchRight()
+        {
+            switch (touchState)
+            {
+                case 0: // Mouse control
+                    wowInteraction.SendClick(WoWInteraction.MouseButton.Right);
+                    break;
+
+                case 1: // Touch right
+                    wowInteraction.SendKeyDown(settings.KeyBinds.FromName("TouchRight").Key.Value);
+                    break;
+
+                case 2: // Emulate options
+                    wowInteraction.SendKeyPress(settings.KeyBinds.FromName("Options").Key.Value);
+                    break;
+            }
         }
 
         private void DS4_ButtonUp(DS4Button Button)
@@ -336,6 +459,20 @@ namespace ConsolePort
                     case DS4Button.Options:
                         wowInteraction.SendKeyUp(settings.KeyBinds.FromName("Options").Key.Value);
                         break;
+
+                    case DS4Button.TouchLeft:
+                        if (touchState == 1)
+                        {
+                            wowInteraction.SendKeyUp(settings.KeyBinds.FromName("TouchLeft").Key.Value);
+                        }
+                        break;
+
+                    case DS4Button.TouchRight:
+                        if (touchState == 1)
+                        {
+                            wowInteraction.SendKeyUp(settings.KeyBinds.FromName("TouchRight").Key.Value);
+                        }
+                        break;
                 }
         }
 
@@ -355,6 +492,7 @@ namespace ConsolePort
                 }
                 labelControllerState.Text = "Connected";
             });
+            DS4.Controller.Touchpad.TouchesMoved += Touchpad_TouchesMoved;
         }
 
         private void DS4_OnControllerDisconnected()
@@ -368,18 +506,27 @@ namespace ConsolePort
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            WindowState = FormWindowState.Minimized;
+            e.Cancel = true;
+        }
+
+        private void ExitApp()
+        {
+            notifyIcon.Visible = false;
             movementThread.Abort();
             mouseThread.Abort();
 
             if (advHaptics != null) advHaptics.Dispose();
+
             DS4.Dispose();
             wowInteraction.Dispose();
+            Close();
+            Application.Exit();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             DS4 = new DS4();
-
             DS4.ControllerConnected += DS4_OnControllerConnected;
             DS4.ControllerDisconnected += DS4_OnControllerDisconnected;
             DS4.ButtonDown += DS4_ButtonDown;
@@ -387,6 +534,29 @@ namespace ConsolePort
 
             RefreshKeyBindings();
             UpdateHapticTab();
+        }
+
+        private int lastTouchX, lastTouchY;
+
+        private void Touchpad_TouchesMoved(object sender, DS4Windows.TouchpadEventArgs e)
+        {
+            if (touchState == 0) // Mouse Control
+            {
+                var x = e.touches[0].deltaX;
+                var y = e.touches[0].deltaY;
+                var curPos = Cursor.Position;
+                if (x != lastTouchX)
+                {
+                    curPos.X += x;
+                    lastTouchX = x;
+                }
+                if (y != lastTouchY)
+                {
+                    curPos.Y += y;
+                    lastTouchY = y;
+                }
+                Cursor.Position = curPos;
+            }
         }
 
         private void MovementThread()
@@ -434,10 +604,10 @@ namespace ConsolePort
             var deadDisplay = intRightDead - 4;
             Rectangle rectRightBounds = panelRStickAxis.DisplayRectangle;
             Rectangle rectStickOutline = new Rectangle(
-                rectRightBounds.X,
-                rectRightBounds.Y,
-                rectRightBounds.Width - 1,
-                rectRightBounds.Height - 1);
+                rectRightBounds.X + 3,
+                rectRightBounds.Y + 3,
+                rectRightBounds.Width - 7,
+                rectRightBounds.Height - 7);
             Rectangle rectStickDeadzone = new Rectangle(
                 rectRightBounds.X + rectRightBounds.Width / 2 - (deadDisplay / 2),
                 rectRightBounds.Y + rectRightBounds.Width / 2 - (deadDisplay / 2),
@@ -449,9 +619,13 @@ namespace ConsolePort
                 4,
                 4);
 
-            e.Graphics.DrawEllipse(Pens.Black, rectStickOutline);
-            e.Graphics.DrawEllipse(Pens.Red, rectStickDeadzone);
+            e.Graphics.DrawEllipse(new Pen(Color.Black, 4f), rectStickOutline);
+            e.Graphics.FillEllipse(Brushes.White, rectStickOutline);
+
             e.Graphics.DrawEllipse(Pens.Blue, rectStickIndicator);
+            e.Graphics.FillEllipse(Brushes.Blue, rectStickIndicator);
+
+            e.Graphics.DrawEllipse(Pens.Red, rectStickDeadzone);
         }
 
         private void RefreshKeyBindings()
@@ -475,71 +649,192 @@ namespace ConsolePort
             textMoveRight.Text = settings.KeyBinds.FromName("LStickRight").Key.Value.ToString();
             textMoveBackward.Text = settings.KeyBinds.FromName("LStickDown").Key.Value.ToString();
             textMoveLeft.Text = settings.KeyBinds.FromName("LStickLeft").Key.Value.ToString();
+            textBindTouchLeft.Text = settings.KeyBinds.FromName("TouchLeft").Key.Value.ToString();
+            textBindTouchRight.Text = settings.KeyBinds.FromName("TouchRight").Key.Value.ToString();
         }
+
         private void timerUpdateUI_Tick(object sender, EventArgs e)
         {
-            // Display axis readings
-            ptLeftStick = DS4.GetStickPoint(DS4Stick.Left);
-            ptRightStick = DS4.GetStickPoint(DS4Stick.Right);
-
-            labelAxisReading.Text = string.Format("Lx: {0}\nLy: {1}\nRx: {2}\nRy: {3}", ptLeftStick.X, ptLeftStick.Y, ptRightStick.X, ptRightStick.Y);
-            checkWindowAttached.Checked = wowInteraction.IsAttached;
-
-            panelRStickAxis.Refresh();
-
-            if (advHaptics != null)
+            if (DS4 != null)
             {
-                checkHapticsAttached.Checked = advHaptics.IsWoWAttached;
-                if (advHaptics.IsWoWAttached)
+                // Display axis readings
+                ptLeftStick = DS4.GetStickPoint(DS4Stick.Left);
+                ptRightStick = DS4.GetStickPoint(DS4Stick.Right);
+
+                checkWindowAttached.Checked = wowInteraction.IsAttached;
+
+                panelRStickAxis.Refresh();
+
+                if (checkEnableAdvancedHaptics.Checked == true && advHaptics == null)
                 {
-                    if (advHaptics.GameState == WoWState.LoggedIn)
-                    {
-                        var pi = advHaptics.wowDataReader.GetPlayerInfo();
-                        labelPlayerInfo.Text = String.Format("{0} - {1} ({2})\nLevel {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
-                    }
-                    checkHapticsUserLoggedIn.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
+                    advHaptics = new Haptics(DS4);
+                    advHaptics.Enabled = true;
                 }
+
+                if (Properties.Settings.Default.EnableAdvancedHaptics)
+                {
+                    if (advHaptics != null && wowInteraction.IsAttached)
+                    {
+                        advHaptics.Enabled = true;
+                        advHaptics.LightbarClass = checkLightbarClass.Checked;
+                        advHaptics.LightbarHealth = checkLightbarHealth.Checked;
+                        advHaptics.RumbleOnTarget = checkRumbleTarget.Checked;
+                        advHaptics.RumbleOnDamage = checkRumbleDamage.Checked;
+
+                        checkHapticsAttached.Checked = advHaptics.IsWoWAttached;
+                        if (advHaptics.IsWoWAttached)
+                        {
+                            if (advHaptics.GameState == WoWState.LoggedIn)
+                            {
+                                var pi = advHaptics.wowDataReader.GetPlayerInfo();
+                                labelPlayerInfo.Text = String.Format("{0} / {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
+                                checkHapticsUserLoggedIn.Checked = true;
+                            }
+                            else
+                            {
+                                labelPlayerInfo.Text = string.Empty;
+                                checkHapticsUserLoggedIn.Checked = false;
+                            }
+                            checkHapticsUserLoggedIn.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
+                        }
+                    }
+                    else
+                    {
+                        checkHapticsAttached.Checked = false;
+                        checkHapticsUserLoggedIn.Checked = false;
+                        labelPlayerInfo.Text = "";
+                    }
+                }
+                else
+                {
+                    if (advHaptics != null)
+                    {
+                        advHaptics.Enabled = false;
+                        advHaptics.Dispose();
+                        advHaptics = null;
+                    }
+
+                    checkHapticsAttached.Checked = false;
+                    checkHapticsUserLoggedIn.Checked = false;
+                    labelPlayerInfo.Text = "";
+                }
+            }
+        }
+
+        private void numRCurve_ValueChanged(object sender, EventArgs e)
+        {
+            intRightCurve = (int)numRCurve.Value;
+            Properties.Settings.Default.RStickCurve = intRightCurve;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkLightbarClass_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EnableLightbarClass = checkLightbarClass.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkLightbarHealth_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EnableLightbarHealth = checkLightbarHealth.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkRumbleTarget_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EnableRumbleTarget = checkRumbleTarget.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkRumbleDamage_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.EnableRumbleDamage = checkRumbleDamage.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                // Minimize to tray
+                ShowInTaskbar = false;
             }
             else
             {
-                checkHapticsAttached.Checked = false;
-                checkHapticsUserLoggedIn.Checked = false;
+                // Show from tray
+                ShowInTaskbar = true;
             }
         }
 
-        private void trackRightCurve_Scroll(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            intRightCurve = trackRightCurve.Value;
-            labelRightCurveValue.Text = intRightCurve.ToString();
+            ExitApp();
         }
 
-        private void trackRightDead_Scroll(object sender, EventArgs e)
+        private void numRDeadzone_ValueChanged(object sender, EventArgs e)
         {
-            intRightDead = trackRightDead.Value;
-            labelRightDeadValue.Text = intRightDead.ToString();
+            intRightDead = (int)numRDeadzone.Value;
+            Properties.Settings.Default.RStickDeadzone = intRightDead;
+            Properties.Settings.Default.Save();
         }
 
-        private void trackRightSpeed_Scroll(object sender, EventArgs e)
+        private void numRSpeed_ValueChanged(object sender, EventArgs e)
         {
-            intRightSpeed = trackRightSpeed.Value;
-            labelRightSpeedValue.Text = intRightSpeed.ToString();
-        }
-
-        private void buttonEnableAdvancedHaptics_Click(object sender, EventArgs e)
-        {
-            var hapwarn = new AdvHapWarningForm();
-            var agreed = hapwarn.ShowDialog();
-            if(agreed == DialogResult.OK)
-            {
-                Properties.Settings.Default.EnableAdvancedHaptics = true;
-                Properties.Settings.Default.Save();
-                UpdateHapticTab();
-            }
+            intRightSpeed = (int)numRSpeed.Value;
+            Properties.Settings.Default.RStickSpeed = intRightSpeed;
+            Properties.Settings.Default.Save();
         }
 
         private void UpdateHapticTab()
         {
             panelAdvancedHaptics.Enabled = Properties.Settings.Default.EnableAdvancedHaptics;
+        }
+
+        private void checkEnableAdvancedHaptics_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkEnableAdvancedHaptics.Checked && !Properties.Settings.Default.EnableAdvancedHaptics)
+            {
+                checkEnableAdvancedHaptics.Checked = false;
+                var hapwarn = new AdvHapWarningForm();
+                var agreed = hapwarn.ShowDialog();
+                if (agreed == DialogResult.OK) // agree
+                {
+                    Properties.Settings.Default.EnableAdvancedHaptics = true;
+                    Properties.Settings.Default.Save();
+                    checkEnableAdvancedHaptics.Checked = true;
+                }
+                else // no agree
+                {
+                    Properties.Settings.Default.EnableAdvancedHaptics = false;
+                    Properties.Settings.Default.Save();
+                    checkEnableAdvancedHaptics.Checked = false;
+                }
+            }
+            else
+            {
+                Properties.Settings.Default.EnableAdvancedHaptics = checkEnableAdvancedHaptics.Checked;
+                Properties.Settings.Default.Save();
+            }
+            UpdateHapticTab();
+        }
+
+        private void comboTouchMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboTouchMode.SelectedIndex == 1)
+            {
+                textBindTouchLeft.Visible = true;
+                textBindTouchRight.Visible = true;
+            }
+            else
+            {
+                textBindTouchLeft.Visible = false;
+                textBindTouchRight.Visible = false;
+            }
+            labelTouchUpper.Visible = (comboTouchMode.SelectedIndex == 0) ? false : true;
+
+            touchState = comboTouchMode.SelectedIndex;
+            Properties.Settings.Default.TouchMode = comboTouchMode.SelectedIndex;
+            Properties.Settings.Default.Save();
         }
     }
 }

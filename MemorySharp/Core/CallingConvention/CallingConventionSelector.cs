@@ -7,11 +7,11 @@
  * See the file LICENSE for more information.
 */
 
-using System;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Interfaces;
 using Binarysharp.MemoryManagement.Core.CallingConvention.Objects;
 using Binarysharp.MemoryManagement.Core.Helpers;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.CallingConvention
 {

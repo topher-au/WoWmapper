@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Logging.Interfaces;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Binarysharp.MemoryManagement.Core.Logging.Interfaces;
 
 #pragma warning disable 1591
 
@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
     public class DebugLog : IManagedLog
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -30,9 +31,11 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
         ///     The name of the element.
         /// </summary>
         public string Name { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Logs the warning.
         /// </summary>
@@ -44,7 +47,6 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
             Debug.WriteLine($"{"[LogWarning]["}{DateTime.Now}{"]: "}{message}");
         }
 
-
         /// <summary>
         ///     Logs the normal.
         /// </summary>
@@ -55,7 +57,6 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
                 return;
             Debug.WriteLine($"{"[LogNormal]["}{DateTime.Now}{"]: "}{message}");
         }
-
 
         /// <summary>
         ///     Logs the error.
@@ -109,6 +110,7 @@ namespace Binarysharp.MemoryManagement.Core.Logging.Default
             MustBeDisposed = true;
             IsEnabled = true;
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

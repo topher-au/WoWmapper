@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Structs
 {
@@ -123,13 +123,15 @@ namespace Binarysharp.MemoryManagement.Core.Native.Structs
         ///     <see cref="ThreadContextFlags.ExtendedRegisters" />.
         ///     The format and contexts are processor specific.
         /// </summary>
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)] public byte[] ExtendedRegisters;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)]
+        public byte[] ExtendedRegisters;
 
         /// <summary>
         ///     This is specified/returned if <see cref="ContextFlags" /> contains the flag
         ///     <see cref="ThreadContextFlags.FloatingPoint" />.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public FloatingSaveArea FloatingSave;
+        [MarshalAs(UnmanagedType.Struct)]
+        public FloatingSaveArea FloatingSave;
 
         /// <summary>
         ///     This is specified/returned if <see cref="ContextFlags" /> contains the flag

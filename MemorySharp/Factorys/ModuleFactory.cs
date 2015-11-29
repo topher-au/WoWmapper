@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using Binarysharp.MemoryManagement.Core.Memory.Objects;
+using Binarysharp.MemoryManagement.Models.Modules;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
-using Binarysharp.MemoryManagement.Core.Memory.Objects;
-using Binarysharp.MemoryManagement.Models.Modules;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -15,6 +15,7 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class ModuleFactory : IFactory
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The list containing all injected modules (writable).
         /// </summary>
@@ -24,9 +25,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         ///     The reference of the <see cref="MemoryManagement.MemorySharp" /> object.
         /// </summary>
         protected readonly MemorySharp MemorySharp;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ModuleFactory" /> class.
         /// </summary>
@@ -46,9 +49,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     A collection containing all injected modules.
         /// </summary>
@@ -76,16 +81,17 @@ namespace Binarysharp.MemoryManagement.Factorys
         /// <returns>A new instance of a <see cref="ProxyPointer" /> class.</returns>
         public ProxyPointer this[IntPtr address] => new ProxyPointer(MemorySharp.Handle, address);
 
-
         /// <summary>
         ///     Gets the specified module in the remote process.
         /// </summary>
         /// <param name="moduleName">The name of module (not case sensitive).</param>
         /// <returns>A new instance of a <see cref="RemoteModule" /> class.</returns>
         public RemoteModule this[string moduleName] => FetchModule(moduleName);
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="ModuleFactory" /> object.
         /// </summary>
@@ -105,7 +111,8 @@ namespace Binarysharp.MemoryManagement.Factorys
             // Avoid the finalizer
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Frees the loaded dynamic-link library (DLL) module and, if necessary, decrements its reference count.

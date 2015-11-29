@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Enums;
+﻿using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Enums;
 using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Interfaces;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Core.Native;
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
 {
@@ -21,14 +21,17 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
     public class WindowHook : INamedElement
     {
         #region Fields, Private Properties
+
         private int GwlWndproc { get; } = -4;
         private IntPtr WindowHandle { get; }
         private WindowProc OurCallBack { get; set; }
         private IntPtr OurCallBackAddress { get; set; }
         private IntPtr OriginalCallbackAddress { get; set; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="WindowHook" /> class.
         /// </summary>
@@ -51,9 +54,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the unique name that represents this instance.
         /// </summary>
@@ -79,7 +84,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
         /// </summary>
         public bool IsEnabled { get; private set; }
 
-
         /// <summary>
         ///     Gets a value indicating whether the updateris disposed.
         /// </summary>
@@ -91,9 +95,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
         ///     default value is true.
         /// </summary>
         public bool MustBeDisposed { get; set; } = true;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Enables the <code>WndProc</code> hook.
         /// </summary>
@@ -105,7 +111,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
             }
             // Pins WndProc - will not be garbage collected.
             OurCallBack = WndProc;
-            // Store the call back pointer. Storing the result is not needed, however. 
+            // Store the call back pointer. Storing the result is not needed, however.
             OurCallBackAddress = Marshal.GetFunctionPointerForDelegate(OurCallBack);
             // This helper method will work with x32 or x64.
             OriginalCallbackAddress = SafeNativeMethods.SetWindowLongPtr(WindowHandle, GwlWndproc, OurCallBackAddress);
@@ -143,7 +149,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
             IsDisposed = true;
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Used to send the custom user message to be intercepted in the call back.
@@ -151,14 +158,14 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
         /// <param name="message">The message to to send.</param>
         public void SendUserMessage(UserMessage message)
         {
-            SafeNativeMethods.SendMessage(WindowHandle, (uint) WmUser, (UIntPtr) message, new IntPtr(0));
+            SafeNativeMethods.SendMessage(WindowHandle, (uint)WmUser, (UIntPtr)message, new IntPtr(0));
         }
 
         // The custom call back.
         private int WndProc(IntPtr hWnd, int msg, int wParam, int lParam)
         {
             // Intercept the message and handle it.
-            if (msg == WmUser && HandleUserMessage((UserMessage) wParam))
+            if (msg == WmUser && HandleUserMessage((UserMessage)wParam))
             {
                 // Already handled, so no need to do anything.
                 return 0;
@@ -176,6 +183,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc
                 case UserMessage.StartUp:
                     Engine.StartUp();
                     return true;
+
                 case UserMessage.ShutDown:
                     Engine.ShutDown();
                     return true;

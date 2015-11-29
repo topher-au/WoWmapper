@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Binarysharp.MemoryManagement.Core.Patterns;
+﻿using Binarysharp.MemoryManagement.Core.Patterns;
 using Binarysharp.MemoryManagement.Core.Patterns.Objects;
 using Binarysharp.MemoryManagement.Models.Memory;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Binarysharp.MemoryManagement.Models.Modules
 {
     public class PatternScanner
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The field for storing the modules data once dumped.
         /// </summary>
         private byte[] _moduleData;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="PatternScanner" /> class.
         /// </summary>
@@ -27,9 +30,11 @@ namespace Binarysharp.MemoryManagement.Models.Modules
             ProcessMemory = processMemory;
             ProcessModule = processModule;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         public ProcessMemory ProcessMemory { get; }
 
         /// <summary>
@@ -45,7 +50,8 @@ namespace Binarysharp.MemoryManagement.Models.Modules
         /// </summary>
         /// <value>The process module.</value>
         public ProcessModule ProcessModule { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Adds all pointers found from scanning a xml file to a given dictonary using the <code>IDictonary</code> interface.
@@ -124,7 +130,6 @@ namespace Binarysharp.MemoryManagement.Models.Modules
             return Find(bytes, mask, offsetToAdd, isOffsetMode, reBase);
         }
 
-
         /// <summary>
         ///     Performs a pattern scan.
         /// </summary>
@@ -143,7 +148,6 @@ namespace Binarysharp.MemoryManagement.Models.Modules
                 isOffsetMode, reBase);
             return scanResult;
         }
-
 
         /// <summary>
         ///     Creates a mask from a given pattern, using the given chars

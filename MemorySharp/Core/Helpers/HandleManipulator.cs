@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Native;
+using Binarysharp.MemoryManagement.Core.Native.Objects;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using Binarysharp.MemoryManagement.Core.Native;
-using Binarysharp.MemoryManagement.Core.Native.Objects;
 
 namespace Binarysharp.MemoryManagement.Core.Helpers
 {

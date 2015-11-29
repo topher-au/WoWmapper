@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Core.Native;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.Input
 {
@@ -14,6 +14,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
     public class MouseHook : INamedElement
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     Function to be called when defined even occurs
         /// </summary>
@@ -64,15 +65,19 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         ///     Occurs when [middle button up].
         /// </summary>
         public event MouseHookCallback MiddleButtonUp;
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Fields, Private Properties
+
         private const int WhMouseLl = 14;
         private MouseHookHandler HookHandler { get; set; }
         private IntPtr HookId { get; set; } = IntPtr.Zero;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="MouseHook" /> class.
         /// </summary>
@@ -94,9 +99,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the low level mouse hook is disposed.
         /// </summary>
@@ -117,9 +124,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         ///     The name of the low level mouse hook.
         /// </summary>
         public string Name { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Disposes this instance.
         /// </summary>
@@ -152,7 +161,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
             HookId = SetHook(HookHandler);
             IsEnabled = true;
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Sets hook and assigns its ID for tracking
@@ -173,32 +183,40 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
             // parse system messages
             if (nCode < 0) return SafeNativeMethods.CallNextHookEx(HookId, nCode, wParam, lParam);
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch ((MouseFlags) wParam)
+            switch ((MouseFlags)wParam)
             {
                 case MouseFlags.LeftDown:
-                    LeftButtonDown?.Invoke((MouseInput) Marshal.PtrToStructure(lParam, typeof (MouseInput)));
+                    LeftButtonDown?.Invoke((MouseInput)Marshal.PtrToStructure(lParam, typeof(MouseInput)));
                     break;
+
                 case MouseFlags.LeftUp:
                     LeftButtonUp?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.RightDown:
                     RightButtonDown?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.RightUp:
                     RightButtonUp?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.Move:
                     MouseMove?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.Wheel:
                     MouseWheel?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.DoubleLeftClick:
                     DoubleClick?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.MiddleDown:
                     MiddleButtonDown?.Invoke(MouseInputToStructure(lParam));
                     break;
+
                 case MouseFlags.MiddleUp:
                     MiddleButtonUp?.Invoke((MouseInputToStructure(lParam)));
                     break;
@@ -209,14 +227,12 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
 
         private static MouseInput MouseInputToStructure(IntPtr lParam)
         {
-            return (MouseInput) Marshal.PtrToStructure(lParam, typeof (MouseInput));
+            return (MouseInput)Marshal.PtrToStructure(lParam, typeof(MouseInput));
         }
-
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr InternalSetWindowsHookEx(int idHook,
                                                               MouseHookHandler lpfn, IntPtr hMod, uint dwThreadId);
-
 
         /// <summary>
         ///     Internal callback processing function.

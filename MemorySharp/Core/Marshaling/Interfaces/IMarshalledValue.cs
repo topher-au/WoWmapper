@@ -1,5 +1,5 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Memory.Objects;
+﻿using Binarysharp.MemoryManagement.Core.Memory.Objects;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Marshaling.Interfaces
 {
@@ -9,6 +9,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Interfaces
     public interface IMarshalledValue : IDisposable
     {
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The memory allocated where the value is fully written if needed. It can be unused.
         /// </summary>
@@ -18,6 +19,7 @@ namespace Binarysharp.MemoryManagement.Core.Marshaling.Interfaces
         ///     The reference of the value. It can be directly the value or a pointer.
         /// </summary>
         IntPtr Reference { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

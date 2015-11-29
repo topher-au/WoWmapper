@@ -1,11 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using Binarysharp.MemoryManagement.Core.Helpers;
+﻿using Binarysharp.MemoryManagement.Core.Helpers;
 using Binarysharp.MemoryManagement.Core.Marshaling;
 using Binarysharp.MemoryManagement.Core.Native;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Native.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
+using System.ComponentModel;
 
 namespace Binarysharp.MemoryManagement.Core.Threads
 {
@@ -87,7 +87,7 @@ namespace Binarysharp.MemoryManagement.Core.Threads
             HandleManipulator.ValidateAsArgument(threadHandle, "threadHandle");
 
             // Allocate a thread context structure
-            var context = new ThreadContext {ContextFlags = contextFlags};
+            var context = new ThreadContext { ContextFlags = contextFlags };
 
             // Set the context flag
 

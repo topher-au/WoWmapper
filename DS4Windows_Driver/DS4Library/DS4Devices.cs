@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DS4Windows
 {
@@ -46,7 +45,6 @@ namespace DS4Windows
                         }
                     }
                 }
-                
             }
         }
 
@@ -65,7 +63,7 @@ namespace DS4Windows
                 return device;
             }
         }
-        
+
         //returns DS4 controllers that were found and are running
         public static IEnumerable<DS4Device> getDS4Controllers()
         {

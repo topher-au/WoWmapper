@@ -1,5 +1,5 @@
-using System.Runtime.InteropServices;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System.Runtime.InteropServices;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
 {

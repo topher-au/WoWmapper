@@ -8,13 +8,16 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
     public class PluginContainer : IPlugin
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The plugin
         /// </summary>
         internal IPlugin Plugin;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="PluginContainer" /> class.
         /// </summary>
@@ -23,9 +26,11 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
         {
             Plugin = plugin;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -67,9 +72,11 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
         /// </summary>
         /// <value>The description.</value>
         public string Description => Plugin.Description;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -117,6 +124,7 @@ namespace Binarysharp.MemoryManagement.Core.Managment.Interfaces
         {
             Plugin.Initialize();
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

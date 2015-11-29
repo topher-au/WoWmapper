@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using Binarysharp.MemoryManagement.Core.Memory.Objects;
+﻿using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Threads;
+using System;
+using System.Diagnostics;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Objects
 {
@@ -12,6 +12,7 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
     public class ManagedTeb : ProxyPointer
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ManagedTeb" /> class.
         /// </summary>
@@ -20,9 +21,11 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
         public ManagedTeb(Process process, IntPtr address) : base(process.Handle, address)
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Current Structured Exception Handling (SEH) frame.
         /// </summary>
@@ -437,7 +440,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
             get { return Read<IntPtr>(TebStructure.ThreadErrorMode); }
             set { Write(TebStructure.ThreadErrorMode, value); }
         }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Finds the Thread Environment Block address of a specified thread.

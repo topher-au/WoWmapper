@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePort", "ConsolePort\ConsolePort.csproj", "{7522EE2C-3977-4FFA-B6AA-4990D4D0BF5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS4ConsolePort", "ConsolePort\DS4ConsolePort.csproj", "{7522EE2C-3977-4FFA-B6AA-4990D4D0BF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CP_AdvancedHaptics", "ConsolePort_AdvHaptics\CP_AdvancedHaptics.csproj", "{14FCCDD6-7741-4D4A-BF33-4A9C04917F76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS4CP_AdvancedHaptics", "ConsolePort_AdvHaptics\DS4CP_AdvancedHaptics.csproj", "{14FCCDD6-7741-4D4A-BF33-4A9C04917F76}"
 	ProjectSection(ProjectDependencies) = postProject
 		{78A6F97D-5CA8-4E92-8E17-2545983C9555} = {78A6F97D-5CA8-4E92-8E17-2545983C9555}
 	EndProjectSection

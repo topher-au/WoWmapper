@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Marshaling;
+using System;
 using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Marshaling;
 
 namespace Binarysharp.MemoryManagement.Core.Memory.Objects
 {
@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class LocalUnmanagedMemory : IDisposable
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="LocalUnmanagedMemory" /> class, allocating a block of memory in the
         ///     local process.
@@ -29,9 +30,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The address where the data is allocated.
         /// </summary>
@@ -41,9 +44,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         ///     The size of the allocated memory.
         /// </summary>
         public int Size { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases the memory held by the <see cref="LocalUnmanagedMemory" /> object.
         /// </summary>
@@ -56,7 +61,8 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             // Avoid the finalizer
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Reads data from the unmanaged block of memory.

@@ -47,7 +47,7 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         public static string ExportToString<T>(T obj)
         {
             // Initialize the required objects for serialization
-            var serializer = new XmlSerializer(typeof (T));
+            var serializer = new XmlSerializer(typeof(T));
             using (var stringWriter = new StringWriter())
             {
                 // Serialize the object
@@ -94,11 +94,11 @@ namespace Binarysharp.MemoryManagement.Core.Helpers
         public static T ImportFromString<T>(string serializedObj)
         {
             // Initialize the required objects for deserialization
-            var serializer = new XmlSerializer(typeof (T));
+            var serializer = new XmlSerializer(typeof(T));
             using (var stringWriter = new StringReader(serializedObj))
             {
                 // Return the serialized object
-                return (T) serializer.Deserialize(stringWriter);
+                return (T)serializer.Deserialize(stringWriter);
             }
         }
     }

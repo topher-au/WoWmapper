@@ -6,6 +6,7 @@
     public class Pattern
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Creates a new instance of <see cref="Pattern" />.
         /// </summary>
@@ -20,9 +21,11 @@
             IsOffsetMode = isOffsetMode;
             RebaseAddress = rebase;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The Dword format text of the pattern.
         ///     <example>A2 5B ?? ?? ?? A2</example>
@@ -55,6 +58,7 @@
         /// </summary>
         /// <returns>An array of bytes.</returns>
         public byte[] PatternBytes => PatternCore.GetBytesFromDwordPattern(TextPattern);
-        #endregion
+
+        #endregion Public Properties, Indexers
     }
 }

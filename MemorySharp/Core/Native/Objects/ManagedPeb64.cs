@@ -1,7 +1,7 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Memory;
+﻿using Binarysharp.MemoryManagement.Core.Memory;
 using Binarysharp.MemoryManagement.Core.Memory.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Objects
 {
@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
     public class ManagedPeb64 : ProxyPointer
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ManagedPeb32" /> class.
         /// </summary>
@@ -22,9 +23,11 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
                 ExternalMemoryCore.NtQueryInformationProcess(processHandle).PebBaseAddress)
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Returns the read <see cref="Peb64" /> structure.
         ///     <remarks>
@@ -41,7 +44,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Objects
         ///         still provides a lot of information that is easily accessible about the peb for 64 bit and releated values.
         ///     </remarks>
         /// </summary>
-        public PebLdrData64 NativePebLdrData => Read<PebLdrData64>((int) NativePeb.pLdr);
-        #endregion
+        public PebLdrData64 NativePebLdrData => Read<PebLdrData64>((int)NativePeb.pLdr);
+
+        #endregion Public Properties, Indexers
     }
 }

@@ -61,33 +61,6 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} is already bound to {1}!.
-        /// </summary>
-        internal static string BINDING_EXISTS {
-            get {
-                return ResourceManager.GetString("BINDING_EXISTS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} is not a valid keybind!.
-        /// </summary>
-        internal static string BINDING_ILLEGAL {
-            get {
-                return ResourceManager.GetString("BINDING_ILLEGAL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Press the keyboard key for {0}.
-        /// </summary>
-        internal static string BINDING_SET {
-            get {
-                return ResourceManager.GetString("BINDING_SET", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BT {
@@ -103,6 +76,16 @@ namespace ConsolePort.Properties {
         internal static System.Drawing.Bitmap Circle {
             get {
                 object obj = ResourceManager.GetObject("Circle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CONSOLEPORTLOGO {
+            get {
+                object obj = ResourceManager.GetObject("CONSOLEPORTLOGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,6 +186,16 @@ namespace ConsolePort.Properties {
         internal static System.Drawing.Bitmap DS4 {
             get {
                 object obj = ResourceManager.GetObject("DS4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DS4_Config {
+            get {
+                object obj = ResourceManager.GetObject("DS4_Config", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -448,6 +441,60 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera.
+        /// </summary>
+        internal static string STRING_BIND_CAMERA {
+            get {
+                return ResourceManager.GetString("STRING_BIND_CAMERA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movement.
+        /// </summary>
+        internal static string STRING_BIND_MOVEMENT {
+            get {
+                return ResourceManager.GetString("STRING_BIND_MOVEMENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double-click to change binding.
+        /// </summary>
+        internal static string STRING_BINDING_CHANGE {
+            get {
+                return ResourceManager.GetString("STRING_BINDING_CHANGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is already bound to {1}!.
+        /// </summary>
+        internal static string STRING_BINDING_EXISTS {
+            get {
+                return ResourceManager.GetString("STRING_BINDING_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not a valid keybind!.
+        /// </summary>
+        internal static string STRING_BINDING_ILLEGAL {
+            get {
+                return ResourceManager.GetString("STRING_BINDING_ILLEGAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press the keyboard key for {0}.
+        /// </summary>
+        internal static string STRING_BINDING_SET {
+            get {
+                return ResourceManager.GetString("STRING_BINDING_SET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced haptics attached.
         /// </summary>
         internal static string STRING_HAPTIC_ATTACHED {
@@ -520,6 +567,125 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Haptic Status.
+        /// </summary>
+        internal static string STRING_HAPTIC_STATUS {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_STATUS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string STRING_NOTIFY_MENU_EXIT {
+            get {
+                return ResourceManager.GetString("STRING_NOTIFY_MENU_EXIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DS4ConsolePort.
+        /// </summary>
+        internal static string STRING_NOTIFY_TOOLTIP {
+            get {
+                return ResourceManager.GetString("STRING_NOTIFY_TOOLTIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        internal static string STRING_TAB_ADVANCED {
+            get {
+                return ResourceManager.GetString("STRING_TAB_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ConsolePort.
+        /// </summary>
+        internal static string STRING_TAB_CONSOLEPORT {
+            get {
+                return ResourceManager.GetString("STRING_TAB_CONSOLEPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keybinds.
+        /// </summary>
+        internal static string STRING_TAB_KEYBINDS {
+            get {
+                return ResourceManager.GetString("STRING_TAB_KEYBINDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TouchLeft/Right.
+        /// </summary>
+        internal static string STRING_TOUCHPAD_BUTTONS {
+            get {
+                return ResourceManager.GetString("STRING_TOUCHPAD_BUTTONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Touchpad Mode.
+        /// </summary>
+        internal static string STRING_TOUCHPAD_MODE {
+            get {
+                return ResourceManager.GetString("STRING_TOUCHPAD_MODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mouse Control.
+        /// </summary>
+        internal static string STRING_TOUCHPAD_MOUSE {
+            get {
+                return ResourceManager.GetString("STRING_TOUCHPAD_MOUSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share/Options.
+        /// </summary>
+        internal static string STRING_TOUCHPAD_SHARE_OPTIONS {
+            get {
+                return ResourceManager.GetString("STRING_TOUCHPAD_SHARE_OPTIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WoW window found.
+        /// </summary>
+        internal static string STRING_WOW_WINDOW_FOUND {
+            get {
+                return ResourceManager.GetString("STRING_WOW_WINDOW_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TouchLeft {
+            get {
+                object obj = ResourceManager.GetObject("TouchLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TouchRight {
+            get {
+                object obj = ResourceManager.GetObject("TouchRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Triangle {
@@ -536,6 +702,16 @@ namespace ConsolePort.Properties {
             get {
                 object obj = ResourceManager.GetObject("USB", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon WoWConsolePort {
+            get {
+                object obj = ResourceManager.GetObject("WoWConsolePort", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

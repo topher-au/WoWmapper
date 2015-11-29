@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
+﻿using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
 using Binarysharp.MemoryManagement.Core.Helpers;
 using Binarysharp.MemoryManagement.Core.Marshaling;
 using Binarysharp.MemoryManagement.Core.Memory;
@@ -13,6 +9,10 @@ using Binarysharp.MemoryManagement.Managers;
 using Binarysharp.MemoryManagement.Models.Calls;
 using Binarysharp.MemoryManagement.Models.Memory;
 using Binarysharp.MemoryManagement.Models.Modules;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
 namespace Binarysharp.MemoryManagement
 {
@@ -22,13 +22,16 @@ namespace Binarysharp.MemoryManagement
     public class MemorySharp : ProcessMemory, IEquatable<MemorySharp>
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     Raises when the <see cref="MemorySharp" /> object is disposed.
         /// </summary>
         public event EventHandler OnDispose;
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="MemorySharp" /> class.
         /// </summary>
@@ -44,6 +47,7 @@ namespace Binarysharp.MemoryManagement
                 case 4:
                     InternalPeb32 = new Lazy<ManagedPeb32>((() => new ManagedPeb32(Handle)));
                     break;
+
                 case 8:
                     InternalPeb64 = new Lazy<ManagedPeb64>((() => new ManagedPeb64(Handle)));
                     break;
@@ -77,9 +81,11 @@ namespace Binarysharp.MemoryManagement
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the factory manager instance.
         /// </summary>
@@ -102,7 +108,6 @@ namespace Binarysharp.MemoryManagement
         ///     Gets the architecture of the process.
         /// </summary>
         public ProcessArchitectures Architecture => ArchitectureHelper.GetArchitectureByProcess(Process);
-
 
         /// <summary>
         ///     Gets whether the process is 32-bit.
@@ -132,7 +137,6 @@ namespace Binarysharp.MemoryManagement
         ///     The remote process handle opened with all rights.
         /// </summary>
         public SafeMemoryHandle SafeHandle { get; }
-
 
         /// <summary>
         ///     The ProcessUpdateData Environment Block of the process.
@@ -174,9 +178,11 @@ namespace Binarysharp.MemoryManagement
         /// <returns>A new instance of a <see cref="ProxyPointer" /> class.</returns>
         public ProxyPointer this[IntPtr address, bool isRelative = false]
             => new ProxyPointer(Handle, isRelative ? ToRelative(address) : address);
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Returns a value indicating whether this instance is equal to a specified object.
         /// </summary>
@@ -185,7 +191,8 @@ namespace Binarysharp.MemoryManagement
             if (ReferenceEquals(null, other)) return false;
             return ReferenceEquals(this, other) || SafeHandle.Equals(other.SafeHandle);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Releases all resources used by the <see cref="MemorySharp" /> object.
@@ -212,7 +219,7 @@ namespace Binarysharp.MemoryManagement
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((MemorySharp) obj);
+            return obj.GetType() == GetType() && Equals((MemorySharp)obj);
         }
 
         /// <summary>
@@ -222,7 +229,6 @@ namespace Binarysharp.MemoryManagement
         {
             return SafeHandle.GetHashCode();
         }
-
 
         /// <summary>
         ///     Implements the operator ==.
@@ -285,7 +291,7 @@ namespace Binarysharp.MemoryManagement
             // Read the array in the remote process
             for (var i = 0; i < count; i++)
             {
-                array[i] = Read<T>(address + SafeMarshal<T>.Size*i, isRelative);
+                array[i] = Read<T>(address + SafeMarshal<T>.Size * i, isRelative);
             }
             return array;
         }
@@ -418,7 +424,7 @@ namespace Binarysharp.MemoryManagement
             // Write the array in the remote process
             for (var i = 0; i < array.Length; i++)
             {
-                Write(address + SafeMarshal<T>.Size*i, array[i], isRelative);
+                Write(address + SafeMarshal<T>.Size * i, array[i], isRelative);
             }
         }
 
@@ -445,13 +451,12 @@ namespace Binarysharp.MemoryManagement
             // Change the protection of the memory to allow writable
             using (
                 new MemoryProtection(Handle, isRelative ? ToAbsolute(address) : address,
-                    SafeMarshal<byte>.Size*byteArray.Length))
+                    SafeMarshal<byte>.Size * byteArray.Length))
             {
                 // Write the byte array
                 ExternalMemoryCore.WriteProcessMemory(Handle, isRelative ? ToAbsolute(address) : address, byteArray);
             }
         }
-
 
         /// <summary>
         ///     Writes a string with a specified encoding in the remote process.

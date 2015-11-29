@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Memory;
+using Binarysharp.MemoryManagement.Core.Native;
+using Binarysharp.MemoryManagement.Core.Native.Enums;
+using Binarysharp.MemoryManagement.Core.Native.Objects;
+using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Memory;
-using Binarysharp.MemoryManagement.Core.Native;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
-using Binarysharp.MemoryManagement.Core.Native.Objects;
-using Binarysharp.MemoryManagement.Core.Native.Structs;
 
 namespace Binarysharp.MemoryManagement.Core.Extensions
 {

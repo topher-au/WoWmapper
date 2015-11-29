@@ -9,21 +9,25 @@ namespace ConsolePort.AdvancedHaptics
 {
     public class Haptics : IDisposable
     {
+        public bool Enabled { get; set; } = false;
         public DataReader wowDataReader;
         private DS4 hapticDevice;
-        private Thread hapticThread;
+        private Thread hapticThread, rumbleThread;
 
         public bool LightbarClass { get; set; } = true;
         public bool LightbarHealth { get; set; } = true;
         public bool RumbleOnDamage { get; set; } = true;
-
-        private byte[] lastTarget;
+        public bool RumbleOnTarget { get; set; } = true;
 
         public WoWState GameState
         {
             get
             {
-                return wowDataReader.ReadState();
+                if (wowDataReader != null)
+                {
+                    return wowDataReader.ReadState();
+                }
+                return WoWState.NotRunning;
             }
         }
 
@@ -31,7 +35,11 @@ namespace ConsolePort.AdvancedHaptics
         {
             get
             {
-                return wowDataReader.Attached;
+                if (wowDataReader != null)
+                {
+                    return wowDataReader.Attached;
+                }
+                return false;
             }
         }
 
@@ -49,52 +57,58 @@ namespace ConsolePort.AdvancedHaptics
         {
             hapticDevice = Device;
             hapticThread = new Thread(HapticThread);
-            hapticThread.Priority = ThreadPriority.Highest;
             hapticThread.Start();
+            rumbleThread = new Thread(RumbleThread);
+            rumbleThread.Priority = ThreadPriority.Highest;
+            rumbleThread.Start();
         }
 
         public void Dispose()
         {
-            wowDataReader.Dispose();
             hapticThread.Abort();
+            rumbleThread.Abort();
+            if (wowDataReader != null) wowDataReader.Dispose();
         }
 
-        private void HapticThread()
+        private void RumbleThread()
         {
-            // Thread for processing advanced haptic feedback
-            if (wowDataReader == null) wowDataReader = new DataReader();
-            // Retrieve data about game
-            var playerMaxHealth = wowDataReader.ReadPlayerData<uint>(Constants.PlayerDataType.MaxHealth);
-            var playerHealth = wowDataReader.ReadPlayerData<uint>(Constants.PlayerDataType.Health);
+            byte[] lastTarget = new byte[16];
+            if (wowDataReader != null && wowDataReader.Attached)
+                lastTarget = wowDataReader.GetTargetGuid();
 
-            float healthPercent = ((float)playerHealth / (float)playerMaxHealth) * 100;
+            float lastHealthPercent = 100;
 
             while (true)
             {
-                if(hapticDevice != null)
-                if (wowDataReader.Attached)
+                if (wowDataReader != null && wowDataReader.Attached)
                 {
-                    // Check if player is logged in
-                    if (wowDataReader.ReadState() == WoWState.LoggedIn)
+                    // Buzz on change target
+                    if (RumbleOnTarget)
                     {
-                        // Read player data from memory
-                        PlayerInfo playerInfo = wowDataReader.GetPlayerInfo();
-                        
-                        // Buzz on change target
                         var target = wowDataReader.GetTargetGuid();
 
-                        if (lastTarget != null) // if previous target exists
+                        if (lastTarget != null && target != null) // if previous target exists
                             if (!target.SequenceEqual(lastTarget) && !target.SequenceEqual(new byte[16])) // ignore same target or null target
                             {
                                 hapticDevice.RumbleSmall(200, 200);
                             }
 
                         lastTarget = target; // set last target
+                    }
+                    else
+                    {
+                        lastTarget = new byte[16];
+                    }
+
+                    if (RumbleOnDamage)
+                    {
+                        PlayerInfo playerInfo = wowDataReader.GetPlayerInfo();
 
                         float currentHealthPct = ((float)playerInfo.CurrentHP / (float)playerInfo.MaxHP) * 100;
 
                         // Rumble controller on health loss
-                        var healthLoss = healthPercent - currentHealthPct;
+                        var healthLoss = lastHealthPercent - currentHealthPct;
+
                         if (healthLoss > 50)
                         {
                             hapticDevice.Rumble(255, 255, 1200);
@@ -112,45 +126,93 @@ namespace ConsolePort.AdvancedHaptics
                             hapticDevice.Rumble(50, 50, 500);
                         }
 
-                        // Update lightbar based on player health
-                        if (currentHealthPct > 90)
-                        {
-                            if (LightbarClass)
-                            {
-                                // TODO: colour lightbar by class
-                                var col = ConsolePort.ClassColors.GetClassColor(playerInfo.Class);
-                                hapticDevice.LightBarOn(col);
-                            }
-                            else
-                            {
-                                hapticDevice.LightBarOn(this.HealthColors.High);
-                            }
-                        }
-                        else
-                        if (currentHealthPct > 50)
-                        {
-                            hapticDevice.LightBarOn(HealthColors.Medium);
-                        }
-                        else
-                        if (currentHealthPct > 20)
-                        {
-                            hapticDevice.LightBarOn(HealthColors.Low);
-                        }
-                        else if (currentHealthPct < 20)
-                        {
-                            hapticDevice.LightBarFlash(HealthColors.Critical, 50, 50);
-                        }
-
-                        healthPercent = currentHealthPct;
-                    } else
+                        lastHealthPercent = currentHealthPct;
+                    }
+                    else
                     {
-                        hapticDevice.LightBarOff();
+                        lastHealthPercent = 100;
                     }
                 }
                 else
                 {
-                    hapticDevice.LightBarOff();
+                    lastHealthPercent = 100;
                 }
+                Thread.Sleep(1);
+            }
+        }
+
+        private void HapticThread()
+        {
+            byte[] lastTarget = new byte[16];
+
+            while (true)
+            {
+                if (hapticDevice != null && Enabled)
+                {
+                    if (wowDataReader == null) wowDataReader = new DataReader();
+                    if (wowDataReader.Attached)
+                    {
+                        // Check if player is logged in
+                        if (wowDataReader.ReadState() == WoWState.LoggedIn)
+                        {
+                            if (LightbarHealth)
+                            {
+                                // Read player data from memory
+                                PlayerInfo playerInfo = wowDataReader.GetPlayerInfo();
+
+                                float currentHealthPct = ((float)playerInfo.CurrentHP / (float)playerInfo.MaxHP) * 100;
+
+                                // Update lightbar based on player health
+                                if (currentHealthPct > 90)
+                                {
+                                    if (LightbarClass)
+                                    {
+                                        var classColor = ClassColors.GetClassColor(playerInfo.Class);
+                                        hapticDevice.LightBarOn(classColor);
+                                    }
+                                    else
+                                    {
+                                        hapticDevice.LightBarOn(HealthColors.High);
+                                    }
+                                }
+                                else
+                                if (currentHealthPct > 50)
+                                {
+                                    hapticDevice.LightBarOn(HealthColors.Medium);
+                                }
+                                else
+                                if (currentHealthPct > 20)
+                                {
+                                    hapticDevice.LightBarOn(HealthColors.Low);
+                                }
+                                else if (currentHealthPct < 20)
+                                {
+                                    hapticDevice.LightBarFlash(HealthColors.Critical, 50, 50);
+                                }
+                            }
+                            else if (!LightbarHealth && LightbarClass)
+                            {
+                                PlayerInfo playerInfo = wowDataReader.GetPlayerInfo();
+                                var classColor = ClassColors.GetClassColor(playerInfo.Class);
+                                hapticDevice.LightBarOn(classColor);
+                            }
+                            else
+                            {
+                                hapticDevice.LightBarOff();
+                            }
+                        }
+                        else
+                        {
+                            hapticDevice.LightBarOff();
+                        }
+                    }
+                }
+                else
+                {
+                    if (hapticDevice != null)
+                        hapticDevice.LightBarOff();
+                }
+
                 Thread.Sleep(5);
             }
         }

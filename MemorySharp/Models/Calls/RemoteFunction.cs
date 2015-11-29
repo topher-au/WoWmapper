@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
+using System;
 using System.Threading.Tasks;
-using Binarysharp.MemoryManagement.Core.CallingConvention.Enums;
 
 namespace Binarysharp.MemoryManagement.Models.Calls
 {
@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Models.Calls
     public class RemoteFunction : IEquatable<RemoteFunction>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="RemoteFunction" /> class.
         /// </summary>
@@ -25,9 +26,11 @@ namespace Binarysharp.MemoryManagement.Models.Calls
             BaseAddress = address;
             CallingConventions = callingConventions;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the calling convention used for this remote function instance.
         /// </summary>
@@ -50,9 +53,11 @@ namespace Binarysharp.MemoryManagement.Models.Calls
         ///     The name of the function.
         /// </summary>
         public string Name { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Returns a value indicating whether this instance is equal to a specified object.
         /// </summary>
@@ -62,7 +67,8 @@ namespace Binarysharp.MemoryManagement.Models.Calls
             return ReferenceEquals(this, other) ||
                    (BaseAddress.Equals(other.BaseAddress));
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Executes the assembly code in the remote process.
@@ -192,9 +198,8 @@ namespace Binarysharp.MemoryManagement.Models.Calls
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((RemoteFunction) obj);
+            return obj.GetType() == GetType() && Equals((RemoteFunction)obj);
         }
-
 
         /// <summary>
         ///     Serves as a hash function for a particular type.

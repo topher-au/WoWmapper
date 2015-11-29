@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Helpers;
+using Binarysharp.MemoryManagement.Core.Native;
+using Binarysharp.MemoryManagement.Core.Native.Enums;
+using Binarysharp.MemoryManagement.Core.Native.Structs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -6,10 +10,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Binarysharp.MemoryManagement.Core.Helpers;
-using Binarysharp.MemoryManagement.Core.Native;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
-using Binarysharp.MemoryManagement.Core.Native.Structs;
 
 namespace Binarysharp.MemoryManagement.Core.Windows
 {
@@ -103,7 +103,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows
 
             // Allocate a WindowPlacement structure
             WindowPlacement placement;
-            placement.Length = Marshal.SizeOf(typeof (WindowPlacement));
+            placement.Length = Marshal.SizeOf(typeof(WindowPlacement));
 
             // Get the window placement
             if (!SafeNativeMethods.GetWindowPlacement(windowHandle, out placement))
@@ -176,7 +176,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows
             // Create the list of windows
             var list = new List<IntPtr>();
             // Create the callback
-            EnumWindowsProc callback = delegate(IntPtr windowHandle, IntPtr lParam)
+            EnumWindowsProc callback = delegate (IntPtr windowHandle, IntPtr lParam)
                                        {
                                            list.Add(windowHandle);
                                            return true;
@@ -232,13 +232,13 @@ namespace Binarysharp.MemoryManagement.Core.Windows
 
             // Create the data structure
             var flashInfo = new FlashInfo
-                            {
-                                Size = Marshal.SizeOf(typeof (FlashInfo)),
-                                Hwnd = windowHandle,
-                                Flags = flags,
-                                Count = count,
-                                Timeout = Convert.ToInt32(timeout.TotalMilliseconds)
-                            };
+            {
+                Size = Marshal.SizeOf(typeof(FlashInfo)),
+                Hwnd = windowHandle,
+                Flags = flags,
+                Count = count,
+                Timeout = Convert.ToInt32(timeout.TotalMilliseconds)
+            };
 
             // Flash the window
             SafeNativeMethods.FlashWindowEx(ref flashInfo);
@@ -311,7 +311,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows
         /// </returns>
         public static uint MapVirtualKey(Keys key, TranslationTypes translation)
         {
-            return MapVirtualKey((uint) key, translation);
+            return MapVirtualKey((uint)key, translation);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows
         /// <param name="lParam">Additional message-specific information.</param>
         public static void PostMessage(IntPtr windowHandle, WindowsMessages message, UIntPtr wParam, UIntPtr lParam)
         {
-            PostMessage(windowHandle, (uint) message, wParam, lParam);
+            PostMessage(windowHandle, (uint)message, wParam, lParam);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows
         /// <param name="input">A structure represents an event to be inserted into the keyboard or mouse input stream.</param>
         public static void SendInput(Input input)
         {
-            SendInput(new[] {input});
+            SendInput(new[] { input });
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows
         /// <returns>The return value specifies the result of the message processing; it depends on the message sent.</returns>
         public static IntPtr SendMessage(IntPtr windowHandle, WindowsMessages message, UIntPtr wParam, IntPtr lParam)
         {
-            return SendMessage(windowHandle, (uint) message, wParam, lParam);
+            return SendMessage(windowHandle, (uint)message, wParam, lParam);
         }
 
         /// <summary>
@@ -528,13 +528,16 @@ namespace Binarysharp.MemoryManagement.Core.Windows
         public abstract class BaseKeyboard
         {
             #region Fields, Private Properties
+
             /// <summary>
             ///     The collection storing the current pressed keys.
             /// </summary>
             protected static readonly List<Tuple<IntPtr, Keys>> PressedKeys = new List<Tuple<IntPtr, Keys>>();
-            #endregion
+
+            #endregion Fields, Private Properties
 
             #region Constructors, Destructors
+
             /// <summary>
             ///     Initializes a new instance of a child of the <see cref="BaseKeyboard" /> class.
             /// </summary>
@@ -544,15 +547,18 @@ namespace Binarysharp.MemoryManagement.Core.Windows
                 // Save the parameter
                 Handle = windowHandle;
             }
-            #endregion
+
+            #endregion Constructors, Destructors
 
             #region Public Properties, Indexers
+
             /// <summary>
             ///     Gets the safe processHandle.
             /// </summary>
             /// <value>The safe processHandle.</value>
             protected IntPtr Handle { get; }
-            #endregion
+
+            #endregion Public Properties, Indexers
 
             /// <summary>
             ///     Presses the specified virtual key to the window.

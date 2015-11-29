@@ -1,6 +1,6 @@
+using Binarysharp.MemoryManagement.Core.Native.Enums;
 using System;
 using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Structs
 {

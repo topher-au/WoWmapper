@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Enums;
+﻿using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Enums;
 using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Interfaces;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
 {
@@ -13,6 +13,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
     public class WindowHookPulseEngine : IWindowEngine
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     Occurs when the first line of code in the engines <code><see cref="IWindowEngine.StartUp()" /></code> is called.
         /// </summary>
@@ -22,9 +23,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
         ///     Occurs when the last line of code in the engines <code><see cref="IWindowEngine.StartUp()" /></code> is called.
         /// </summary>
         public event EventHandler<UpdatePulseArgs> EndOfPulse;
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Fields, Private Properties
+
         /// <summary>
         ///     Gets the linked list of <code>IPulsableElement</code>'s.
         /// </summary>
@@ -32,9 +35,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
         ///     The linked list of IPulsableElement's.
         /// </value>
         private LinkedList<IPulsableElement> Pulsables { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="WindowHookPulseEngine" /> class.
         /// </summary>
@@ -42,9 +47,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
         {
             Pulsables = new LinkedList<IPulsableElement>();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Interface Implementations
+
         /// <summary>
         ///     Shuts the engine down.
         /// </summary>
@@ -75,7 +82,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
             }
             EndOfPulse?.Invoke(this, new UpdatePulseArgs());
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Adds a <code>IPulseableElement</code> member to the linked list. All elements in the list will have their

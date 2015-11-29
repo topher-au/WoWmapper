@@ -16,7 +16,7 @@ namespace Binarysharp.MemoryManagement.Core.Extensions
         public static T GetValue<T>(this Enum e)
             where T : struct, IComparable, IFormattable, IConvertible, IComparable<T>, IEquatable<T>
         {
-            return (T) (object) e;
+            return (T)(object)e;
         }
 
         /// <summary>

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Hooks.Input;
+﻿using Binarysharp.MemoryManagement.Core.Hooks.Input;
 using Binarysharp.MemoryManagement.Core.Hooks.WndProc;
 using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Enums;
 using Binarysharp.MemoryManagement.Core.Hooks.WndProc.Interfaces;
 using Binarysharp.MemoryManagement.Core.Logging.Default;
 using Binarysharp.MemoryManagement.Core.Managment;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -16,6 +16,7 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class HookFactory : SafeManager<INamedElement>, IFactory
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="HookFactory" /> class.
         /// </summary>
@@ -24,9 +25,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             ProcessMemory = processMemory;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The reference of the <see cref="ProcessMemory" /> object.
         /// </summary>
@@ -37,9 +40,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         /// </summary>
         /// <param name="name">The name of the hook.</param>
         public INamedElement this[string name] => InternalItems[name];
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -50,7 +55,8 @@ namespace Binarysharp.MemoryManagement.Factorys
                 hookValue.Disable();
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Creates the WND proc hook.
@@ -66,7 +72,7 @@ namespace Binarysharp.MemoryManagement.Factorys
         public WindowHook CreateWndProcHook(string name, IntPtr windowHandle, ref IWindowEngine engine)
         {
             InternalItems[name] = new WindowHook(windowHandle, name, ref engine);
-            return (WindowHook) InternalItems[name];
+            return (WindowHook)InternalItems[name];
         }
 
         /// <summary>
@@ -82,7 +88,7 @@ namespace Binarysharp.MemoryManagement.Factorys
         public MouseHook CreateKMouseHook(string name, bool mustBeDisposed = true)
         {
             InternalItems[name] = new MouseHook(name, mustBeDisposed);
-            return (MouseHook) InternalItems[name];
+            return (MouseHook)InternalItems[name];
         }
 
         /// <summary>
@@ -98,7 +104,7 @@ namespace Binarysharp.MemoryManagement.Factorys
         public KeyboardHook CreateKeyboardHook(string name, bool mustBeDisposed = true)
         {
             InternalItems[name] = new KeyboardHook(name, mustBeDisposed);
-            return (KeyboardHook) InternalItems[name];
+            return (KeyboardHook)InternalItems[name];
         }
     }
 }

@@ -10,18 +10,23 @@ namespace Binarysharp.MemoryManagement.Core.Tools
     public class TimedUpdater<T>
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     An event that is raised repeatedly at the Interval[in milliseconds] for this Instance.
         /// </summary>
         public event EventHandler<T> OnUpdate;
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Fields, Private Properties
+
         private Timer Timer { get; }
         private TimerCallback Callback { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="TimedUpdater{T}" /> class.
         /// </summary>
@@ -45,9 +50,11 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         protected T State { get; }
 
         /// <summary>
@@ -66,7 +73,8 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         /// </summary>
         /// <value>The name.</value>
         public string Name { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -101,7 +109,7 @@ namespace Binarysharp.MemoryManagement.Core.Tools
         /// <param name="e">The e.</param>
         protected virtual void Process(object e)
         {
-            OnUpdate?.Invoke(this, (T) e);
+            OnUpdate?.Invoke(this, (T)e);
         }
     }
 }

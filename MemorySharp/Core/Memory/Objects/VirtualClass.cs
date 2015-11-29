@@ -9,6 +9,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class VirtualClass
     {
         #region Constructors, Destructors
+
         //private IMemory mem;
         /// <summary>
         ///     Initializes a new instance of the <see cref="VirtualClass" /> class.
@@ -18,14 +19,17 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         {
             Address = address;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The address the class is located at in memory.
         /// </summary>
         public IntPtr Address { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Gets a virtual function delegate at the given index.
@@ -57,7 +61,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         /// <returns>A <code>IntPtr</code>.</returns>
         private static unsafe IntPtr GetVTableEntry(IntPtr addr, int index)
         {
-            var pAddr = (void***) addr.ToPointer();
+            var pAddr = (void***)addr.ToPointer();
             return new IntPtr((*pAddr)[index]);
         }
     }

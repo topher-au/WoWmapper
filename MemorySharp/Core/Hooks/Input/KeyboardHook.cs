@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.Input
 {
@@ -13,6 +13,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
     public class KeyboardHook : INamedElement
     {
         #region Public Delegates/Events
+
         /// <summary>
         ///     Function that will be called when defined events occur.
         /// </summary>
@@ -28,9 +29,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         ///     Occurs when [key up].
         /// </summary>
         public event KeyboardHookCallback KeyUp;
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Fields, Private Properties
+
         /// <summary>
         ///     Gets or sets the hook identifier.
         /// </summary>
@@ -42,9 +45,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         /// </summary>
         /// <value>The hook handler.</value>
         private KeyboardHookHandler HookHandler { get; set; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="KeyboardHook" /> class.
         /// </summary>
@@ -63,9 +68,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The name that represents this instance.
         /// </summary>
@@ -86,9 +93,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         /// </summary>
         /// <value>If the keyboard hook is enabled, <code>true</code>, else <code>false</code>.</value>
         public bool IsEnabled { get; private set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -99,7 +108,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
             IsDisposed = true;
             GC.SuppressFinalize(this);
         }
-
 
         /// <summary>
         ///     Disables the low level keyboard hook.
@@ -119,7 +127,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
             HookId = SetHook(HookHandler);
             IsEnabled = true;
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Registers hook with Windows API.
@@ -132,7 +141,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
                 return SetWindowsHookEx(13, proc, GetModuleHandle(module.ModuleName), 0);
         }
 
-
         /// <summary>
         ///     Default hook call, which analyses pressed keys.
         /// </summary>
@@ -141,15 +149,14 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
             if (nCode < 0)
                 return CallNextHookEx(HookId, nCode, wParam, lParam);
 
-            if (IsKeyDownOrUpEvent((int) wParam))
-                KeyDown?.Invoke((Keys) Marshal.ReadInt32(lParam));
+            if (IsKeyDownOrUpEvent((int)wParam))
+                KeyDown?.Invoke((Keys)Marshal.ReadInt32(lParam));
 
-            if (IsSysKeyDownOrUpEvent((int) wParam))
-                KeyUp?.Invoke((Keys) Marshal.ReadInt32(lParam));
+            if (IsSysKeyDownOrUpEvent((int)wParam))
+                KeyUp?.Invoke((Keys)Marshal.ReadInt32(lParam));
 
             return CallNextHookEx(HookId, nCode, wParam, lParam);
         }
-
 
         /// <summary>
         ///     Determines whether the message given contains key up and down event codes.
@@ -157,10 +164,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         [SuppressMessage("ReSharper", "SwitchStatementMissingSomeCases")]
         private static bool IsKeyDownOrUpEvent(int messages)
         {
-            switch ((WindowsMessages) messages)
+            switch ((WindowsMessages)messages)
             {
                 case WindowsMessages.KeyDown:
                     return true;
+
                 case WindowsMessages.KeyUp:
                     return true;
             }
@@ -173,10 +181,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         [SuppressMessage("ReSharper", "SwitchStatementMissingSomeCases")]
         private static bool IsSysKeyDownOrUpEvent(int messages)
         {
-            switch ((WindowsMessages) messages)
+            switch ((WindowsMessages)messages)
             {
                 case WindowsMessages.SysKeyDown:
                     return true;
+
                 case WindowsMessages.SysKeyUp:
                     return true;
             }
@@ -193,6 +202,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
         /// </summary>
 
         #region WinAPI
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, KeyboardHookHandler lpfn, IntPtr hMod, uint dwThreadId);
 
@@ -205,6 +215,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-        #endregion
+
+        #endregion WinAPI
     }
 }

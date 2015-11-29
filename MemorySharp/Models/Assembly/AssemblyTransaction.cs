@@ -7,9 +7,9 @@
  * See the file LICENSE for more information.
 */
 
+using Binarysharp.MemoryManagement.Core.Marshaling;
 using System;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Marshaling;
 
 namespace Binarysharp.MemoryManagement.Models.Assembly
 {
@@ -20,6 +20,7 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
     public class AssemblyTransaction : IDisposable
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The reference of the <see cref="MemorySharp" /> object.
         /// </summary>
@@ -34,9 +35,11 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
         ///     The builder contains all the mnemonics inserted by the user.
         /// </summary>
         protected StringBuilder Mnemonics;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="AssemblyTransaction" /> class.
         /// </summary>
@@ -62,9 +65,11 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
             : this(memorySharp, IntPtr.Zero, autoExecute)
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The address where to assembly code is assembled.
         /// </summary>
@@ -74,9 +79,11 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
         ///     Gets the value indicating whether the assembly code is executed once the object is disposed.
         /// </summary>
         public bool IsAutoExecuted { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="AssemblyTransaction" /> object.
         /// </summary>
@@ -104,7 +111,8 @@ namespace Binarysharp.MemoryManagement.Models.Assembly
                 ExitCode = MemorySharp.Factories.AssemblyFactory.InjectAndExecute<IntPtr>(Mnemonics.ToString());
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Adds a mnemonic to the transaction.

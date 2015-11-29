@@ -19,28 +19,38 @@ namespace ConsolePort
 
         public static Color GetClassColor(Constants.WoWClass Class)
         {
-            switch((int)Class)
+            switch ((int)Class)
             {
                 case 1: // warrior
                     return Warrior;
+
                 case 2: // paladin
                     return Paladin;
+
                 case 3: // hunter
                     return Hunter;
+
                 case 4: // rogue
                     return Rogue;
+
                 case 5: // priest
                     return Priest;
+
                 case 6: // death knight
                     return DeathKnight;
+
                 case 7: // shaman
                     return Shaman;
+
                 case 8: // mage
                     return Mage;
+
                 case 9: // warlock
                     return Warlock;
+
                 case 11: // druid
                     return Druid;
+
                 default: // other
                     return Color.Green;
             }

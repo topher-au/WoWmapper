@@ -1,6 +1,6 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Memory.Objects
 {
@@ -10,6 +10,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class ProxyAllocation : ProxyRegion, IDisposableState
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProxyAllocation" /> class.
         /// </summary>
@@ -38,9 +39,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             if (MustBeDisposed)
                 Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets a value indicating whether the element is disposed.
         /// </summary>
@@ -50,9 +53,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         ///     Gets a value indicating whether the element must be disposed when the Garbage Collector collects the object.
         /// </summary>
         public bool MustBeDisposed { get; set; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="ProxyAllocation" /> object.
         /// </summary>
@@ -69,10 +74,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
                 ExternalMemoryCore.Free(ProcessHandle, BaseAddress);
                 // Remove the pointer
                 BaseAddress = IntPtr.Zero;
-                // Avoid the finalizer 
+                // Avoid the finalizer
                 GC.SuppressFinalize(this);
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
     }
 }

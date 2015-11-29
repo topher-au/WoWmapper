@@ -1,13 +1,7 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using ConsolePort;
-using ConsolePort.AdvancedHaptics;
 using System.Windows.Forms;
 
 namespace ConsolePort
@@ -19,13 +13,37 @@ namespace ConsolePort
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool PostMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+        private static extern bool PostMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         internal static extern short GetKeyState(int virtualKeyCode);
 
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(IntPtr hWnd, Rectangle rect);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        private const int MOUSEEVENTF_RIGHTUP = 0x10;
+
+        public void DoLeftClick()
+        {
+            //Call the imported function with the cursor's current position
+            int X = Cursor.Position.X;
+            int Y = Cursor.Position.Y;
+            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+        }
+
+        public void DoRightClick()
+        {
+            //Call the imported function with the cursor's current position
+            int X = Cursor.Position.X;
+            int Y = Cursor.Position.Y;
+            mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Rectangle
@@ -36,21 +54,22 @@ namespace ConsolePort
             public int Bottom;      // y position of lower-right corner
         }
 
-        const uint WM_KEYDOWN = 0x0100;
-        const uint WM_KEYUP = 0x0101;
-        const uint WM_LBUTTONDOWN = 0x0201;
-        const uint WM_LBUTTONUP = 0x0202;
-        const uint WM_RBUTTONDOWN = 0x0204;
-        const uint WM_RBUTTONUP = 0x0205;
+        private const uint WM_KEYDOWN = 0x0100;
+        private const uint WM_KEYUP = 0x0101;
+        private const uint WM_LBUTTONDOWN = 0x0201;
+        private const uint WM_LBUTTONUP = 0x0202;
+        private const uint WM_RBUTTONDOWN = 0x0204;
+        private const uint WM_RBUTTONUP = 0x0205;
 
         public bool IsAttached { get; private set; }
         public bool AdvancedHapticsEnabled { get; private set; }
         public bool AdvancedHapticsAttached { get; private set; }
+        public bool UsePostMessage { get; set; } = false;
 
-        IntPtr wowHandle;
-        Thread scannerThread;
-        KeyBind bindings;
-        bool[] moveKeys;
+        private IntPtr wowHandle;
+        private Thread scannerThread;
+        private KeyBind bindings;
+        private bool[] moveKeys;
 
         public WoWInteraction(KeyBind Bindings)
         {
@@ -63,33 +82,47 @@ namespace ConsolePort
 
         public void Dispose()
         {
-            if(scannerThread != null)
+            if (scannerThread != null)
                 scannerThread.Abort();
         }
 
         private void WindowScanner()
         {
-            while(true)
+            while (true)
             {
-                var wowWindow = FindWindow(IntPtr.Zero, "World of Warcraft");
-                if (wowWindow != IntPtr.Zero)
+                // Scan for WoW process and get window handle
+                var wowProcesses = Process.GetProcessesByName("WoW-64");
+
+                if (wowProcesses.Length > 0)
                 {
-                    // WoW window found
-                    wowHandle = wowWindow;
-                    IsAttached = true;
-                } else
+                    var wowWindow = wowProcesses[0].MainWindowHandle;
+                    if (wowWindow != IntPtr.Zero)
+                    {
+                        // WoW window found
+                        wowHandle = wowWindow;
+                        IsAttached = true;
+                    }
+                }
+                else
                 {
                     // WoW window not found
                     wowHandle = IntPtr.Zero;
                     IsAttached = false;
                 }
-                Thread.Sleep(5000);
+
+                Thread.Sleep(1000);
             }
         }
 
         public void SendKeyDown(Keys Key)
         {
             PostMessage(wowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
+        }
+
+        public void SendKeyPress(Keys Key)
+        {
+            PostMessage(wowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
+            PostMessage(wowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
         }
 
         public void SendKeyUp(Keys Key)
@@ -102,7 +135,6 @@ namespace ConsolePort
             return (IntPtr)((HiWord << 16) | (LoWord & 0xFFFF));
         }
 
-
         public void SendClick(MouseButton Button)
         {
             Rectangle wowRect = new Rectangle();
@@ -111,15 +143,30 @@ namespace ConsolePort
             var relX = Cursor.Position.X - wowRect.Left;
             var relY = Cursor.Position.Y - wowRect.Top;
 
-            switch(Button)
+            switch (Button)
             {
                 case MouseButton.Left:
-                    PostMessage(wowHandle, WM_LBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
-                    PostMessage(wowHandle, WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    if (UsePostMessage)
+                    {
+                        PostMessage(wowHandle, WM_LBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
+                        PostMessage(wowHandle, WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    }
+                    else
+                    {
+                        DoLeftClick();
+                    }
                     break;
+
                 case MouseButton.Right:
-                    PostMessage(wowHandle, WM_RBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
-                    PostMessage(wowHandle, WM_RBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    if (UsePostMessage)
+                    {
+                        //PostMessage(wowHandle, WM_RBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
+                        //PostMessage(wowHandle, WM_RBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    }
+                    else
+                    {
+                        DoRightClick();
+                    }
                     break;
             }
         }
@@ -132,7 +179,7 @@ namespace ConsolePort
 
         public void Move(Direction Dir)
         {
-            switch(Dir)
+            switch (Dir)
             {
                 case Direction.Forward:
                     SendKeyDown(bindings.FromName("LStickUp").Key.Value);
@@ -140,24 +187,28 @@ namespace ConsolePort
                     moveKeys[(int)Direction.Forward] = true;
                     moveKeys[(int)Direction.Backward] = false;
                     break;
+
                 case Direction.Backward:
                     SendKeyDown(bindings.FromName("LStickDown").Key.Value);
                     SendKeyUp(bindings.FromName("LStickUp").Key.Value);
                     moveKeys[(int)Direction.Backward] = true;
                     moveKeys[(int)Direction.Forward] = false;
                     break;
+
                 case Direction.Left:
                     SendKeyDown(bindings.FromName("LStickLeft").Key.Value);
                     SendKeyUp(bindings.FromName("LStickRight").Key.Value);
                     moveKeys[(int)Direction.Left] = true;
                     moveKeys[(int)Direction.Right] = false;
                     break;
+
                 case Direction.Right:
                     SendKeyDown(bindings.FromName("LStickRight").Key.Value);
                     SendKeyUp(bindings.FromName("LStickLeft").Key.Value);
                     moveKeys[(int)Direction.Right] = true;
                     moveKeys[(int)Direction.Left] = false;
                     break;
+
                 case Direction.StopX:
                     if (moveKeys[(int)Direction.Left])
                     {
@@ -183,7 +234,6 @@ namespace ConsolePort
                         moveKeys[(int)Direction.Backward] = false;
                     }
                     break;
-
             }
         }
 

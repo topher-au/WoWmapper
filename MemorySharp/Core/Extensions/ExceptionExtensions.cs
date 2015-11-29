@@ -26,10 +26,12 @@ namespace Binarysharp.MemoryManagement.Core.Extensions
     public static class ExceptionExtensions
     {
         #region Fields, Private Properties
+
         /// <summary>
         /// </summary>
         private static int _exceptionLevel;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         /// <summary>
         ///     Returns full information about the exception
@@ -81,7 +83,6 @@ namespace Binarysharp.MemoryManagement.Core.Extensions
 
             return result;
         }
-
 
         /// <summary>
         ///     Gets the error message.

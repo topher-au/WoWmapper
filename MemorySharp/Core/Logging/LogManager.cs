@@ -1,8 +1,8 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Logging.Default;
+﻿using Binarysharp.MemoryManagement.Core.Logging.Default;
 using Binarysharp.MemoryManagement.Core.Logging.Enums;
 using Binarysharp.MemoryManagement.Core.Logging.Interfaces;
 using Binarysharp.MemoryManagement.Core.Managment;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Logging
 {
@@ -12,22 +12,26 @@ namespace Binarysharp.MemoryManagement.Core.Logging
     public class LogManager : SafeManager<IManagedLog>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Prevents a default instance of the <see cref="LogManager" /> class from being created.
         /// </summary>
         public LogManager() : base(new DebugLog())
         {
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the <see cref="IManagedLog" /> with the specified updater name.
         /// </summary>
         /// <param name="updaterName">Name of the ManagedLog .</param>
         /// <returns>A ManagedLog.</returns>
         public IManagedLog this[string updaterName] => InternalItems[updaterName];
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Logs the text to all logs in the manager as a 'info' log type.
@@ -84,12 +88,15 @@ namespace Binarysharp.MemoryManagement.Core.Logging
                 case LoggerType.Console:
                     InternalItems[name] = new ConsoleLog();
                     break;
+
                 case LoggerType.Debug:
                     InternalItems[name] = new DebugLog();
                     break;
+
                 case LoggerType.File:
                     InternalItems[name] = FileLog.Create(name, name, "Logs", true);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -111,15 +118,19 @@ namespace Binarysharp.MemoryManagement.Core.Logging
                 case MessageType.Normal:
                     LogNormal(message);
                     break;
+
                 case MessageType.Info:
                     LogNormal(message);
                     break;
+
                 case MessageType.Error:
                     LogError(message);
                     break;
+
                 case MessageType.Warn:
                     LogWarning(message);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 
 namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
 {
@@ -13,10 +13,13 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
     public class WindowActionQueue : IPulsableElement
     {
         #region Fields, Private Properties
-        private readonly Queue<Action> _executionQueue;
-        #endregion
 
-        #region Constructors, Destructors        
+        private readonly Queue<Action> _executionQueue;
+
+        #endregion Fields, Private Properties
+
+        #region Constructors, Destructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowActionQueue"/> class.
         /// </summary>
@@ -24,9 +27,11 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
         {
             _executionQueue = new Queue<Action>();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Interface Implementations
+
         public void Pulse()
         {
             if (_executionQueue == null)
@@ -38,7 +43,8 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.WndProc.Engines
             var action = _executionQueue.Dequeue();
             action.Invoke();
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Adds the action to an <see cref="Queue{Action}" /> queue, which is used execute code in the main thread of the

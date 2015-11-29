@@ -108,9 +108,9 @@
       <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
       <Name>DS4Driver</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ConsolePort_AdvHaptics\CP_AdvancedHaptics.csproj">
+    <ProjectReference Include="..\ConsolePort_AdvHaptics\DS4CP_AdvancedHaptics.csproj">
       <Project>{14fccdd6-7741-4d4a-bf33-4a9c04917f76}</Project>
-      <Name>CP_AdvancedHaptics</Name>
+      <Name>DS4CP_AdvancedHaptics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +226,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\PS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WoWConsolePort.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\CONSOLEPORTLOGO.png" />
+    <None Include="Resources\left touch.png" />
+    <None Include="Resources\right touch.png" />
+    <None Include="Resources\DS4 Config.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -15,10 +15,13 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
     public class SendInputMouse : BaseMouse
     {
         #region Fields, Private Properties
+
         private ProxyWindow ProxyWindow { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="SendInputMouse" /> class.
         /// </summary>
@@ -27,7 +30,8 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         {
             ProxyWindow = proxyWindow;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         /// <summary>
         ///     Moves the cursor at the specified coordinate.
@@ -143,7 +147,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         /// </summary>
         private static int CalculateAbsoluteCoordinateX(int x)
         {
-            return (x*65536)/SafeNativeMethods.GetSystemMetrics(SystemMetrics.CxScreen);
+            return (x * 65536) / SafeNativeMethods.GetSystemMetrics(SystemMetrics.CxScreen);
         }
 
         /// <summary>
@@ -151,7 +155,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         /// </summary>
         private static int CalculateAbsoluteCoordinateY(int y)
         {
-            return (y*65536)/SafeNativeMethods.GetSystemMetrics(SystemMetrics.CyScreen);
+            return (y * 65536) / SafeNativeMethods.GetSystemMetrics(SystemMetrics.CyScreen);
         }
 
         /// <summary>

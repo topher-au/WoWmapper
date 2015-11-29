@@ -121,7 +121,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <filterpriority>2</filterpriority>
         public override bool Equals(object obj)
         {
-            var vec = (Vector2) obj;
+            var vec = (Vector2)obj;
             return GetHashCode() == vec.GetHashCode();
         }
 
@@ -138,7 +138,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         ///     Returns the length of this Vector2
         /// </summary>
         /// <returns></returns>
-        public float Length() => (float) Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
+        public float Length() => (float)Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
 
         /// <summary>
         ///     To the string.
@@ -169,7 +169,7 @@ namespace Binarysharp.MemoryManagement.Core.Math3D.Objects
         /// <param name="v1">The v1.</param>
         /// <param name="scalar">The scalar.</param>
         /// <returns>The result of the operator.</returns>
-        public static Vector2 operator *(Vector2 v1, float scalar) => new Vector2(v1.X*scalar, v1.Y*scalar);
+        public static Vector2 operator *(Vector2 v1, float scalar) => new Vector2(v1.X * scalar, v1.Y * scalar);
 
         /// <summary>
         ///     Implements the operator +.

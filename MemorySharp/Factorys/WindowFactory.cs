@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Helpers;
+﻿using Binarysharp.MemoryManagement.Core.Helpers;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Core.Windows;
 using Binarysharp.MemoryManagement.Core.Windows.Objects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -14,13 +14,16 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class WindowFactory : IFactory
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The reference of the <see cref="MemorySharp" /> object.
         /// </summary>
         private readonly MemorySharp _memorySharp;
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="WindowFactory" /> class.
         /// </summary>
@@ -30,9 +33,11 @@ namespace Binarysharp.MemoryManagement.Factorys
             // Save the parameter
             _memorySharp = memorySharp;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the unique name for this instance.
         /// </summary>
@@ -81,10 +86,12 @@ namespace Binarysharp.MemoryManagement.Factorys
         /// <summary>
         ///     Gets all the window handles that belong to the application.
         /// </summary>
-        internal IEnumerable<IntPtr> WindowHandles => new List<IntPtr>(ChildWindowHandles) {MainWindowHandle};
-        #endregion
+        internal IEnumerable<IntPtr> WindowHandles => new List<IntPtr>(ChildWindowHandles) { MainWindowHandle };
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="WindowFactory" /> object.
         /// </summary>
@@ -92,7 +99,8 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             // Nothing to dispose... yet
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Gets all the windows that have the specified class name.

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Extensions;
+using Binarysharp.MemoryManagement.Core.Helpers;
+using Binarysharp.MemoryManagement.Models.Modules;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Binarysharp.MemoryManagement.Core.Extensions;
-using Binarysharp.MemoryManagement.Core.Helpers;
-using Binarysharp.MemoryManagement.Models.Modules;
 
 namespace Binarysharp.MemoryManagement.Models.Memory
 {
@@ -17,10 +17,13 @@ namespace Binarysharp.MemoryManagement.Models.Memory
     public abstract class ProcessMemory : IDisposable
     {
         #region Fields, Private Properties
+
         private Lazy<PatternScanner> LazyMainModulePatterns { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProcessMemory" /> class.
         /// </summary>
@@ -41,9 +44,11 @@ namespace Binarysharp.MemoryManagement.Models.Memory
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The native process.
         /// </summary>
@@ -69,9 +74,11 @@ namespace Binarysharp.MemoryManagement.Models.Memory
         ///     <see cref="Lazy{PatternScanner}" /> value.
         /// </summary>
         public PatternScanner MainModulePatterns => LazyMainModulePatterns.Value;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Disposes this instance.
         /// </summary>
@@ -79,7 +86,8 @@ namespace Binarysharp.MemoryManagement.Models.Memory
         {
             // Patches.DisableAll();
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Reads the specified amount of bytes from the specified address.

@@ -11,6 +11,7 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
     public class GlobalEventProvider : Component
     {
         #region Public Delegates/Events
+
         private event MouseEventHandler MMouseMove;
 
         /// <summary>
@@ -89,7 +90,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
             }
         }
 
-
         private event MouseEventHandler MMouseUp;
 
         /// <summary>
@@ -143,7 +143,6 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 }
             }
         }
-
 
         private event EventHandler<MouseEventExtArgs> MMouseMoveExt;
 
@@ -296,14 +295,17 @@ namespace Binarysharp.MemoryManagement.Core.Hooks.Input.Static.Core
                 }
             }
         }
-        #endregion
+
+        #endregion Public Delegates/Events
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     This component raises events. The value is always true.
         /// </summary>
         protected override bool CanRaiseEvents => true;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         private void HookManager_MouseMove(object sender, MouseEventArgs e)
         {

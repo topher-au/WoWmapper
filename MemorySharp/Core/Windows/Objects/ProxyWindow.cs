@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Native;
+﻿using Binarysharp.MemoryManagement.Core.Native;
 using Binarysharp.MemoryManagement.Core.Native.Enums;
 using Binarysharp.MemoryManagement.Core.Native.Objects;
 using Binarysharp.MemoryManagement.Core.Native.Structs;
 using Binarysharp.MemoryManagement.Core.Windows.BaseClasses;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Core.Windows.Objects
 {
@@ -20,6 +20,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
     public class ProxyWindow : IEquatable<ProxyWindow>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="ProxyWindow" /> class.
         /// </summary>
@@ -35,9 +36,11 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
             Keyboard = new MessageKeyboard(this);
             Mouse = new SendInputMouse(this);
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the process instance.
         /// </summary>
@@ -91,7 +94,6 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         ///     Gets if the window is currently activated.
         /// </summary>
         public bool IsActivated => WindowCore.GetForegroundWindow() == Handle;
-
 
         /// <summary>
         ///     Tools for managing a virtual keyboard in the window.
@@ -190,9 +192,11 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
                 Placement = p;
             }
         }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Returns a value indicating whether this instance is equal to a specified object.
         /// </summary>
@@ -200,7 +204,8 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         {
             return !ReferenceEquals(null, other) && Handle.Equals(other.Handle);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         private ProcessThread GetThreadById(int id)
         {
@@ -230,7 +235,7 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((ProxyWindow) obj);
+            return obj.GetType() == GetType() && Equals((ProxyWindow)obj);
         }
 
         /// <summary>
@@ -336,7 +341,6 @@ namespace Binarysharp.MemoryManagement.Core.Windows.Objects
         {
             return WindowCore.SendMessage(Handle, message, wParam, lParam);
         }
-
 
         /// <summary>
         ///     Returns a string that represents the current object.

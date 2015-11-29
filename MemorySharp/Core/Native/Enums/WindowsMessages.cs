@@ -333,7 +333,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Enums
         /// <summary>
         ///     WM_COMMNOTIFY is Obsolete for Win32-Based Applications
         /// </summary>
-        [Obsolete] CommNotify = 0x0044,
+        [Obsolete]
+        CommNotify = 0x0044,
 
         /// <summary>
         ///     The WM_WINDOWPOSCHANGING message is sent to a window whose size, position, or place in the Z order is about to
@@ -352,7 +353,8 @@ namespace Binarysharp.MemoryManagement.Core.Native.Enums
         ///     mode.
         ///     Use: POWERBROADCAST
         /// </summary>
-        [Obsolete] Power = 0x0048,
+        [Obsolete]
+        Power = 0x0048,
 
         /// <summary>
         ///     An application sends the WM_COPYDATA message to pass data to another application.

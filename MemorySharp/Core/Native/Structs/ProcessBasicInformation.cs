@@ -1,5 +1,5 @@
-using System;
 using Binarysharp.MemoryManagement.Core.Marshaling;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Native.Structs
 {

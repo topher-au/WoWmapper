@@ -9,6 +9,7 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class ProcessFunction<T>
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the
         /// </summary>
@@ -19,9 +20,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             Name = name;
             Pointer = address;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The lazy installed fs execute buffer delegate.
         /// </summary>
@@ -42,7 +45,8 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         ///     The name representing the function
         /// </summary>
         public string Name { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         /// <summary>
         ///     Registers a function into a delegate.

@@ -48,9 +48,9 @@
             // 
             // picBindImage
             // 
-            this.picBindImage.Location = new System.Drawing.Point(109, 10);
+            this.picBindImage.Location = new System.Drawing.Point(106, 4);
             this.picBindImage.Name = "picBindImage";
-            this.picBindImage.Size = new System.Drawing.Size(37, 37);
+            this.picBindImage.Size = new System.Drawing.Size(48, 48);
             this.picBindImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picBindImage.TabIndex = 1;
             this.picBindImage.TabStop = false;

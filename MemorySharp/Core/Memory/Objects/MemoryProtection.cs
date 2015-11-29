@@ -1,5 +1,5 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Native.Enums;
+﻿using Binarysharp.MemoryManagement.Core.Native.Enums;
+using System;
 
 namespace Binarysharp.MemoryManagement.Core.Memory.Objects
 {
@@ -9,13 +9,16 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
     public class MemoryProtection : IDisposable
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     The opened process processHandle reference.
         /// </summary>
         private IntPtr Handle { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="MemoryProtection" /> class.
         /// </summary>
@@ -45,9 +48,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             if (MustBeDisposed)
                 Dispose();
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The base address of the altered memory.
         /// </summary>
@@ -72,9 +77,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
         ///     The size of the altered memory.
         /// </summary>
         public int Size { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Restores the initial protection of the memory.
         /// </summary>
@@ -83,10 +90,11 @@ namespace Binarysharp.MemoryManagement.Core.Memory.Objects
             // Restore the memory protection
             ExternalMemoryCore.ChangeProtection(Handle, BaseAddress, Size,
                 OldProtection);
-            // Avoid the finalizer 
+            // Avoid the finalizer
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Returns a string that represents the current object.

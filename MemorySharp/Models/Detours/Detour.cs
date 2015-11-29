@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
+using Binarysharp.MemoryManagement.Models.Memory;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
-using Binarysharp.MemoryManagement.Models.Memory;
 
 namespace Binarysharp.MemoryManagement.Models.Detours
 {
@@ -13,6 +13,7 @@ namespace Binarysharp.MemoryManagement.Models.Detours
     public class Detour : INamedElement
     {
         #region Fields, Private Properties
+
         /// <summary>
         ///     This var is not used within the detour itself. It is only here
         ///     to keep a reference, to avoid the GC from collecting the delegate instance!
@@ -24,9 +25,11 @@ namespace Binarysharp.MemoryManagement.Models.Detours
         ///     The reference of the <see cref="ProcessMemory" /> object.
         /// </summary>
         private ProcessMemory ProcessMemory { get; }
-        #endregion
+
+        #endregion Fields, Private Properties
 
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="Detour" /> class.
         /// </summary>
@@ -48,14 +51,16 @@ namespace Binarysharp.MemoryManagement.Models.Detours
             Orginal.AddRange(memory.ReadBytes(Target, 6));
 
             //Setup the detour bytes
-            New = new List<byte> {0x68};
+            New = new List<byte> { 0x68 };
             var tmp = BitConverter.GetBytes(Target.ToInt32());
             New.AddRange(tmp);
             New.Add(0xC3);
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     Gets the hook.
         /// </summary>
@@ -106,9 +111,11 @@ namespace Binarysharp.MemoryManagement.Models.Detours
         ///     Gets a value indicating whether the element must be disposed when the Garbage Collector collects the object.
         /// </summary>
         public bool MustBeDisposed { get; set; } = true;
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
@@ -141,7 +148,8 @@ namespace Binarysharp.MemoryManagement.Models.Detours
             ProcessMemory.WriteBytes(Target, New.ToArray());
             IsEnabled = true;
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Calls the original function, and returns a return value.

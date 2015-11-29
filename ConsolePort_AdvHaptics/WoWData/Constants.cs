@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsolePort.WoWData
 {
@@ -257,8 +253,10 @@ namespace ConsolePort.WoWData
             Stealth = 5,
             Invisibility = 6,
             All = 7,
+
             //Special_NpcOnly=8,
             Enrage = 9,
+
             //ZgTrinkets=10
         }
 
@@ -299,8 +297,10 @@ namespace ConsolePort.WoWData
             None = 0,
             RMouse = (1 << 0), // 0x1,
             LMouse = (1 << 1), // 0x2,
+
                                // 2 and 3 not used apparently. Possibly for flag masking?
             Forward = (1 << 4), // 0x10,
+
             Backward = (1 << 5), // 0x20,
             StrafeLeft = (1 << 6), // 0x40,
             StrafeRight = (1 << 7), // 0x80,
@@ -341,8 +341,10 @@ namespace ConsolePort.WoWData
             TimeValid = 0x200,
             Immobilized = 0x400,
             DontCollide = 0x800,
+
             // JUMPING
             Redirected = 0x1000,
+
             Rooted = 0x2000,
             Falling = 0x4000,
             FallenFar = 0x8000,
@@ -380,7 +382,6 @@ namespace ConsolePort.WoWData
             UnTrackable = 0x4,
         }
 
-
         [Flags]
         private enum UnitDynamicFlags
         {
@@ -400,23 +401,30 @@ namespace ConsolePort.WoWData
         {
             None = 0,
             Sitting = 0x1,
+
             //SelectableNotAttackable_1 = 0x2,
             Influenced = 0x4, // Stops movement packets
+
             PlayerControlled = 0x8, // 2.4.2
             Totem = 0x10,
             Preparation = 0x20, // 3.0.3
             PlusMob = 0x40, // 3.0.2
+
             //SelectableNotAttackable_2 = 0x80,
             NotAttackable = 0x100,
+
             //Flag_0x200 = 0x200,
             Looting = 0x400,
+
             PetInCombat = 0x800, // 3.0.2
             PvPFlagged = 0x1000,
             Silenced = 0x2000, //3.0.3
+
             //Flag_14_0x4000 = 0x4000,
             //Flag_15_0x8000 = 0x8000,
             //SelectableNotAttackable_3 = 0x10000,
             Pacified = 0x20000, //3.0.3
+
             Stunned = 0x40000,
             CanPerformAction_Mask1 = 0x60000,
             Combat = 0x80000, // 3.1.1
@@ -428,8 +436,10 @@ namespace ConsolePort.WoWData
             NotSelectable = 0x2000000,
             Skinnable = 0x4000000,
             Mounted = 0x8000000,
+
             //Flag_28_0x10000000 = 0x10000000,
             Dazed = 0x20000000,
+
             Sheathe = 0x40000000,
             //Flag_31_0x80000000 = 0x80000000,
         }
@@ -500,29 +510,35 @@ namespace ConsolePort.WoWData
             /// Disables interaction while animated
             /// </summary>
             InUse = 0x01,
+
             /// <summary>
             /// 0x2
-            /// Requires a key, spell, event, etc to be opened. 
+            /// Requires a key, spell, event, etc to be opened.
             /// Makes "Locked" appear in tooltip
             /// </summary>
             Locked = 0x02,
+
             /// <summary>
             /// 0x4
             /// Objects that require a condition to be met before they are usable
             /// </summary>
             ConditionalInteraction = 0x04,
+
             /// <summary>
             /// 0x8
             /// any kind of transport? Object can transport (elevator, boat, car)
             /// </summary>
             Transport = 0x08,
+
             GOFlag_0x10 = 0x10,
+
             /// <summary>
             /// 0x20
             /// These objects never de-spawn, but typically just change state in response to an event
             /// Ex: doors
             /// </summary>
             DoesNotDespawn = 0x20,
+
             /// <summary>
             /// 0x40
             /// Typically, summoned objects. Triggered by spell or other events
@@ -554,7 +570,9 @@ namespace ConsolePort.WoWData
             CORPSE_FLAG_HIDE_CLOAK = 0x10,
             CORPSE_FLAG_LOOTABLE = 0x20
         }
-        public enum PlayerDataType {
+
+        public enum PlayerDataType
+        {
             Charm = 0x30, // Size: 0x4, Flags: 0x1
             Summon = 0x40, // Size: 0x4, Flags: 0x1
             Critter = 0x50, // Size: 0x4, Flags: 0x2

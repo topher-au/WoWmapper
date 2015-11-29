@@ -1,9 +1,9 @@
-﻿using System;
-using Binarysharp.MemoryManagement.Core.Logging.Default;
+﻿using Binarysharp.MemoryManagement.Core.Logging.Default;
 using Binarysharp.MemoryManagement.Core.Managment;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Models.Memory;
 using Binarysharp.MemoryManagement.Models.Patch;
+using System;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -14,6 +14,7 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class PatchFactory : SafeManager<Patch>, IFactory
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="PatchFactory" /> class.
         /// </summary>
@@ -22,9 +23,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             ProcessMemory = processMemory;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The reference of the <see cref="ProcessMemory" /> object.
         ///     <remarks>This value is invalid if the manager was created for the <see cref="MemorySharp" /> class.</remarks>
@@ -36,9 +39,11 @@ namespace Binarysharp.MemoryManagement.Factorys
         /// </summary>
         /// <param name="name">The name of the patch.</param>
         public Models.Patch.Patch this[string name] => InternalItems[name];
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         public void Dispose()
         {
             foreach (var keyValuePair in InternalItems)
@@ -51,7 +56,8 @@ namespace Binarysharp.MemoryManagement.Factorys
                 Remove(keyValuePair.Key);
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Creates a new <see cref="Patch" /> at the specified address.

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using Binarysharp.MemoryManagement.Core.Helpers;
+﻿using Binarysharp.MemoryManagement.Core.Helpers;
 using Binarysharp.MemoryManagement.Core.Logging.Default;
 using Binarysharp.MemoryManagement.Core.Managment;
 using Binarysharp.MemoryManagement.Core.Managment.Interfaces;
 using Binarysharp.MemoryManagement.Models.Detours;
+using System;
+using System.Linq;
 
 namespace Binarysharp.MemoryManagement.Factorys
 {
@@ -15,6 +15,7 @@ namespace Binarysharp.MemoryManagement.Factorys
     public class DetourFactory : SafeManager<Detour>, IFactory
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="DetourFactory" /> class.
         /// </summary>
@@ -23,16 +24,20 @@ namespace Binarysharp.MemoryManagement.Factorys
         {
             ProcessMemory = processMemory;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The reference of the <see cref="ProcessMemory" /> object.
         /// </summary>
         protected MemoryPlus ProcessMemory { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="DetourFactory" /> object.
         /// </summary>
@@ -43,7 +48,8 @@ namespace Binarysharp.MemoryManagement.Factorys
                 value.Dispose();
             }
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Creates a new Detour.

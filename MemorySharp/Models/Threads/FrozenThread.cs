@@ -8,6 +8,7 @@ namespace Binarysharp.MemoryManagement.Models.Threads
     public class FrozenThread : IDisposable
     {
         #region Constructors, Destructors
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="FrozenThread" /> class.
         /// </summary>
@@ -17,16 +18,20 @@ namespace Binarysharp.MemoryManagement.Models.Threads
             // Save the parameter
             Thread = thread;
         }
-        #endregion
+
+        #endregion Constructors, Destructors
 
         #region Public Properties, Indexers
+
         /// <summary>
         ///     The frozen thread.
         /// </summary>
         public RemoteThread Thread { get; }
-        #endregion
+
+        #endregion Public Properties, Indexers
 
         #region Interface Implementations
+
         /// <summary>
         ///     Releases all resources used by the <see cref="RemoteThread" /> object.
         /// </summary>
@@ -35,7 +40,8 @@ namespace Binarysharp.MemoryManagement.Models.Threads
             // Unfreeze the thread
             Thread.Resume();
         }
-        #endregion
+
+        #endregion Interface Implementations
 
         /// <summary>
         ///     Returns a string that represents the current object.
