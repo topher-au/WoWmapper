@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     public class WoWInteraction : IDisposable
     {
@@ -28,6 +28,40 @@ namespace ConsolePort
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
+
+        public void DoMouseDown(MouseButtons Button)
+        {
+            switch(Button)
+            {
+                case MouseButtons.Left:
+                    MouseEvent(MOUSEEVENTF_LEFTDOWN);
+                    break;
+                case MouseButtons.Right:
+                    MouseEvent(MOUSEEVENTF_RIGHTDOWN);
+                    break;
+            }
+        }
+
+        public void DoMouseUp(MouseButtons Button)
+        {
+            switch (Button)
+            {
+                case MouseButtons.Left:
+                    MouseEvent(MOUSEEVENTF_LEFTUP);
+                    break;
+                case MouseButtons.Right:
+                    MouseEvent(MOUSEEVENTF_RIGHTUP);
+                    break;
+            }
+        }
+
+        private void MouseEvent(uint Flags)
+        {
+            // Send a mouse event with the specified flags to the cursor position
+            int X = Cursor.Position.X;
+            int Y = Cursor.Position.Y;
+            mouse_event(Flags, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+        }
 
         public void DoLeftClick()
         {
@@ -64,7 +98,8 @@ namespace ConsolePort
         public bool IsAttached { get; private set; }
         public bool AdvancedHapticsEnabled { get; private set; }
         public bool AdvancedHapticsAttached { get; private set; }
-        public bool UsePostMessage { get; set; } = false;
+        public bool PostMessageMouse { get; set; } = false;
+        public bool PostMessageKeys { get; set; } = true;
 
         private IntPtr wowHandle;
         private Thread scannerThread;
@@ -88,7 +123,7 @@ namespace ConsolePort
 
         private void WindowScanner()
         {
-            while (true)
+            while (scannerThread.ThreadState == System.Threading.ThreadState.Running)
             {
                 // Scan for WoW process and get window handle
                 var wowProcesses = Process.GetProcessesByName("WoW-64");
@@ -146,7 +181,7 @@ namespace ConsolePort
             switch (Button)
             {
                 case MouseButton.Left:
-                    if (UsePostMessage)
+                    if (PostMessageMouse)
                     {
                         PostMessage(wowHandle, WM_LBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
                         PostMessage(wowHandle, WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
@@ -158,7 +193,7 @@ namespace ConsolePort
                     break;
 
                 case MouseButton.Right:
-                    if (UsePostMessage)
+                    if (PostMessageMouse)
                     {
                         //PostMessage(wowHandle, WM_RBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
                         //PostMessage(wowHandle, WM_RBUTTONUP, IntPtr.Zero, IntPtr.Zero);

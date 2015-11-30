@@ -1,4 +1,4 @@
-﻿namespace ConsolePort
+﻿namespace DS4ConsolePort
 {
     partial class MainForm
     {
@@ -37,8 +37,9 @@
             this.tabConsolePort = new System.Windows.Forms.TabPage();
             this.labelWoWAddon = new System.Windows.Forms.Label();
             this.labelDS4ConsolePort = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picConsolePort = new System.Windows.Forms.PictureBox();
             this.tabKeybinds = new System.Windows.Forms.TabPage();
+            this.picResetBinds = new System.Windows.Forms.PictureBox();
             this.labelTouchUpper = new System.Windows.Forms.Label();
             this.labelTouchMode = new System.Windows.Forms.Label();
             this.textBindTouchRight = new System.Windows.Forms.TextBox();
@@ -81,7 +82,16 @@
             this.textL1 = new System.Windows.Forms.TextBox();
             this.picDS4 = new System.Windows.Forms.PictureBox();
             this.tabAdvanced = new System.Windows.Forms.TabPage();
+            this.groupDS4CSettings = new System.Windows.Forms.GroupBox();
+            this.checkCloseTray = new System.Windows.Forms.CheckBox();
+            this.checkMinTray = new System.Windows.Forms.CheckBox();
             this.checkEnableAdvancedHaptics = new System.Windows.Forms.CheckBox();
+            this.groupInteraction = new System.Windows.Forms.GroupBox();
+            this.groupInteractionSettings = new System.Windows.Forms.GroupBox();
+            this.checkDisableBG = new System.Windows.Forms.CheckBox();
+            this.checkSendMouseDirect = new System.Windows.Forms.CheckBox();
+            this.checkSendKeysDirect = new System.Windows.Forms.CheckBox();
+            this.checkWindowAttached = new System.Windows.Forms.CheckBox();
             this.panelAdvancedHaptics = new System.Windows.Forms.Panel();
             this.groupHapticStatus = new System.Windows.Forms.GroupBox();
             this.checkHapticsAttached = new System.Windows.Forms.CheckBox();
@@ -92,16 +102,17 @@
             this.checkRumbleTarget = new System.Windows.Forms.CheckBox();
             this.checkLightbarHealth = new System.Windows.Forms.CheckBox();
             this.checkLightbarClass = new System.Windows.Forms.CheckBox();
-            this.checkWindowAttached = new System.Windows.Forms.CheckBox();
             this.menuNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dS4ConsolePortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkStartMinimized = new System.Windows.Forms.CheckBox();
             this.statusBar.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabConsolePort.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picConsolePort)).BeginInit();
             this.tabKeybinds.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picResetBinds)).BeginInit();
             this.panelCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRCurve)).BeginInit();
@@ -113,6 +124,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLStickUp)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDS4)).BeginInit();
             this.tabAdvanced.SuspendLayout();
+            this.groupDS4CSettings.SuspendLayout();
+            this.groupInteraction.SuspendLayout();
+            this.groupInteractionSettings.SuspendLayout();
             this.panelAdvancedHaptics.SuspendLayout();
             this.groupHapticStatus.SuspendLayout();
             this.groupHapticSettings.SuspendLayout();
@@ -130,9 +144,9 @@
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelSpacer,
             this.labelControllerState});
-            this.statusBar.Location = new System.Drawing.Point(0, 544);
+            this.statusBar.Location = new System.Drawing.Point(0, 531);
             this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(856, 22);
+            this.statusBar.Size = new System.Drawing.Size(779, 22);
             this.statusBar.SizingGrip = false;
             this.statusBar.TabIndex = 5;
             this.statusBar.Text = "statusStrip1";
@@ -140,7 +154,7 @@
             // labelSpacer
             // 
             this.labelSpacer.Name = "labelSpacer";
-            this.labelSpacer.Size = new System.Drawing.Size(776, 17);
+            this.labelSpacer.Size = new System.Drawing.Size(699, 17);
             this.labelSpacer.Spring = true;
             // 
             // labelControllerState
@@ -159,18 +173,18 @@
             this.tabControl.Location = new System.Drawing.Point(4, 4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(850, 534);
+            this.tabControl.Size = new System.Drawing.Size(772, 524);
             this.tabControl.TabIndex = 6;
             // 
             // tabConsolePort
             // 
             this.tabConsolePort.Controls.Add(this.labelWoWAddon);
             this.tabConsolePort.Controls.Add(this.labelDS4ConsolePort);
-            this.tabConsolePort.Controls.Add(this.pictureBox1);
+            this.tabConsolePort.Controls.Add(this.picConsolePort);
             this.tabConsolePort.Location = new System.Drawing.Point(4, 24);
             this.tabConsolePort.Name = "tabConsolePort";
             this.tabConsolePort.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConsolePort.Size = new System.Drawing.Size(842, 506);
+            this.tabConsolePort.Size = new System.Drawing.Size(764, 496);
             this.tabConsolePort.TabIndex = 0;
             this.tabConsolePort.Text = "consoleport";
             this.tabConsolePort.UseVisualStyleBackColor = true;
@@ -178,7 +192,7 @@
             // labelWoWAddon
             // 
             this.labelWoWAddon.AutoSize = true;
-            this.labelWoWAddon.Location = new System.Drawing.Point(304, 330);
+            this.labelWoWAddon.Location = new System.Drawing.Point(274, 330);
             this.labelWoWAddon.Name = "labelWoWAddon";
             this.labelWoWAddon.Size = new System.Drawing.Size(250, 15);
             this.labelWoWAddon.TabIndex = 2;
@@ -188,24 +202,25 @@
             // 
             this.labelDS4ConsolePort.AutoSize = true;
             this.labelDS4ConsolePort.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDS4ConsolePort.Location = new System.Drawing.Point(340, 300);
+            this.labelDS4ConsolePort.Location = new System.Drawing.Point(304, 300);
             this.labelDS4ConsolePort.Name = "labelDS4ConsolePort";
             this.labelDS4ConsolePort.Size = new System.Drawing.Size(172, 30);
             this.labelDS4ConsolePort.TabIndex = 1;
             this.labelDS4ConsolePort.Text = "DS4ConsolePort";
             // 
-            // pictureBox1
+            // picConsolePort
             // 
-            this.pictureBox1.Image = global::ConsolePort.Properties.Resources.CONSOLEPORTLOGO;
-            this.pictureBox1.Location = new System.Drawing.Point(173, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(512, 291);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.picConsolePort.Image = global::DS4ConsolePort.Properties.Resources.CONSOLEPORTLOGO;
+            this.picConsolePort.Location = new System.Drawing.Point(132, 6);
+            this.picConsolePort.Name = "picConsolePort";
+            this.picConsolePort.Size = new System.Drawing.Size(512, 291);
+            this.picConsolePort.TabIndex = 0;
+            this.picConsolePort.TabStop = false;
             // 
             // tabKeybinds
             // 
             this.tabKeybinds.BackColor = System.Drawing.Color.DimGray;
+            this.tabKeybinds.Controls.Add(this.picResetBinds);
             this.tabKeybinds.Controls.Add(this.labelTouchUpper);
             this.tabKeybinds.Controls.Add(this.labelTouchMode);
             this.tabKeybinds.Controls.Add(this.textBindTouchRight);
@@ -230,17 +245,27 @@
             this.tabKeybinds.Controls.Add(this.textL2);
             this.tabKeybinds.Controls.Add(this.textL1);
             this.tabKeybinds.Controls.Add(this.picDS4);
-            this.tabKeybinds.Location = new System.Drawing.Point(4, 24);
+            this.tabKeybinds.Location = new System.Drawing.Point(4, 22);
             this.tabKeybinds.Name = "tabKeybinds";
             this.tabKeybinds.Padding = new System.Windows.Forms.Padding(3);
-            this.tabKeybinds.Size = new System.Drawing.Size(842, 506);
+            this.tabKeybinds.Size = new System.Drawing.Size(764, 498);
             this.tabKeybinds.TabIndex = 1;
             this.tabKeybinds.Text = "keybinds";
+            // 
+            // picResetBinds
+            // 
+            this.picResetBinds.Image = global::DS4ConsolePort.Properties.Resources.Reset_Binds;
+            this.picResetBinds.Location = new System.Drawing.Point(734, 6);
+            this.picResetBinds.Name = "picResetBinds";
+            this.picResetBinds.Size = new System.Drawing.Size(24, 24);
+            this.picResetBinds.TabIndex = 43;
+            this.picResetBinds.TabStop = false;
+            this.picResetBinds.Click += new System.EventHandler(this.picResetBinds_Click);
             // 
             // labelTouchUpper
             // 
             this.labelTouchUpper.ForeColor = System.Drawing.Color.Yellow;
-            this.labelTouchUpper.Location = new System.Drawing.Point(370, 35);
+            this.labelTouchUpper.Location = new System.Drawing.Point(333, 35);
             this.labelTouchUpper.Name = "labelTouchUpper";
             this.labelTouchUpper.Size = new System.Drawing.Size(100, 70);
             this.labelTouchUpper.TabIndex = 42;
@@ -250,7 +275,7 @@
             // labelTouchMode
             // 
             this.labelTouchMode.ForeColor = System.Drawing.Color.White;
-            this.labelTouchMode.Location = new System.Drawing.Point(357, 109);
+            this.labelTouchMode.Location = new System.Drawing.Point(323, 109);
             this.labelTouchMode.Name = "labelTouchMode";
             this.labelTouchMode.Size = new System.Drawing.Size(124, 15);
             this.labelTouchMode.TabIndex = 41;
@@ -259,7 +284,7 @@
             // 
             // textBindTouchRight
             // 
-            this.textBindTouchRight.Location = new System.Drawing.Point(423, 160);
+            this.textBindTouchRight.Location = new System.Drawing.Point(386, 160);
             this.textBindTouchRight.Name = "textBindTouchRight";
             this.textBindTouchRight.ReadOnly = true;
             this.textBindTouchRight.Size = new System.Drawing.Size(75, 23);
@@ -270,7 +295,7 @@
             // 
             // textBindTouchLeft
             // 
-            this.textBindTouchLeft.Location = new System.Drawing.Point(340, 160);
+            this.textBindTouchLeft.Location = new System.Drawing.Point(302, 160);
             this.textBindTouchLeft.Name = "textBindTouchLeft";
             this.textBindTouchLeft.ReadOnly = true;
             this.textBindTouchLeft.Size = new System.Drawing.Size(75, 23);
@@ -287,7 +312,7 @@
             "Mouse Control",
             "TouchLeft/TouchRight",
             "Share/Options"});
-            this.comboTouchMode.Location = new System.Drawing.Point(360, 127);
+            this.comboTouchMode.Location = new System.Drawing.Point(324, 127);
             this.comboTouchMode.Name = "comboTouchMode";
             this.comboTouchMode.Size = new System.Drawing.Size(121, 23);
             this.comboTouchMode.TabIndex = 38;
@@ -295,7 +320,7 @@
             // 
             // textPS
             // 
-            this.textPS.Location = new System.Drawing.Point(370, 397);
+            this.textPS.Location = new System.Drawing.Point(330, 394);
             this.textPS.Name = "textPS";
             this.textPS.ReadOnly = true;
             this.textPS.Size = new System.Drawing.Size(100, 23);
@@ -308,7 +333,7 @@
             // 
             this.labelChangeBindings.AutoSize = true;
             this.labelChangeBindings.ForeColor = System.Drawing.Color.White;
-            this.labelChangeBindings.Location = new System.Drawing.Point(336, 14);
+            this.labelChangeBindings.Location = new System.Drawing.Point(301, 13);
             this.labelChangeBindings.Name = "labelChangeBindings";
             this.labelChangeBindings.Size = new System.Drawing.Size(172, 15);
             this.labelChangeBindings.TabIndex = 37;
@@ -316,7 +341,7 @@
             // 
             // textOptions
             // 
-            this.textOptions.Location = new System.Drawing.Point(475, 44);
+            this.textOptions.Location = new System.Drawing.Point(438, 44);
             this.textOptions.Name = "textOptions";
             this.textOptions.ReadOnly = true;
             this.textOptions.Size = new System.Drawing.Size(100, 23);
@@ -327,7 +352,7 @@
             // 
             // textShare
             // 
-            this.textShare.Location = new System.Drawing.Point(267, 44);
+            this.textShare.Location = new System.Drawing.Point(230, 44);
             this.textShare.Name = "textShare";
             this.textShare.ReadOnly = true;
             this.textShare.Size = new System.Drawing.Size(100, 23);
@@ -347,7 +372,7 @@
             this.panelCamera.Controls.Add(this.panelRStickAxis);
             this.panelCamera.Controls.Add(this.labelRightCurve);
             this.panelCamera.Controls.Add(this.labelRightDead);
-            this.panelCamera.Location = new System.Drawing.Point(538, 397);
+            this.panelCamera.Location = new System.Drawing.Point(457, 389);
             this.panelCamera.Name = "panelCamera";
             this.panelCamera.Size = new System.Drawing.Size(212, 93);
             this.panelCamera.TabIndex = 36;
@@ -359,7 +384,7 @@
             this.labelCamera.Name = "labelCamera";
             this.labelCamera.Size = new System.Drawing.Size(65, 19);
             this.labelCamera.TabIndex = 30;
-            this.labelCamera.Text = "label2";
+            this.labelCamera.Text = "camera";
             // 
             // numRSpeed
             // 
@@ -403,6 +428,7 @@
             // labelRightSpeed
             // 
             this.labelRightSpeed.AutoSize = true;
+            this.labelRightSpeed.ForeColor = System.Drawing.Color.White;
             this.labelRightSpeed.Location = new System.Drawing.Point(74, 64);
             this.labelRightSpeed.Name = "labelRightSpeed";
             this.labelRightSpeed.Size = new System.Drawing.Size(39, 15);
@@ -420,6 +446,7 @@
             // labelRightCurve
             // 
             this.labelRightCurve.AutoSize = true;
+            this.labelRightCurve.ForeColor = System.Drawing.Color.White;
             this.labelRightCurve.Location = new System.Drawing.Point(74, 35);
             this.labelRightCurve.Name = "labelRightCurve";
             this.labelRightCurve.Size = new System.Drawing.Size(38, 15);
@@ -429,6 +456,7 @@
             // labelRightDead
             // 
             this.labelRightDead.AutoSize = true;
+            this.labelRightDead.ForeColor = System.Drawing.Color.White;
             this.labelRightDead.Location = new System.Drawing.Point(74, 6);
             this.labelRightDead.Name = "labelRightDead";
             this.labelRightDead.Size = new System.Drawing.Size(59, 15);
@@ -437,7 +465,7 @@
             // 
             // textSquare
             // 
-            this.textSquare.Location = new System.Drawing.Point(727, 301);
+            this.textSquare.Location = new System.Drawing.Point(650, 297);
             this.textSquare.Name = "textSquare";
             this.textSquare.ReadOnly = true;
             this.textSquare.Size = new System.Drawing.Size(100, 23);
@@ -448,7 +476,7 @@
             // 
             // textCross
             // 
-            this.textCross.Location = new System.Drawing.Point(727, 265);
+            this.textCross.Location = new System.Drawing.Point(650, 265);
             this.textCross.Name = "textCross";
             this.textCross.ReadOnly = true;
             this.textCross.Size = new System.Drawing.Size(100, 23);
@@ -459,7 +487,7 @@
             // 
             // textCircle
             // 
-            this.textCircle.Location = new System.Drawing.Point(727, 213);
+            this.textCircle.Location = new System.Drawing.Point(648, 213);
             this.textCircle.Name = "textCircle";
             this.textCircle.ReadOnly = true;
             this.textCircle.Size = new System.Drawing.Size(100, 23);
@@ -470,7 +498,7 @@
             // 
             // textTriangle
             // 
-            this.textTriangle.Location = new System.Drawing.Point(728, 165);
+            this.textTriangle.Location = new System.Drawing.Point(648, 165);
             this.textTriangle.Name = "textTriangle";
             this.textTriangle.ReadOnly = true;
             this.textTriangle.Size = new System.Drawing.Size(100, 23);
@@ -481,7 +509,7 @@
             // 
             // textDpadLeft
             // 
-            this.textDpadLeft.Location = new System.Drawing.Point(11, 301);
+            this.textDpadLeft.Location = new System.Drawing.Point(11, 300);
             this.textDpadLeft.Name = "textDpadLeft";
             this.textDpadLeft.ReadOnly = true;
             this.textDpadLeft.Size = new System.Drawing.Size(100, 23);
@@ -492,7 +520,7 @@
             // 
             // textDpadDown
             // 
-            this.textDpadDown.Location = new System.Drawing.Point(12, 258);
+            this.textDpadDown.Location = new System.Drawing.Point(12, 257);
             this.textDpadDown.Name = "textDpadDown";
             this.textDpadDown.ReadOnly = true;
             this.textDpadDown.Size = new System.Drawing.Size(100, 23);
@@ -503,7 +531,7 @@
             // 
             // textDpadRight
             // 
-            this.textDpadRight.Location = new System.Drawing.Point(12, 208);
+            this.textDpadRight.Location = new System.Drawing.Point(12, 206);
             this.textDpadRight.Name = "textDpadRight";
             this.textDpadRight.ReadOnly = true;
             this.textDpadRight.Size = new System.Drawing.Size(100, 23);
@@ -535,7 +563,7 @@
             this.panelMovement.Controls.Add(this.textMoveRight);
             this.panelMovement.Controls.Add(this.picLStickUp);
             this.panelMovement.Controls.Add(this.textMoveForward);
-            this.panelMovement.Location = new System.Drawing.Point(12, 397);
+            this.panelMovement.Location = new System.Drawing.Point(12, 389);
             this.panelMovement.Name = "panelMovement";
             this.panelMovement.Size = new System.Drawing.Size(292, 93);
             this.panelMovement.TabIndex = 25;
@@ -547,12 +575,12 @@
             this.labelMovement.Name = "labelMovement";
             this.labelMovement.Size = new System.Drawing.Size(114, 19);
             this.labelMovement.TabIndex = 31;
-            this.labelMovement.Text = "label3";
+            this.labelMovement.Text = "movement";
             this.labelMovement.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // picLStickLeft
             // 
-            this.picLStickLeft.Image = global::ConsolePort.Properties.Resources.LStickLeft;
+            this.picLStickLeft.Image = global::DS4ConsolePort.Properties.Resources.LStickLeft;
             this.picLStickLeft.Location = new System.Drawing.Point(108, 31);
             this.picLStickLeft.Name = "picLStickLeft";
             this.picLStickLeft.Size = new System.Drawing.Size(24, 24);
@@ -573,7 +601,7 @@
             // 
             // picLStickDown
             // 
-            this.picLStickDown.Image = global::ConsolePort.Properties.Resources.LStickDown;
+            this.picLStickDown.Image = global::DS4ConsolePort.Properties.Resources.LStickDown;
             this.picLStickDown.Location = new System.Drawing.Point(132, 59);
             this.picLStickDown.Name = "picLStickDown";
             this.picLStickDown.Size = new System.Drawing.Size(24, 24);
@@ -594,7 +622,7 @@
             // 
             // picLStickRight
             // 
-            this.picLStickRight.Image = global::ConsolePort.Properties.Resources.LStickRight;
+            this.picLStickRight.Image = global::DS4ConsolePort.Properties.Resources.LStickRight;
             this.picLStickRight.Location = new System.Drawing.Point(156, 31);
             this.picLStickRight.Name = "picLStickRight";
             this.picLStickRight.Size = new System.Drawing.Size(24, 24);
@@ -615,7 +643,7 @@
             // 
             // picLStickUp
             // 
-            this.picLStickUp.Image = global::ConsolePort.Properties.Resources.LStickUp;
+            this.picLStickUp.Image = global::DS4ConsolePort.Properties.Resources.LStickUp;
             this.picLStickUp.Location = new System.Drawing.Point(132, 3);
             this.picLStickUp.Name = "picLStickUp";
             this.picLStickUp.Size = new System.Drawing.Size(24, 24);
@@ -636,7 +664,7 @@
             // 
             // textR2
             // 
-            this.textR2.Location = new System.Drawing.Point(581, 58);
+            this.textR2.Location = new System.Drawing.Point(540, 58);
             this.textR2.Name = "textR2";
             this.textR2.ReadOnly = true;
             this.textR2.Size = new System.Drawing.Size(100, 23);
@@ -647,7 +675,7 @@
             // 
             // textR1
             // 
-            this.textR1.Location = new System.Drawing.Point(727, 107);
+            this.textR1.Location = new System.Drawing.Point(648, 107);
             this.textR1.Name = "textR1";
             this.textR1.ReadOnly = true;
             this.textR1.Size = new System.Drawing.Size(100, 23);
@@ -658,7 +686,7 @@
             // 
             // textL2
             // 
-            this.textL2.Location = new System.Drawing.Point(161, 58);
+            this.textL2.Location = new System.Drawing.Point(128, 58);
             this.textL2.Name = "textL2";
             this.textL2.ReadOnly = true;
             this.textL2.Size = new System.Drawing.Size(100, 23);
@@ -680,8 +708,8 @@
             // 
             // picDS4
             // 
-            this.picDS4.Image = global::ConsolePort.Properties.Resources.DS4_Config;
-            this.picDS4.Location = new System.Drawing.Point(93, 53);
+            this.picDS4.Image = global::DS4ConsolePort.Properties.Resources.DS4_Config;
+            this.picDS4.Location = new System.Drawing.Point(55, 53);
             this.picDS4.Name = "picDS4";
             this.picDS4.Size = new System.Drawing.Size(657, 408);
             this.picDS4.TabIndex = 0;
@@ -689,20 +717,55 @@
             // 
             // tabAdvanced
             // 
+            this.tabAdvanced.Controls.Add(this.groupDS4CSettings);
+            this.tabAdvanced.Controls.Add(this.groupInteraction);
             this.tabAdvanced.Controls.Add(this.checkEnableAdvancedHaptics);
             this.tabAdvanced.Controls.Add(this.panelAdvancedHaptics);
-            this.tabAdvanced.Controls.Add(this.checkWindowAttached);
             this.tabAdvanced.Location = new System.Drawing.Point(4, 24);
             this.tabAdvanced.Name = "tabAdvanced";
-            this.tabAdvanced.Size = new System.Drawing.Size(842, 506);
+            this.tabAdvanced.Size = new System.Drawing.Size(764, 496);
             this.tabAdvanced.TabIndex = 2;
             this.tabAdvanced.Text = "advanced";
             this.tabAdvanced.UseVisualStyleBackColor = true;
             // 
+            // groupDS4CSettings
+            // 
+            this.groupDS4CSettings.Controls.Add(this.checkStartMinimized);
+            this.groupDS4CSettings.Controls.Add(this.checkCloseTray);
+            this.groupDS4CSettings.Controls.Add(this.checkMinTray);
+            this.groupDS4CSettings.Location = new System.Drawing.Point(14, 166);
+            this.groupDS4CSettings.Name = "groupDS4CSettings";
+            this.groupDS4CSettings.Size = new System.Drawing.Size(237, 99);
+            this.groupDS4CSettings.TabIndex = 27;
+            this.groupDS4CSettings.TabStop = false;
+            this.groupDS4CSettings.Text = "ds4consoleport settings";
+            // 
+            // checkCloseTray
+            // 
+            this.checkCloseTray.AutoSize = true;
+            this.checkCloseTray.Location = new System.Drawing.Point(6, 74);
+            this.checkCloseTray.Name = "checkCloseTray";
+            this.checkCloseTray.Size = new System.Drawing.Size(90, 19);
+            this.checkCloseTray.TabIndex = 1;
+            this.checkCloseTray.Text = "close to tray";
+            this.checkCloseTray.UseVisualStyleBackColor = true;
+            this.checkCloseTray.CheckedChanged += new System.EventHandler(this.checkCloseTray_CheckedChanged);
+            // 
+            // checkMinTray
+            // 
+            this.checkMinTray.AutoSize = true;
+            this.checkMinTray.Location = new System.Drawing.Point(6, 49);
+            this.checkMinTray.Name = "checkMinTray";
+            this.checkMinTray.Size = new System.Drawing.Size(112, 19);
+            this.checkMinTray.TabIndex = 0;
+            this.checkMinTray.Text = "minimize to tray";
+            this.checkMinTray.UseVisualStyleBackColor = true;
+            this.checkMinTray.CheckedChanged += new System.EventHandler(this.checkMinTray_CheckedChanged);
+            // 
             // checkEnableAdvancedHaptics
             // 
             this.checkEnableAdvancedHaptics.AutoSize = true;
-            this.checkEnableAdvancedHaptics.Location = new System.Drawing.Point(14, 343);
+            this.checkEnableAdvancedHaptics.Location = new System.Drawing.Point(276, 13);
             this.checkEnableAdvancedHaptics.Name = "checkEnableAdvancedHaptics";
             this.checkEnableAdvancedHaptics.Size = new System.Drawing.Size(156, 19);
             this.checkEnableAdvancedHaptics.TabIndex = 25;
@@ -710,13 +773,81 @@
             this.checkEnableAdvancedHaptics.UseVisualStyleBackColor = true;
             this.checkEnableAdvancedHaptics.CheckedChanged += new System.EventHandler(this.checkEnableAdvancedHaptics_CheckedChanged);
             // 
+            // groupInteraction
+            // 
+            this.groupInteraction.Controls.Add(this.groupInteractionSettings);
+            this.groupInteraction.Controls.Add(this.checkWindowAttached);
+            this.groupInteraction.Location = new System.Drawing.Point(14, 13);
+            this.groupInteraction.Name = "groupInteraction";
+            this.groupInteraction.Size = new System.Drawing.Size(237, 147);
+            this.groupInteraction.TabIndex = 26;
+            this.groupInteraction.TabStop = false;
+            this.groupInteraction.Text = "interaction";
+            // 
+            // groupInteractionSettings
+            // 
+            this.groupInteractionSettings.Controls.Add(this.checkDisableBG);
+            this.groupInteractionSettings.Controls.Add(this.checkSendMouseDirect);
+            this.groupInteractionSettings.Controls.Add(this.checkSendKeysDirect);
+            this.groupInteractionSettings.Location = new System.Drawing.Point(6, 47);
+            this.groupInteractionSettings.Name = "groupInteractionSettings";
+            this.groupInteractionSettings.Size = new System.Drawing.Size(224, 94);
+            this.groupInteractionSettings.TabIndex = 27;
+            this.groupInteractionSettings.TabStop = false;
+            this.groupInteractionSettings.Text = "settings";
+            // 
+            // checkDisableBG
+            // 
+            this.checkDisableBG.AutoSize = true;
+            this.checkDisableBG.Location = new System.Drawing.Point(7, 72);
+            this.checkDisableBG.Name = "checkDisableBG";
+            this.checkDisableBG.Size = new System.Drawing.Size(179, 19);
+            this.checkDisableBG.TabIndex = 16;
+            this.checkDisableBG.Text = "disable when wow not found";
+            this.checkDisableBG.UseVisualStyleBackColor = true;
+            this.checkDisableBG.CheckedChanged += new System.EventHandler(this.checkDisableBG_CheckedChanged);
+            // 
+            // checkSendMouseDirect
+            // 
+            this.checkSendMouseDirect.AutoSize = true;
+            this.checkSendMouseDirect.Location = new System.Drawing.Point(7, 47);
+            this.checkSendMouseDirect.Name = "checkSendMouseDirect";
+            this.checkSendMouseDirect.Size = new System.Drawing.Size(206, 19);
+            this.checkSendMouseDirect.TabIndex = 15;
+            this.checkSendMouseDirect.Text = "send mouse clicks directly to wow";
+            this.checkSendMouseDirect.UseVisualStyleBackColor = true;
+            this.checkSendMouseDirect.CheckedChanged += new System.EventHandler(this.checkSendMouseDirect_CheckedChanged);
+            // 
+            // checkSendKeysDirect
+            // 
+            this.checkSendKeysDirect.AutoSize = true;
+            this.checkSendKeysDirect.Enabled = false;
+            this.checkSendKeysDirect.Location = new System.Drawing.Point(7, 22);
+            this.checkSendKeysDirect.Name = "checkSendKeysDirect";
+            this.checkSendKeysDirect.Size = new System.Drawing.Size(193, 19);
+            this.checkSendKeysDirect.TabIndex = 14;
+            this.checkSendKeysDirect.Text = "send keystrokes directly to wow";
+            this.checkSendKeysDirect.UseVisualStyleBackColor = true;
+            this.checkSendKeysDirect.CheckedChanged += new System.EventHandler(this.checkSendKeysDirect_CheckedChanged);
+            // 
+            // checkWindowAttached
+            // 
+            this.checkWindowAttached.AutoSize = true;
+            this.checkWindowAttached.Enabled = false;
+            this.checkWindowAttached.Location = new System.Drawing.Point(6, 22);
+            this.checkWindowAttached.Name = "checkWindowAttached";
+            this.checkWindowAttached.Size = new System.Drawing.Size(103, 19);
+            this.checkWindowAttached.TabIndex = 13;
+            this.checkWindowAttached.Text = "window found";
+            this.checkWindowAttached.UseVisualStyleBackColor = true;
+            // 
             // panelAdvancedHaptics
             // 
             this.panelAdvancedHaptics.Controls.Add(this.groupHapticStatus);
             this.panelAdvancedHaptics.Controls.Add(this.groupHapticSettings);
-            this.panelAdvancedHaptics.Location = new System.Drawing.Point(3, 365);
+            this.panelAdvancedHaptics.Location = new System.Drawing.Point(257, 35);
             this.panelAdvancedHaptics.Name = "panelAdvancedHaptics";
-            this.panelAdvancedHaptics.Size = new System.Drawing.Size(424, 138);
+            this.panelAdvancedHaptics.Size = new System.Drawing.Size(420, 138);
             this.panelAdvancedHaptics.TabIndex = 24;
             // 
             // groupHapticStatus
@@ -724,9 +855,9 @@
             this.groupHapticStatus.Controls.Add(this.checkHapticsAttached);
             this.groupHapticStatus.Controls.Add(this.checkHapticsUserLoggedIn);
             this.groupHapticStatus.Controls.Add(this.labelPlayerInfo);
-            this.groupHapticStatus.Location = new System.Drawing.Point(5, 3);
+            this.groupHapticStatus.Location = new System.Drawing.Point(10, 3);
             this.groupHapticStatus.Name = "groupHapticStatus";
-            this.groupHapticStatus.Size = new System.Drawing.Size(200, 122);
+            this.groupHapticStatus.Size = new System.Drawing.Size(183, 122);
             this.groupHapticStatus.TabIndex = 25;
             this.groupHapticStatus.TabStop = false;
             this.groupHapticStatus.Text = "HapticStatus";
@@ -768,9 +899,9 @@
             this.groupHapticSettings.Controls.Add(this.checkRumbleTarget);
             this.groupHapticSettings.Controls.Add(this.checkLightbarHealth);
             this.groupHapticSettings.Controls.Add(this.checkLightbarClass);
-            this.groupHapticSettings.Location = new System.Drawing.Point(211, 3);
+            this.groupHapticSettings.Location = new System.Drawing.Point(199, 3);
             this.groupHapticSettings.Name = "groupHapticSettings";
-            this.groupHapticSettings.Size = new System.Drawing.Size(200, 122);
+            this.groupHapticSettings.Size = new System.Drawing.Size(210, 122);
             this.groupHapticSettings.TabIndex = 24;
             this.groupHapticSettings.TabStop = false;
             this.groupHapticSettings.Text = "HapticSettings";
@@ -819,17 +950,6 @@
             this.checkLightbarClass.UseVisualStyleBackColor = true;
             this.checkLightbarClass.CheckedChanged += new System.EventHandler(this.checkLightbarClass_CheckedChanged);
             // 
-            // checkWindowAttached
-            // 
-            this.checkWindowAttached.AutoSize = true;
-            this.checkWindowAttached.Enabled = false;
-            this.checkWindowAttached.Location = new System.Drawing.Point(14, 13);
-            this.checkWindowAttached.Name = "checkWindowAttached";
-            this.checkWindowAttached.Size = new System.Drawing.Size(103, 19);
-            this.checkWindowAttached.TabIndex = 13;
-            this.checkWindowAttached.Text = "window found";
-            this.checkWindowAttached.UseVisualStyleBackColor = true;
-            // 
             // menuNotify
             // 
             this.menuNotify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -858,10 +978,21 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // checkStartMinimized
+            // 
+            this.checkStartMinimized.AutoSize = true;
+            this.checkStartMinimized.Location = new System.Drawing.Point(6, 24);
+            this.checkStartMinimized.Name = "checkStartMinimized";
+            this.checkStartMinimized.Size = new System.Drawing.Size(108, 19);
+            this.checkStartMinimized.TabIndex = 2;
+            this.checkStartMinimized.Text = "start minimized";
+            this.checkStartMinimized.UseVisualStyleBackColor = true;
+            this.checkStartMinimized.CheckedChanged += new System.EventHandler(this.checkStartMinimized_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(856, 566);
+            this.ClientSize = new System.Drawing.Size(779, 553);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusBar);
             this.DoubleBuffered = true;
@@ -879,9 +1010,10 @@
             this.tabControl.ResumeLayout(false);
             this.tabConsolePort.ResumeLayout(false);
             this.tabConsolePort.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picConsolePort)).EndInit();
             this.tabKeybinds.ResumeLayout(false);
             this.tabKeybinds.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picResetBinds)).EndInit();
             this.panelCamera.ResumeLayout(false);
             this.panelCamera.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRSpeed)).EndInit();
@@ -896,6 +1028,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.picDS4)).EndInit();
             this.tabAdvanced.ResumeLayout(false);
             this.tabAdvanced.PerformLayout();
+            this.groupDS4CSettings.ResumeLayout(false);
+            this.groupDS4CSettings.PerformLayout();
+            this.groupInteraction.ResumeLayout(false);
+            this.groupInteraction.PerformLayout();
+            this.groupInteractionSettings.ResumeLayout(false);
+            this.groupInteractionSettings.PerformLayout();
             this.panelAdvancedHaptics.ResumeLayout(false);
             this.groupHapticStatus.ResumeLayout(false);
             this.groupHapticStatus.PerformLayout();
@@ -958,7 +1096,7 @@
         private System.Windows.Forms.CheckBox checkRumbleTarget;
         private System.Windows.Forms.CheckBox checkLightbarHealth;
         private System.Windows.Forms.CheckBox checkLightbarClass;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picConsolePort;
         private System.Windows.Forms.CheckBox checkEnableAdvancedHaptics;
         private System.Windows.Forms.NumericUpDown numRSpeed;
         private System.Windows.Forms.NumericUpDown numRCurve;
@@ -977,6 +1115,16 @@
         private System.Windows.Forms.ToolStripMenuItem dS4ConsolePortToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.PictureBox picResetBinds;
+        private System.Windows.Forms.GroupBox groupInteraction;
+        private System.Windows.Forms.GroupBox groupInteractionSettings;
+        private System.Windows.Forms.CheckBox checkDisableBG;
+        private System.Windows.Forms.CheckBox checkSendMouseDirect;
+        private System.Windows.Forms.CheckBox checkSendKeysDirect;
+        private System.Windows.Forms.GroupBox groupDS4CSettings;
+        private System.Windows.Forms.CheckBox checkCloseTray;
+        private System.Windows.Forms.CheckBox checkMinTray;
+        private System.Windows.Forms.CheckBox checkStartMinimized;
     }
 }
 

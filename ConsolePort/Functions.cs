@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     public static class Functions
     {

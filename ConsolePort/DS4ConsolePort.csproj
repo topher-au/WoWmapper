@@ -7,8 +7,8 @@
     <ProjectGuid>{7522EE2C-3977-4FFA-B6AA-4990D4D0BF5F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ConsolePort</RootNamespace>
-    <AssemblyName>ConsolePort</AssemblyName>
+    <RootNamespace>DS4ConsolePort</RootNamespace>
+    <AssemblyName>DS4ConsolePort</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -33,6 +33,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\WoWConsolePort.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -231,6 +234,7 @@
     <None Include="Resources\WoWConsolePort.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Command-Reset-24.png" />
     <Content Include="Resources\CONSOLEPORTLOGO.png" />
     <None Include="Resources\left touch.png" />
     <None Include="Resources\right touch.png" />

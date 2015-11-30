@@ -78,7 +78,7 @@ namespace ConsolePort.AdvancedHaptics
 
             float lastHealthPercent = 100;
 
-            while (true)
+            while (rumbleThread.ThreadState == System.Threading.ThreadState.Running)
             {
                 if (wowDataReader != null && wowDataReader.Attached)
                 {
@@ -145,7 +145,7 @@ namespace ConsolePort.AdvancedHaptics
         {
             byte[] lastTarget = new byte[16];
 
-            while (true)
+            while (hapticThread.ThreadState == System.Threading.ThreadState.Running)
             {
                 if (hapticDevice != null && Enabled)
                 {

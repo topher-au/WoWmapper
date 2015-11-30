@@ -1,4 +1,4 @@
-﻿namespace ConsolePort
+﻿namespace DS4ConsolePort
 {
     partial class AdvHapWarningForm
     {

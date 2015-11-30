@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     public partial class AdvHapWarningForm : Form
     {

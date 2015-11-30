@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     internal static class Program
     {
@@ -19,11 +19,11 @@ namespace ConsolePort
                 return;
             }
 
-            var ass = Assembly.GetEntryAssembly().GetName().Version;
-            if (new Version(Properties.Settings.Default.SettingsVersion) < ass)
+            var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
+            if (new Version(Properties.Settings.Default.SettingsVersion) < assemblyVersion)
             {
                 Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.SettingsVersion = ass.ToString();
+                Properties.Settings.Default.SettingsVersion = assemblyVersion.ToString();
                 Properties.Settings.Default.Save();
             }
 

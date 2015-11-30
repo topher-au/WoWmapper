@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     public partial class MainForm : Form
     {
@@ -73,11 +73,22 @@ namespace ConsolePort
             comboTouchMode.Items[0] = Properties.Resources.STRING_TOUCHPAD_MOUSE;
             comboTouchMode.Items[1] = Properties.Resources.STRING_TOUCHPAD_BUTTONS;
             comboTouchMode.Items[2] = Properties.Resources.STRING_TOUCHPAD_SHARE_OPTIONS;
+            checkMinTray.Text = Properties.Resources.STRING_SETTING_MIN_TRAY;
+            checkCloseTray.Text = Properties.Resources.STRING_SETTING_CLOSE_TRAY;
+            checkSendKeysDirect.Text = Properties.Resources.STRING_SETTING_KEY_DIRECT;
+            checkSendMouseDirect.Text = Properties.Resources.STRING_SETTING_MOUSE_DIRECT;
+            checkDisableBG.Text = Properties.Resources.STRING_SETTING_INPUT_BGDISABLE;
+            groupInteraction.Text = Properties.Resources.STRING_INTERACTION;
+            groupInteractionSettings.Text = Properties.Resources.STRING_INTERACTION_SETTINGS;
+            groupDS4CSettings.Text = Properties.Resources.STRING_DS4CSETTINGS;
+            checkStartMinimized.Text = Properties.Resources.STRING_SETTING_START_MINIMIZED;
             picLStickUp.Image = Properties.Resources.LStickUp;
             picLStickDown.Image = Properties.Resources.LStickDown;
             picLStickLeft.Image = Properties.Resources.LStickLeft;
             picLStickRight.Image = Properties.Resources.LStickRight;
             picDS4.Image = Properties.Resources.DS4_Config;
+
+            new ToolTip().SetToolTip(picResetBinds, Properties.Resources.STRING_TOOLTIP_RESET_BINDS);
 
             notifyIcon.Visible = true;
             notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
@@ -115,13 +126,21 @@ namespace ConsolePort
             intRightCurve = Properties.Settings.Default.RStickCurve;
             intRightDead = Properties.Settings.Default.RStickDeadzone;
             intRightSpeed = Properties.Settings.Default.RStickSpeed;
+            checkCloseTray.Checked = Properties.Settings.Default.CloseToTray;
+            checkMinTray.Checked = Properties.Settings.Default.MinToTray;
+            checkDisableBG.Checked = Properties.Settings.Default.InactiveDisable;
+            checkSendKeysDirect.Checked = Properties.Settings.Default.SendKeysDirect;
+            checkSendMouseDirect.Checked = Properties.Settings.Default.SendMouseDirect;
+            checkStartMinimized.Checked = Properties.Settings.Default.StartMinimized;
 
             wowInteraction = new WoWInteraction(settings.KeyBinds);
 
             movementThread = new Thread(MovementThread);
+            movementThread.Priority = ThreadPriority.Highest;
             movementThread.Start();
 
-            mouseThread = new Thread(CursorThread);
+            mouseThread = new Thread(MouseThread);
+            mouseThread.Priority = ThreadPriority.Highest;
             mouseThread.Start();
 
             numRCurve.Value = intRightCurve;
@@ -160,13 +179,13 @@ namespace ConsolePort
                 settings.KeyBinds.FromName(bindBox.Tag.ToString()).Key.Value);
         }
 
-        private void CursorThread()
+        private void MouseThread()
         {
             bool movingX = false;
             bool movingY = false;
-            while (true)
+            while (mouseThread.ThreadState == System.Threading.ThreadState.Running)
             {
-                if (wowInteraction.IsAttached && DS4 != null)
+                if ((wowInteraction.IsAttached || !Properties.Settings.Default.InactiveDisable) && DS4 != null)
                 {
                     var rightStick = DS4.GetStickPoint(DS4Stick.Right);
                     var curPos = Cursor.Position;
@@ -337,11 +356,11 @@ namespace ConsolePort
                         break;
 
                     case DS4Button.L3:
-                        MouseLeftClick();
+                        wowInteraction.DoMouseDown(MouseButtons.Left);
                         break;
 
                     case DS4Button.R3:
-                        MouseRightClick();
+                        wowInteraction.DoMouseDown(MouseButtons.Right);
                         break;
                 }
         }
@@ -460,6 +479,14 @@ namespace ConsolePort
                         wowInteraction.SendKeyUp(settings.KeyBinds.FromName("Options").Key.Value);
                         break;
 
+                    case DS4Button.L3:
+                        wowInteraction.DoMouseUp(MouseButtons.Left);
+                        break;
+
+                    case DS4Button.R3:
+                        wowInteraction.DoMouseUp(MouseButtons.Right);
+                        break;
+
                     case DS4Button.TouchLeft:
                         if (touchState == 1)
                         {
@@ -506,12 +533,19 @@ namespace ConsolePort
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            WindowState = FormWindowState.Minimized;
-            e.Cancel = true;
+            // close to tray
+            if(e.CloseReason == CloseReason.UserClosing && Properties.Settings.Default.CloseToTray)
+            {
+                WindowState = FormWindowState.Minimized;
+                e.Cancel = true;
+                return;
+            }
+            ExitApp();
         }
 
         private void ExitApp()
         {
+            Hide();
             notifyIcon.Visible = false;
             movementThread.Abort();
             mouseThread.Abort();
@@ -520,7 +554,6 @@ namespace ConsolePort
 
             DS4.Dispose();
             wowInteraction.Dispose();
-            Close();
             Application.Exit();
         }
 
@@ -534,6 +567,9 @@ namespace ConsolePort
 
             RefreshKeyBindings();
             UpdateHapticTab();
+
+            if(Properties.Settings.Default.StartMinimized) WindowState = FormWindowState.Minimized;
+            if(Properties.Settings.Default.MinToTray) ShowInTaskbar = false;
         }
 
         private int lastTouchX, lastTouchY;
@@ -561,7 +597,7 @@ namespace ConsolePort
 
         private void MovementThread()
         {
-            while (true)
+            while (movementThread.ThreadState == ThreadState.Running)
             {
                 if (wowInteraction.IsAttached && DS4 != null)
                 {
@@ -754,7 +790,7 @@ namespace ConsolePort
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized)
+            if (WindowState == FormWindowState.Minimized && Properties.Settings.Default.MinToTray)
             {
                 // Minimize to tray
                 ShowInTaskbar = false;
@@ -769,6 +805,55 @@ namespace ConsolePort
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitApp();
+        }
+
+        private void picResetBinds_Click(object sender, EventArgs e)
+        {
+            var wMB = MessageBox.Show(Properties.Resources.STRING_WARN_RESET_BINDS, "DS4ConsolePort", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (wMB == DialogResult.No) return;
+            settings.KeyBinds.Bindings = Defaults.Bindings;
+            settings.Save();
+            RefreshKeyBindings();
+        }
+
+        private void checkMinTray_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.MinToTray = checkMinTray.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkCloseTray_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.CloseToTray = checkCloseTray.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkSendKeysDirect_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SendKeysDirect = checkSendKeysDirect.Checked;
+            Properties.Settings.Default.Save();
+            if(wowInteraction != null)
+                wowInteraction.PostMessageKeys = checkSendKeysDirect.Checked;
+        }
+
+        private void checkSendMouseDirect_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SendMouseDirect = checkSendMouseDirect.Checked;
+            Properties.Settings.Default.Save();
+            if (wowInteraction != null)
+                wowInteraction.PostMessageMouse = checkSendMouseDirect.Checked;
+        }
+
+        private void checkDisableBG_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.InactiveDisable = checkDisableBG.Checked;
+            Properties.Settings.Default.Save();
+        }
+
+        private void checkStartMinimized_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.StartMinimized = checkStartMinimized.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void numRDeadzone_ValueChanged(object sender, EventArgs e)

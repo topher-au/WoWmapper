@@ -13,17 +13,17 @@ namespace ConsolePort.WoWData
         private IntPtr PlayerBase;
 
         public bool Attached { get; private set; }
-        private Thread watcher;
+        private Thread wowWatcher;
 
         public DataReader()
         {
-            watcher = new Thread(WoWWatcher);
-            watcher.Start();
+            wowWatcher = new Thread(WoWWatcher);
+            wowWatcher.Start();
         }
 
         public void Dispose()
         {
-            watcher.Abort();
+            wowWatcher.Abort();
             if (wowMemory != null)
             {
                 wowMemory.Dispose();
@@ -32,7 +32,7 @@ namespace ConsolePort.WoWData
 
         public void WoWWatcher()
         {
-            while (true)
+            while (wowWatcher.ThreadState == System.Threading.ThreadState.Running)
             {
                 if (wowMemory == null)
                 {

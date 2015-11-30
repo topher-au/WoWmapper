@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     public partial class BindKeyForm : Form
     {

@@ -322,4 +322,40 @@
   <data name="STRING_NOTIFY_TOOLTIP" xml:space="preserve">
     <value>DS4ConsolePort</value>
   </data>
+  <data name="Reset_Binds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Command-Reset-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_DS4CSETTINGS" xml:space="preserve">
+    <value>DS4C Settings</value>
+  </data>
+  <data name="STRING_INTERACTION" xml:space="preserve">
+    <value>Interaction</value>
+  </data>
+  <data name="STRING_INTERACTION_SETTINGS" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="STRING_SETTING_CLOSE_TRAY" xml:space="preserve">
+    <value>Close to tray</value>
+  </data>
+  <data name="STRING_SETTING_INPUT_BGDISABLE" xml:space="preserve">
+    <value>Disable when WoW not running</value>
+  </data>
+  <data name="STRING_SETTING_KEY_DIRECT" xml:space="preserve">
+    <value>Send keystrokes directly to WoW</value>
+  </data>
+  <data name="STRING_SETTING_MIN_TRAY" xml:space="preserve">
+    <value>Minimize to tray</value>
+  </data>
+  <data name="STRING_SETTING_MOUSE_DIRECT" xml:space="preserve">
+    <value>Send mouse clicks directly to WoW</value>
+  </data>
+  <data name="STRING_TOOLTIP_RESET_BINDS" xml:space="preserve">
+    <value>Reset the keybindings to default</value>
+  </data>
+  <data name="STRING_WARN_RESET_BINDS" xml:space="preserve">
+    <value>Your keybindings will be reset to default. Are you sure?</value>
+  </data>
+  <data name="STRING_SETTING_START_MINIMIZED" xml:space="preserve">
+    <value>Start minimized</value>
+  </data>
 </root>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ConsolePort.Properties {
+namespace DS4ConsolePort.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ConsolePort.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ConsolePort.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DS4ConsolePort.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -343,6 +343,16 @@ namespace ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Reset_Binds {
+            get {
+                object obj = ResourceManager.GetObject("Reset_Binds", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RStick {
             get {
                 object obj = ResourceManager.GetObject("RStick", resourceCulture);
@@ -495,6 +505,15 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DS4C Settings.
+        /// </summary>
+        internal static string STRING_DS4CSETTINGS {
+            get {
+                return ResourceManager.GetString("STRING_DS4CSETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced haptics attached.
         /// </summary>
         internal static string STRING_HAPTIC_ATTACHED {
@@ -576,6 +595,24 @@ namespace ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interaction.
+        /// </summary>
+        internal static string STRING_INTERACTION {
+            get {
+                return ResourceManager.GetString("STRING_INTERACTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string STRING_INTERACTION_SETTINGS {
+            get {
+                return ResourceManager.GetString("STRING_INTERACTION_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
         internal static string STRING_NOTIFY_MENU_EXIT {
@@ -590,6 +627,60 @@ namespace ConsolePort.Properties {
         internal static string STRING_NOTIFY_TOOLTIP {
             get {
                 return ResourceManager.GetString("STRING_NOTIFY_TOOLTIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close to tray.
+        /// </summary>
+        internal static string STRING_SETTING_CLOSE_TRAY {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_CLOSE_TRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable when WoW not running.
+        /// </summary>
+        internal static string STRING_SETTING_INPUT_BGDISABLE {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_INPUT_BGDISABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send keystrokes directly to WoW.
+        /// </summary>
+        internal static string STRING_SETTING_KEY_DIRECT {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_KEY_DIRECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize to tray.
+        /// </summary>
+        internal static string STRING_SETTING_MIN_TRAY {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_MIN_TRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send mouse clicks directly to WoW.
+        /// </summary>
+        internal static string STRING_SETTING_MOUSE_DIRECT {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_MOUSE_DIRECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start minimized.
+        /// </summary>
+        internal static string STRING_SETTING_START_MINIMIZED {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_START_MINIMIZED", resourceCulture);
             }
         }
         
@@ -617,6 +708,15 @@ namespace ConsolePort.Properties {
         internal static string STRING_TAB_KEYBINDS {
             get {
                 return ResourceManager.GetString("STRING_TAB_KEYBINDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset the keybindings to default.
+        /// </summary>
+        internal static string STRING_TOOLTIP_RESET_BINDS {
+            get {
+                return ResourceManager.GetString("STRING_TOOLTIP_RESET_BINDS", resourceCulture);
             }
         }
         
@@ -653,6 +753,15 @@ namespace ConsolePort.Properties {
         internal static string STRING_TOUCHPAD_SHARE_OPTIONS {
             get {
                 return ResourceManager.GetString("STRING_TOUCHPAD_SHARE_OPTIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your keybindings will be reset to default. Are you sure?.
+        /// </summary>
+        internal static string STRING_WARN_RESET_BINDS {
+            get {
+                return ResourceManager.GetString("STRING_WARN_RESET_BINDS", resourceCulture);
             }
         }
         

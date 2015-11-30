@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace ConsolePort
+namespace DS4ConsolePort
 {
     [XmlType("Settings")]
     public class Settings
@@ -132,10 +132,10 @@ namespace ConsolePort
             new Binding("DpadDown", DS4Button.DpadDown, Keys.F3),
             new Binding("DpadLeft", DS4Button.DpadLeft, Keys.F2),
             new Binding("DpadRight", DS4Button.DpadRight, Keys.F4),
-            new Binding("L1", DS4Button.L1, Keys.F7),
+            new Binding("L1", DS4Button.L1, Keys.LShiftKey),
             new Binding("R1", DS4Button.R1, Keys.F8),
-            new Binding("L2", DS4Button.L2, Keys.LShiftKey),
-            new Binding("R2", DS4Button.R2, Keys.LControlKey),
+            new Binding("L2", DS4Button.L2, Keys.LControlKey),
+            new Binding("R2", DS4Button.R2, Keys.F7),
             new Binding("Share", DS4Button.Share, Keys.F6),
             new Binding("Options", DS4Button.Options, Keys.F5),
             new Binding("PS", DS4Button.PS, Keys.Multiply),
