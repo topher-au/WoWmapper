@@ -170,7 +170,7 @@ namespace DS4ConsolePort
             return (IntPtr)((HiWord << 16) | (LoWord & 0xFFFF));
         }
 
-        public void SendClick(MouseButton Button)
+        public void SendClick(MouseButtons Button)
         {
             Rectangle wowRect = new Rectangle();
             GetWindowRect(wowHandle, wowRect);
@@ -180,7 +180,7 @@ namespace DS4ConsolePort
 
             switch (Button)
             {
-                case MouseButton.Left:
+                case MouseButtons.Left:
                     if (PostMessageMouse)
                     {
                         PostMessage(wowHandle, WM_LBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
@@ -192,7 +192,7 @@ namespace DS4ConsolePort
                     }
                     break;
 
-                case MouseButton.Right:
+                case MouseButtons.Right:
                     if (PostMessageMouse)
                     {
                         //PostMessage(wowHandle, WM_RBUTTONDOWN, (IntPtr)1, MakeLParam(relX, relY));
@@ -206,72 +206,6 @@ namespace DS4ConsolePort
             }
         }
 
-        public enum MouseButton
-        {
-            Left,
-            Right
-        }
-
-        public void Move(Direction Dir)
-        {
-            switch (Dir)
-            {
-                case Direction.Forward:
-                    SendKeyDown(bindings.FromName("LStickUp").Key.Value);
-                    SendKeyUp(bindings.FromName("LStickDown").Key.Value);
-                    moveKeys[(int)Direction.Forward] = true;
-                    moveKeys[(int)Direction.Backward] = false;
-                    break;
-
-                case Direction.Backward:
-                    SendKeyDown(bindings.FromName("LStickDown").Key.Value);
-                    SendKeyUp(bindings.FromName("LStickUp").Key.Value);
-                    moveKeys[(int)Direction.Backward] = true;
-                    moveKeys[(int)Direction.Forward] = false;
-                    break;
-
-                case Direction.Left:
-                    SendKeyDown(bindings.FromName("LStickLeft").Key.Value);
-                    SendKeyUp(bindings.FromName("LStickRight").Key.Value);
-                    moveKeys[(int)Direction.Left] = true;
-                    moveKeys[(int)Direction.Right] = false;
-                    break;
-
-                case Direction.Right:
-                    SendKeyDown(bindings.FromName("LStickRight").Key.Value);
-                    SendKeyUp(bindings.FromName("LStickLeft").Key.Value);
-                    moveKeys[(int)Direction.Right] = true;
-                    moveKeys[(int)Direction.Left] = false;
-                    break;
-
-                case Direction.StopX:
-                    if (moveKeys[(int)Direction.Left])
-                    {
-                        SendKeyUp(bindings.FromName("LStickLeft").Key.Value);
-                        moveKeys[(int)Direction.Left] = false;
-                    }
-                    if (moveKeys[(int)Direction.Right])
-                    {
-                        SendKeyUp(bindings.FromName("LStickRight").Key.Value);
-                        moveKeys[(int)Direction.Right] = false;
-                    }
-                    break;
-
-                case Direction.StopY:
-                    if (moveKeys[(int)Direction.Forward])
-                    {
-                        SendKeyUp(bindings.FromName("LStickUp").Key.Value);
-                        moveKeys[(int)Direction.Forward] = false;
-                    }
-                    if (moveKeys[(int)Direction.Backward])
-                    {
-                        SendKeyUp(bindings.FromName("LStickDown").Key.Value);
-                        moveKeys[(int)Direction.Backward] = false;
-                    }
-                    break;
-            }
-        }
-
         public enum Direction
         {
             Forward,
@@ -280,6 +214,13 @@ namespace DS4ConsolePort
             Right,
             StopX,
             StopY
+        }
+
+        public static class MoveBindName {
+            public static string Forward = "LStickUp";
+            public static string Backward = "LStickDown";
+            public static string Left = "LStickLeft";
+            public static string Right = "LStickRight";
         }
     }
 }

@@ -20,6 +20,7 @@ namespace DS4ConsolePort
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
         private Haptics advHaptics;
+        bool[] moveKeys = new bool[4];
 
         private DS4 DS4;
 
@@ -157,12 +158,12 @@ namespace DS4ConsolePort
 
         public void MouseLeftClick()
         {
-            wowInteraction.SendClick(WoWInteraction.MouseButton.Left);
+            wowInteraction.SendClick(MouseButtons.Left);
         }
 
         public void MouseRightClick()
         {
-            wowInteraction.SendClick(WoWInteraction.MouseButton.Right);
+            wowInteraction.SendClick(MouseButtons.Right);
         }
 
         private void BindBox_DoubleClick(object sender, EventArgs e)
@@ -271,9 +272,20 @@ namespace DS4ConsolePort
             if (BindForm.DialogResult == DialogResult.OK)
             {
                 var bindKey = BindForm.Key;
+                var swapWith = BindForm.SwapWith;
+                if(swapWith != string.Empty)
+                {
+                    var swapBind = settings.KeyBinds.FromName(swapWith);
+                    var oldBind = settings.KeyBinds.FromName(BindBox.Tag.ToString());
+                    if(!swapBind.Equals(default(Binding)))
+                    {
+                        settings.KeyBinds.Update(swapBind.Name, oldBind.Key.Value);
+                    }
+                }
                 BindBox.Text = bindKey.ToString();
                 settings.KeyBinds.Update(BindBox.Tag.ToString(), bindKey);
                 settings.Save();
+                RefreshKeyBindings();
             }
         }
 
@@ -382,7 +394,7 @@ namespace DS4ConsolePort
             switch (touchState)
             {
                 case 0: // Mouse control
-                    wowInteraction.SendClick(WoWInteraction.MouseButton.Left);
+                    wowInteraction.SendClick(MouseButtons.Left);
                     break;
 
                 case 1: // Touch left
@@ -400,7 +412,7 @@ namespace DS4ConsolePort
             switch (touchState)
             {
                 case 0: // Mouse control
-                    wowInteraction.SendClick(WoWInteraction.MouseButton.Right);
+                    wowInteraction.SendClick(MouseButtons.Right);
                     break;
 
                 case 1: // Touch right
@@ -597,42 +609,67 @@ namespace DS4ConsolePort
 
         private void MovementThread()
         {
+            
             while (movementThread.ThreadState == ThreadState.Running)
             {
                 if (wowInteraction.IsAttached && DS4 != null)
                 {
+                    bool[] thisMove = new bool[4];
                     var leftStick = DS4.GetStickPoint(DS4Stick.Left);
                     if (leftStick.Y < -40)
                     {
-                        wowInteraction.Move(WoWInteraction.Direction.Forward);
+                        thisMove[(int)WoWInteraction.Direction.Forward] = true;
                     }
 
                     if (leftStick.Y > 40)
                     {
-                        wowInteraction.Move(WoWInteraction.Direction.Backward);
+                        thisMove[(int)WoWInteraction.Direction.Backward] = true;
                     }
 
                     if (leftStick.X < -40)
                     {
-                        wowInteraction.Move(WoWInteraction.Direction.Left);
+                        thisMove[(int)WoWInteraction.Direction.Left] = true;
                     }
 
                     if (leftStick.X > 40)
                     {
-                        wowInteraction.Move(WoWInteraction.Direction.Right);
+                        thisMove[(int)WoWInteraction.Direction.Right] = true;
                     }
 
-                    if (leftStick.Y > -40)
-                        if (leftStick.Y < 40)
-                            wowInteraction.Move(WoWInteraction.Direction.StopY);
-
-                    if (leftStick.X > -40)
-                        if (leftStick.X < 40)
-                            wowInteraction.Move(WoWInteraction.Direction.StopX);
+                    for (int i = 0; i < 4; i++){
+                        if(thisMove[i] && !moveKeys[i])
+                        {
+                            // send key down
+                            wowInteraction.SendKeyDown(settings.KeyBinds.FromName(GetKeyName(i)).Key.Value);
+                            moveKeys[i] = true;
+                        }
+                        if(!thisMove[i] && moveKeys[i])
+                        {
+                            // send key up
+                            wowInteraction.SendKeyUp(settings.KeyBinds.FromName(GetKeyName(i)).Key.Value);
+                            moveKeys[i] = false;
+                        }
+                    }
                 }
 
                 Thread.Sleep(10);
             }
+        }
+
+        private string GetKeyName(int i)
+        {
+            switch(i)
+            {
+                case 0:
+                    return WoWInteraction.MoveBindName.Forward;
+                case 1:
+                    return WoWInteraction.MoveBindName.Backward;
+                case 2:
+                    return WoWInteraction.MoveBindName.Left;
+                case 3:
+                    return WoWInteraction.MoveBindName.Right;
+            }
+            return string.Empty;
         }
 
         private void panelRStick_Paint(object sender, PaintEventArgs e)

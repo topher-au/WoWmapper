@@ -8,6 +8,7 @@ namespace DS4ConsolePort
     public partial class BindKeyForm : Form
     {
         public Keys Key;
+        public string SwapWith = string.Empty;
         private KeyBind bindings;
 
         public BindKeyForm(Bitmap ButtonImage, DS4Button Button, Keys CurrentKey, KeyBind Bindings)
@@ -32,13 +33,13 @@ namespace DS4ConsolePort
             var existing = bindings.FromKey(e.KeyCode);
             if (!existing.Equals(default(Binding)))
             {
-                labelKeyError.Text = String.Format(Properties.Resources.STRING_BINDING_EXISTS, e.KeyCode.ToString(), existing.Name);
-                return;
+                SwapWith = existing.Name;
             }
 
             // Bind success
             textKeyBind.Text = e.KeyCode.ToString();
             Key = e.KeyCode;
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -49,8 +50,7 @@ namespace DS4ConsolePort
             var existing = bindings.FromKey(Keys.LShiftKey);
             if (!existing.Equals(default(Binding)))
             {
-                labelKeyError.Text = String.Format(Properties.Resources.STRING_BINDING_EXISTS, Keys.LShiftKey.ToString(), existing.Name);
-                return;
+                SwapWith = existing.Name;
             }
 
             // Bind success
@@ -66,8 +66,7 @@ namespace DS4ConsolePort
             var existing = bindings.FromKey(Keys.LControlKey);
             if (!existing.Equals(default(Binding)))
             {
-                labelKeyError.Text = String.Format(Properties.Resources.STRING_BINDING_EXISTS, Keys.LControlKey.ToString(), existing.Name);
-                return;
+                SwapWith = existing.Name;
             }
 
             // Bind success
