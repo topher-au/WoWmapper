@@ -1,9 +1,0 @@
-You need the following packages to compile this project:
-
-1. Fasm.NET
-Link: https://www.nuget.org/packages/Fasm.NET/
-
-2. Newtonsoft.Json 
-Link: https://www.nuget.org/packages/Newtonsoft.Json/
-
-Note: The Newtonsoft.Json package can be removed if you remove the class "JsonHelper.cs" and anything that uses that class, which is not much.

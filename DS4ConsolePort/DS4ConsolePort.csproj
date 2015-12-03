@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7522EE2C-3977-4FFA-B6AA-4990D4D0BF5F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DS4ConsolePort</RootNamespace>
+    <AssemblyName>DS4ConsolePort</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\WoWConsolePort.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BindKeyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BindKeyForm.Designer.cs">
+      <DependentUpon>BindKeyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdvHapWarningForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdvHapWarningForm.Designer.cs">
+      <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Functions.cs" />
+    <Compile Include="Github.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="WoWInteraction.cs" />
+    <EmbeddedResource Include="BindKeyForm.resx">
+      <DependentUpon>BindKeyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdvHapWarningForm.resx">
+      <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DS4CP_Driver\DS4CP_Driver.csproj">
+      <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
+      <Name>DS4CP_Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS4CP_AdvancedHaptics\DS4CP_AdvancedHaptics.csproj">
+      <Project>{14fccdd6-7741-4d4a-bf33-4a9c04917f76}</Project>
+      <Name>DS4CP_AdvancedHaptics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BT.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\USB.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DS4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\a_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_leftright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dpad_updown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lb_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_leftright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lstick_updown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lt_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rb_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_leftright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rstick_updown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rt_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\start_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\y_butt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WoWConsolePort.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Command-Reset-24.png" />
+    <Content Include="Resources\CONSOLEPORTLOGO.png" />
+    <None Include="Resources\left touch.png" />
+    <None Include="Resources\right touch.png" />
+    <None Include="Resources\DS4 Config.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
