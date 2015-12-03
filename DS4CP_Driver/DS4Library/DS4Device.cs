@@ -38,6 +38,11 @@ namespace DS4Windows
                 return false;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         public override string ToString() => $"Red: {red} Green: {green} Blue: {blue}";
     }
 

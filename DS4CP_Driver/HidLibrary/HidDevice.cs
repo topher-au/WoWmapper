@@ -23,7 +23,7 @@ namespace DS4Windows
         private readonly HidDeviceAttributes _deviceAttributes;
 
         private readonly HidDeviceCapabilities _deviceCapabilities;
-        private bool _monitorDeviceEvents;
+        // private bool _monitorDeviceEvents;
         private string serial = null;
 
         internal HidDevice(string devicePath, string description = null)
