@@ -1,4 +1,4 @@
-![Console Port Logo](https://raw.githubusercontent.com/topher-au/DS4ConsolePort/master/ConsolePort/Resources/CONSOLEPORTLOGO.png)
+![Console Port Logo](https://raw.githubusercontent.com/topher-au/DS4ConsolePort/master/DS4ConsolePort/Resources/CONSOLEPORTLOGO.png)
 
 # DS4ConsolePort
 
