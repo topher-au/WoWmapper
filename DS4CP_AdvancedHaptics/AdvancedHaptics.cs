@@ -11,7 +11,6 @@ namespace DS4ConsolePort.AdvancedHaptics
     public class Haptics : IDisposable
     {
         public bool Enabled { get; set; } = false;
-        //public DataReader wowDataReader;
         public WoWReader wowReader = new WoWReader();
         private DS4 hapticDevice;
         private Thread hapticThread, rumbleThread;
@@ -20,6 +19,7 @@ namespace DS4ConsolePort.AdvancedHaptics
         public bool LightbarHealth { get; set; } = true;
         public bool RumbleOnDamage { get; set; } = true;
         public bool RumbleOnTarget { get; set; } = true;
+        public bool DisableLightBar { get; set; } = false;
 
         public WoWState GameState
         {
@@ -59,6 +59,7 @@ namespace DS4ConsolePort.AdvancedHaptics
 
         public void Dispose()
         {
+            hapticDevice.LightBarOff();
             hapticThread.Abort();
             rumbleThread.Abort();
             wowReader.Dispose();
@@ -74,7 +75,7 @@ namespace DS4ConsolePort.AdvancedHaptics
 
             while (rumbleThread.ThreadState == System.Threading.ThreadState.Running)
             {
-                if (wowReader.IsAttached && wowReader.GameState == WoWState.LoggedIn)
+                if (wowReader.IsAttached && wowReader.GameState == WoWState.LoggedIn && Enabled)
                 {
                     // Buzz on change target
                     if (RumbleOnTarget)
@@ -131,7 +132,7 @@ namespace DS4ConsolePort.AdvancedHaptics
                 {
                     lastHealthPercent = 100;
                 }
-                Thread.Sleep(1);
+                Thread.Sleep(5);
             }
         }
 
@@ -139,65 +140,54 @@ namespace DS4ConsolePort.AdvancedHaptics
         {
             byte[] lastTarget = new byte[16];
 
-            while (hapticThread.ThreadState == System.Threading.ThreadState.Running)
+            while (hapticThread.ThreadState == ThreadState.Running)
             {
-                if (hapticDevice != null && Enabled)
+                if (wowReader.IsAttached && wowReader.GameState == WoWState.LoggedIn && Enabled)
                 {
-                    if (wowReader.IsAttached)
+                    if (LightbarHealth && !DisableLightBar)
                     {
-                        // Check if player is logged in
-                        if (wowReader.GameState == WoWState.LoggedIn)
+                        // Read player data from memory
+                        PlayerInfo playerInfo = wowReader.ReadPlayerInfo();
+
+                        float currentHealthPct = ((float)playerInfo.CurrentHP / (float)playerInfo.MaxHP) * 100;
+
+                        // Update lightbar based on player health
+                        if (currentHealthPct > 90)
                         {
-                            if (LightbarHealth)
+                            if (LightbarClass)
                             {
-                                // Read player data from memory
-                                PlayerInfo playerInfo = wowReader.ReadPlayerInfo();
-
-                                float currentHealthPct = ((float)playerInfo.CurrentHP / (float)playerInfo.MaxHP) * 100;
-
-                                // Update lightbar based on player health
-                                if (currentHealthPct > 90)
-                                {
-                                    if (LightbarClass)
-                                    {
-                                        var classColor = ClassColors.GetClassColor(playerInfo.Class);
-                                        hapticDevice.LightBarOn(classColor);
-                                    }
-                                    else
-                                    {
-                                        hapticDevice.LightBarOn(HealthColors.High);
-                                    }
-                                }
-                                else
-                                if (currentHealthPct > 50)
-                                {
-                                    hapticDevice.LightBarOn(HealthColors.Medium);
-                                }
-                                else
-                                if (currentHealthPct > 20)
-                                {
-                                    hapticDevice.LightBarOn(HealthColors.Low);
-                                }
-                                else if (currentHealthPct < 20)
-                                {
-                                    hapticDevice.LightBarFlash(HealthColors.Critical, 50, 50);
-                                }
-                            }
-                            else if (!LightbarHealth && LightbarClass)
-                            {
-                                PlayerInfo playerInfo = wowReader.ReadPlayerInfo();
                                 var classColor = ClassColors.GetClassColor(playerInfo.Class);
                                 hapticDevice.LightBarOn(classColor);
                             }
                             else
                             {
-                                hapticDevice.LightBarOff();
+                                hapticDevice.LightBarOn(HealthColors.High);
                             }
                         }
                         else
+                        if (currentHealthPct > 50)
                         {
-                            hapticDevice.LightBarOff();
+                            hapticDevice.LightBarOn(HealthColors.Medium);
                         }
+                        else
+                        if (currentHealthPct > 20)
+                        {
+                            hapticDevice.LightBarOn(HealthColors.Low);
+                        }
+                        else if (currentHealthPct < 20)
+                        {
+                            hapticDevice.LightBarFlash(HealthColors.Critical, 50, 50);
+                        }
+                    }
+                    else if (!LightbarHealth && LightbarClass && !DisableLightBar)
+                    {
+                        PlayerInfo playerInfo = wowReader.ReadPlayerInfo();
+                        var classColor = ClassColors.GetClassColor(playerInfo.Class);
+                        hapticDevice.LightBarOn(classColor);
+                    }
+                    else
+                    {
+                        hapticDevice.LightBarOff();
                     }
                 }
                 else

@@ -1,8 +1,13 @@
 ﻿using DS4ConsolePort.AdvancedHaptics;
 using DS4ConsolePort.WoWData;
+using DS4Windows;
 using DS4Wrapper;
+using FolderSelect;
+using ICSharpCode.SharpZipLib.Zip;
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +19,8 @@ namespace DS4ConsolePort
     {
         #region Private Fields
 
+        private const string DS4CP_USER = "topher-au";
+        private const string DS4CP_REPO = "DS4ConsolePort";
         private Haptics advHaptics;
         private DS4 DS4;
         private WoWInteraction interaction;
@@ -71,6 +78,11 @@ namespace DS4ConsolePort
             picLStickLeft.Image = Properties.Resources.LStickLeft;
             picLStickRight.Image = Properties.Resources.LStickRight;
             picDS4.Image = Properties.Resources.DS4_Config;
+            groupHaptics.Text = Properties.Resources.STRING_SETTING_HAPTICS;
+            checkLightbarBattery.Text = Properties.Resources.STRING_LB_BATTERY;
+            groupDS4Status.Text = Properties.Resources.STRING_GROUP_DS4_STATUS;
+            groupWoWFolder.Text = Properties.Resources.STRING_GROUP_WOW_PATH;
+            buttonLocateWoW.Text = Properties.Resources.STRING_FIND_WOW;
 
             new ToolTip().SetToolTip(picResetBinds, Properties.Resources.STRING_TOOLTIP_RESET_BINDS);
 
@@ -82,6 +94,21 @@ namespace DS4ConsolePort
             typeof(Panel).InvokeMember("DoubleBuffered",
                 BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
                 null, panelRStickAxis, new object[] { true });
+
+            if (!Functions.CheckWoWPath()) // check for valid install path
+            {
+                var findWoWNow = MessageBox.Show(Properties.Resources.STRING_NO_WOW_PATH, "DS4ConsolePort", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (findWoWNow == DialogResult.Yes)
+                {
+                    FolderSelectDialog fbd = new FolderSelectDialog();
+                    var res = fbd.ShowDialog();
+                    if (res && Directory.Exists(fbd.FileName))
+                    {
+                        Properties.Settings.Default.WoWInstallPath = fbd.FileName;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+            }
 
             // Load settings
             settings.Load();
@@ -103,6 +130,8 @@ namespace DS4ConsolePort
             checkDisableBG.Checked = Properties.Settings.Default.InactiveDisable;
             checkSendKeysDirect.Checked = Properties.Settings.Default.SendKeysDirect;
             checkStartMinimized.Checked = Properties.Settings.Default.StartMinimized;
+            checkLightbarBattery.Checked = Properties.Settings.Default.LightbarBattery;
+            textWoWFolder.Text = Properties.Settings.Default.WoWInstallPath;
 
             interaction = new WoWInteraction(settings.KeyBinds);
 
@@ -127,34 +156,100 @@ namespace DS4ConsolePort
 
         public async Task DoVersionCheck()
         {
-            // check addon version
-            var wowPath = Functions.TryFindWoWPath();
-
-            if (wowPath != string.Empty)
+            // Update app version display
+            var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
+            Version addonVersion = null;
+            if (assemblyVersion.Revision == 0)
             {
-                var addonVersion = Functions.CheckAddonVersion(wowPath, "ConsolePort");
+                assemblyVersion = new Version(assemblyVersion.Major, assemblyVersion.Minor, assemblyVersion.Build);
+            }
+            labelDS4VersionInstalled.Text = assemblyVersion.ToString();
 
-                var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
+            if (Functions.CheckWoWPath()) // If we have valid wow path
+            {
+                // Attempt to check addon version
+                try
+                {
+                    addonVersion = Functions.CheckAddonVersion(Properties.Settings.Default.WoWInstallPath, "ConsolePort");
+                }
+                catch { }
 
-                labelDS4InstalledVersion.Text = string.Format("{0}.{1}.{2}", assemblyVersion.Major, assemblyVersion.Minor, assemblyVersion.Build);
-                labelCPInstalledVersion.Text = addonVersion.ToString();
+                if (addonVersion == null)
+                {
+                    labelCPVersionInstalled.Text = "N/A";
+                }
+                else
+                if (addonVersion.Revision == 0)
+                {
+                    addonVersion = new Version(addonVersion.Major, addonVersion.Minor, addonVersion.Build);
+                    labelCPVersionInstalled.Text = addonVersion.ToString();
+                }
+                else
+                {
+                    labelCPVersionInstalled.Text = addonVersion.ToString();
+                }
+            }
 
+            if (true) // Todo: Checkforupdates
+            {
                 // check website version
                 var dsVer = await Github.GetLatestRelease("topher-au", "DS4ConsolePort");
-                var cpVer = await Github.GetLatestCommit("seblindfors", "ConsolePort");
 
                 if (dsVer != null)
                 {
-                    var v = new Version(dsVer.tag_name);
-                    labelDS4LatestVersion.Text = labelCPLatestVersion.Text = string.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);
+                    Version v = new Version("0.0.0");
+                    try
+                    {
+                        v = new Version(dsVer.tag_name);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error parsing DS4ConsolePort version number");
+                        return;
+                    }
+                    labelDS4VersionAvailable.Text = v.ToString();
+
+                    if (assemblyVersion < v)
+                    {
+                        buttonDS4UpdateNow.Visible = true;
+                    }
                 }
+                else
+                {
+                }
+
+                // Check github for a new release
+                var cpVer = await Github.GetLatestRelease("seblindfors", "ConsolePort");
 
                 if (cpVer != null)
                 {
-                    var fL = cpVer.commit.message.Split('\n')[0];
-                    fL = fL.Replace("Beta ", "");
-                    var v = new Version(fL);
-                    labelCPLatestVersion.Text = string.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);
+                    Version v = new Version();
+                    try
+                    {
+                        v = new Version(cpVer.tag_name);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error parsing ConsolePort version number");
+                        return;
+                    }
+                    labelCPVersionAvailable.Text = v.ToString();
+
+                    if (Functions.CheckWoWPath()) // valid install dir
+                    {
+                        if (addonVersion == null) // addon not installed
+                        {
+                            buttonCPUpdateNow.Text = Properties.Resources.STRING_INSTALL_BUTTON;
+                            buttonCPUpdateNow.Visible = true;
+                        } else if(addonVersion < v) // addon out of date
+                        {
+                            buttonCPUpdateNow.Visible = true;
+                        }
+                        
+                    }
+                }
+                else
+                {
                 }
             }
         }
@@ -403,7 +498,6 @@ namespace DS4ConsolePort
         private void DS4_ButtonDown(DS4Button Button)
         {
             if (this != null && (interaction.IsAttached || !Properties.Settings.Default.InactiveDisable))
-
                 switch (Button)
                 {
                     case DS4Button.Cross:
@@ -488,7 +582,7 @@ namespace DS4ConsolePort
                             var wowWidth = interaction.WoWWindow.Right - interaction.WoWWindow.Left;
                             var wowHeight = interaction.WoWWindow.Bottom - interaction.WoWWindow.Top;
 
-                            Cursor.Position = new Point(interaction.WoWWindow.Left + (wowWidth / 2), interaction.WoWWindow.Top + (wowHeight / 2) - 90);
+                            Cursor.Position = new Point(interaction.WoWWindow.Left + (wowWidth / 2), interaction.WoWWindow.Top + (wowHeight / 2));
                         }
                         else
                         {
@@ -649,7 +743,22 @@ namespace DS4ConsolePort
 
             if (Properties.Settings.Default.StartMinimized) { Minimize(); }
 
-            // DoVersionCheck();
+            var vCheck = DoVersionCheck();
+
+            Show();
+            
+            // App was loaded from updater
+            if (Environment.GetCommandLineArgs().Length > 1)
+            if (Environment.GetCommandLineArgs()[1] == "-updated")
+            {
+                var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
+                var addonVersion = new Version();
+                if (assemblyVersion.Revision == 0)
+                {
+                    assemblyVersion = new Version(assemblyVersion.Major, assemblyVersion.Minor, assemblyVersion.Build);
+                }
+                MessageBox.Show(String.Format(Properties.Resources.STRING_DS4_UPDATE_SUCCESS, assemblyVersion.ToString()), "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -761,7 +870,7 @@ namespace DS4ConsolePort
 
         private void MovementThread()
         {
-            while (movementThread.ThreadState == ThreadState.Running)
+            while (movementThread.ThreadState == System.Threading.ThreadState.Running)
             {
                 if (DS4 != null && (interaction.IsAttached))
                 {
@@ -812,6 +921,7 @@ namespace DS4ConsolePort
         {
             ShowForm();
         }
+
         private void numRCurve_ValueChanged(object sender, EventArgs e)
         {
             intRightCurve = (int)numRCurve.Value;
@@ -871,6 +981,12 @@ namespace DS4ConsolePort
             RefreshKeyBindings();
         }
 
+        private void checkLightbarBattery_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.LightbarBattery = checkLightbarBattery.Checked;
+            Properties.Settings.Default.Save();
+        }
+
         private void RefreshKeyBindings()
         {
             textL1.Text = settings.KeyBinds.FromName("L1").Key.Value.ToString();
@@ -896,11 +1012,151 @@ namespace DS4ConsolePort
             textBindTouchRight.Text = settings.KeyBinds.FromName("TouchRight").Key.Value.ToString();
         }
 
+        private void buttonLocateWoW_Click(object sender, EventArgs e)
+        {
+            FolderSelectDialog fsd = new FolderSelectDialog();
+            var res = fsd.ShowDialog();
+            if (!res) return; // no folder selected
+            textWoWFolder.Text = fsd.FileName;
+            Properties.Settings.Default.WoWInstallPath = fsd.FileName;
+            Properties.Settings.Default.Save();
+        }
+
         private void ShowForm()
         {
             Visible = true;
             ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
+        }
+
+        private void buttonCPUpdateNow_Click(object sender, EventArgs e)
+        {
+            if (Functions.CheckIsWowRunning())
+            {
+                MessageBox.Show(Properties.Resources.STRING_WOW_RUNNING_CLOSE, "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            var cpVer = Github.GetLatestRelease2("seblindfors", "ConsolePort");
+            DownloadForm dlf = new DownloadForm(cpVer.assets[0].browser_download_url);
+            if (dlf.DialogResult == DialogResult.Cancel) return;
+
+            var outFile = dlf.OutputFile;
+            Functions.InstallAddOn(outFile);
+            MessageBox.Show(string.Format(Properties.Resources.STRING_CP_UPDATE_SUCCESS, cpVer.tag_name), "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            File.Delete(outFile);
+            var vCheck = DoVersionCheck();
+        }
+
+        private void buttonDS4UpdateNow_Click(object sender, EventArgs e)
+        {
+            if (Functions.CheckIsWowRunning())
+            {
+                MessageBox.Show(Properties.Resources.STRING_WOW_RUNNING_CLOSE, "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            var dsVer = Github.GetLatestRelease2("topher-au", "DS4ConsolePort");
+            DownloadForm dlf;
+            try
+            {
+                dlf = new DownloadForm(dsVer.assets[0].browser_download_url);
+            } catch
+            {
+                MessageBox.Show("Error","", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+            if (dlf.DialogResult == DialogResult.Cancel) return;
+
+            var outFile = dlf.OutputFile;
+            FastZip fz = new FastZip();
+            fz.ExtractZip(outFile, ".", "DS4CP_Updater.exe");
+            Process updater = new Process();
+            updater.StartInfo.FileName = "DS4CP_Updater.exe";
+            updater.StartInfo.Arguments = string.Format("-update \"{0}\"", outFile);
+            updater.StartInfo.UseShellExecute = false;
+            updater.Start();
+            ExitApp();
+        }
+
+        private void UpdateAdvancedHaptics()
+        {
+            // Initialize haptics if not already
+            if (Properties.Settings.Default.EnableAdvancedHaptics)
+                try
+                {
+                    if (advHaptics == null)
+                        advHaptics = new Haptics(DS4);
+                }
+                catch
+                {
+                    // Error loading advanced haptics, disable
+                    advHaptics = null;
+                    Properties.Settings.Default.EnableAdvancedHaptics = false;
+                    Properties.Settings.Default.Save();
+                    checkEnableAdvancedHaptics.Checked = false;
+                    UpdateHapticTab();
+                    MessageBox.Show(Properties.Resources.STRING_HAPTICS_DISABLED_ERROR, "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+            // Update advanced haptic display
+            if (Properties.Settings.Default.EnableAdvancedHaptics && advHaptics != null)
+            {
+                if (advHaptics.wowReader.IsAttached && !advHaptics.wowReader.OffsetsLoaded)
+                {
+                    // No suitable offsets found, disable haptics
+                    Properties.Settings.Default.EnableAdvancedHaptics = false;
+                    Properties.Settings.Default.Save();
+                    checkEnableAdvancedHaptics.Checked = false;
+                    UpdateHapticTab();
+                    advHaptics.Dispose();
+                    advHaptics = null;
+                    MessageBox.Show(Properties.Resources.STRING_HAPTICS_DISABLED_NO_OFFSETS, "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else if (interaction.IsAttached && advHaptics.wowReader.IsAttached && advHaptics.wowReader.OffsetsLoaded)
+                {
+                    advHaptics.Enabled = true;
+                    advHaptics.LightbarClass = checkLightbarClass.Checked;
+                    advHaptics.LightbarHealth = checkLightbarHealth.Checked;
+                    advHaptics.RumbleOnTarget = checkRumbleTarget.Checked;
+                    advHaptics.RumbleOnDamage = checkRumbleDamage.Checked;
+
+                    checkHapticsAttached.Checked = advHaptics.IsWoWAttached;
+                    if (advHaptics.IsWoWAttached)
+                    {
+                        if (advHaptics.GameState == WoWState.LoggedIn)
+                        {
+                            var pi = advHaptics.wowReader.ReadPlayerInfo();
+                            labelPlayerInfo.Text = String.Format("{0} / {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
+                            checkHapticsUserLoggedIn.Checked = true;
+                        }
+                        else
+                        {
+                            checkHapticsUserLoggedIn.Checked = false;
+                        }
+                        checkHapticsUserLoggedIn.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
+                    }
+                }
+                else
+                {
+                    checkHapticsAttached.Checked = false;
+                    checkHapticsUserLoggedIn.Checked = false;
+                    advHaptics.Enabled = false;
+                }
+            }
+            else
+            {
+                if (advHaptics != null)
+                {
+                    advHaptics.Dispose();
+                    advHaptics.Enabled = false;
+                    advHaptics = null;
+                }
+
+                checkHapticsAttached.Checked = false;
+                checkHapticsUserLoggedIn.Checked = false;
+                labelPlayerInfo.Text = "";
+            }
         }
 
         private void timerUpdateUI_Tick(object sender, EventArgs e)
@@ -915,80 +1171,48 @@ namespace DS4ConsolePort
 
                 panelRStickAxis.Refresh();
 
-                if (checkEnableAdvancedHaptics.Checked == true && advHaptics == null)
-                {
-                    advHaptics = new Haptics(DS4);
-                    advHaptics.Enabled = true;
-                }
+                UpdateAdvancedHaptics();
 
-                // Update advanced haptic display
-                if (Properties.Settings.Default.EnableAdvancedHaptics)
-                {
-                    if (advHaptics != null && interaction.IsAttached)
-                    {
-                        advHaptics.Enabled = true;
-                        advHaptics.LightbarClass = checkLightbarClass.Checked;
-                        advHaptics.LightbarHealth = checkLightbarHealth.Checked;
-                        advHaptics.RumbleOnTarget = checkRumbleTarget.Checked;
-                        advHaptics.RumbleOnDamage = checkRumbleDamage.Checked;
-
-                        checkHapticsAttached.Checked = advHaptics.IsWoWAttached;
-                        if (advHaptics.IsWoWAttached)
-                        {
-                            if (advHaptics.GameState == WoWState.LoggedIn)
-                            {
-                                var pi = advHaptics.wowReader.ReadPlayerInfo();
-                                labelPlayerInfo.Text = String.Format("{0} / {3} {4}\n{5}/{6}", pi.Name, pi.RealmName, pi.AccountName, pi.Level, pi.Class, pi.CurrentHP, pi.MaxHP);
-                                checkHapticsUserLoggedIn.Checked = true;
-                            }
-                            else
-                            {
-                                labelPlayerInfo.Text = string.Empty;
-                                checkHapticsUserLoggedIn.Checked = false;
-                            }
-                            checkHapticsUserLoggedIn.Checked = advHaptics.GameState == WoWState.LoggedIn ? true : false;
-                        }
-                    }
-                    else
-                    {
-                        checkHapticsAttached.Checked = false;
-                        checkHapticsUserLoggedIn.Checked = false;
-                        labelPlayerInfo.Text = "";
-                    }
-                }
-                else
-                {
-                    if (advHaptics != null)
-                    {
-                        advHaptics.Enabled = false;
-                        advHaptics.Dispose();
-                        advHaptics = null;
-                    }
-
-                    checkHapticsAttached.Checked = false;
-                    checkHapticsUserLoggedIn.Checked = false;
-                    labelPlayerInfo.Text = "";
-                }
-
+                // update battery display
                 if (DS4.Controller != null)
                 {
-                    var battery = DS4.Controller.Battery;
+                    var battery = DS4.Battery;
                     switch (DS4.Controller.ConnectionType)
                     {
                         case DS4Windows.ConnectionType.BT:
-                            labelControllerState.Image = Properties.Resources.BT;
+                            picConnectionType.Image = Properties.Resources.BT;
                             break;
 
                         case DS4Windows.ConnectionType.USB:
-                            labelControllerState.Image = Properties.Resources.USB;
+                            picConnectionType.Image = Properties.Resources.USB;
                             break;
                     }
-                    labelControllerState.Text = string.Format(Properties.Resources.STRING_CONTROLLER_CONNECTED, battery);
+                    labelConnectionStatus.Text = string.Format(Properties.Resources.STRING_CONTROLLER_CONNECTED, battery);
+
+                    if (battery > 0 && battery < Properties.Settings.Default.LightbarBatteryThreshold && !DS4.Controller.LightBarColor.Equals(new DS4Color(Properties.Settings.Default.LightbarBatteryColor)))
+                    {
+                        if (advHaptics != null)
+                        {
+                            advHaptics.LightbarClass = false;
+                            advHaptics.LightbarHealth = false;
+                        }
+                        DS4.Controller.LightBarColor = new DS4Color(Properties.Settings.Default.LightbarBatteryColor);
+                        DS4.Controller.LightBarOffDuration = 100;
+                        DS4.Controller.LightBarOnDuration = 100;
+                    }
+                    else
+                    {
+                        if (advHaptics != null)
+                        {
+                            advHaptics.LightbarClass = Properties.Settings.Default.EnableLightbarClass;
+                            advHaptics.LightbarHealth = Properties.Settings.Default.EnableLightbarHealth;
+                        }
+                    }
                 }
                 else
                 {
-                    labelControllerState.Image = null;
-                    labelControllerState.Text = Properties.Resources.STRING_CONTROLLER_DISCONNECTED;
+                    picConnectionType.Image = null;
+                    labelConnectionStatus.Text = Properties.Resources.STRING_CONTROLLER_DISCONNECTED;
                 }
             }
         }
@@ -1013,8 +1237,17 @@ namespace DS4ConsolePort
                 Cursor.Position = curPos;
             }
         }
+
         private void UpdateHapticTab()
         {
+            if (!File.Exists("CPAdvancedHaptics.dll") || (!Environment.Is64BitProcess))
+            {
+                Properties.Settings.Default.EnableAdvancedHaptics = false;
+                Properties.Settings.Default.Save();
+                checkEnableAdvancedHaptics.Enabled = false;
+            }
+
+            checkEnableAdvancedHaptics.Checked = Properties.Settings.Default.EnableAdvancedHaptics;
             panelAdvancedHaptics.Enabled = Properties.Settings.Default.EnableAdvancedHaptics;
         }
 

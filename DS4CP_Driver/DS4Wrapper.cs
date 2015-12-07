@@ -6,58 +6,81 @@ using System.Threading;
 
 namespace DS4Wrapper
 {
+    public enum DS4Axis : int
+    {
+        L2,
+        R2,
+        Lx,
+        Ly,
+        Rx,
+        Ry,
+        Gx,
+        Gy,
+        Gz
+    }
+
+    public enum DS4Button : int
+    {
+        Cross,
+        Circle,
+        Triangle,
+        Square,
+        L1,
+        L2,
+        L3,
+        R1,
+        R2,
+        R3,
+        DpadUp,
+        DpadDown,
+        DpadRight,
+        DpadLeft,
+        Share,
+        Options,
+        PS,
+        TouchLeft,
+        TouchRight,
+        TouchUpper,
+        LStickUp,
+        LStickDown,
+        LStickRight,
+        LStickLeft
+    }
+
+    public enum DS4Stick
+    {
+        Left,
+        Right
+    }
+
+    public enum TriggerMode
+    {
+        Analog,
+        Buttons
+    }
+
     public class DS4 : IDisposable
     {
-        // Events
-        public event ControllerConnectedHandler ControllerConnected;
+        #region Public Fields
 
-        public delegate void ControllerConnectedHandler();
+        public DS4Device Controller;
 
-        public event ControllerDisconnectedHandler ControllerDisconnected;
+        public bool IsConnected;
 
-        public delegate void ControllerDisconnectedHandler();
+        #endregion Public Fields
 
-        public event ButtonDownHandler ButtonDown;
+        #region Private Fields
+        private float[] axisThresholds;
 
-        public delegate void ButtonDownHandler(DS4Button Button);
-
-        public event ButtonDownHandler ButtonUp;
-
-        public delegate void ButtonUpHandler(DS4Button Button);
-
-        public event AxisThresholdHandler AxisThresholdReached;
-
-        public delegate void AxisThresholdHandler(DS4Axis Axis);
-
-        public event AxisThresholdDroppedHandler AxisThresholdDropped;
-
-        public delegate void AxisThresholdDroppedHandler(DS4Axis Axis);
-
-        // Public objects
-        public DS4Device Controller; // the active controller
-
-        public bool IsConnected; // is a controller connected?
-
-        // Settings
-        public TriggerMode TriggerMode { get; set; } // Triggers analog/digital
-
-        public float TriggerSensitivity { get; set; } // Trigger sensitivity
+        private bool[] buttonStates, axisStates;
 
         private Thread controllerThread, stateThread;
-        private bool[] buttonStates, axisStates;
-        private float[] axisThresholds;
 
         private bool Suspended = false;
 
-        public void Suspend()
-        {
-            Suspended = true;
-        }
+        #endregion Private Fields
 
-        public void Resume()
-        {
-            Suspended = false;
-        }
+        #region Public Constructors
 
         public DS4()
         {
@@ -99,25 +122,198 @@ namespace DS4Wrapper
             TriggerSensitivity = 0.5f;
         }
 
+        #endregion Public Constructors
+
+        #region Public Delegates
+
+        public delegate void AxisThresholdDroppedHandler(DS4Axis Axis);
+
+        public delegate void AxisThresholdHandler(DS4Axis Axis);
+
+        public delegate void ButtonDownHandler(DS4Button Button);
+
+        public delegate void ButtonUpHandler(DS4Button Button);
+
+        public delegate void ControllerConnectedHandler();
+
+        public delegate void ControllerDisconnectedHandler();
+
+        #endregion Public Delegates
+
+        #region Public Events
+
+        public event AxisThresholdDroppedHandler AxisThresholdDropped;
+
+        public event AxisThresholdHandler AxisThresholdReached;
+
+        public event ButtonDownHandler ButtonDown;
+
+        public event ButtonDownHandler ButtonUp;
+
+        public event ControllerConnectedHandler ControllerConnected;
+
+        public event ControllerDisconnectedHandler ControllerDisconnected;
+
+        #endregion Public Events
+
+        #region Public Properties
+
+        public int Battery
+        {
+            get
+            {
+                if (Controller != null)
+                {
+                    var cBat = Controller.Battery;
+                    if (cBat > 100) cBat = 100;
+                    return cBat;
+                }
+                else return 0;
+            }
+        }
+
+        // Settings
+        public TriggerMode TriggerMode { get; set; } // Triggers analog/digital
+
+        public float TriggerSensitivity { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        // Trigger sensitivity
+        public void ControllerThread()
+        {
+            while (true)
+            {
+                if (Controller != null)
+                {
+                    if (Controller.IsDisconnecting)
+                    {
+                        Controller = null;
+                        IsConnected = false;
+                        ControllerDisconnected();
+                        continue;
+                    }
+                    Thread.Sleep(5);
+                    continue;
+                }
+                DS4Devices.findControllers();
+                var Controllers = DS4Devices.getDS4Controllers();
+                if (Controllers.Count() > 0)
+                {
+                    Controller = Controllers.First();
+                    IsConnected = true;
+                }
+                Thread.Sleep(5);
+            }
+        }
+
+        public void Dispose()
+        {
+            controllerThread.Abort();
+            stateThread.Abort();
+
+            // Disconnect controller and abort thread
+            if (Controller != null)
+            {
+                Controller.pushHapticState(new DS4HapticState()
+                {
+                    LightBarExplicitlyOff = true,
+                    RumbleMotorsExplicitlyOff = true
+                });
+                Controller.LightBarColor = new DS4Color(Color.Black);
+
+                Controller.StopUpdate();
+                if (Controller.ConnectionType == ConnectionType.BT)
+                    Controller.DisconnectBT();
+                Controller = null;
+            }
+        }
+
+        public bool GetButtonState(DS4Button Button)
+        {
+            return buttonStates[(int)Button];
+        }
+
+        public float GetStickAxis(byte Axis)
+        {
+            float StickAxis = Axis - 127;
+            StickAxis *= 2;
+            StickAxis /= 255;
+            return StickAxis;
+        }
+
+        public Point GetStickPoint(DS4Stick Stick)
+        {
+            if (Controller != null)
+            {
+                var state = Controller.getCurrentState();
+                switch (Stick)
+                {
+                    case DS4Stick.Left:
+                        return new Point()
+                        {
+                            X = state.LX - 128,
+                            Y = state.LY - 128
+                        };
+
+                    case DS4Stick.Right:
+                        return new Point()
+                        {
+                            X = state.RX - 128,
+                            Y = state.RY - 128
+                        };
+                }
+            }
+
+            return new Point(0, 0);
+        }
+
+        public float GetThreshold(DS4Axis Axis)
+        {
+            return axisThresholds[(int)Axis];
+        }
+
+        public float GetTriggerAxis(byte Axis)
+        {
+            float TriggerAxis = Axis / 255;
+            return TriggerAxis;
+        }
+
         public bool IsButtonPressed(DS4Button Button)
         {
             return buttonStates[(int)Button];
         }
 
-        /// <summary>
-        /// Raised whenever a button is released.
-        /// </summary>
-        /// <param name="Button">The DS4Button that was released.</param>
-        private void OnButtonUp(DS4Button Button)
+        public void LightBarFlash(Color c, byte On, byte Off)
         {
+            if (Controller != null)
+            {
+                Controller.LightBarColor = new DS4Color(c);
+                Controller.LightBarOffDuration = Off;
+                Controller.LightBarOnDuration = On;
+            }
         }
 
-        /// <summary>
-        /// Raised whenever a button is pressed.
-        /// </summary>
-        /// <param name="Button">The DS4Button that was pressed.</param>
-        private void OnButtonDown(DS4Button Button)
+        public void LightBarOff()
         {
+            if (Controller != null)
+            {
+                Controller.LightBarColor = new DS4Color(Color.Black);
+                Controller.LightBarOnDuration = 0x00;
+                Controller.LightBarOffDuration = 0x00;
+            }
+        }
+
+        public void LightBarOn(Color c)
+        {
+            if (Controller != null)
+            {
+                Controller.LightBarColor = new DS4Color(c);
+                Controller.LightBarOnDuration = 0xFF;
+                Controller.LightBarOffDuration = 0x00;
+            }
         }
 
         /// <summary>
@@ -127,11 +323,86 @@ namespace DS4Wrapper
         {
         }
 
-        /// <summary>
-        /// Raised whenever a controller is disconnected.
-        /// </summary>
-        private void OnControllerDisconnected()
+        public void Resume()
         {
+            Suspended = false;
+        }
+
+        public void Rumble(byte strengthL, byte strengthR, int duration)
+        {
+            if (Controller != null)
+            {
+                Controller.setRumble(strengthL, strengthR);
+                Thread.Sleep(duration);
+                Controller.setRumble(0, 0);
+            }
+        }
+
+        public void RumbleBig(byte strength, int duration)
+        {
+            if (Controller != null)
+            {
+                Controller.setRumble(0, strength);
+                Thread.Sleep(duration);
+                Controller.setRumble(0, 0);
+            }
+        }
+
+        public void RumbleSmall(byte strength, int duration)
+        {
+            if (Controller != null)
+            {
+                Controller.setRumble(strength, 0);
+                Thread.Sleep(duration);
+                Controller.setRumble(0, 0);
+            }
+        }
+
+        public void SetThreshold(DS4Axis Axis, float Threshold)
+        {
+            axisThresholds[(int)Axis] = Threshold;
+        }
+
+        public void Suspend()
+        {
+            Suspended = true;
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void DoButtonDown(DS4Button Button)
+        {
+            // if button already pressed, ignore
+            if (buttonStates[(int)Button] == true) return;
+
+            buttonStates[(int)Button] = true;
+            Thread buttWatcher = new Thread(() =>
+            {
+                // Handle button events
+                ButtonDown(Button);
+                while (buttonStates[(int)Button])
+                {
+                    Thread.Sleep(5);
+                }
+                buttonStates[(int)Button] = false;
+                ButtonUp(Button);
+                return;
+            });
+
+            buttWatcher.Start();
+        }
+
+        private void DoButtonUp(DS4Button Button)
+        {
+            buttonStates[(int)Button] = false;
+        }
+
+        private bool EvaluateThreshold(float AxisValue, float Threshold)
+        {
+            if (AxisValue < 0) AxisValue = -AxisValue;
+            return AxisValue > Threshold;
         }
 
         /// <summary>
@@ -150,21 +421,27 @@ namespace DS4Wrapper
         {
         }
 
-        public void SetThreshold(DS4Axis Axis, float Threshold)
+        /// <summary>
+        /// Raised whenever a button is pressed.
+        /// </summary>
+        /// <param name="Button">The DS4Button that was pressed.</param>
+        private void OnButtonDown(DS4Button Button)
         {
-            axisThresholds[(int)Axis] = Threshold;
         }
 
-        public float GetThreshold(DS4Axis Axis)
+        /// <summary>
+        /// Raised whenever a button is released.
+        /// </summary>
+        /// <param name="Button">The DS4Button that was released.</param>
+        private void OnButtonUp(DS4Button Button)
         {
-            return axisThresholds[(int)Axis];
         }
-
-        public bool GetButtonState(DS4Button Button)
+        /// <summary>
+        /// Raised whenever a controller is disconnected.
+        /// </summary>
+        private void OnControllerDisconnected()
         {
-            return buttonStates[(int)Button];
         }
-
         private void StateMonitor()
         {
             DS4State state = new DS4State();
@@ -351,240 +628,6 @@ namespace DS4Wrapper
             }
         }
 
-        public Point GetStickPoint(DS4Stick Stick)
-        {
-            if (Controller != null)
-            {
-                var state = Controller.getCurrentState();
-                switch (Stick)
-                {
-                    case DS4Stick.Left:
-                        return new Point()
-                        {
-                            X = state.LX - 128,
-                            Y = state.LY - 128
-                        };
-
-                    case DS4Stick.Right:
-                        return new Point()
-                        {
-                            X = state.RX - 128,
-                            Y = state.RY - 128
-                        };
-                }
-            }
-
-            return new Point(0, 0);
-        }
-
-        public float GetStickAxis(byte Axis)
-        {
-            float StickAxis = Axis - 127;
-            StickAxis *= 2;
-            StickAxis /= 255;
-            return StickAxis;
-        }
-
-        public float GetTriggerAxis(byte Axis)
-        {
-            float TriggerAxis = Axis / 255;
-            return TriggerAxis;
-        }
-
-        private bool EvaluateThreshold(float AxisValue, float Threshold)
-        {
-            if (AxisValue < 0) AxisValue = -AxisValue;
-            return AxisValue > Threshold;
-        }
-
-        private void DoButtonDown(DS4Button Button)
-        {
-            // if button already pressed, ignore
-            if (buttonStates[(int)Button] == true) return;
-
-            buttonStates[(int)Button] = true;
-            Thread buttWatcher = new Thread(() =>
-            {
-                // Handle button events
-                ButtonDown(Button);
-                while (buttonStates[(int)Button])
-                {
-                    Thread.Sleep(5);
-                }
-                buttonStates[(int)Button] = false;
-                ButtonUp(Button);
-                return;
-            });
-
-            buttWatcher.Start();
-        }
-
-        private void DoButtonUp(DS4Button Button)
-        {
-            buttonStates[(int)Button] = false;
-        }
-
-        public void Dispose()
-        {
-            controllerThread.Abort();
-            stateThread.Abort();
-
-            // Disconnect controller and abort thread
-            if (Controller != null)
-            {
-                Controller.pushHapticState(new DS4HapticState()
-                {
-                    LightBarExplicitlyOff = true,
-                    RumbleMotorsExplicitlyOff = true
-                });
-                Controller.LightBarColor = new DS4Color(Color.Black);
-
-                Controller.StopUpdate();
-                if (Controller.ConnectionType == ConnectionType.BT)
-                    Controller.DisconnectBT();
-                Controller = null;
-            }
-        }
-
-        public void LightBarOn(Color c)
-        {
-            if (Controller != null)
-            {
-                Controller.LightBarColor = new DS4Color(c);
-                Controller.LightBarOnDuration = 0xFF;
-                Controller.LightBarOffDuration = 0x00;
-            }
-        }
-
-        public void LightBarFlash(Color c, byte On, byte Off)
-        {
-            if (Controller != null)
-            {
-                Controller.LightBarColor = new DS4Color(c);
-                Controller.LightBarOffDuration = Off;
-                Controller.LightBarOnDuration = On;
-            }
-        }
-
-        public void LightBarOff()
-        {
-            if (Controller != null)
-            {
-                Controller.LightBarColor = new DS4Color(Color.Black);
-                Controller.LightBarOnDuration = 0x00;
-                Controller.LightBarOffDuration = 0x00;
-            }
-        }
-
-        public void Rumble(byte strengthL, byte strengthR, int duration)
-        {
-            if (Controller != null)
-            {
-                Controller.setRumble(strengthL, strengthR);
-                Thread.Sleep(duration);
-                Controller.setRumble(0, 0);
-            }
-        }
-
-        public void RumbleBig(byte strength, int duration)
-        {
-            if (Controller != null)
-            {
-                Controller.setRumble(0, strength);
-                Thread.Sleep(duration);
-                Controller.setRumble(0, 0);
-            }
-        }
-
-        public void RumbleSmall(byte strength, int duration)
-        {
-            if (Controller != null)
-            {
-                Controller.setRumble(strength, 0);
-                Thread.Sleep(duration);
-                Controller.setRumble(0, 0);
-            }
-        }
-
-        public void ControllerThread()
-        {
-            while (true)
-            {
-                if (Controller != null)
-                {
-                    if (Controller.IsDisconnecting)
-                    {
-                        Controller = null;
-                        IsConnected = false;
-                        ControllerDisconnected();
-                        continue;
-                    }
-                    Thread.Sleep(5);
-                    continue;
-                }
-                DS4Devices.findControllers();
-                var Controllers = DS4Devices.getDS4Controllers();
-                if (Controllers.Count() > 0)
-                {
-                    Controller = Controllers.First();
-                    IsConnected = true;
-                    ControllerConnected();
-                }
-                Thread.Sleep(5);
-            }
-        }
-    }
-
-    public enum TriggerMode
-    {
-        Analog,
-        Buttons
-    }
-
-    public enum DS4Button : int
-    {
-        Cross,
-        Circle,
-        Triangle,
-        Square,
-        L1,
-        L2,
-        L3,
-        R1,
-        R2,
-        R3,
-        DpadUp,
-        DpadDown,
-        DpadRight,
-        DpadLeft,
-        Share,
-        Options,
-        PS,
-        TouchLeft,
-        TouchRight,
-        TouchUpper,
-        LStickUp,
-        LStickDown,
-        LStickRight,
-        LStickLeft
-    }
-
-    public enum DS4Axis : int
-    {
-        L2,
-        R2,
-        Lx,
-        Ly,
-        Rx,
-        Ry,
-        Gx,
-        Gy,
-        Gz
-    }
-
-    public enum DS4Stick
-    {
-        Left,
-        Right
+        #endregion Private Methods
     }
 }

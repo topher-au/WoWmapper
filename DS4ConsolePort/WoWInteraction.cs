@@ -117,20 +117,31 @@ namespace DS4ConsolePort
 
         public void SendKeyDown(Keys Key)
         {
-            PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
-            keyStates[(int)Key] = true;
+            if(IsAttached)
+            {
+                PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
+                keyStates[(int)Key] = true;
+            }
+            
         }
 
         public void SendKeyPress(Keys Key)
         {
-            PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
-            PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
+            if(IsAttached)
+            {
+                PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
+                PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
+            }
+            
         }
 
         public void SendKeyUp(Keys Key)
         {
-            PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
-            keyStates[(int)Key] = false;
+            if(IsAttached)
+            {
+                PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
+                keyStates[(int)Key] = false;
+            }
         }
 
         private IntPtr MakeLParam(int LoWord, int HiWord)

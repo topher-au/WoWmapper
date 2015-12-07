@@ -12,12 +12,6 @@ namespace DS4ConsolePort
         [STAThread]
         private static void Main()
         {
-            if (!Environment.Is64BitProcess)
-            {
-                // Incompatibility with x86
-                MessageBox.Show("Sorry, this application can only be run in 64-bit mode.", "ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
             if (new Version(Properties.Settings.Default.SettingsVersion) < assemblyVersion)

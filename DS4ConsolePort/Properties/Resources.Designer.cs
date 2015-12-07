@@ -523,11 +523,56 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ConsolePort successfully updated to version {0}..
+        /// </summary>
+        internal static string STRING_CP_UPDATE_SUCCESS {
+            get {
+                return ResourceManager.GetString("STRING_CP_UPDATE_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DS4ConsolePort successfully updated to version {0}..
+        /// </summary>
+        internal static string STRING_DS4_UPDATE_SUCCESS {
+            get {
+                return ResourceManager.GetString("STRING_DS4_UPDATE_SUCCESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DS4C Settings.
         /// </summary>
         internal static string STRING_DS4CSETTINGS {
             get {
                 return ResourceManager.GetString("STRING_DS4CSETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find WoW.
+        /// </summary>
+        internal static string STRING_FIND_WOW {
+            get {
+                return ResourceManager.GetString("STRING_FIND_WOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DualShock4 Status.
+        /// </summary>
+        internal static string STRING_GROUP_DS4_STATUS {
+            get {
+                return ResourceManager.GetString("STRING_GROUP_DS4_STATUS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WoW Installation Folder.
+        /// </summary>
+        internal static string STRING_GROUP_WOW_PATH {
+            get {
+                return ResourceManager.GetString("STRING_GROUP_WOW_PATH", resourceCulture);
             }
         }
         
@@ -595,7 +640,7 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feedback Settings.
+        ///   Looks up a localized string similar to Advanced Haptics.
         /// </summary>
         internal static string STRING_HAPTIC_SETTINGS {
             get {
@@ -609,6 +654,33 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_HAPTIC_STATUS {
             get {
                 return ResourceManager.GetString("STRING_HAPTIC_STATUS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced haptics was disabled because there was an error loading the module..
+        /// </summary>
+        internal static string STRING_HAPTICS_DISABLED_ERROR {
+            get {
+                return ResourceManager.GetString("STRING_HAPTICS_DISABLED_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced haptics was disabled because there are no offsets available for your version..
+        /// </summary>
+        internal static string STRING_HAPTICS_DISABLED_NO_OFFSETS {
+            get {
+                return ResourceManager.GetString("STRING_HAPTICS_DISABLED_NO_OFFSETS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        internal static string STRING_INSTALL_BUTTON {
+            get {
+                return ResourceManager.GetString("STRING_INSTALL_BUTTON", resourceCulture);
             }
         }
         
@@ -627,6 +699,26 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_INTERACTION_SETTINGS {
             get {
                 return ResourceManager.GetString("STRING_INTERACTION_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flash lightbar when battery low.
+        /// </summary>
+        internal static string STRING_LB_BATTERY {
+            get {
+                return ResourceManager.GetString("STRING_LB_BATTERY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to locate your World of Warcraft installation folder. This is required for some features.
+        ///
+        ///Would you like to find your WoW folder now?.
+        /// </summary>
+        internal static string STRING_NO_WOW_PATH {
+            get {
+                return ResourceManager.GetString("STRING_NO_WOW_PATH", resourceCulture);
             }
         }
         
@@ -654,6 +746,15 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_SETTING_CLOSE_TRAY {
             get {
                 return ResourceManager.GetString("STRING_SETTING_CLOSE_TRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haptics.
+        /// </summary>
+        internal static string STRING_SETTING_HAPTICS {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_HAPTICS", resourceCulture);
             }
         }
         
@@ -703,7 +804,7 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string STRING_TAB_ADVANCED {
             get {
@@ -775,11 +876,38 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        internal static string STRING_UPDATE_BUTTON {
+            get {
+                return ResourceManager.GetString("STRING_UPDATE_BUTTON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The update file is being downloaded and will be automatically installed when the download is complete. Please wait....
+        /// </summary>
+        internal static string STRING_UPDATE_TEXT {
+            get {
+                return ResourceManager.GetString("STRING_UPDATE_TEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your keybindings will be reset to default. Are you sure?.
         /// </summary>
         internal static string STRING_WARN_RESET_BINDS {
             get {
                 return ResourceManager.GetString("STRING_WARN_RESET_BINDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please close World of Warcraft before updating..
+        /// </summary>
+        internal static string STRING_WOW_RUNNING_CLOSE {
+            get {
+                return ResourceManager.GetString("STRING_WOW_RUNNING_CLOSE", resourceCulture);
             }
         }
         

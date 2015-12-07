@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace DS4ConsolePort
 {
@@ -29,7 +31,7 @@ namespace DS4ConsolePort
             // Find install path
             foreach (string Path in testPaths)
             {
-                if (CheckWoWFolder(Path))
+                if (CheckForWowExe(Path))
                 {
                     wowPath = Path.TrimEnd('\\');
                     break;
@@ -39,10 +41,56 @@ namespace DS4ConsolePort
             return wowPath;
         }
 
-        private static bool CheckWoWFolder(string Folder)
+        public static bool CheckForWowExe(string Folder)
         {
-            if (File.Exists(Path.Combine(Folder, "WoW-64.exe"))) return true;
+            if (File.Exists(Path.Combine(Folder, "Wow.exe")) || 
+                File.Exists(Path.Combine(Folder, "Wow-64.exe"))) return true;
+
             return false;
+        }
+
+        public static bool CheckIsWowRunning()
+        {
+            var proc32 = Process.GetProcessesByName("Wow");
+            var proc64 = Process.GetProcessesByName("Wow-64");
+            if (proc64.GetLength(0) > 0 || proc32.GetLength(0) > 0) return true;
+            return false;
+        }
+
+        public static bool InstallAddOn(string AddonZip)
+        {
+            if (Directory.Exists(Properties.Settings.Default.WoWInstallPath))
+            {
+                var addonFolder = Path.Combine(Properties.Settings.Default.WoWInstallPath, "Interface\\AddOns");
+                if (!Directory.Exists(addonFolder)) return false;
+                using (FileStream zf = new FileStream(AddonZip, FileMode.Open))
+                {
+                    ZipFile z = new ZipFile(zf);
+                    // Find root folders
+                    List<string> rootFolders = new List<string>();
+                    foreach (ZipEntry f in z)
+                    {
+                        var root = f.Name.Substring(0, f.Name.IndexOf("/"));
+                        if (!rootFolders.Contains(root)) rootFolders.Add(root);
+                    }
+                    foreach(var folder in rootFolders)
+                    {
+                        var addonSubFolder = Path.Combine(addonFolder, folder);
+                        if (Directory.Exists(addonSubFolder))
+                        {
+                            Console.WriteLine("Deleting " + addonSubFolder);
+                            Directory.Delete(addonSubFolder, true);
+                        }
+                    }
+                }
+                Console.WriteLine("Extracting update");
+                FastZip unzip = new FastZip();
+                unzip.ExtractZip(AddonZip, addonFolder, ".*?");
+                return true;
+            }
+            else return false;
+            
+                
         }
 
         public static TocInfo ReadTocInfo(string TocFile)
@@ -102,6 +150,17 @@ namespace DS4ConsolePort
             }
             return default(Version);
         }
+
+        public static bool CheckWoWPath()
+        {
+            var WoWPath = Properties.Settings.Default.WoWInstallPath;
+            if (Directory.Exists(WoWPath)) return true;
+            WoWPath = Functions.TryFindWoWPath();
+            Properties.Settings.Default.WoWInstallPath = WoWPath;
+            Properties.Settings.Default.Save();
+            if (WoWPath == string.Empty) return false;
+            return true;
+        }
     }
 
     public struct TocInfo
@@ -113,4 +172,6 @@ namespace DS4ConsolePort
         public List<string> SavedVariables;
         public List<string> SavedVariablesPerCharacter;
     }
+
+
 }

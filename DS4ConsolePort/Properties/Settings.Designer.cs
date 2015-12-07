@@ -226,5 +226,41 @@ namespace DS4ConsolePort.Properties {
                 this["StartMinimized"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool LightbarBattery {
+            get {
+                return ((bool)(this["LightbarBattery"]));
+            }
+            set {
+                this["LightbarBattery"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int LightbarBatteryThreshold {
+            get {
+                return ((int)(this["LightbarBatteryThreshold"]));
+            }
+            set {
+                this["LightbarBatteryThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color LightbarBatteryColor {
+            get {
+                return ((global::System.Drawing.Color)(this["LightbarBatteryColor"]));
+            }
+            set {
+                this["LightbarBatteryColor"] = value;
+            }
+        }
     }
 }

@@ -1,148 +1,124 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace DS4ConsolePort.WoWData
 {
-    public static class Offsets
+    public class OffsetReader
     {
-        public static IntPtr GameState = (IntPtr)0x16A179E;
-        public static IntPtr GameBuild = (IntPtr)0xFE20B4;
+        public bool Loaded { get; private set; } = false;
+        private OffsetFile offsetFileData;
 
-        public static class Player
+        public OffsetReader()
         {
-            public static IntPtr LocalPlayer = (IntPtr)0x1606320;
-            public static IntPtr LocalCont = (IntPtr)0x13CC73C;
-            public static IntPtr LocalZone = (IntPtr)0x13E1674;
-            public static IntPtr IsLooting = (IntPtr)0x1715264;
-            public static IntPtr IsTexting = (IntPtr)0x1454030;
-            public static IntPtr Name = (IntPtr)0x17EE040;
-            public static IntPtr Class = (IntPtr)0x17EE1D5;
-            public static IntPtr RealmName = (IntPtr)0x17EE1F6;
-            public static IntPtr AccountName = (IntPtr)0x17ED6C0;
+            Load();
         }
 
-        public static int Read(string Name)
+        public void Load()
         {
-            switch(Name)
+            var exeLoc = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var exePath = Path.GetDirectoryName(exeLoc);
+            var offsetFile = Path.Combine(exePath, "offsets.xml");
+            if (File.Exists(offsetFile))
             {
-                case "GameState":
-                    return 0x16A179E;
-                case "GameBuild":
-                    return 0xFE20B4;
-                case "Player":
-                    return 0x1606320;
-                case "Name":
-                    return 0x17EE040;
-                case "Class":
-                    return 0x17EE1D5;
-                case "TargetGuid":
-                    return 0xA0;
-                case "Level":
-                    return 0x158;
-                case "CurrentHP":
-                    return 0xF0;
-                case "MaxHP":
-                    return 0x10C;
+                // Load the offset data from file
+                try
+                {
+                    using (FileStream inFile = new FileStream(offsetFile, FileMode.Open))
+                    {
+                        XmlSerializer x = new XmlSerializer(typeof(OffsetFile));
+                        offsetFileData = (OffsetFile)x.Deserialize(inFile);
+                    }
+                    Loaded = true;
+                }
+                catch
+                {
+                    Loaded = false;
+                }
             }
-            return 0;
+            else
+            {
+                Loaded = false;
+            }
         }
 
-        //General
-        //=======
-        //GameHash	= 0D3C6997
-        //IconHash = A118EC28
-        //GameBuild	= 0FE20B4
-        //GameState = 16A179E
+        public bool BuildExists(int build, int arch)
+        {
+            if (Loaded && offsetFileData != null)
+            {
+                var BuildOffsets = offsetFileData.GameOffsetList.Find(offset => offset.GameBuild == build && offset.GameArchitecture == arch);
+                if (BuildOffsets != null) return true;
+            }
+            return false;
+        }
 
-        //Camera
-        //======
-        //CameraStruct	= 16A2250
-        //CameraOffset = 7768
-        //CameraOrigin	= 10
-        //CameraMatrix	= 1C
-        //CameraFov = 40
+        public OffsetFile.GameOffset LoadOffsets(int build, int arch)
+        {
+            if (Loaded && offsetFileData != null)
+            {
+                var BuildOffsets = offsetFileData.GameOffsetList.Find(offset => offset.GameBuild == build && offset.GameArchitecture == arch);
+                if (BuildOffsets != null) return BuildOffsets;
+            }
+            return default(OffsetFile.GameOffset);
+        }
+    }
 
-        //Player
-        //======
-        //LocalPlayer	= 1606320
-        //LocalCont	= 13CC73C
-        //LocalZone = 13E1674
-        //IsLooting	= 1715264
-        //IsTexting	= 1454030
-        // MouseGuid	= 16A1DD8
-        //TargetGuid = 16A1E08
+    [XmlType("OffsetFile")]
+    public class OffsetFile
+    {
+        [XmlAttribute("DS4CPVersion")]
+        public string Version { get; set; }
 
-        //Entity List
-        //===========
-        //EntityList	= 14E4DC0
-        //FirstEntity = 18
-        // NextEntity	= 68
+        [XmlArray("GameOffsets")]
+        public List<GameOffset> GameOffsetList { get; set; }
 
-        //EntityType	= 18
-        //Descriptors	= 08
-        //GlobalID	= 00
-        //EntityID	= 24
-        //DynFlags	= 28
+        [XmlType("GameOffset")]
+        public class GameOffset
+        {
+            [XmlAttribute("GameBuild")]
+            public int GameBuild { get; set; }
 
-        //Unit
-        //====
-        //UnitTransport	= 1538
-        //UnitOrigin	= 1548
-        //UnitAngle	= 1558
-        //UnitCasting	= 1B98
-        //UnitChannel = 1BB8
+            [XmlAttribute("GameArchitecture")]
+            public int GameArchitecture {get;set;}
 
-        //UnitCreator = 080
-        //UnitHealth	= 0F0
-        //UnitPower	= 0F4
-        //UnitHealthMax	= 10C
-        //UnitPowerMax = 110
-        //UnitLevel	= 158
-        //UnitFlags	= 17C
+            [XmlArray("Offsets")]
+            public List<OffsetData> OffsetData { get; set; }
 
-        //PlayerMoney1 = 2790
-        //PlayerMoney2	= 1890
-        //PlayerArch	= 2798
-        //PlayerArchCount	= 08
-        //PlayerArchSites	= 18
+            public int ReadOffset(string Name)
+            {
+                return (int)OffsetData.Find(offset => offset.Name == Name).Address;
+            }
+        }
 
-        //NpcCache	= 16F0
-        //NpcName		= 00A0
+        public GameOffset GetBuildOffsets(int Build, int Architecture)
+        {
+            if(GameOffsetList != null)
+            {
+                return GameOffsetList.Find(offset => offset.GameBuild == Build && offset.GameArchitecture == Architecture);
+            }
+            return default(GameOffset);
+        }
 
-        //Object
-        //======
-        //ObjectBobbing	= 1E0
-        //ObjectTransport	= 238
-        //ObjectOrigin	= 248
-        //ObjectRotation	= 258
-        //ObjectTransform	= 4A0
-        //ObjectCache = 498
-        //ObjectName	= 0D8
+        [XmlType("Offset")]
+        public class OffsetData
+        {
+            [XmlAttribute("Name")]
+            public string Name { get;set; }
 
-        //ObjectCreator	= 030
-        //ObjectDisplay	= 040
+            [XmlAttribute("Address")]
+            public uint Address { get; set; }
 
-        //Name Cache
-        //==========
-        //NameCacheBase	= 14C2818
-        //NameCacheNext = 00
-        //NameCacheGuid	= 20
-        //NameCacheName	= 31
-        //NameCacheRace	= 88
-        //NameCacheClass	= 90
+            public OffsetData()
+            {
+                Name = string.Empty;
+                Address = 0;
+            }
 
-        //Chat System
-        //===========
-        //ChatPosition	= 16FE08C
-        //ChatBuffer = 16A3B30
-        //ChatMsgSize = 17F0
-
-        //Message
-        //=======
-        //MsgSenderGuid	= 0000
-        //MsgSenderName	= 0034
-        //MsgFullMessage	= 0065
-        //MsgOnlyMessage	= 0C1D
-        //MsgChannelNum = 17D8
-        //MsgTimeStamp	= 17E8
+            public OffsetData(string n, uint o)
+            {
+                Name = n.ToString(); Address = o;
+            }
+        }
     }
 }

@@ -263,7 +263,7 @@
     <value>Vibrate when switching targets</value>
   </data>
   <data name="STRING_HAPTIC_SETTINGS" xml:space="preserve">
-    <value>Feedback Settings</value>
+    <value>Advanced Haptics</value>
   </data>
   <data name="CONSOLEPORTLOGO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CONSOLEPORTLOGO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -305,7 +305,7 @@
     <value>Haptic Status</value>
   </data>
   <data name="STRING_TAB_ADVANCED" xml:space="preserve">
-    <value>Advanced</value>
+    <value>Settings</value>
   </data>
   <data name="STRING_TAB_CONSOLEPORT" xml:space="preserve">
     <value>ConsolePort</value>
@@ -363,5 +363,49 @@
   </data>
   <data name="STRING_CONTROLLER_DISCONNECTED" xml:space="preserve">
     <value>Disconnected</value>
+  </data>
+  <data name="STRING_HAPTICS_DISABLED_ERROR" xml:space="preserve">
+    <value>Advanced haptics was disabled because there was an error loading the module.</value>
+  </data>
+  <data name="STRING_HAPTICS_DISABLED_NO_OFFSETS" xml:space="preserve">
+    <value>Advanced haptics was disabled because there are no offsets available for your version.</value>
+  </data>
+  <data name="STRING_LB_BATTERY" xml:space="preserve">
+    <value>Flash lightbar when battery low</value>
+  </data>
+  <data name="STRING_SETTING_HAPTICS" xml:space="preserve">
+    <value>Haptics</value>
+  </data>
+  <data name="STRING_GROUP_DS4_STATUS" xml:space="preserve">
+    <value>DualShock4 Status</value>
+  </data>
+  <data name="STRING_UPDATE_TEXT" xml:space="preserve">
+    <value>The update file is being downloaded and will be automatically installed when the download is complete. Please wait...</value>
+  </data>
+  <data name="STRING_FIND_WOW" xml:space="preserve">
+    <value>Find WoW</value>
+  </data>
+  <data name="STRING_GROUP_WOW_PATH" xml:space="preserve">
+    <value>WoW Installation Folder</value>
+  </data>
+  <data name="STRING_NO_WOW_PATH" xml:space="preserve">
+    <value>Unable to locate your World of Warcraft installation folder. This is required for some features.
+
+Would you like to find your WoW folder now?</value>
+  </data>
+  <data name="STRING_CP_UPDATE_SUCCESS" xml:space="preserve">
+    <value>ConsolePort successfully updated to version {0}.</value>
+  </data>
+  <data name="STRING_DS4_UPDATE_SUCCESS" xml:space="preserve">
+    <value>DS4ConsolePort successfully updated to version {0}.</value>
+  </data>
+  <data name="STRING_INSTALL_BUTTON" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="STRING_UPDATE_BUTTON" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="STRING_WOW_RUNNING_CLOSE" xml:space="preserve">
+    <value>Please close World of Warcraft before updating.</value>
   </data>
 </root>

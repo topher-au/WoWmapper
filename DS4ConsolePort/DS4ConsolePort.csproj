@@ -26,7 +26,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,6 +38,10 @@
     <ApplicationIcon>Resources\WoWConsolePort.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +71,14 @@
     <Compile Include="AdvHapWarningForm.Designer.cs">
       <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DownloadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DownloadForm.Designer.cs">
+      <DependentUpon>DownloadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FolderSelectDialog\FolderSelectDialog.cs" />
+    <Compile Include="FolderSelectDialog\Reflector.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Github.cs" />
     <Compile Include="MainForm.cs">
@@ -78,12 +90,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Updater.cs" />
     <Compile Include="WoWInteraction.cs" />
     <EmbeddedResource Include="BindKeyForm.resx">
       <DependentUpon>BindKeyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdvHapWarningForm.resx">
       <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DownloadForm.resx">
+      <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -243,11 +259,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Command-Reset-24.png" />
+    <Content Include="offsets.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\CONSOLEPORTLOGO.png" />
     <None Include="Resources\left touch.png" />
     <None Include="Resources\right touch.png" />
     <None Include="Resources\DS4 Config.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
