@@ -524,6 +524,42 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Critical.
+        /// </summary>
+        internal static string STRING_COLOR_CRIT {
+            get {
+                return ResourceManager.GetString("STRING_COLOR_CRIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High.
+        /// </summary>
+        internal static string STRING_COLOR_HIGH {
+            get {
+                return ResourceManager.GetString("STRING_COLOR_HIGH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Low.
+        /// </summary>
+        internal static string STRING_COLOR_LOW {
+            get {
+                return ResourceManager.GetString("STRING_COLOR_LOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium.
+        /// </summary>
+        internal static string STRING_COLOR_MED {
+            get {
+                return ResourceManager.GetString("STRING_COLOR_MED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected ({0}%).
         /// </summary>
         internal static string STRING_CONTROLLER_CONNECTED {
@@ -565,6 +601,15 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_DS4CSETTINGS {
             get {
                 return ResourceManager.GetString("STRING_DS4CSETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slow the cursor when over an object.
+        /// </summary>
+        internal static string STRING_ENABLE_STICKY_CURSOR {
+            get {
+                return ResourceManager.GetString("STRING_ENABLE_STICKY_CURSOR", resourceCulture);
             }
         }
         
@@ -695,6 +740,24 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lightbar Settings.
+        /// </summary>
+        internal static string STRING_HAPTICS_LB_SETTINGS {
+            get {
+                return ResourceManager.GetString("STRING_HAPTICS_LB_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibration Settings.
+        /// </summary>
+        internal static string STRING_HAPTICS_RUMBLE_SETTINGS {
+            get {
+                return ResourceManager.GetString("STRING_HAPTICS_RUMBLE_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Install.
         /// </summary>
         internal static string STRING_INSTALL_BUTTON {
@@ -727,6 +790,15 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_LB_BATTERY {
             get {
                 return ResourceManager.GetString("STRING_LB_BATTERY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Miscellaneous.
+        /// </summary>
+        internal static string STRING_MISC {
+            get {
+                return ResourceManager.GetString("STRING_MISC", resourceCulture);
             }
         }
         
@@ -936,6 +1008,15 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_WARN_RESET_BINDS {
             get {
                 return ResourceManager.GetString("STRING_WARN_RESET_BINDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Haptics.
+        /// </summary>
+        internal static string STRING_WINDOW_ADVANCED_HAPTICS {
+            get {
+                return ResourceManager.GetString("STRING_WINDOW_ADVANCED_HAPTICS", resourceCulture);
             }
         }
         

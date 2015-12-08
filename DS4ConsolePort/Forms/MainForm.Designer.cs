@@ -105,11 +105,6 @@
             this.checkHapticsAttached = new System.Windows.Forms.CheckBox();
             this.checkHapticsUserLoggedIn = new System.Windows.Forms.CheckBox();
             this.labelPlayerInfo = new System.Windows.Forms.Label();
-            this.groupHapticSettings = new System.Windows.Forms.GroupBox();
-            this.checkRumbleDamage = new System.Windows.Forms.CheckBox();
-            this.checkRumbleTarget = new System.Windows.Forms.CheckBox();
-            this.checkLightbarHealth = new System.Windows.Forms.CheckBox();
-            this.checkLightbarClass = new System.Windows.Forms.CheckBox();
             this.groupDS4CSettings = new System.Windows.Forms.GroupBox();
             this.checkStartMinimized = new System.Windows.Forms.CheckBox();
             this.checkCloseTray = new System.Windows.Forms.CheckBox();
@@ -123,6 +118,7 @@
             this.dS4ConsolePortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonHapticSettings = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabConsolePort.SuspendLayout();
             this.groupVersion.SuspendLayout();
@@ -148,7 +144,6 @@
             this.groupHaptics.SuspendLayout();
             this.panelAdvancedHaptics.SuspendLayout();
             this.groupHapticStatus.SuspendLayout();
-            this.groupHapticSettings.SuspendLayout();
             this.groupDS4CSettings.SuspendLayout();
             this.groupInteraction.SuspendLayout();
             this.groupInteractionSettings.SuspendLayout();
@@ -374,10 +369,10 @@
             this.tabKeybinds.Controls.Add(this.textL2);
             this.tabKeybinds.Controls.Add(this.textL1);
             this.tabKeybinds.Controls.Add(this.picDS4);
-            this.tabKeybinds.Location = new System.Drawing.Point(4, 24);
+            this.tabKeybinds.Location = new System.Drawing.Point(4, 22);
             this.tabKeybinds.Name = "tabKeybinds";
             this.tabKeybinds.Padding = new System.Windows.Forms.Padding(3);
-            this.tabKeybinds.Size = new System.Drawing.Size(764, 496);
+            this.tabKeybinds.Size = new System.Drawing.Size(764, 498);
             this.tabKeybinds.TabIndex = 1;
             this.tabKeybinds.Text = "keybinds";
             // 
@@ -882,9 +877,9 @@
             this.tabAdvanced.Controls.Add(this.groupHaptics);
             this.tabAdvanced.Controls.Add(this.groupDS4CSettings);
             this.tabAdvanced.Controls.Add(this.groupInteraction);
-            this.tabAdvanced.Location = new System.Drawing.Point(4, 22);
+            this.tabAdvanced.Location = new System.Drawing.Point(4, 24);
             this.tabAdvanced.Name = "tabAdvanced";
-            this.tabAdvanced.Size = new System.Drawing.Size(764, 498);
+            this.tabAdvanced.Size = new System.Drawing.Size(764, 496);
             this.tabAdvanced.TabIndex = 2;
             this.tabAdvanced.Text = "advanced";
             this.tabAdvanced.UseVisualStyleBackColor = true;
@@ -920,15 +915,16 @@
             // 
             // groupHaptics
             // 
+            this.groupHaptics.Controls.Add(this.buttonHapticSettings);
             this.groupHaptics.Controls.Add(this.checkLightbarBattery);
             this.groupHaptics.Controls.Add(this.checkEnableAdvancedHaptics);
             this.groupHaptics.Controls.Add(this.panelAdvancedHaptics);
             this.groupHaptics.Location = new System.Drawing.Point(10, 189);
             this.groupHaptics.Name = "groupHaptics";
-            this.groupHaptics.Size = new System.Drawing.Size(440, 207);
+            this.groupHaptics.Size = new System.Drawing.Size(300, 207);
             this.groupHaptics.TabIndex = 28;
             this.groupHaptics.TabStop = false;
-            this.groupHaptics.Text = "Haptics";
+            this.groupHaptics.Text = "basic haptics";
             // 
             // checkLightbarBattery
             // 
@@ -955,10 +951,9 @@
             // panelAdvancedHaptics
             // 
             this.panelAdvancedHaptics.Controls.Add(this.groupHapticStatus);
-            this.panelAdvancedHaptics.Controls.Add(this.groupHapticSettings);
             this.panelAdvancedHaptics.Location = new System.Drawing.Point(6, 72);
             this.panelAdvancedHaptics.Name = "panelAdvancedHaptics";
-            this.panelAdvancedHaptics.Size = new System.Drawing.Size(434, 128);
+            this.panelAdvancedHaptics.Size = new System.Drawing.Size(289, 128);
             this.panelAdvancedHaptics.TabIndex = 24;
             // 
             // groupHapticStatus
@@ -968,7 +963,7 @@
             this.groupHapticStatus.Controls.Add(this.labelPlayerInfo);
             this.groupHapticStatus.Location = new System.Drawing.Point(3, 3);
             this.groupHapticStatus.Name = "groupHapticStatus";
-            this.groupHapticStatus.Size = new System.Drawing.Size(210, 122);
+            this.groupHapticStatus.Size = new System.Drawing.Size(280, 122);
             this.groupHapticStatus.TabIndex = 25;
             this.groupHapticStatus.TabStop = false;
             this.groupHapticStatus.Text = "HapticStatus";
@@ -1002,63 +997,6 @@
             this.labelPlayerInfo.Name = "labelPlayerInfo";
             this.labelPlayerInfo.Size = new System.Drawing.Size(0, 15);
             this.labelPlayerInfo.TabIndex = 23;
-            // 
-            // groupHapticSettings
-            // 
-            this.groupHapticSettings.Controls.Add(this.checkRumbleDamage);
-            this.groupHapticSettings.Controls.Add(this.checkRumbleTarget);
-            this.groupHapticSettings.Controls.Add(this.checkLightbarHealth);
-            this.groupHapticSettings.Controls.Add(this.checkLightbarClass);
-            this.groupHapticSettings.Location = new System.Drawing.Point(219, 3);
-            this.groupHapticSettings.Name = "groupHapticSettings";
-            this.groupHapticSettings.Size = new System.Drawing.Size(210, 122);
-            this.groupHapticSettings.TabIndex = 24;
-            this.groupHapticSettings.TabStop = false;
-            this.groupHapticSettings.Text = "HapticSettings";
-            // 
-            // checkRumbleDamage
-            // 
-            this.checkRumbleDamage.AutoSize = true;
-            this.checkRumbleDamage.Location = new System.Drawing.Point(6, 97);
-            this.checkRumbleDamage.Name = "checkRumbleDamage";
-            this.checkRumbleDamage.Size = new System.Drawing.Size(110, 19);
-            this.checkRumbleDamage.TabIndex = 3;
-            this.checkRumbleDamage.Text = "rumble damage";
-            this.checkRumbleDamage.UseVisualStyleBackColor = true;
-            this.checkRumbleDamage.CheckedChanged += new System.EventHandler(this.checkRumbleDamage_CheckedChanged);
-            // 
-            // checkRumbleTarget
-            // 
-            this.checkRumbleTarget.AutoSize = true;
-            this.checkRumbleTarget.Location = new System.Drawing.Point(6, 72);
-            this.checkRumbleTarget.Name = "checkRumbleTarget";
-            this.checkRumbleTarget.Size = new System.Drawing.Size(95, 19);
-            this.checkRumbleTarget.TabIndex = 2;
-            this.checkRumbleTarget.Text = "rumbletarget";
-            this.checkRumbleTarget.UseVisualStyleBackColor = true;
-            this.checkRumbleTarget.CheckedChanged += new System.EventHandler(this.checkRumbleTarget_CheckedChanged);
-            // 
-            // checkLightbarHealth
-            // 
-            this.checkLightbarHealth.AutoSize = true;
-            this.checkLightbarHealth.Location = new System.Drawing.Point(6, 47);
-            this.checkLightbarHealth.Name = "checkLightbarHealth";
-            this.checkLightbarHealth.Size = new System.Drawing.Size(103, 19);
-            this.checkLightbarHealth.TabIndex = 1;
-            this.checkLightbarHealth.Text = "lightbar health";
-            this.checkLightbarHealth.UseVisualStyleBackColor = true;
-            this.checkLightbarHealth.CheckedChanged += new System.EventHandler(this.checkLightbarHealth_CheckedChanged);
-            // 
-            // checkLightbarClass
-            // 
-            this.checkLightbarClass.AutoSize = true;
-            this.checkLightbarClass.Location = new System.Drawing.Point(6, 22);
-            this.checkLightbarClass.Name = "checkLightbarClass";
-            this.checkLightbarClass.Size = new System.Drawing.Size(95, 19);
-            this.checkLightbarClass.TabIndex = 0;
-            this.checkLightbarClass.Text = "lightbar class";
-            this.checkLightbarClass.UseVisualStyleBackColor = true;
-            this.checkLightbarClass.CheckedChanged += new System.EventHandler(this.checkLightbarClass_CheckedChanged);
             // 
             // groupDS4CSettings
             // 
@@ -1189,6 +1127,16 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // buttonHapticSettings
+            // 
+            this.buttonHapticSettings.Location = new System.Drawing.Point(214, 44);
+            this.buttonHapticSettings.Name = "buttonHapticSettings";
+            this.buttonHapticSettings.Size = new System.Drawing.Size(75, 23);
+            this.buttonHapticSettings.TabIndex = 24;
+            this.buttonHapticSettings.Text = "settings";
+            this.buttonHapticSettings.UseVisualStyleBackColor = true;
+            this.buttonHapticSettings.Click += new System.EventHandler(this.buttonHapticSettings_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1237,8 +1185,6 @@
             this.panelAdvancedHaptics.ResumeLayout(false);
             this.groupHapticStatus.ResumeLayout(false);
             this.groupHapticStatus.PerformLayout();
-            this.groupHapticSettings.ResumeLayout(false);
-            this.groupHapticSettings.PerformLayout();
             this.groupDS4CSettings.ResumeLayout(false);
             this.groupDS4CSettings.PerformLayout();
             this.groupInteraction.ResumeLayout(false);
@@ -1293,11 +1239,6 @@
         private System.Windows.Forms.Panel panelCamera;
         private System.Windows.Forms.Label labelChangeBindings;
         private System.Windows.Forms.Panel panelAdvancedHaptics;
-        private System.Windows.Forms.GroupBox groupHapticSettings;
-        private System.Windows.Forms.CheckBox checkRumbleDamage;
-        private System.Windows.Forms.CheckBox checkRumbleTarget;
-        private System.Windows.Forms.CheckBox checkLightbarHealth;
-        private System.Windows.Forms.CheckBox checkLightbarClass;
         private System.Windows.Forms.PictureBox picConsolePort;
         private System.Windows.Forms.CheckBox checkEnableAdvancedHaptics;
         private System.Windows.Forms.NumericUpDown numRSpeed;
@@ -1346,6 +1287,7 @@
         private System.Windows.Forms.Button buttonCPUpdateNow;
         private System.Windows.Forms.PictureBox picConfigR2;
         private System.Windows.Forms.PictureBox picConfigL2;
+        private System.Windows.Forms.Button buttonHapticSettings;
     }
 }
 

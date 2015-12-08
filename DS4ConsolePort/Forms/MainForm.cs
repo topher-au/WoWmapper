@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace DS4ConsolePort
         private Point ptLeftStick, ptRightStick;
         private Settings settings = new Settings();
         private int touchState;
+        private byte[] lastTarget = new byte[16];
 
         #endregion Private Fields
 
@@ -53,11 +55,6 @@ namespace DS4ConsolePort
             groupHapticStatus.Text = Properties.Resources.STRING_HAPTIC_STATUS;
             checkHapticsAttached.Text = Properties.Resources.STRING_HAPTIC_ATTACHED;
             checkHapticsUserLoggedIn.Text = Properties.Resources.STRING_HAPTIC_CHARLOGGEDIN;
-            checkLightbarClass.Text = Properties.Resources.STRING_HAPTIC_LBCLASS;
-            checkLightbarHealth.Text = Properties.Resources.STRING_HAPTIC_LBHEALTH;
-            checkRumbleDamage.Text = Properties.Resources.STRING_HAPTIC_RUMBLEDAMAGE;
-            checkRumbleTarget.Text = Properties.Resources.STRING_HAPTIC_RUMBLETARGET;
-            groupHapticSettings.Text = Properties.Resources.STRING_HAPTIC_SETTINGS;
             checkWindowAttached.Text = Properties.Resources.STRING_WOW_WINDOW_FOUND;
             labelChangeBindings.Text = Properties.Resources.STRING_BINDING_CHANGE;
             checkEnableAdvancedHaptics.Text = Properties.Resources.STRING_HAPTIC_ENABLE;
@@ -83,6 +80,7 @@ namespace DS4ConsolePort
             groupDS4Status.Text = Properties.Resources.STRING_GROUP_DS4_STATUS;
             groupWoWFolder.Text = Properties.Resources.STRING_GROUP_WOW_PATH;
             buttonLocateWoW.Text = Properties.Resources.STRING_FIND_WOW;
+            buttonHapticSettings.Text = Properties.Resources.STRING_INTERACTION_SETTINGS;
 
             new ToolTip().SetToolTip(picResetBinds, Properties.Resources.STRING_TOOLTIP_RESET_BINDS);
 
@@ -115,10 +113,6 @@ namespace DS4ConsolePort
             checkEnableAdvancedHaptics.Checked = Properties.Settings.Default.EnableAdvancedHaptics;
             comboTouchMode.SelectedIndex = Properties.Settings.Default.TouchMode;
             touchState = Properties.Settings.Default.TouchMode;
-            checkRumbleDamage.Checked = Properties.Settings.Default.EnableRumbleDamage;
-            checkRumbleTarget.Checked = Properties.Settings.Default.EnableRumbleTarget;
-            checkLightbarClass.Checked = Properties.Settings.Default.EnableLightbarClass;
-            checkLightbarHealth.Checked = Properties.Settings.Default.EnableLightbarHealth;
             numRCurve.Value = Properties.Settings.Default.RStickCurve;
             numRDeadzone.Value = Properties.Settings.Default.RStickDeadzone;
             numRSpeed.Value = Properties.Settings.Default.RStickSpeed;
@@ -312,33 +306,9 @@ namespace DS4ConsolePort
             UpdateHapticTab();
         }
 
-        private void checkLightbarClass_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.EnableLightbarClass = checkLightbarClass.Checked;
-            Properties.Settings.Default.Save();
-        }
-
-        private void checkLightbarHealth_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.EnableLightbarHealth = checkLightbarHealth.Checked;
-            Properties.Settings.Default.Save();
-        }
-
         private void checkMinTray_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.MinToTray = checkMinTray.Checked;
-            Properties.Settings.Default.Save();
-        }
-
-        private void checkRumbleDamage_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.EnableRumbleDamage = checkRumbleDamage.Checked;
-            Properties.Settings.Default.Save();
-        }
-
-        private void checkRumbleTarget_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.EnableRumbleTarget = checkRumbleTarget.Checked;
             Properties.Settings.Default.Save();
         }
 
@@ -801,10 +771,30 @@ namespace DS4ConsolePort
         {
             bool movingX = false;
             bool movingY = false;
+            bool slowCursor = false;
+            float slowMod = 1.85f;
             while (mouseThread.ThreadState == System.Threading.ThreadState.Running)
             {
                 if ((interaction.IsAttached || !Properties.Settings.Default.InactiveDisable) && DS4 != null)
                 {
+                    if (Properties.Settings.Default.EnableAdvancedHaptics && Properties.Settings.Default.EnableStickyCursor)
+                    {
+                        if (advHaptics != null)
+                        {
+                            if (advHaptics.IsWoWAttached && advHaptics.GameState == WoWState.LoggedIn)
+                            {
+                                // cause the cursor to slow down when it is over any object
+                                var target = advHaptics.wowReader.MouseGuid;
+                                if (!target.SequenceEqual(new byte[16]))
+                                {
+                                    slowCursor = true;
+                                } else
+                                {
+                                    slowCursor = false;
+                                }
+                            }
+                        }
+                    }
                     var rightStick = DS4.GetStickPoint(DS4Stick.Right);
                     var curPos = Cursor.Position;
 
@@ -821,7 +811,15 @@ namespace DS4ConsolePort
 
                         float tiltPercent = (rightVal / rightMax);
 
-                        double moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
+                        double moveMath = 0;
+                        if (slowCursor)
+                        {
+                            moveMath = Math.Pow(((float)intRightCurve/slowMod) * tiltPercent, 2) + ((intRightSpeed) * tiltPercent) + 1;
+                        } else
+                        {
+                            moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
+                        }
+
 
                         int moveVal = (int)moveMath; // y = ax^2 + bx where a=
 
@@ -855,7 +853,15 @@ namespace DS4ConsolePort
 
                         float tiltPercent = (rightVal / rightMax);
 
-                        double moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
+                        double moveMath = 0;
+                        if (slowCursor)
+                        {
+                            moveMath = Math.Pow(((float)intRightCurve / slowMod) * tiltPercent, 2) + ((intRightSpeed) * tiltPercent) + 1;
+                        }
+                        else
+                        {
+                            moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
+                        }
 
                         int moveVal = (int)moveMath; // y = ax^2 + bx where a=
 
@@ -879,6 +885,7 @@ namespace DS4ConsolePort
                 }
 
                 Thread.Sleep(10);
+                
             }
         }
 
@@ -1086,6 +1093,12 @@ namespace DS4ConsolePort
             ShowTriggerConfig();
         }
 
+        private void buttonHapticSettings_Click(object sender, EventArgs e)
+        {
+            HapticSettingsForm hapticForm = new HapticSettingsForm();
+            hapticForm.ShowDialog();
+        }
+
         private void buttonDS4UpdateNow_Click(object sender, EventArgs e)
         {
             if (Functions.CheckIsWowRunning())
@@ -1156,10 +1169,17 @@ namespace DS4ConsolePort
                 else if (interaction.IsAttached && advHaptics.wowReader.IsAttached && advHaptics.wowReader.OffsetsLoaded)
                 {
                     advHaptics.Enabled = true;
-                    advHaptics.LightbarClass = checkLightbarClass.Checked;
-                    advHaptics.LightbarHealth = checkLightbarHealth.Checked;
-                    advHaptics.RumbleOnTarget = checkRumbleTarget.Checked;
-                    advHaptics.RumbleOnDamage = checkRumbleDamage.Checked;
+                    advHaptics.LightbarClass = Properties.Settings.Default.EnableLightbarClass;
+                    advHaptics.LightbarHealth = Properties.Settings.Default.EnableLightbarHealth;
+                    advHaptics.RumbleOnTarget = Properties.Settings.Default.EnableRumbleTarget;
+                    advHaptics.RumbleOnDamage = Properties.Settings.Default.EnableRumbleDamage;
+                    advHaptics.HealthColors = new Haptics.Colors()
+                    {
+                        Critical = Properties.Settings.Default.ColorCritical,
+                        Low = Properties.Settings.Default.ColorLow,
+                        Medium = Properties.Settings.Default.ColorMedium,
+                        High = Properties.Settings.Default.ColorHigh
+                    };
 
                     checkHapticsAttached.Checked = advHaptics.IsWoWAttached;
                     if (advHaptics.IsWoWAttached)
@@ -1286,7 +1306,7 @@ namespace DS4ConsolePort
                 Properties.Settings.Default.Save();
                 checkEnableAdvancedHaptics.Enabled = false;
             }
-
+            buttonHapticSettings.Enabled = Properties.Settings.Default.EnableAdvancedHaptics;
             checkEnableAdvancedHaptics.Checked = Properties.Settings.Default.EnableAdvancedHaptics;
             panelAdvancedHaptics.Enabled = Properties.Settings.Default.EnableAdvancedHaptics;
         }

@@ -286,5 +286,89 @@ namespace DS4ConsolePort.Properties {
                 this["R2Sensitivity"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public global::System.Drawing.Color ColorCritical {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorCritical"]));
+            }
+            set {
+                this["ColorCritical"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        public global::System.Drawing.Color ColorLow {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorLow"]));
+            }
+            set {
+                this["ColorLow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Yellow")]
+        public global::System.Drawing.Color ColorMedium {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorMedium"]));
+            }
+            set {
+                this["ColorMedium"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("LimeGreen")]
+        public global::System.Drawing.Color ColorHigh {
+            get {
+                return ((global::System.Drawing.Color)(this["ColorHigh"]));
+            }
+            set {
+                this["ColorHigh"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int TargetRumbleMod {
+            get {
+                return ((int)(this["TargetRumbleMod"]));
+            }
+            set {
+                this["TargetRumbleMod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int DamageRumbleMod {
+            get {
+                return ((int)(this["DamageRumbleMod"]));
+            }
+            set {
+                this["DamageRumbleMod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableStickyCursor {
+            get {
+                return ((bool)(this["EnableStickyCursor"]));
+            }
+            set {
+                this["EnableStickyCursor"] = value;
+            }
+        }
     }
 }

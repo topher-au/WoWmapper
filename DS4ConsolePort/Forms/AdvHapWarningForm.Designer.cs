@@ -52,6 +52,7 @@
             this.linkMoreInfo.TabIndex = 1;
             this.linkMoreInfo.TabStop = true;
             this.linkMoreInfo.Text = "http://www.github.com/topher-au/DS4ConsolePort";
+            this.linkMoreInfo.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkMoreInfo_LinkClicked);
             // 
             // buttonOK
             // 

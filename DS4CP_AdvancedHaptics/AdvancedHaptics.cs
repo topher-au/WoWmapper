@@ -69,7 +69,7 @@ namespace DS4ConsolePort.AdvancedHaptics
         {
             byte[] lastTarget = new byte[16];
             if (wowReader.IsAttached && wowReader.GameState == WoWState.LoggedIn)
-                lastTarget = wowReader.CurrentTarget;
+                lastTarget = wowReader.TargetGuid;
 
             float lastHealthPercent = 100;
 
@@ -80,7 +80,7 @@ namespace DS4ConsolePort.AdvancedHaptics
                     // Buzz on change target
                     if (RumbleOnTarget)
                     {
-                        var target = wowReader.CurrentTarget;
+                        var target = wowReader.TargetGuid;
 
                         if (lastTarget != null && target != null) // if previous target exists
                             if (!target.SequenceEqual(lastTarget) && !target.SequenceEqual(new byte[16])) // ignore same target or null target

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace DS4ConsolePort
@@ -21,6 +22,11 @@ namespace DS4ConsolePort
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void linkMoreInfo_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(linkMoreInfo.Text);
         }
     }
 }

@@ -129,7 +129,7 @@ namespace DS4ConsolePort.WoWData
             }
         }
 
-        public byte[] CurrentTarget
+        public byte[] TargetGuid
         {
             get
             {
@@ -137,6 +137,17 @@ namespace DS4ConsolePort.WoWData
                 int bytesRead = 0;
                 ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("TargetGuid"), targetGuid, targetGuid.Length, ref bytesRead);
                 return targetGuid;
+            }
+        }
+
+        public byte[] MouseGuid
+        {
+            get
+            {
+                byte[] mouseGuid = new byte[16];
+                int bytesRead = 0;
+                ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("MouseGuid"), mouseGuid, mouseGuid.Length, ref bytesRead);
+                return mouseGuid;
             }
         }
 

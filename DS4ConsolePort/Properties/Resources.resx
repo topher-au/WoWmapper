@@ -420,4 +420,31 @@ Would you like to find your WoW folder now?</value>
   <data name="STRING_TRIGGERS_ADJUST" xml:space="preserve">
     <value>Please select the desired trigger sensitivity</value>
   </data>
+  <data name="STRING_COLOR_CRIT" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="STRING_COLOR_HIGH" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="STRING_COLOR_LOW" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="STRING_COLOR_MED" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="STRING_ENABLE_STICKY_CURSOR" xml:space="preserve">
+    <value>Slow the cursor when over an object</value>
+  </data>
+  <data name="STRING_HAPTICS_LB_SETTINGS" xml:space="preserve">
+    <value>Lightbar Settings</value>
+  </data>
+  <data name="STRING_HAPTICS_RUMBLE_SETTINGS" xml:space="preserve">
+    <value>Vibration Settings</value>
+  </data>
+  <data name="STRING_MISC" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="STRING_WINDOW_ADVANCED_HAPTICS" xml:space="preserve">
+    <value>Advanced Haptics</value>
+  </data>
 </root>
