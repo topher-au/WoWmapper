@@ -25,7 +25,7 @@ namespace DS4ConsolePort
 
         public void SetProgressValue(int Value)
         {
-            if(progressBar1.InvokeRequired)
+            if (progressBar1.InvokeRequired)
             {
                 try
                 {
@@ -34,11 +34,11 @@ namespace DS4ConsolePort
                         progressBar1.Value = Value;
                         Console.WriteLine(String.Format("Downloading... {0}%", Value));
                     });
-                } catch
+                }
+                catch
                 {
                     // window was probably closed
                 }
-                
             }
         }
 
@@ -48,7 +48,7 @@ namespace DS4ConsolePort
             wClient.Headers.Add(HttpRequestHeader.UserAgent, "DS4ConsolePort");
             wClient.DownloadProgressChanged += (obj, args) =>
             {
-                if(!Disposing)
+                if (!Disposing)
                     SetProgressValue(args.ProgressPercentage);
             };
             wClient.DownloadFileCompleted += (obj, args) =>

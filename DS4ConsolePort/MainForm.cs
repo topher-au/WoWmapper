@@ -241,11 +241,11 @@ namespace DS4ConsolePort
                         {
                             buttonCPUpdateNow.Text = Properties.Resources.STRING_INSTALL_BUTTON;
                             buttonCPUpdateNow.Visible = true;
-                        } else if(addonVersion < v) // addon out of date
+                        }
+                        else if (addonVersion < v) // addon out of date
                         {
                             buttonCPUpdateNow.Visible = true;
                         }
-                        
                     }
                 }
                 else
@@ -731,6 +731,19 @@ namespace DS4ConsolePort
             ExitApp();
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (m.Msg == Program.WM_ACTIVATE_DS4)
+            { // another instance launched, focus this instead
+                ShowForm();
+                var onTop = TopMost;
+                TopMost = true;
+                TopMost = onTop;
+                Activate();
+            }
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             DS4 = new DS4();
@@ -748,19 +761,19 @@ namespace DS4ConsolePort
             var vCheck = DoVersionCheck();
 
             Show();
-            
+
             // App was loaded from updater
             if (Environment.GetCommandLineArgs().Length > 1)
-            if (Environment.GetCommandLineArgs()[1] == "-updated")
-            {
-                var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
-                var addonVersion = new Version();
-                if (assemblyVersion.Revision == 0)
+                if (Environment.GetCommandLineArgs()[1] == "-updated")
                 {
-                    assemblyVersion = new Version(assemblyVersion.Major, assemblyVersion.Minor, assemblyVersion.Build);
+                    var assemblyVersion = Assembly.GetEntryAssembly().GetName().Version;
+                    var addonVersion = new Version();
+                    if (assemblyVersion.Revision == 0)
+                    {
+                        assemblyVersion = new Version(assemblyVersion.Major, assemblyVersion.Minor, assemblyVersion.Build);
+                    }
+                    MessageBox.Show(String.Format(Properties.Resources.STRING_DS4_UPDATE_SUCCESS, assemblyVersion.ToString()), "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                MessageBox.Show(String.Format(Properties.Resources.STRING_DS4_UPDATE_SUCCESS, assemblyVersion.ToString()), "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -781,7 +794,6 @@ namespace DS4ConsolePort
             if (Properties.Settings.Default.MinToTray)
             {
                 ShowInTaskbar = false;
-                Visible = false;
             }
         }
 
@@ -1026,7 +1038,6 @@ namespace DS4ConsolePort
 
         private void ShowForm()
         {
-            Visible = true;
             ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
         }
@@ -1051,7 +1062,6 @@ namespace DS4ConsolePort
 
         private void labelDS4CP_Click(object sender, EventArgs e)
         {
-
         }
 
         private void ShowTriggerConfig()
@@ -1088,12 +1098,13 @@ namespace DS4ConsolePort
             try
             {
                 dlf = new DownloadForm(dsVer.assets[0].browser_download_url);
-            } catch
+            }
+            catch
             {
-                MessageBox.Show("Error","", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
             if (dlf.DialogResult == DialogResult.Cancel) return;
 
             var outFile = dlf.OutputFile;

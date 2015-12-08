@@ -1,12 +1,5 @@
 ﻿using DS4Wrapper;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DS4ConsolePort
@@ -34,12 +27,11 @@ namespace DS4ConsolePort
 
         private void TriggerConfigForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void timerUpdate_Tick(object sender, EventArgs e)
         {
-            if(Controller != null)
+            if (Controller != null)
             {
                 var L2state = Controller.GetTriggerState(DS4Trigger.L2);
                 var R2state = Controller.GetTriggerState(DS4Trigger.R2);
@@ -47,8 +39,8 @@ namespace DS4ConsolePort
                 trackR2.Value = (int)(R2state * 100f);
                 checkL2.Checked = (trackL2.Value > numL2.Value);
                 checkR2.Checked = (trackR2.Value > numR2.Value);
-                
-            } else
+            }
+            else
             {
                 trackL2.Value = 0;
                 trackR2.Value = 0;

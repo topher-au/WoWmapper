@@ -9,6 +9,7 @@ namespace DS4ConsolePort
     public class WoWInteraction : IDisposable
     {
         #region Windows API declarations
+
         [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
         internal static extern IntPtr FindWindow(IntPtr ZeroOnly, string lpWindowName);
 
@@ -21,7 +22,7 @@ namespace DS4ConsolePort
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
+        private static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
@@ -45,9 +46,8 @@ namespace DS4ConsolePort
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
-        #endregion
 
-
+        #endregion Windows API declarations
 
         public bool IsAttached { get; private set; }
         public bool AdvancedHapticsEnabled { get; private set; }
@@ -80,12 +80,15 @@ namespace DS4ConsolePort
             return keyStates[(int)Key];
         }
 
-        public RECT WoWWindow { get
+        public RECT WoWWindow
+        {
+            get
             {
                 RECT wowRect = new RECT();
                 var b = GetWindowRect(new HandleRef(this, wowProcess.MainWindowHandle), out wowRect);
                 return wowRect;
-            } }
+            }
+        }
 
         private void WindowScanner()
         {
@@ -117,27 +120,25 @@ namespace DS4ConsolePort
 
         public void SendKeyDown(Keys Key)
         {
-            if(IsAttached)
+            if (IsAttached)
             {
                 PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
                 keyStates[(int)Key] = true;
             }
-            
         }
 
         public void SendKeyPress(Keys Key)
         {
-            if(IsAttached)
+            if (IsAttached)
             {
                 PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
                 PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
             }
-            
         }
 
         public void SendKeyUp(Keys Key)
         {
-            if(IsAttached)
+            if (IsAttached)
             {
                 PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
                 keyStates[(int)Key] = false;
@@ -148,6 +149,7 @@ namespace DS4ConsolePort
         {
             return (IntPtr)((HiWord << 16) | (LoWord & 0xFFFF));
         }
+
         #region Mouse Functions
 
         private void DoMouseEvent(uint Flags)
@@ -165,6 +167,7 @@ namespace DS4ConsolePort
                 case MouseButtons.Left:
                     DoMouseEvent(MOUSEEVENTF_LEFTDOWN);
                     break;
+
                 case MouseButtons.Right:
                     DoMouseEvent(MOUSEEVENTF_RIGHTDOWN);
                     break;
@@ -178,13 +181,12 @@ namespace DS4ConsolePort
                 case MouseButtons.Left:
                     DoMouseEvent(MOUSEEVENTF_LEFTUP);
                     break;
+
                 case MouseButtons.Right:
                     DoMouseEvent(MOUSEEVENTF_RIGHTUP);
                     break;
             }
         }
-
-
 
         public void SendLeftClick()
         {
@@ -202,7 +204,7 @@ namespace DS4ConsolePort
             mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
         }
 
-        #endregion
+        #endregion Mouse Functions
 
         public enum Direction
         {
@@ -214,7 +216,8 @@ namespace DS4ConsolePort
             StopY
         }
 
-        public static class MoveBindName {
+        public static class MoveBindName
+        {
             public static string Forward = "LStickUp";
             public static string Backward = "LStickDown";
             public static string Left = "LStickLeft";

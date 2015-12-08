@@ -1,14 +1,29 @@
-﻿using Microsoft.Win32;
+﻿using ICSharpCode.SharpZipLib.Zip;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using ICSharpCode.SharpZipLib.Zip;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace DS4ConsolePort
 {
     public static class Functions
     {
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const UInt32 WM_SYSCOMMAND = 0x0112;
+        private const UInt32 SC_RESTORE = 0xF120;
+        private const int SW_SHOW = 0x05;
+
         private static List<string> wowDefaultPaths = new List<string>()
         {
             "C:\\Program Files\\World of Warcraft",
@@ -16,6 +31,26 @@ namespace DS4ConsolePort
             "C:\\World of Warcraft",
             "D:\\World of Warcraft",
         };
+
+        public static void ShowAndFocusWindow(IntPtr hWnd)
+        {
+            // Attempt to restore the specified window to default state
+            try
+            {
+                if (hWnd != IntPtr.Zero)
+                {
+                    SendMessage(hWnd, WM_SYSCOMMAND, (IntPtr)SC_RESTORE, IntPtr.Zero);
+                    ShowWindow(hWnd, SW_SHOW);
+                    FocusWindow(hWnd);
+                }
+            }
+            catch { }
+        }
+
+        public static void FocusWindow(IntPtr hWnd)
+        {
+            SetForegroundWindow(hWnd);
+        }
 
         public static string TryFindWoWPath()
         {
@@ -43,8 +78,9 @@ namespace DS4ConsolePort
 
         public static bool CheckForWowExe(string Folder)
         {
-            if (File.Exists(Path.Combine(Folder, "Wow.exe")) || 
-                File.Exists(Path.Combine(Folder, "Wow-64.exe"))) return true;
+            if (File.Exists(Path.Combine(Folder, "Wow.exe")) ||
+                File.Exists(Path.Combine(Folder, "Wow-64.exe")))
+                return true;
 
             return false;
         }
@@ -73,7 +109,7 @@ namespace DS4ConsolePort
                         var root = f.Name.Substring(0, f.Name.IndexOf("/"));
                         if (!rootFolders.Contains(root)) rootFolders.Add(root);
                     }
-                    foreach(var folder in rootFolders)
+                    foreach (var folder in rootFolders)
                     {
                         var addonSubFolder = Path.Combine(addonFolder, folder);
                         if (Directory.Exists(addonSubFolder))
@@ -89,8 +125,6 @@ namespace DS4ConsolePort
                 return true;
             }
             else return false;
-            
-                
         }
 
         public static TocInfo ReadTocInfo(string TocFile)
@@ -161,6 +195,32 @@ namespace DS4ConsolePort
             if (WoWPath == string.Empty) return false;
             return true;
         }
+
+        public static List<string> EnumerateWowAccounts()
+        {
+            if (CheckWoWPath())
+            {
+                var wowPath = Properties.Settings.Default.WoWInstallPath;
+                var accountPath = Path.Combine(wowPath, "WTF\\Account");
+                if (!Directory.Exists(accountPath)) return null; // wtf not found
+
+                var accounts = new List<string>();
+                foreach (var account in Directory.GetDirectories(accountPath))
+                {
+                    accounts.Add(account.Substring(account.LastIndexOf("\\") + 1));
+                }
+                return accounts.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static List<string> EnumerateAccountCharacters(string WowAccount)
+        {
+            return null;
+        }
     }
 
     public struct TocInfo
@@ -172,6 +232,4 @@ namespace DS4ConsolePort
         public List<string> SavedVariables;
         public List<string> SavedVariablesPerCharacter;
     }
-
-
 }

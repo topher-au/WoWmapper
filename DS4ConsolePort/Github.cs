@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace DS4ConsolePort
 {
@@ -125,6 +125,5 @@ namespace DS4ConsolePort
             public string name { get; set; }
             public string browser_download_url { get; set; }
         }
-
     }
 }
