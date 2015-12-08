@@ -217,6 +217,7 @@ namespace DS4Wrapper
                 {
                     Controller = Controllers.First();
                     IsConnected = true;
+                    if (Controller != null) ControllerConnected();
                 }
                 Thread.Sleep(5);
             }
