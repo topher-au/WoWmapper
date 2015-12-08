@@ -48,6 +48,8 @@
             this.labelConnectionStatus = new System.Windows.Forms.Label();
             this.picConsolePort = new System.Windows.Forms.PictureBox();
             this.tabKeybinds = new System.Windows.Forms.TabPage();
+            this.picConfigR2 = new System.Windows.Forms.PictureBox();
+            this.picConfigL2 = new System.Windows.Forms.PictureBox();
             this.labelCenterCursor = new System.Windows.Forms.Label();
             this.picResetBinds = new System.Windows.Forms.PictureBox();
             this.labelTouchUpper = new System.Windows.Forms.Label();
@@ -128,6 +130,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picConnectionType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picConsolePort)).BeginInit();
             this.tabKeybinds.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picConfigR2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picConfigL2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picResetBinds)).BeginInit();
             this.panelCamera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numRSpeed)).BeginInit();
@@ -287,6 +291,7 @@
             this.labelDS4CP.Size = new System.Drawing.Size(97, 15);
             this.labelDS4CP.TabIndex = 1;
             this.labelDS4CP.Text = "DS4ConsolePort";
+            this.labelDS4CP.Click += new System.EventHandler(this.labelDS4CP_Click);
             // 
             // labelCPAddon
             // 
@@ -341,6 +346,8 @@
             // tabKeybinds
             // 
             this.tabKeybinds.BackColor = System.Drawing.Color.DimGray;
+            this.tabKeybinds.Controls.Add(this.picConfigR2);
+            this.tabKeybinds.Controls.Add(this.picConfigL2);
             this.tabKeybinds.Controls.Add(this.labelCenterCursor);
             this.tabKeybinds.Controls.Add(this.picResetBinds);
             this.tabKeybinds.Controls.Add(this.labelTouchUpper);
@@ -367,12 +374,34 @@
             this.tabKeybinds.Controls.Add(this.textL2);
             this.tabKeybinds.Controls.Add(this.textL1);
             this.tabKeybinds.Controls.Add(this.picDS4);
-            this.tabKeybinds.Location = new System.Drawing.Point(4, 22);
+            this.tabKeybinds.Location = new System.Drawing.Point(4, 24);
             this.tabKeybinds.Name = "tabKeybinds";
             this.tabKeybinds.Padding = new System.Windows.Forms.Padding(3);
-            this.tabKeybinds.Size = new System.Drawing.Size(764, 498);
+            this.tabKeybinds.Size = new System.Drawing.Size(764, 496);
             this.tabKeybinds.TabIndex = 1;
             this.tabKeybinds.Text = "keybinds";
+            // 
+            // picConfigR2
+            // 
+            this.picConfigR2.Image = global::DS4ConsolePort.Properties.Resources.cogs;
+            this.picConfigR2.Location = new System.Drawing.Point(645, 58);
+            this.picConfigR2.Name = "picConfigR2";
+            this.picConfigR2.Size = new System.Drawing.Size(24, 24);
+            this.picConfigR2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picConfigR2.TabIndex = 46;
+            this.picConfigR2.TabStop = false;
+            this.picConfigR2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // picConfigL2
+            // 
+            this.picConfigL2.Image = global::DS4ConsolePort.Properties.Resources.cogs;
+            this.picConfigL2.Location = new System.Drawing.Point(98, 58);
+            this.picConfigL2.Name = "picConfigL2";
+            this.picConfigL2.Size = new System.Drawing.Size(24, 24);
+            this.picConfigL2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picConfigL2.TabIndex = 45;
+            this.picConfigL2.TabStop = false;
+            this.picConfigL2.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // labelCenterCursor
             // 
@@ -1185,6 +1214,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picConsolePort)).EndInit();
             this.tabKeybinds.ResumeLayout(false);
             this.tabKeybinds.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picConfigR2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picConfigL2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picResetBinds)).EndInit();
             this.panelCamera.ResumeLayout(false);
             this.panelCamera.PerformLayout();
@@ -1313,6 +1344,8 @@
         private System.Windows.Forms.TextBox textWoWFolder;
         private System.Windows.Forms.Button buttonDS4UpdateNow;
         private System.Windows.Forms.Button buttonCPUpdateNow;
+        private System.Windows.Forms.PictureBox picConfigR2;
+        private System.Windows.Forms.PictureBox picConfigL2;
     }
 }
 

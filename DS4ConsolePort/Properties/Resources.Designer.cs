@@ -83,6 +83,16 @@ namespace DS4ConsolePort.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cogs {
+            get {
+                object obj = ResourceManager.GetObject("cogs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CONSOLEPORTLOGO {
             get {
                 object obj = ResourceManager.GetObject("CONSOLEPORTLOGO", resourceCulture);
@@ -505,6 +515,15 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string STRING_CANCEL {
+            get {
+                return ResourceManager.GetString("STRING_CANCEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected ({0}%).
         /// </summary>
         internal static string STRING_CONTROLLER_CONNECTED {
@@ -741,6 +760,15 @@ namespace DS4ConsolePort.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string STRING_SAVE {
+            get {
+                return ResourceManager.GetString("STRING_SAVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close to tray.
         /// </summary>
         internal static string STRING_SETTING_CLOSE_TRAY {
@@ -872,6 +900,15 @@ namespace DS4ConsolePort.Properties {
         internal static string STRING_TOUCHPAD_SHARE_OPTIONS {
             get {
                 return ResourceManager.GetString("STRING_TOUCHPAD_SHARE_OPTIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select the desired trigger sensitivity.
+        /// </summary>
+        internal static string STRING_TRIGGERS_ADJUST {
+            get {
+                return ResourceManager.GetString("STRING_TRIGGERS_ADJUST", resourceCulture);
             }
         }
         

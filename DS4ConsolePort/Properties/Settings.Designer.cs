@@ -262,5 +262,29 @@ namespace DS4ConsolePort.Properties {
                 this["LightbarBatteryColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int L2Sensitivity {
+            get {
+                return ((int)(this["L2Sensitivity"]));
+            }
+            set {
+                this["L2Sensitivity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int R2Sensitivity {
+            get {
+                return ((int)(this["R2Sensitivity"]));
+            }
+            set {
+                this["R2Sensitivity"] = value;
+            }
+        }
     }
 }

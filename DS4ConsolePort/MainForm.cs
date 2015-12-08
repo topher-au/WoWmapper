@@ -737,6 +737,8 @@ namespace DS4ConsolePort
             DS4.ControllerConnected += DS4_OnControllerConnected;
             DS4.ButtonDown += DS4_ButtonDown;
             DS4.ButtonUp += DS4_ButtonUp;
+            DS4.TriggerSensitivity.L2 = Properties.Settings.Default.L2Sensitivity;
+            DS4.TriggerSensitivity.R2 = Properties.Settings.Default.R2Sensitivity;
 
             RefreshKeyBindings();
             UpdateHapticTab();
@@ -1045,6 +1047,33 @@ namespace DS4ConsolePort
             MessageBox.Show(string.Format(Properties.Resources.STRING_CP_UPDATE_SUCCESS, cpVer.tag_name), "DS4ConsolePort", MessageBoxButtons.OK, MessageBoxIcon.Information);
             File.Delete(outFile);
             var vCheck = DoVersionCheck();
+        }
+
+        private void labelDS4CP_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ShowTriggerConfig()
+        {
+            TriggerConfigForm triggerConfig = new TriggerConfigForm(DS4.TriggerSensitivity.L2, DS4.TriggerSensitivity.R2);
+            triggerConfig.ShowDialog();
+            if (triggerConfig.DialogResult == DialogResult.Cancel) return;
+            Properties.Settings.Default.L2Sensitivity = triggerConfig.L2Threshold;
+            Properties.Settings.Default.R2Sensitivity = triggerConfig.R2Threshold;
+            DS4.TriggerSensitivity.L2 = triggerConfig.L2Threshold;
+            DS4.TriggerSensitivity.R2 = triggerConfig.R2Threshold;
+            Properties.Settings.Default.Save();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            ShowTriggerConfig();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            ShowTriggerConfig();
         }
 
         private void buttonDS4UpdateNow_Click(object sender, EventArgs e)

@@ -62,5 +62,11 @@
     <Setting Name="LightbarBatteryColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Red</Value>
     </Setting>
+    <Setting Name="L2Sensitivity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="R2Sensitivity" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

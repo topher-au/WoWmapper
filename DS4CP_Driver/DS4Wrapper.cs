@@ -53,6 +53,12 @@ namespace DS4Wrapper
         Right
     }
 
+    public enum DS4Trigger
+    {
+        L2,
+        R2
+    }
+
     public enum TriggerMode
     {
         Analog,
@@ -119,7 +125,8 @@ namespace DS4Wrapper
             }
 
             TriggerMode = TriggerMode.Buttons;
-            TriggerSensitivity = 0.5f;
+            TriggerSensitivity.L2 = 40;
+            TriggerSensitivity.R2 = 40;
         }
 
         #endregion Public Constructors
@@ -175,9 +182,15 @@ namespace DS4Wrapper
         // Settings
         public TriggerMode TriggerMode { get; set; } // Triggers analog/digital
 
-        public float TriggerSensitivity { get; set; }
+        public DS4Sensitivity TriggerSensitivity { get; set; } = new DS4Sensitivity();
 
         #endregion Public Properties
+
+        public class DS4Sensitivity
+        {
+            public int L2 { get; set; }
+            public int R2 { get; set; }
+        }
 
         #region Public Methods
 
@@ -275,10 +288,26 @@ namespace DS4Wrapper
             return axisThresholds[(int)Axis];
         }
 
-        public float GetTriggerAxis(byte Axis)
+        public float AxisToFloat(byte Axis)
         {
-            float TriggerAxis = Axis / 255;
+            float TriggerAxis = Axis / 255f;
             return TriggerAxis;
+        }
+
+        public float GetTriggerState(DS4Trigger Trigger)
+        {
+            if(Controller != null)
+            {
+                var state = Controller.getCurrentState();
+                switch (Trigger)
+                {
+                    case DS4Trigger.L2:
+                        return AxisToFloat(state.L2);
+                    case DS4Trigger.R2:
+                        return AxisToFloat(state.R2);
+                }
+            }
+            return 0f;
         }
 
         public bool IsButtonPressed(DS4Button Button)
@@ -511,13 +540,13 @@ namespace DS4Wrapper
                         // Handle L2/R2 triggers as buttons
                         if (TriggerMode == TriggerMode.Buttons)
                         {
-                            if (GetTriggerAxis(state.L2) > TriggerSensitivity)
+                            if (AxisToFloat(state.L2) > (TriggerSensitivity.L2/100))
                                 DoButtonDown(DS4Button.L2);
-                            if (!(GetTriggerAxis(state.L2) > TriggerSensitivity) && buttonStates[(int)DS4Button.L2])
+                            if (!(AxisToFloat(state.L2) > (TriggerSensitivity.L2 / 100)) && buttonStates[(int)DS4Button.L2])
                                 DoButtonUp(DS4Button.L2);
-                            if (GetTriggerAxis(state.R2) > TriggerSensitivity)
+                            if (AxisToFloat(state.R2) > (TriggerSensitivity.R2 / 100))
                                 DoButtonDown(DS4Button.R2);
-                            if (!(GetTriggerAxis(state.R2) > TriggerSensitivity) && buttonStates[(int)DS4Button.R2])
+                            if (!(AxisToFloat(state.R2) > (TriggerSensitivity.R2 / 100)) && buttonStates[(int)DS4Button.R2])
                                 DoButtonUp(DS4Button.R2);
                         }
 
