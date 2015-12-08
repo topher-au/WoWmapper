@@ -135,7 +135,7 @@ namespace DS4ConsolePort.WoWData
             {
                 byte[] targetGuid = new byte[16];
                 int bytesRead = 0;
-                ReadProcessMemory(wowHandle, ReadPlayerBase() + 0x08 + offsets.ReadOffset("TargetGuid"), targetGuid, targetGuid.Length, ref bytesRead);
+                ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("TargetGuid"), targetGuid, targetGuid.Length, ref bytesRead);
                 return targetGuid;
             }
         }

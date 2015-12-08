@@ -132,7 +132,7 @@ namespace DS4ConsolePort.AdvancedHaptics
                 {
                     lastHealthPercent = 100;
                 }
-                Thread.Sleep(5);
+                Thread.Sleep(100);
             }
         }
 
@@ -196,7 +196,7 @@ namespace DS4ConsolePort.AdvancedHaptics
                         hapticDevice.LightBarOff();
                 }
 
-                Thread.Sleep(5);
+                Thread.Sleep(100);
             }
         }
     }

@@ -8,7 +8,8 @@
         <Offset Name="Player" Address="23094048" />
         <Offset Name="Name" Address="25092160" />
         <Offset Name="Class" Address="25092565" />
-        <Offset Name="TargetGuid" Address="160" />
+        <Offset Name="TargetGuid" Address="23731720" />
+        <Offset Name="MouseGuid" Address="23731672" />
         <Offset Name="Level" Address="344" />
         <Offset Name="CurrentHP" Address="240" />
         <Offset Name="MaxHP" Address="268" />
@@ -21,7 +22,8 @@
         <Offset Name="Player" Address="23094048" />
         <Offset Name="Name" Address="25092160" />
         <Offset Name="Class" Address="25092565" />
-        <Offset Name="TargetGuid" Address="160" />
+        <Offset Name="TargetGuid" Address="23731720" />
+        <Offset Name="MouseGuid" Address="23731672" />
         <Offset Name="Level" Address="344" />
         <Offset Name="CurrentHP" Address="240" />
         <Offset Name="MaxHP" Address="268" />
