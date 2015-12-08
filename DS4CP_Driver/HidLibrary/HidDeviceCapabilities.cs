@@ -20,6 +20,7 @@
             NumberFeatureButtonCaps = capabilities.NumberFeatureButtonCaps;
             NumberFeatureValueCaps = capabilities.NumberFeatureValueCaps;
             NumberFeatureDataIndices = capabilities.NumberFeatureDataIndices;
+
         }
 
         public short Usage { get; private set; }

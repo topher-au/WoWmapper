@@ -139,13 +139,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DS4CP_Driver\DS4CP_Driver.csproj">
-      <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
-      <Name>DS4CP_Driver</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DS4CP_AdvancedHaptics\DS4CP_AdvancedHaptics.csproj">
       <Project>{14fccdd6-7741-4d4a-bf33-4a9c04917f76}</Project>
       <Name>DS4CP_AdvancedHaptics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DS4CP_Driver\DS4CP_Driver.csproj">
+      <Project>{7b9354bf-af82-4ccb-a83d-4beb1e9d8c96}</Project>
+      <Name>DS4CP_Driver</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,8 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Runtime.InteropServices;
 namespace DS4Windows
 {
     public class TouchpadEventArgs : EventArgs
@@ -7,7 +10,6 @@ namespace DS4Windows
         public readonly Touch[] touches = null;
         public readonly System.DateTime timeStamp;
         public readonly bool touchButtonPressed;
-
         public TouchpadEventArgs(System.DateTime utcTimestamp, bool tButtonDown, Touch t0, Touch t1 = null)
         {
             if (t1 != null)
@@ -31,8 +33,7 @@ namespace DS4Windows
         public readonly int hwX, hwY, deltaX, deltaY;
         public readonly byte touchID;
         public readonly Touch previousTouch;
-
-        public Touch(int X, int Y, byte tID, Touch prevTouch = null)
+        public Touch(int X, int Y,  byte tID, Touch prevTouch = null)
         {
             hwX = X;
             hwY = Y;
@@ -49,22 +50,15 @@ namespace DS4Windows
     public class DS4Touchpad
     {
         public event EventHandler<TouchpadEventArgs> TouchesBegan = null; // finger one or two landed (or both, or one then two, or two then one; any touches[] count increase)
-
         public event EventHandler<TouchpadEventArgs> TouchesMoved = null; // deltaX/deltaY are set because one or both fingers were already down on a prior sensor reading
-
         public event EventHandler<TouchpadEventArgs> TouchesEnded = null; // all fingers lifted
-
         public event EventHandler<TouchpadEventArgs> TouchButtonDown = null; // touchpad pushed down until the button clicks
-
         public event EventHandler<TouchpadEventArgs> TouchButtonUp = null; // touchpad button released
-
         public event EventHandler<EventArgs> TouchUnchanged = null; // no status change for the touchpad itself... but other sensors may have changed, or you may just want to do some processing
 
         public readonly static int TOUCHPAD_DATA_OFFSET = 35;
-
         internal int lastTouchPadX1, lastTouchPadY1,
             lastTouchPadX2, lastTouchPadY2; // tracks 0, 1 or 2 touches; we maintain touch 1 and 2 separately
-
         internal bool lastTouchPadIsDown;
         internal bool lastIsActive1, lastIsActive2;
         internal byte lastTouchID1, lastTouchID2;
