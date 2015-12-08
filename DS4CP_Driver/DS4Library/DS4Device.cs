@@ -28,12 +28,14 @@ namespace DS4Windows
             green = c.G;
             blue = c.B;
         }
+
         public DS4Color(byte r, byte g, byte b)
         {
             red = r;
             green = g;
             blue = b;
         }
+
         public override bool Equals(object obj)
         {
             if (obj is DS4Color)

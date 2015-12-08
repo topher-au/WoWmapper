@@ -26,13 +26,14 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\WoWConsolePort.ico</ApplicationIcon>
@@ -59,54 +60,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BindKeyForm.cs">
+    <Compile Include="Forms\BindKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BindKeyForm.Designer.cs">
+    <Compile Include="Forms\BindKeyForm.Designer.cs">
       <DependentUpon>BindKeyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdvHapWarningForm.cs">
+    <Compile Include="Forms\AdvHapWarningForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdvHapWarningForm.Designer.cs">
+    <Compile Include="Forms\AdvHapWarningForm.Designer.cs">
       <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DownloadForm.cs">
+    <Compile Include="Forms\DownloadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DownloadForm.Designer.cs">
+    <Compile Include="Forms\DownloadForm.Designer.cs">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FolderSelectDialog\FolderSelectDialog.cs" />
-    <Compile Include="FolderSelectDialog\Reflector.cs" />
-    <Compile Include="Functions.cs" />
-    <Compile Include="Github.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Classes\FolderSelectDialog\FolderSelectDialog.cs" />
+    <Compile Include="Classes\FolderSelectDialog\Reflector.cs" />
+    <Compile Include="Classes\Functions.cs" />
+    <Compile Include="Classes\Github.cs" />
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="TriggerConfigForm.cs">
+    <Compile Include="Classes\Settings.cs" />
+    <Compile Include="Forms\TriggerConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TriggerConfigForm.Designer.cs">
+    <Compile Include="Forms\TriggerConfigForm.Designer.cs">
       <DependentUpon>TriggerConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="WoWInteraction.cs" />
-    <EmbeddedResource Include="BindKeyForm.resx">
+    <Compile Include="Classes\WoWInteraction.cs" />
+    <EmbeddedResource Include="Forms\BindKeyForm.resx">
       <DependentUpon>BindKeyForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdvHapWarningForm.resx">
+    <EmbeddedResource Include="Forms\AdvHapWarningForm.resx">
       <DependentUpon>AdvHapWarningForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DownloadForm.resx">
+    <EmbeddedResource Include="Forms\DownloadForm.resx">
       <DependentUpon>DownloadForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -119,7 +120,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TriggerConfigForm.resx">
+    <EmbeddedResource Include="Forms\TriggerConfigForm.resx">
       <DependentUpon>TriggerConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -279,6 +280,9 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"D:\Libraries\Documents\Repos\DS4ConsolePort\DS4ConsolePort\createrelease.bat"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
