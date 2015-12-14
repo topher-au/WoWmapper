@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="BT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\USB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_HAPTIC_ATTACHED" xml:space="preserve">
+    <value>Advanced haptics attached</value>
+  </data>
+  <data name="STRING_HAPTIC_CHARLOGGEDIN" xml:space="preserve">
+    <value>Character logged in</value>
+  </data>
+  <data name="STRING_WOW_WINDOW_FOUND" xml:space="preserve">
+    <value>World of Warcraft currently running</value>
+  </data>
+  <data name="STRING_HAPTIC_STATUS" xml:space="preserve">
+    <value>Advanced Haptics</value>
+  </data>
+  <data name="STRING_NOTIFY_MENU_EXIT" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="STRING_NOTIFY_TOOLTIP" xml:space="preserve">
+    <value>WoWmapper</value>
+  </data>
+  <data name="STRING_SETTING_APP_PREFS" xml:space="preserve">
+    <value>Application Preferences</value>
+  </data>
+  <data name="STRING_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="STRING_SHOW_CONFIG" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="STRING_SETTING_CLOSE_TRAY" xml:space="preserve">
+    <value>Close to tray</value>
+  </data>
+  <data name="STRING_SETTING_NO_WOW_DIABLE" xml:space="preserve">
+    <value>Disable controller when WoW is not running</value>
+  </data>
+  <data name="STRING_SETTING_MIN_TRAY" xml:space="preserve">
+    <value>Minimize to tray</value>
+  </data>
+  <data name="STRING_SETTING_START_MINIMIZED" xml:space="preserve">
+    <value>Start minimized</value>
+  </data>
+  <data name="STRING_CONTROLLER_CONNECTED" xml:space="preserve">
+    <value>{1} connected ({0}%)</value>
+  </data>
+  <data name="STRING_CONTROLLER_DISCONNECTED" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="STRING_MESSAGE_HAPTICS_DISABLED_ERROR" xml:space="preserve">
+    <value>Advanced haptics was disabled because there was an error loading the module.</value>
+  </data>
+  <data name="STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS" xml:space="preserve">
+    <value>Advanced haptics was disabled because there are no offsets available for your version.</value>
+  </data>
+  <data name="STRING_SETTING_HAPTICS" xml:space="preserve">
+    <value>Haptics</value>
+  </data>
+  <data name="STRING_GROUP_STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="STRING_UPDATE_TEXT" xml:space="preserve">
+    <value>The update file is being downloaded and will be automatically installed when the download is complete. Please wait...</value>
+  </data>
+  <data name="STRING_FIND_WOW" xml:space="preserve">
+    <value>Find WoW</value>
+  </data>
+  <data name="STRING_GROUP_WOW_PATH" xml:space="preserve">
+    <value>WoW Installation Folder</value>
+  </data>
+  <data name="STRING_MESSAGE_NO_WOW_PATH" xml:space="preserve">
+    <value>Unable to locate your World of Warcraft installation folder. This is required for some features.
+
+Would you like to find your WoW folder now?</value>
+  </data>
+  <data name="STRING_MESSAGE_CP_UPDATE_SUCCESS" xml:space="preserve">
+    <value>ConsolePort successfully updated to version {0}.</value>
+  </data>
+  <data name="STRING_MESSAGE_DS4_UPDATE_SUCCESS" xml:space="preserve">
+    <value>WoWmapper successfully updated to version {0}.</value>
+  </data>
+  <data name="STRING_INSTALL_BUTTON" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="STRING_UPDATE_BUTTON" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="STRING_MESSAGE_CLOSE_WOW" xml:space="preserve">
+    <value>Please close World of Warcraft before updating.</value>
+  </data>
+  <data name="STRING_CANCEL" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="STRING_SAVE" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="STRING_COLOR_CRIT" xml:space="preserve">
+    <value>Critical</value>
+  </data>
+  <data name="STRING_COLOR_HIGH" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="STRING_COLOR_LOW" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="STRING_COLOR_MED" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="STRING_HAPTIC_STICKY_CURSOR" xml:space="preserve">
+    <value>Slow the cursor when over an object</value>
+  </data>
+  <data name="STRING_WINDOW_ADVANCED_HAPTICS" xml:space="preserve">
+    <value>Advanced Haptics</value>
+  </data>
+  <data name="wowmapper3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WoWmapperLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WoWConsolePort" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WoWConsolePort.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_HAPTIC_LED_BATTERY" xml:space="preserve">
+    <value>Flash when battery low</value>
+  </data>
+  <data name="STRING_HAPTIC_LED_CLASS" xml:space="preserve">
+    <value>Color by class</value>
+  </data>
+  <data name="STRING_HAPTIC_LED_HEALTH" xml:space="preserve">
+    <value>Color by remaining health</value>
+  </data>
+  <data name="STRING_HAPTIC_RUMBLE_DAMAGE" xml:space="preserve">
+    <value>Rumble when taking damage</value>
+  </data>
+  <data name="STRING_HAPTIC_RUMBLE_TARGET" xml:space="preserve">
+    <value>Rumble when switching target</value>
+  </data>
+  <data name="STRING_SHOW_KEYBINDS" xml:space="preserve">
+    <value>Keybinds</value>
+  </data>
+  <data name="STRING_SHOW_PLUGINS" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="STRING_APP_NAME" xml:space="preserve">
+    <value>WoWmapper</value>
+  </data>
+  <data name="STRING_HAPTIC_LED" xml:space="preserve">
+    <value>Color LED/Lightbar</value>
+  </data>
+  <data name="STRING_HAPTIC_RUMBLE" xml:space="preserve">
+    <value>Rumble</value>
+  </data>
+  <data name="STRING_MESSAGE_NO_PLUGIN_SELECTED" xml:space="preserve">
+    <value>No input plugin selected.
+Please select an input plugin before configuring keybindings.</value>
+  </data>
+  <data name="STRING_MISC" xml:space="preserve">
+    <value>Miscellaneous</value>
+  </data>
+  <data name="STRING_SETTING_CONFIG_ADVANCED_HAPTICS" xml:space="preserve">
+    <value>Configure advanced haptics</value>
+  </data>
+  <data name="STRING_SETTING_DISABLE_WOW_NOT_RUNNING" xml:space="preserve">
+    <value>Disable when WoW not running</value>
+  </data>
+  <data name="STRING_SETTING_ENABLE_ADVANCED_HAPTICS" xml:space="preserve">
+    <value>Enable advanced haptics</value>
+  </data>
+  <data name="STRING_SETTING_HAPTIC" xml:space="preserve">
+    <value>Haptic Settings</value>
+  </data>
+  <data name="STRING_SETTING_DONE" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="STRING_SETTING_LOCATE_WOW" xml:space="preserve">
+    <value>Locate WoW</value>
+  </data>
+  <data name="STRING_SETTING_WOW" xml:space="preserve">
+    <value>WoW Settings</value>
+  </data>
+</root>
