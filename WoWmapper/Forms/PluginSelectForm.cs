@@ -16,9 +16,15 @@ namespace WoWmapper
     public partial class PluginSelectForm : Form
     {
         private List<IInputPlugin> plugins;
+        string[] inputDllFiles;
+
         public PluginSelectForm()
         {
             InitializeComponent();
+            RefreshInputPlugins();
+            this.Text = Properties.Resources.STRING_PLUGIN_TITLE;
+            buttonLoad.Text = Properties.Resources.STRING_PLUGIN_LOAD;
+            labelSelectPlugin.Text = Properties.Resources.STRING_PLUGIN_SELECT;
         }
 
         private void RefreshInputPlugins()
@@ -27,7 +33,7 @@ namespace WoWmapper
 
             var path = "plugins";
 
-            string[] inputDllFiles = null;
+            inputDllFiles = null;
 
             if (Directory.Exists(path))
             {
@@ -77,21 +83,24 @@ namespace WoWmapper
             foreach (Type type in pluginTypes)
             {
                 IInputPlugin plugin = (IInputPlugin)Activator.CreateInstance(type);
-                plugins.Add(plugin);
-            }
-
-            foreach (var plugin in plugins)
-            {
                 var pluginFile = Assembly.GetAssembly(plugin.GetType()).GetName().Name;
-                //listInputPlugins.Items.Add(plugin.Name);
+                listInputPlugins.Items.Add(plugin.Name);
 
                 if (currentPlugin != string.Empty && currentPlugin.Contains(pluginFile))
                 {
-                    //listInputPlugins.SelectedIndex = listInputPlugins.Items.Count - 1;
+                    listInputPlugins.SelectedIndex = listInputPlugins.Items.Count - 1;
                 }
-
-                plugin.Dispose();
+                plugin.Kill();
+                plugin = null;
             }
+
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.InputPlugin = Path.GetFileName(inputDllFiles[listInputPlugins.SelectedIndex]);
+            Properties.Settings.Default.Save();
+            DialogResult = DialogResult.OK;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper", "WoWmapper\WoWmapper.csproj", "{7522EE2C-3977-4FFA-B6AA-4990D4D0BF5F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_DS4Driver", "WoWmapper_DS4Driver\WoWmapper_DS4Driver.csproj", "{7B9354BF-AF82-4CCB-A83D-4BEB1E9D8C96}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_InputPlugin", "WoWmapper_InputPlugin\WoWmapper_InputPlugin.csproj", "{0341ED76-AD47-491F-88F8-D0411928CC1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_360Driver", "WoWmapper_360Driver\WoWmapper_360Driver.csproj", "{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,14 @@ Global
 		{0341ED76-AD47-491F-88F8-D0411928CC1D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0341ED76-AD47-491F-88F8-D0411928CC1D}.Release|x64.ActiveCfg = Release|Any CPU
 		{0341ED76-AD47-491F-88F8-D0411928CC1D}.Release|x64.Build.0 = Release|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Debug|x64.Build.0 = Debug|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Release|x64.ActiveCfg = Release|Any CPU
+		{1B73D7C6-00EF-4D80-98FC-49020DF0F44E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -76,6 +76,7 @@ namespace DS4Wrapper
         #endregion Public Fields
 
         #region Private Fields
+
         private float[] axisThresholds;
 
         private bool[] buttonStates, axisStates;
@@ -84,12 +85,15 @@ namespace DS4Wrapper
 
         private bool Suspended = false;
 
-        public ConnectionType ConnectionType { get
+        public ConnectionType ConnectionType
+        {
+            get
             {
-                if(Controller != null)
+                if (Controller != null)
                     return Controller.ConnectionType;
                 return ConnectionType.USB;
-            } }
+            }
+        }
 
         #endregion Private Fields
 
@@ -233,10 +237,9 @@ namespace DS4Wrapper
                         try
                         {
                             ControllerConnected();
-                            
-                        } catch { }
+                        }
+                        catch { }
                         Controller.Touchpad.TouchesMoved += Touchpad_TouchesMoved;
-
                     }
                 }
                 Thread.Sleep(5);
@@ -307,6 +310,7 @@ namespace DS4Wrapper
                 {
                     case DS4Trigger.L2:
                         return AxisToFloat(state.L2);
+
                     case DS4Trigger.R2:
                         return AxisToFloat(state.R2);
                 }
@@ -333,9 +337,11 @@ namespace DS4Wrapper
         {
             if (Controller != null)
             {
-                Controller.LightBarColor = new DS4Color(Color.Black);
-                Controller.LightBarOnDuration = 0x00;
-                Controller.LightBarOffDuration = 0x00;
+                DS4HapticState hapState = new DS4HapticState()
+                {
+                    LightBarExplicitlyOff = true
+                };
+                Controller.pushHapticState(hapState);
             }
         }
 
@@ -344,13 +350,12 @@ namespace DS4Wrapper
             if (Controller != null)
             {
                 var curCol = Controller.LightBarColor;
-                if(!c.Equals(curCol))
+                if (!c.Equals(curCol))
                 {
                     Controller.LightBarColor = c;
                     Controller.LightBarOnDuration = 0xFF;
                     //Controller.LightBarOffDuration = 0x00;
                 }
-                
             }
         }
 
@@ -474,12 +479,14 @@ namespace DS4Wrapper
         private void OnButtonUp(DS4Button Button)
         {
         }
+
         /// <summary>
         /// Raised whenever a controller is disconnected.
         /// </summary>
         private void OnControllerDisconnected()
         {
         }
+
         private void StateMonitor()
         {
             DS4State state = new DS4State();
@@ -667,6 +674,7 @@ namespace DS4Wrapper
         }
 
         #region IDisposable Support
+
         private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -686,7 +694,7 @@ namespace DS4Wrapper
                             LightBarExplicitlyOff = true,
                             RumbleMotorsExplicitlyOff = true
                         });
-                        Controller.LightBarColor = new DS4Color(Color.Black);
+                        LightBarOff();
 
                         Controller.StopUpdate();
                         if (Controller.ConnectionType == ConnectionType.BT)
@@ -700,12 +708,12 @@ namespace DS4Wrapper
             }
         }
 
-
         public void Dispose()
         {
             Dispose(true);
         }
-        #endregion
+
+        #endregion IDisposable Support
 
         #endregion Private Methods
     }

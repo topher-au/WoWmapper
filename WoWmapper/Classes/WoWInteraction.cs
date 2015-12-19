@@ -55,24 +55,18 @@ namespace WoWmapper
         public bool PostMessageKeys { get; set; } = true;
 
         private Process wowProcess;
-        private Thread scannerThread;
+        private Thread windowScannerThread;
         private Input.Keybind bindings;
         private bool[] moveKeys;
         private bool[] keyStates = new bool[Enum.GetNames(typeof(Keys)).Length];
 
         public WoWInteraction(Input.Keybind Bindings)
         {
-            scannerThread = new Thread(WindowScanner);
-            scannerThread.Start();
+            windowScannerThread = new Thread(WindowScannerThread);
+            windowScannerThread.Start();
 
             moveKeys = new bool[Enum.GetNames(typeof(Direction)).Length];
             bindings = Bindings;
-        }
-
-        public void Dispose()
-        {
-            if (scannerThread != null)
-                scannerThread.Abort();
         }
 
         public bool IsKeyDown(Keys Key)
@@ -84,18 +78,30 @@ namespace WoWmapper
         {
             get
             {
-                RECT wowRect = new RECT();
-                var b = GetWindowRect(new HandleRef(this, wowProcess.MainWindowHandle), out wowRect);
-                return wowRect;
+                if(wowProcess != null)
+                    if(wowProcess.MainWindowHandle != IntPtr.Zero)
+                    {
+                        RECT wowRect = new RECT();
+                        var b = GetWindowRect(new HandleRef(this, wowProcess.MainWindowHandle), out wowRect);
+                        return wowRect;
+                    }
+                return default(RECT);
             }
         }
 
-        private void WindowScanner()
+        private void WindowScannerThread()
         {
-            while (scannerThread.ThreadState == System.Threading.ThreadState.Running)
+            // Select correct module name for architecture type
+            string wowModuleName = string.Empty;
+
+            if (IntPtr.Size == 4) wowModuleName = "WoW";
+            if (IntPtr.Size == 8) wowModuleName = "WoW-64";
+
+            while (true)
             {
-                // Scan for WoW process and get window handle
-                var wowProcesses = Process.GetProcessesByName("WoW-64");
+                Thread.Sleep(1000);
+                // Continuously scan for wow process and update process ID/state
+                var wowProcesses = Process.GetProcessesByName(wowModuleName);
 
                 if (wowProcesses.Length > 0)
                 {
@@ -105,16 +111,13 @@ namespace WoWmapper
                         // WoW window found
                         wowProcess = wowProcesses[0];
                         IsAttached = true;
+                        continue;
                     }
                 }
-                else
-                {
-                    // WoW window not found
-                    wowProcess = null;
-                    IsAttached = false;
-                }
 
-                Thread.Sleep(1000);
+                // WoW window not found
+                wowProcess = null;
+                IsAttached = false;
             }
         }
 
@@ -127,15 +130,6 @@ namespace WoWmapper
             }
         }
 
-        public void SendKeyPress(Keys Key)
-        {
-            if (IsAttached)
-            {
-                PostMessage(wowProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)Key, IntPtr.Zero);
-                PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
-            }
-        }
-
         public void SendKeyUp(Keys Key)
         {
             if (IsAttached)
@@ -143,11 +137,6 @@ namespace WoWmapper
                 PostMessage(wowProcess.MainWindowHandle, WM_KEYUP, (IntPtr)Key, IntPtr.Zero);
                 keyStates[(int)Key] = false;
             }
-        }
-
-        private IntPtr MakeLParam(int LoWord, int HiWord)
-        {
-            return (IntPtr)((HiWord << 16) | (LoWord & 0xFFFF));
         }
 
         #region Mouse Functions
@@ -188,20 +177,11 @@ namespace WoWmapper
             }
         }
 
-        public void SendLeftClick()
-        {
-            //Call the imported function with the cursor's current position
-            int X = Cursor.Position.X;
-            int Y = Cursor.Position.Y;
-            mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
-        }
 
-        public void SendRightClick()
+        public void Dispose()
         {
-            //Call the imported function with the cursor's current position
-            int X = Cursor.Position.X;
-            int Y = Cursor.Position.Y;
-            mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+            if (windowScannerThread != null)
+                windowScannerThread.Abort();
         }
 
         #endregion Mouse Functions
@@ -212,8 +192,6 @@ namespace WoWmapper
             Backward,
             Left,
             Right,
-            StopX,
-            StopY
         }
 
         public static class MoveBindName

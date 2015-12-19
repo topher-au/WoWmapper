@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WoWmapper_DS4Driver.Properties {
+namespace WoWmapper_360Driver.Properties {
     using System;
     
     
@@ -63,6 +63,56 @@ namespace WoWmapper_DS4Driver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BumperLeft {
+            get {
+                object obj = ResourceManager.GetObject("BumperLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BumperRight {
+            get {
+                object obj = ResourceManager.GetObject("BumperRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CenterLeft {
+            get {
+                object obj = ResourceManager.GetObject("CenterLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CenterMiddle {
+            get {
+                object obj = ResourceManager.GetObject("CenterMiddle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CenterRight {
+            get {
+                object obj = ResourceManager.GetObject("CenterRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Command_Reset_24 {
             get {
                 object obj = ResourceManager.GetObject("Command_Reset_24", resourceCulture);
@@ -86,6 +136,106 @@ namespace WoWmapper_DS4Driver.Properties {
         internal static System.Drawing.Bitmap gear39 {
             get {
                 object obj = ResourceManager.GetObject("gear39", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LFaceDown {
+            get {
+                object obj = ResourceManager.GetObject("LFaceDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LFaceLeft {
+            get {
+                object obj = ResourceManager.GetObject("LFaceLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LFaceRight {
+            get {
+                object obj = ResourceManager.GetObject("LFaceRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LFaceUp {
+            get {
+                object obj = ResourceManager.GetObject("LFaceUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RFaceDown {
+            get {
+                object obj = ResourceManager.GetObject("RFaceDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RFaceLeft {
+            get {
+                object obj = ResourceManager.GetObject("RFaceLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RFaceRight {
+            get {
+                object obj = ResourceManager.GetObject("RFaceRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RFaceUp {
+            get {
+                object obj = ResourceManager.GetObject("RFaceUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StickLeft {
+            get {
+                object obj = ResourceManager.GetObject("StickLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StickRight {
+            get {
+                object obj = ResourceManager.GetObject("StickRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -118,7 +268,7 @@ namespace WoWmapper_DS4Driver.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Illegal bind.
+        ///   Looks up a localized string similar to {0} is not a valid keybind.
         /// </summary>
         internal static string STRING_BIND_ILLEGAL {
             get {
@@ -191,7 +341,7 @@ namespace WoWmapper_DS4Driver.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set keybind.
+        ///   Looks up a localized string similar to Press the new key for {0}.
         /// </summary>
         internal static string STRING_BIND_SET {
             get {
@@ -241,6 +391,26 @@ namespace WoWmapper_DS4Driver.Properties {
         internal static string STRING_BIND_TOUCH_MOUSE {
             get {
                 return ResourceManager.GetString("STRING_BIND_TOUCH_MOUSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TriggerLeft {
+            get {
+                object obj = ResourceManager.GetObject("TriggerLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TriggerRight {
+            get {
+                object obj = ResourceManager.GetObject("TriggerRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

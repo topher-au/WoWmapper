@@ -298,4 +298,13 @@ Please select an input plugin before configuring keybindings.</value>
   <data name="STRING_SETTING_WOW" xml:space="preserve">
     <value>WoW Settings</value>
   </data>
+  <data name="STRING_PLUGIN_LOAD" xml:space="preserve">
+    <value>Load Plugin</value>
+  </data>
+  <data name="STRING_PLUGIN_SELECT" xml:space="preserve">
+    <value>Please select an input plugin:</value>
+  </data>
+  <data name="STRING_PLUGIN_TITLE" xml:space="preserve">
+    <value>Input Plugins</value>
+  </data>
 </root>

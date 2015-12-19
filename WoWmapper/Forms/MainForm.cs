@@ -281,12 +281,14 @@ namespace WoWmapper
 
         private void buttonSelectPlugin_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Coming Soon™", "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return;
+            //MessageBox.Show("Coming Soon™", "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //return;
             // TODO: Implement plugin selection (need second plugin first)
 
-            //PluginSelectForm PSF = new PluginSelectForm();
-            //PSF.ShowDialog();
+            PluginSelectForm PSF = new PluginSelectForm();
+            PSF.ShowDialog();
+            if (PSF.DialogResult != DialogResult.OK) return;
+            InitializePlugin(Properties.Settings.Default.InputPlugin);
         }
 
         private void DoTouchDown(InputButton Button)
@@ -574,14 +576,13 @@ namespace WoWmapper
         {
             Hide();
             notifyIcon.Visible = false;
-
+            wowInteraction.Dispose();
             movementThread.Abort();
             mouseThread.Abort();
 
+            inputDevice.Kill();
             if (hapticModule != null) hapticModule.Dispose();
-            if (inputDevice != null) inputDevice.Dispose();
 
-            wowInteraction.Dispose();
 
             Application.Exit();
         }
@@ -612,26 +613,34 @@ namespace WoWmapper
 
         private Point GetStickPoint(InputStick Stick)
         {
-            // TODO implement getstickpoint
-            int x, y;
-            switch (Stick)
+            try
             {
-                case InputStick.Left:
-                    x = inputDevice.GetAxis(InputAxis.LeftStickX);
-                    y = inputDevice.GetAxis(InputAxis.LeftStickY);
-                    break;
+                if (inputDevice != null)
+                {
+                    // TODO implement getstickpoint
+                    int x, y;
+                    switch (Stick)
+                    {
+                        case InputStick.Left:
+                            x = inputDevice.GetAxis(InputAxis.LeftStickX);
+                            y = inputDevice.GetAxis(InputAxis.LeftStickY);
+                            break;
 
-                case InputStick.Right:
-                    x = inputDevice.GetAxis(InputAxis.RightStickX);
-                    y = inputDevice.GetAxis(InputAxis.RightStickY);
-                    break;
+                        case InputStick.Right:
+                            x = inputDevice.GetAxis(InputAxis.RightStickX);
+                            y = inputDevice.GetAxis(InputAxis.RightStickY);
+                            break;
 
-                default:
-                    x = 0;
-                    y = 0;
-                    break;
-            }
-            return new Point(x, y);
+                        default:
+                            x = 0;
+                            y = 0;
+                            break;
+                    }
+                    return new Point(x, y);
+                }
+            } catch { }
+            
+            return new Point(0, 0);
         }
 
         private void InitializePlugin(string DllFile)
@@ -639,7 +648,7 @@ namespace WoWmapper
             if (inputDevice != null)
             {
                 // Dispose old plugin
-                //InputDevice.Dispose();
+                inputDevice.Kill();
             }
 
             Type pluginType = typeof(IInputPlugin);
@@ -664,7 +673,9 @@ namespace WoWmapper
                 inputDevice.OnControllerConnected += DS4_OnControllerConnected;
                 inputDevice.OnButtonDown += DS4_ButtonDown;
                 inputDevice.OnButtonUp += DS4_ButtonUp;
-                inputDevice.OnTouchpadMoved += Touchpad_TouchesMoved;
+
+                if(inputDevice.Peripherals.Touchpad)
+                    inputDevice.OnTouchpadMoved += Touchpad_TouchesMoved;
 
                 int tLeft, tRight;
                 inputDevice.Settings.Settings.Read("TriggerLeft", out tLeft);
@@ -678,6 +689,8 @@ namespace WoWmapper
                 inputDevice.Enabled = true;
             }
 
+            if(wowInteraction != null)
+                wowInteraction.Dispose();
             wowInteraction = new WoWInteraction(inputDevice.Keybinds);
             inputDevice.Settings.Settings.Read("TouchMode", out touchState);
         }
@@ -770,7 +783,7 @@ namespace WoWmapper
 
             while (true)
             {
-                if (wowInteraction != null)
+                if (wowInteraction != null && inputDevice != null)
                     if ((wowInteraction.IsAttached || !Properties.Settings.Default.InactiveDisable)
                         && inputDevice != null)
                     {
@@ -956,7 +969,14 @@ namespace WoWmapper
 
         private void ShowConfig()
         {
-            ConfigForm cf = new ConfigForm();
+            ConfigForm cf;
+            if (inputDevice != null) { cf = new ConfigForm(inputDevice); }
+            else
+            {
+                cf = new ConfigForm();
+            }
+            
+
             if (this.WindowState == FormWindowState.Minimized)
                 cf.ShowInTaskbar = true;
 

@@ -8,12 +8,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FolderSelect;
+using WoWmapper.Input;
 
 namespace WoWmapper
 {
     public partial class ConfigForm : Form
     {
+        IInputPlugin inputDevice;
+        public ConfigForm(IInputPlugin InputDevice)
+        {
+            InitializeForm();
+
+            inputDevice = InputDevice;
+            checkLightbarColor.Enabled = inputDevice.Peripherals.LED;
+            checkLightbarBatteryLow.Enabled = inputDevice.Peripherals.LED;
+        }
+
         public ConfigForm()
+        {
+            InitializeForm();
+        }
+
+        public void InitializeForm()
         {
             InitializeComponent();
 

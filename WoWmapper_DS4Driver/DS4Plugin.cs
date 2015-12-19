@@ -3,7 +3,7 @@ using DS4Wrapper;
 using System;
 using System.Reflection;
 using WoWmapper.Input;
-using WoWmapper_DS4Driver.Forms;
+using WoWmapper_360Driver.Forms;
 
 namespace DS4Driver
 {
@@ -655,6 +655,11 @@ namespace DS4Driver
             {
                 touches = inputTouch
             });
+        }
+
+        public void Kill()
+        {
+            if(Controller != null) Controller.Dispose();
         }
 
         // To detect redundant calls

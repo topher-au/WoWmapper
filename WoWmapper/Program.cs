@@ -51,7 +51,7 @@ namespace WoWmapper
                 }
                 else
                 {
-                    // Existing instance, send message
+                    // Existing instance, send message to show window
                     int res;
                     SendMessageTimeout((IntPtr)0xFFFF, WM_ACTIVATE_DS4, 0, 0, 0, 100, out res);
                     Application.Exit();

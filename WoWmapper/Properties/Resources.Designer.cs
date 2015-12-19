@@ -371,6 +371,33 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load Plugin.
+        /// </summary>
+        internal static string STRING_PLUGIN_LOAD {
+            get {
+                return ResourceManager.GetString("STRING_PLUGIN_LOAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select an input plugin:.
+        /// </summary>
+        internal static string STRING_PLUGIN_SELECT {
+            get {
+                return ResourceManager.GetString("STRING_PLUGIN_SELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Plugins.
+        /// </summary>
+        internal static string STRING_PLUGIN_TITLE {
+            get {
+                return ResourceManager.GetString("STRING_PLUGIN_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string STRING_SAVE {

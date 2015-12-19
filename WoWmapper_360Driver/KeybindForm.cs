@@ -1,5 +1,4 @@
-﻿using DS4Wrapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,26 +9,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WoWmapper.Input;
+using SlimDX.XInput;
 
 namespace WoWmapper_360Driver.Forms
 {
     public partial class KeybindForm : Form
     {
         SettingsFile kb;
-        DS4 device;
+        Controller device;
 
         private void ShowTriggerConfig()
         {
-            TriggerConfigForm triggerConfig = new TriggerConfigForm(device, device.TriggerSensitivity.L2, device.TriggerSensitivity.R2);
+            TriggerConfigForm triggerConfig = new TriggerConfigForm(device, 40,40);
             triggerConfig.ShowDialog();
             if (triggerConfig.DialogResult == DialogResult.Cancel) return;
-            kb.Settings.Write("L2Sensitivity", triggerConfig.L2Threshold);
-            kb.Settings.Write("R2Sensitivity", triggerConfig.R2Threshold);
-            device.TriggerSensitivity = new DS4.DS4Sensitivity()
-            {
-                L2 = triggerConfig.L2Threshold,
-                R2 = triggerConfig.R2Threshold
-            };
+            kb.Settings.Write("TriggerLeft", triggerConfig.L2Threshold);
+            kb.Settings.Write("TriggerRight", triggerConfig.R2Threshold);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -42,24 +37,37 @@ namespace WoWmapper_360Driver.Forms
             ShowTriggerConfig();
         }
 
-        public KeybindForm(DS4 InputDevice, SettingsFile BindFile)
+        public Point GetStickPoint(InputStick Stick)
+        {
+            if (device != null)
+            {
+                var state = device.GetState();
+                switch (Stick)
+                {
+                    case InputStick.Left:
+                        return new Point()
+                        {
+                            X = state.Gamepad.LeftThumbX - 128,
+                            Y = state.Gamepad.LeftThumbY - 128
+                        };
+
+                    case InputStick.Right:
+                        return new Point()
+                        {
+                            X = (state.Gamepad.RightThumbX / 256),
+                            Y = (-state.Gamepad.RightThumbY / 256)
+                        };
+                }
+            }
+
+            return new Point(0, 0);
+        }
+
+        public KeybindForm(Controller InputDevice, SettingsFile BindFile)
         {
             InitializeComponent();
             kb = BindFile;
             device = InputDevice;
-            labelBindHow.Text = Properties.Resources.STRING_BIND_HOW;
-
-            labelTouchMode.Text = Properties.Resources.STRING_BIND_TOUCH_MODE;
-            comboTouchMode.Items[0] = Properties.Resources.STRING_BIND_TOUCH_MOUSE;
-            comboTouchMode.Items[1] = Properties.Resources.STRING_BIND_TOUCH_EXTRA;
-            comboTouchMode.Items[2] = Properties.Resources.STRING_BIND_TOUCH_EMULATE;
-
-            labelMovement.Text = Properties.Resources.STRING_BIND_MOVEMENT;
-            labelCamera.Text = Properties.Resources.STRING_BIND_CAMERA;
-
-            labelRightDead.Text = Properties.Resources.STRING_BIND_MOUSE_DEADZONE;
-            labelRightSpeed.Text = Properties.Resources.STRING_BIND_MOUSE_SPEED;
-            labelRightCurve.Text = Properties.Resources.STRING_BIND_MOUSE_CURVE;
 
             int rSpeed, rCurve, rDead, touchMode;
             kb.Settings.Read("RightDead", out rDead);
@@ -70,7 +78,6 @@ namespace WoWmapper_360Driver.Forms
             numRCurve.Value = rCurve;
             numRSpeed.Value = rSpeed;
             numRDeadzone.Value = rDead;
-            comboTouchMode.SelectedIndex = touchMode;
 
             // Set right stick panel to double buffered
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -102,8 +109,6 @@ namespace WoWmapper_360Driver.Forms
             textMoveRight.Text = kb.Keybinds.FromName("LStickRight").Key.Value.ToString();
             textMoveBackward.Text = kb.Keybinds.FromName("LStickDown").Key.Value.ToString();
             textMoveLeft.Text = kb.Keybinds.FromName("LStickLeft").Key.Value.ToString();
-            textBindTouchLeft.Text = kb.Keybinds.FromName("Extra1").Key.Value.ToString();
-            textBindTouchRight.Text = kb.Keybinds.FromName("Extra2").Key.Value.ToString();
         }
 
         private void numRCurve_ValueChanged(object sender, EventArgs e)
@@ -129,7 +134,7 @@ namespace WoWmapper_360Driver.Forms
             int rightDead = 15;
             kb.Settings.Read<int>("RightDead", out rightDead);
             var deadDisplay = rightDead /2;
-            var ptRightStick = device.GetStickPoint(DS4Stick.Right);
+            var ptRightStick = GetStickPoint(InputStick.Right);
             Rectangle rectRightBounds = panelRStickAxis.DisplayRectangle;
             Rectangle rectStickOutline = new Rectangle(
                 rectRightBounds.X + 3,
@@ -158,27 +163,10 @@ namespace WoWmapper_360Driver.Forms
 
         private void picResetBinds_Click(object sender, EventArgs e)
         {
-            var wMB = MessageBox.Show(Properties.Resources.STRING_BIND_RESET_ALL, "WoWmapper", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var wMB = MessageBox.Show("reset all", "WoWmapper", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (wMB == DialogResult.No) return;
             kb.Keybinds.Bindings = Defaults.Bindings;
             RefreshKeyBindings();
-        }
-
-        private void comboTouchMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboTouchMode.SelectedIndex == 1)
-            {
-                textBindTouchLeft.Visible = true;
-                textBindTouchRight.Visible = true;
-            }
-            else
-            {
-                textBindTouchLeft.Visible = false;
-                textBindTouchRight.Visible = false;
-            }
-            labelTouchUpper.Visible = (comboTouchMode.SelectedIndex == 0) ? false : true;
-
-            kb.Settings.Write("TouchMode", comboTouchMode.SelectedIndex);
         }
 
 
@@ -216,7 +204,7 @@ namespace WoWmapper_360Driver.Forms
             if (!success) return;
 
             DoKeyBind(bindBox,
-                Properties.Resources.ResourceManager.GetObject(bindBox.Tag.ToString()) as Bitmap,
+                new Bitmap(32,32), //Properties.Resources.ResourceManager.GetObject(bindBox.Tag.ToString()) as Bitmap,
                 button,
                 kb.Keybinds.FromName(bindBox.Tag.ToString()).Key.Value);
         }

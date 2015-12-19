@@ -55,13 +55,15 @@ namespace WoWmapper
         public static string TryFindWoWPath()
         {
             string wowPath = string.Empty;
+            var testPaths = wowDefaultPaths;
 
             // Check registry
-            string wowRegPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Blizzard Entertainment\\World of Warcraft", "InstallPath", String.Empty).ToString();
-
-            var testPaths = wowDefaultPaths;
-            if (wowRegPath != string.Empty)
-                testPaths.Insert(0, wowRegPath);
+            try
+            {
+                string wowRegPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Blizzard Entertainment\\World of Warcraft", "InstallPath", String.Empty).ToString();
+                if (wowRegPath != string.Empty)
+                    testPaths.Insert(0, wowRegPath);
+            } catch { }
 
             // Find install path
             foreach (string Path in testPaths)

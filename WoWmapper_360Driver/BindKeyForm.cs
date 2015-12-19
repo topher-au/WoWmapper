@@ -17,7 +17,7 @@ namespace WoWmapper_360Driver.Forms
             picBindImage.Image = ButtonImage;
             textKeyBind.Text = CurrentKey.ToString();
             bindings = Bindings;
-            labelBindName.Text = string.Format(Properties.Resources.STRING_BIND_SET, Button.ToString());
+            labelBindName.Text = string.Format("set bind", Button.ToString());
 
 
 
@@ -28,7 +28,7 @@ namespace WoWmapper_360Driver.Forms
             // Illegal key code
             if (Defaults.IllegalKeyCodes.Contains(e.KeyCode))
             {
-                labelKeyError.Text = string.Format(Properties.Resources.STRING_BIND_ILLEGAL, e.KeyCode.ToString());
+                labelKeyError.Text = string.Format("illegal", e.KeyCode.ToString());
                 return;
             }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WoWmapper.Input
 {
-    public interface IInputPlugin : IDisposable
+    public interface IInputPlugin
     {
         // Input plugin details
         string Name { get; }
@@ -50,5 +50,7 @@ namespace WoWmapper.Input
         // Configuration windows
         void ShowKeybindDialog(bool ShowInTaskbar = true);
         void ShowConfigDialog();
+
+        void Kill();
     }
 }

@@ -1,17 +1,18 @@
 ﻿using WoWmapper.Input;
 using System;
 using System.Windows.Forms;
+using SlimDX.XInput;
 
 namespace WoWmapper_360Driver.Forms
 {
     public partial class TriggerConfigForm : Form
     {
-        private DS4Wrapper.DS4 InputDevice;
+        private Controller InputDevice;
 
         public int L2Threshold = 0;
         public int R2Threshold = 0;
 
-        public TriggerConfigForm(DS4Wrapper.DS4 Controller, int L2, int R2)
+        public TriggerConfigForm(Controller Controller, int L2, int R2)
         {
             InitializeComponent();
             InputDevice = Controller;
@@ -19,10 +20,6 @@ namespace WoWmapper_360Driver.Forms
             R2Threshold = R2;
             numL2.Value = L2;
             numR2.Value = R2;
-
-            labelTriggerConfig.Text = Properties.Resources.STRING_BIND_SET_TRIGGER;
-            buttonSave.Text = Properties.Resources.STRING_BIND_SAVE;
-            buttonCancel.Text = Properties.Resources.STRING_BIND_CANCEL;
         }
 
         private void TriggerConfigForm_Load(object sender, EventArgs e)
@@ -33,10 +30,11 @@ namespace WoWmapper_360Driver.Forms
         {
             if (InputDevice != null)
             {
-                var L2state = InputDevice.GetTriggerState(DS4Wrapper.DS4Trigger.L2);
-                var R2state = InputDevice.GetTriggerState(DS4Wrapper.DS4Trigger.R2);
-                trackL2.Value = (int)(L2state * 100f);
-                trackR2.Value = (int)(R2state * 100f);
+                var state = InputDevice.GetState();
+                var L2state = state.Gamepad.LeftTrigger;
+                var R2state = state.Gamepad.RightTrigger;
+                trackL2.Value = (int)(((float)L2state / 255) *100);
+                trackR2.Value = (int)(((float)R2state / 255)*100);
                 checkL2.Checked = (trackL2.Value > numL2.Value);
                 checkR2.Checked = (trackR2.Value > numR2.Value);
             }
