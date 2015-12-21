@@ -2,30 +2,28 @@
 using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WoWmapper.AdvancedHaptics;
+using WoWmapper.EnhancedInteraction;
 using WoWmapper.Input;
+using WoWmapper.MapperModule;
 using WoWmapper.WoWData;
-
+using WoWmapper.Properties;
 namespace WoWmapper
 {
     public partial class MainForm : Form
     {
         private HapticsModule hapticModule;
         private IInputPlugin inputDevice;
-        private byte[] lastTarget = new byte[16];
-        private int lastTouchX, lastTouchY;
-        private Thread mouseThread, movementThread;
-        private bool[] moveKeys = new bool[4];
+
+        //private byte[] lastTarget = new byte[16];
         private NotifyIcon notifyIcon = new NotifyIcon();
+
         private int touchState;
-        private WoWInteraction wowInteraction;
+        private WoWMapper wowMapper;
+        string displayName = "Controller";
 
         public MainForm()
         {
@@ -71,15 +69,6 @@ namespace WoWmapper
                     }
                 }
             }
-
-            // Start controller threads
-            movementThread = new Thread(MovementThread);
-            movementThread.Priority = ThreadPriority.Highest;
-            movementThread.Start();
-
-            mouseThread = new Thread(MouseThread);
-            mouseThread.Priority = ThreadPriority.Highest;
-            mouseThread.Start();
         }
 
         public async Task DoVersionCheck()
@@ -249,24 +238,6 @@ namespace WoWmapper
             ExitApp();
         }
 
-        //private void buttonLoadPlugin_Click(object sender, EventArgs e)
-        //{
-        //    var myType = plugins.ElementAt(listInputPlugins.SelectedIndex).GetType();
-        //    var assemblyFile = Assembly.GetAssembly(myType).GetName();
-        //    var SelectedPluginDll = assemblyFile.Name + ".dll";
-        //    foreach (var plugin in plugins)
-        //    {
-        //        if (Assembly.GetAssembly(plugin.GetType()).GetName().Name != assemblyFile.Name)
-        //        {
-        //            //plugin.Dispose();
-        //        }
-        //    }
-
-        //    Properties.Settings.Default.InputPlugin = SelectedPluginDll;
-        //    Properties.Settings.Default.Save();
-        //    InitializePlugin(SelectedPluginDll);
-        //}
-
         private void buttonKeybinds_Click(object sender, EventArgs e)
         {
             if (inputDevice != null)
@@ -281,308 +252,20 @@ namespace WoWmapper
 
         private void buttonSelectPlugin_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Coming Soon™", "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //return;
-            // TODO: Implement plugin selection (need second plugin first)
-
-            PluginSelectForm PSF = new PluginSelectForm();
-            PSF.ShowDialog();
-            if (PSF.DialogResult != DialogResult.OK) return;
+            PluginSelectForm pluginForm = new PluginSelectForm();
+            pluginForm.ShowDialog();
+            if (pluginForm.DialogResult != DialogResult.OK) return;
             InitializePlugin(Properties.Settings.Default.InputPlugin);
-        }
-
-        private void DoTouchDown(InputButton Button)
-        {
-            switch (Button)
-            {
-                case InputButton.Extra1:
-                    switch (touchState)
-                    {
-                        case 0:
-                            wowInteraction.SendMouseDown(MouseButtons.Left);
-                            break;
-
-                        case 1:
-                            wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("Extra1").Key.Value);
-                            break;
-
-                        case 2:
-                            wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("CenterLeft").Key.Value);
-                            break;
-                    }
-                    break;
-
-                case InputButton.Extra2:
-                    switch (touchState)
-                    {
-                        case 0:
-                            wowInteraction.SendMouseDown(MouseButtons.Right);
-                            break;
-
-                        case 1:
-                            wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("Extra2").Key.Value);
-                            break;
-
-                        case 2:
-                            wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("CenterRight").Key.Value);
-                            break;
-                    }
-                    break;
-            }
-        }
-
-        private void DoTouchUp(InputButton Button)
-        {
-            switch (Button)
-            {
-                case InputButton.Extra1:
-                    switch (touchState)
-                    {
-                        case 0:
-                            wowInteraction.SendMouseUp(MouseButtons.Left);
-                            break;
-
-                        case 1:
-                            wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("Extra1").Key.Value);
-                            break;
-
-                        case 2:
-                            wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("CenterLeft").Key.Value);
-                            break;
-                    }
-                    break;
-
-                case InputButton.Extra2:
-                    switch (touchState)
-                    {
-                        case 0:
-                            wowInteraction.SendMouseUp(MouseButtons.Right);
-                            break;
-
-                        case 1:
-                            wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("Extra2").Key.Value);
-                            break;
-
-                        case 2:
-                            wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("CenterRight").Key.Value);
-                            break;
-                    }
-                    break;
-            }
-        }
-
-        private void DoTouchUpper()
-        {
-            if (touchState != 0)
-            {
-                touchState = 0;
-            }
-            else
-            {
-                inputDevice.Settings.Settings.Read("TouchMode", out touchState);
-            }
-        }
-
-        private void DS4_ButtonDown(InputButton Button)
-        {
-            if (this != null && (wowInteraction.IsAttached || !Properties.Settings.Default.InactiveDisable))
-                switch (Button)
-                {
-                    case InputButton.RFaceDown:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("RFaceDown").Key.Value);
-                        break;
-
-                    case InputButton.RFaceRight:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("RFaceRight").Key.Value);
-                        break;
-
-                    case InputButton.RFaceUp:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("RFaceUp").Key.Value);
-                        break;
-
-                    case InputButton.RFaceLeft:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("RFaceLeft").Key.Value);
-                        break;
-
-                    case InputButton.LFaceDown:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("LFaceDown").Key.Value);
-                        break;
-
-                    case InputButton.LFaceLeft:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("LFaceLeft").Key.Value);
-                        break;
-
-                    case InputButton.LFaceRight:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("LFaceRight").Key.Value);
-                        break;
-
-                    case InputButton.LFaceUp:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("LFaceUp").Key.Value);
-                        break;
-
-                    case InputButton.BumperLeft:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("BumperLeft").Key.Value);
-                        break;
-
-                    case InputButton.BumperRight:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("BumperRight").Key.Value);
-                        break;
-
-                    case InputButton.TriggerLeft:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("TriggerLeft").Key.Value);
-                        break;
-
-                    case InputButton.TriggerRight:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("TriggerRight").Key.Value);
-                        break;
-
-                    case InputButton.CenterMiddle:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("CenterMiddle").Key.Value);
-                        break;
-
-                    case InputButton.CenterLeft:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("CenterLeft").Key.Value);
-                        break;
-
-                    case InputButton.CenterRight:
-                        wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName("CenterRight").Key.Value);
-                        break;
-
-                    case InputButton.Extra1:
-                        DoTouchDown(Button);
-                        break;
-
-                    case InputButton.Extra2:
-                        DoTouchDown(Button);
-                        break;
-
-                    case InputButton.Extra3:
-                        DoTouchUpper();
-                        break;
-
-                    case InputButton.StickLeft:
-                        wowInteraction.SendMouseDown(MouseButtons.Left);
-                        break;
-
-                    case InputButton.StickRight:
-                        if (wowInteraction.IsKeyDown(Keys.LControlKey))
-                        {
-                            var wowWidth = wowInteraction.WoWWindow.Right - wowInteraction.WoWWindow.Left;
-                            var wowHeight = wowInteraction.WoWWindow.Bottom - wowInteraction.WoWWindow.Top;
-
-                            Cursor.Position = new Point(wowInteraction.WoWWindow.Left + (wowWidth / 2), wowInteraction.WoWWindow.Top + (wowHeight / 2));
-                        }
-                        else
-                        {
-                            wowInteraction.SendMouseDown(MouseButtons.Right);
-                        }
-                        break;
-                }
-        }
-
-        private void DS4_ButtonUp(InputButton Button)
-        {
-            if (this != null && (wowInteraction.IsAttached || !Properties.Settings.Default.InactiveDisable))
-
-                switch (Button)
-                {
-                    case InputButton.RFaceDown:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("RFaceDown").Key.Value);
-                        break;
-
-                    case InputButton.RFaceRight:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("RFaceRight").Key.Value);
-                        break;
-
-                    case InputButton.RFaceUp:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("RFaceUp").Key.Value);
-                        break;
-
-                    case InputButton.RFaceLeft:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("RFaceLeft").Key.Value);
-                        break;
-
-                    case InputButton.LFaceDown:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("LFaceDown").Key.Value);
-                        break;
-
-                    case InputButton.LFaceLeft:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("LFaceLeft").Key.Value);
-                        break;
-
-                    case InputButton.LFaceRight:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("LFaceRight").Key.Value);
-                        break;
-
-                    case InputButton.LFaceUp:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("LFaceUp").Key.Value);
-                        break;
-
-                    case InputButton.BumperLeft:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("BumperLeft").Key.Value);
-                        break;
-
-                    case InputButton.BumperRight:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("BumperRight").Key.Value);
-                        break;
-
-                    case InputButton.TriggerLeft:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("TriggerLeft").Key.Value);
-                        break;
-
-                    case InputButton.TriggerRight:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("TriggerRight").Key.Value);
-                        break;
-
-                    case InputButton.CenterMiddle:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("CenterMiddle").Key.Value);
-                        break;
-
-                    case InputButton.CenterLeft:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("CenterLeft").Key.Value);
-                        break;
-
-                    case InputButton.CenterRight:
-                        wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName("CenterRight").Key.Value);
-                        break;
-
-                    case InputButton.Extra1:
-                        DoTouchUp(Button);
-                        break;
-
-                    case InputButton.Extra2:
-                        DoTouchUp(Button);
-                        break;
-
-                    case InputButton.Extra3:
-                        DoTouchUpper();
-                        break;
-
-                    case InputButton.StickLeft:
-                        wowInteraction.SendMouseUp(MouseButtons.Left);
-                        break;
-
-                    case InputButton.StickRight:
-                        wowInteraction.SendMouseUp(MouseButtons.Right);
-                        break;
-                }
-        }
-
-        private void DS4_OnControllerConnected()
-        {
         }
 
         private void ExitApp()
         {
             Hide();
             notifyIcon.Visible = false;
-            wowInteraction.Dispose();
-            movementThread.Abort();
-            mouseThread.Abort();
+            if (wowMapper != null) wowMapper.Dispose();
 
             inputDevice.Kill();
             if (hapticModule != null) hapticModule.Dispose();
-
 
             Application.Exit();
         }
@@ -590,57 +273,6 @@ namespace WoWmapper
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitApp();
-        }
-
-        private string GetKeyName(int i)
-        {
-            switch (i)
-            {
-                case 0:
-                    return WoWInteraction.MoveBindName.Forward;
-
-                case 1:
-                    return WoWInteraction.MoveBindName.Backward;
-
-                case 2:
-                    return WoWInteraction.MoveBindName.Left;
-
-                case 3:
-                    return WoWInteraction.MoveBindName.Right;
-            }
-            return string.Empty;
-        }
-
-        private Point GetStickPoint(InputStick Stick)
-        {
-            try
-            {
-                if (inputDevice != null)
-                {
-                    // TODO implement getstickpoint
-                    int x, y;
-                    switch (Stick)
-                    {
-                        case InputStick.Left:
-                            x = inputDevice.GetAxis(InputAxis.LeftStickX);
-                            y = inputDevice.GetAxis(InputAxis.LeftStickY);
-                            break;
-
-                        case InputStick.Right:
-                            x = inputDevice.GetAxis(InputAxis.RightStickX);
-                            y = inputDevice.GetAxis(InputAxis.RightStickY);
-                            break;
-
-                        default:
-                            x = 0;
-                            y = 0;
-                            break;
-                    }
-                    return new Point(x, y);
-                }
-            } catch { }
-            
-            return new Point(0, 0);
         }
 
         private void InitializePlugin(string DllFile)
@@ -668,30 +300,11 @@ namespace WoWmapper
                 }
             }
 
-            if (inputDevice != null)
+            if (wowMapper != null)
             {
-                inputDevice.OnControllerConnected += DS4_OnControllerConnected;
-                inputDevice.OnButtonDown += DS4_ButtonDown;
-                inputDevice.OnButtonUp += DS4_ButtonUp;
-
-                if(inputDevice.Peripherals.Touchpad)
-                    inputDevice.OnTouchpadMoved += Touchpad_TouchesMoved;
-
-                int tLeft, tRight;
-                inputDevice.Settings.Settings.Read("TriggerLeft", out tLeft);
-                inputDevice.Settings.Settings.Read("TriggerRight", out tRight);
-
-                inputDevice.Thresholds = new InputThresholds()
-                {
-                    TriggerLeft = tLeft,
-                    TriggerRight = tRight
-                };
-                inputDevice.Enabled = true;
+                wowMapper.Dispose();
             }
-
-            if(wowInteraction != null)
-                wowInteraction.Dispose();
-            wowInteraction = new WoWInteraction(inputDevice.Keybinds);
+            wowMapper = new WoWMapper(inputDevice);
             inputDevice.Settings.Settings.Read("TouchMode", out touchState);
         }
 
@@ -773,190 +386,6 @@ namespace WoWmapper
             }
         }
 
-        private void MouseThread()
-        {
-            bool movingX = false;
-            bool movingY = false;
-
-            bool slowCursor = false;
-            float slowMod = 0.5f;
-
-            while (true)
-            {
-                if (wowInteraction != null && inputDevice != null)
-                    if ((wowInteraction.IsAttached || !Properties.Settings.Default.InactiveDisable)
-                        && inputDevice != null)
-                    {
-                        // Do sticky cursor check
-                        if (Properties.Settings.Default.EnableAdvancedHaptics && hapticModule != null)
-                        {
-                            if (Properties.Settings.Default.EnableStickyCursor)
-                            {
-                                if (hapticModule.IsWoWAttached && hapticModule.GameState == WoWState.LoggedIn)
-                                {
-                                    var target = hapticModule.wowReader.MouseGuid;
-                                    if (!target.SequenceEqual(new byte[16])) // compare mouseover to blank target
-                                    {
-                                        slowCursor = true;
-                                    }
-                                    else
-                                    {
-                                        slowCursor = false;
-                                    }
-                                }
-                            }
-                        }
-
-                        var rightStick = GetStickPoint(InputStick.Right);
-                        var curPos = Cursor.Position;
-
-                        int intRightDead, intRightSpeed, intRightCurve;
-
-                        inputDevice.Settings.Settings.Read("RightDead", out intRightDead);
-                        inputDevice.Settings.Settings.Read("RightCurve", out intRightCurve);
-                        inputDevice.Settings.Settings.Read("RightSpeed", out intRightSpeed);
-
-                        // Process X-axis
-                        var rightX = rightStick.X;
-                        if (rightX < 0) rightX = -rightX; // flip to positive value
-
-                        if (true)
-                        {
-                            float rightMax = 127 - intRightDead;
-                            float rightVal = rightX;
-                            if (rightX > intRightDead)
-                                rightVal = rightX - intRightDead;    // decrease by deadzone value
-
-                            float tiltPercent = (rightVal / rightMax);
-
-                            double moveMath = 0;
-                            if (slowCursor)
-                            {
-                                moveMath = Math.Pow(((float)intRightCurve * slowMod) * tiltPercent, 2) + ((intRightSpeed) * tiltPercent) + 1;
-                            }
-                            else
-                            {
-                                moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
-                            }
-
-                            int moveVal = (int)moveMath; // y = ax^2 + bx where a=
-
-                            if (rightStick.X < -intRightDead || (rightStick.X < -10 && movingY))
-                            {
-                                curPos.X -= moveVal;
-                                movingX = true;
-                            }
-                            else if (rightStick.X > intRightDead || (rightStick.X > 10 && movingY))
-                            {
-                                curPos.X += moveVal;
-                                movingX = true;
-                            }
-                            else
-                            {
-                                movingX = false;
-                            }
-                        }
-
-                        // Process Y-axis
-
-                        var rightY = rightStick.Y;
-                        if (rightY < 0) rightY = -rightY; // flip to positive value
-
-                        if (true)
-                        {
-                            float rightMax = 127 - intRightDead;
-                            float rightVal = rightY;
-                            if (rightY > intRightDead)
-                                rightVal = rightY - intRightDead;    // decrease by deadzone value
-
-                            float tiltPercent = (rightVal / rightMax);
-
-                            double moveMath = 0;
-                            if (slowCursor)
-                            {
-                                moveMath = Math.Pow(((float)intRightCurve * slowMod) * tiltPercent, 2) + ((intRightSpeed) * tiltPercent) + 1;
-                            }
-                            else
-                            {
-                                moveMath = Math.Pow(intRightCurve * tiltPercent, 2) + (intRightSpeed * tiltPercent) + 1;
-                            }
-
-                            int moveVal = (int)moveMath; // y = ax^2 + bx where a=
-
-                            if (rightStick.Y < -intRightDead || (rightStick.Y < -10 && movingX))
-                            {
-                                curPos.Y -= moveVal;
-                                movingY = true;
-                            }
-                            else if (rightStick.Y > intRightDead || (rightStick.Y > 10 && movingX))
-                            {
-                                curPos.Y += moveVal;
-                                movingY = true;
-                            }
-                            else
-                            {
-                                movingY = false;
-                            }
-                        }
-
-                        Cursor.Position = curPos;
-                    }
-
-                Thread.Sleep(10);
-            }
-        }
-
-        private void MovementThread()
-        {
-            while (true)
-            {
-
-                if (wowInteraction != null)
-                    if (inputDevice != null && (wowInteraction.IsAttached))
-                    {
-                        bool[] thisMove = new bool[4];
-                        var leftStick = GetStickPoint(InputStick.Left);
-                        if (leftStick.Y < -40)
-                        {
-                            thisMove[(int)WoWInteraction.Direction.Forward] = true;
-                        }
-
-                        if (leftStick.Y > 40)
-                        {
-                            thisMove[(int)WoWInteraction.Direction.Backward] = true;
-                        }
-
-                        if (leftStick.X < -40)
-                        {
-                            thisMove[(int)WoWInteraction.Direction.Left] = true;
-                        }
-
-                        if (leftStick.X > 40)
-                        {
-                            thisMove[(int)WoWInteraction.Direction.Right] = true;
-                        }
-
-                        for (int i = 0; i < 4; i++)
-                        {
-                            if (thisMove[i] && !moveKeys[i])
-                            {
-                                // send key down
-                                wowInteraction.SendKeyDown(inputDevice.Keybinds.FromName(GetKeyName(i)).Key.Value);
-                                moveKeys[i] = true;
-                            }
-                            if (!thisMove[i] && moveKeys[i])
-                            {
-                                // send key up
-                                wowInteraction.SendKeyUp(inputDevice.Keybinds.FromName(GetKeyName(i)).Key.Value);
-                                moveKeys[i] = false;
-                            }
-                        }
-                    }
-
-                Thread.Sleep(10);
-            }
-        }
-
         private void NotifyIcon_DoubleClick(object sender, EventArgs e)
         {
             ShowForm();
@@ -969,13 +398,7 @@ namespace WoWmapper
 
         private void ShowConfig()
         {
-            ConfigForm cf;
-            if (inputDevice != null) { cf = new ConfigForm(inputDevice); }
-            else
-            {
-                cf = new ConfigForm();
-            }
-            
+            ConfigForm cf = new ConfigForm();
 
             if (this.WindowState == FormWindowState.Minimized)
                 cf.ShowInTaskbar = true;
@@ -993,7 +416,7 @@ namespace WoWmapper
         {
             if (inputDevice != null)
             {
-                checkWindowAttached.Checked = wowInteraction.IsAttached;
+                checkWindowAttached.Checked = wowMapper.IsAttached;
 
                 UpdateAdvancedHaptics();
 
@@ -1004,20 +427,35 @@ namespace WoWmapper
                     switch (inputDevice.ConnectionType)
                     {
                         case InputConnectionType.Wireless:
-                            picConnectionType.Image = Properties.Resources.BT;
+                            picConnectionType.Image = Properties.Resources.Wireless;
+                            break;
+
+                        case InputConnectionType.Bluetooth:
+                            picConnectionType.Image = Properties.Resources.Bluetooth;
                             break;
 
                         case InputConnectionType.Wired:
                             picConnectionType.Image = Properties.Resources.USB;
                             break;
                     }
-                    labelConnectionStatus.Text = string.Format(Properties.Resources.STRING_CONTROLLER_CONNECTED, battery, inputDevice.ControllerName);
+                    labelConnectionStatus.Text = string.Format(Resources.STRING_CONTROLLER_CONNECTED, battery);
+                    if(displayName != inputDevice.ControllerName)
+                    {
+                        groupStatus.Text = string.Format(Resources.STRING_GROUP_STATUS, inputDevice.ControllerName);
+                        displayName = inputDevice.ControllerName;
+                    }
                 }
                 else
                 {
                     // No controller connected
                     picConnectionType.Image = null;
                     labelConnectionStatus.Text = Properties.Resources.STRING_CONTROLLER_DISCONNECTED;
+                    if(displayName != Resources.STRING_CONTROLLER_DEFAULT)
+                    {
+                        groupStatus.Text = string.Format(Resources.STRING_GROUP_STATUS, Resources.STRING_CONTROLLER_DEFAULT);
+                        displayName = Resources.STRING_CONTROLLER_DEFAULT;
+                    }
+                    
                 }
 
                 // Check Led color
@@ -1034,7 +472,7 @@ namespace WoWmapper
                                 var lbColor = Properties.Settings.Default.LightbarBatteryColor;
                                 inputDevice.SetLEDFlash(lbColor.R, lbColor.G, lbColor.B, 100, 100);
                             }
-                            else if (Properties.Settings.Default.ColorLightbar && wowInteraction.IsAttached)
+                            else if (Properties.Settings.Default.ColorLightbar && wowMapper.IsAttached)
                             {
                                 // Default color
                                 var lbColor = Properties.Settings.Default.ColorDefault;
@@ -1055,17 +493,18 @@ namespace WoWmapper
                                 var lbColor = Properties.Settings.Default.LightbarBatteryColor;
                                 inputDevice.SetLEDFlash(lbColor.R, lbColor.G, lbColor.B, 100, 100);
                             }
-                            else if (hapticModule.GameState != WoWState.LoggedIn && Properties.Settings.Default.ColorLightbar && wowInteraction.IsAttached)
+                            else if (hapticModule.GameState != WoWState.LoggedIn && Properties.Settings.Default.ColorLightbar && wowMapper.IsAttached)
                             {
                                 // Haptics not logged in, use default color
                                 hapticModule.LightbarOverride = false;
                                 var lbColor = Properties.Settings.Default.ColorDefault;
                                 inputDevice.SetLEDColor(lbColor.R, lbColor.G, lbColor.B);
                             }
-                            else if(!wowInteraction.IsAttached)
+                            else if (!wowMapper.IsAttached)
                             {
                                 inputDevice.SetLEDOff();
-                            } else
+                            }
+                            else
                             {
                                 // Disable override, use haptic color
                                 hapticModule.LightbarOverride = false;
@@ -1073,29 +512,6 @@ namespace WoWmapper
                         }
                     }
                 }
-
-
-            }
-        }
-
-        private void Touchpad_TouchesMoved(InputTouchpadEventArgs e)
-        {
-            if (touchState == 0 && (wowInteraction.IsAttached || !Properties.Settings.Default.InactiveDisable)) // Mouse Control
-            {
-                var x = e.touches[0].DeltaX;
-                var y = e.touches[0].DeltaY;
-                var curPos = Cursor.Position;
-                if (x != lastTouchX)
-                {
-                    curPos.X += x;
-                    lastTouchX = x;
-                }
-                if (y != lastTouchY)
-                {
-                    curPos.Y += y;
-                    lastTouchY = y;
-                }
-                Cursor.Position = curPos;
             }
         }
 
@@ -1130,13 +546,15 @@ namespace WoWmapper
                     hapticModule = null;
                     MessageBox.Show(Properties.Resources.STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS, "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                else if (wowInteraction.IsAttached && hapticModule.wowReader.IsAttached && hapticModule.wowReader.OffsetsLoaded)
+                else if (wowMapper.IsAttached && hapticModule.wowReader.IsAttached && hapticModule.wowReader.OffsetsLoaded)
                 {
                     hapticModule.Enabled = true;
                     hapticModule.LedClass = Properties.Settings.Default.EnableLightbarClass;
                     hapticModule.LedHealth = Properties.Settings.Default.EnableLightbarHealth;
                     hapticModule.RumbleTarget = Properties.Settings.Default.EnableRumbleTarget;
                     hapticModule.RumbleDamage = Properties.Settings.Default.EnableRumbleDamage;
+                    hapticModule.AutoCenter = Properties.Settings.Default.AutoCenter;
+
                     hapticModule.HealthColors = new HapticsModule.Colors()
                     {
                         Critical = Properties.Settings.Default.ColorCritical,

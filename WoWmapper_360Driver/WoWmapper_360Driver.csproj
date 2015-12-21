@@ -35,7 +35,7 @@
     <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=AMD64">
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\SlimDX SDK (January 2012)\Bin\net40\x64\SlimDX.dll</HintPath>
     </Reference>
@@ -99,7 +99,58 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\360_drawn.png" />
+    <None Include="Resources\xbox360-controller-bg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BumperLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BumperRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CenterLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CenterMiddle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CenterRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LFaceRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LFaceUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftStick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LFaceDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LFaceLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RFaceDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RFaceLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RFaceRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RFaceUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightStick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TriggerLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TriggerRight.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

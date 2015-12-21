@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HidLibrary\LICENSE.htm" />
+    <None Include="Resources\Dualshock4.png" />
     <None Include="Resources\Triangle.png" />
     <None Include="Resources\Square.png" />
     <None Include="Resources\Share.png" />

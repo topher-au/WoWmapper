@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -80,7 +79,7 @@ namespace WoWmapper.WoWData
             public int GameBuild { get; set; }
 
             [XmlAttribute("GameArchitecture")]
-            public int GameArchitecture {get;set;}
+            public int GameArchitecture { get; set; }
 
             [XmlArray("Offsets")]
             public List<OffsetData> OffsetData { get; set; }
@@ -93,7 +92,7 @@ namespace WoWmapper.WoWData
 
         public GameOffset GetBuildOffsets(int Build, int Architecture)
         {
-            if(GameOffsetList != null)
+            if (GameOffsetList != null)
             {
                 return GameOffsetList.Find(offset => offset.GameBuild == Build && offset.GameArchitecture == Architecture);
             }
@@ -104,7 +103,7 @@ namespace WoWmapper.WoWData
         public class OffsetData
         {
             [XmlAttribute("Name")]
-            public string Name { get;set; }
+            public string Name { get; set; }
 
             [XmlAttribute("Address")]
             public uint Address { get; set; }

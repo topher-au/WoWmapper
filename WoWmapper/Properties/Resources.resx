@@ -117,15 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\USB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="STRING_HAPTIC_ATTACHED" xml:space="preserve">
-    <value>Advanced haptics attached</value>
+    <value>Enhanced interaction attached</value>
   </data>
   <data name="STRING_HAPTIC_CHARLOGGEDIN" xml:space="preserve">
     <value>Character logged in</value>
@@ -134,7 +127,7 @@
     <value>World of Warcraft currently running</value>
   </data>
   <data name="STRING_HAPTIC_STATUS" xml:space="preserve">
-    <value>Advanced Haptics</value>
+    <value>Enhanced Interaction</value>
   </data>
   <data name="STRING_NOTIFY_MENU_EXIT" xml:space="preserve">
     <value>Exit</value>
@@ -164,22 +157,22 @@
     <value>Start minimized</value>
   </data>
   <data name="STRING_CONTROLLER_CONNECTED" xml:space="preserve">
-    <value>{1} connected ({0}%)</value>
+    <value>Connected ({0}%)</value>
   </data>
   <data name="STRING_CONTROLLER_DISCONNECTED" xml:space="preserve">
     <value>Disconnected</value>
   </data>
   <data name="STRING_MESSAGE_HAPTICS_DISABLED_ERROR" xml:space="preserve">
-    <value>Advanced haptics was disabled because there was an error loading the module.</value>
+    <value>Enhanced interaction was disabled because there was an error loading the module.</value>
   </data>
   <data name="STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS" xml:space="preserve">
-    <value>Advanced haptics was disabled because there are no offsets available for your version.</value>
+    <value>Enhanced interaction was disabled because there are no offsets available for your version.</value>
   </data>
   <data name="STRING_SETTING_HAPTICS" xml:space="preserve">
     <value>Haptics</value>
   </data>
   <data name="STRING_GROUP_STATUS" xml:space="preserve">
-    <value>Status</value>
+    <value>{0} Status</value>
   </data>
   <data name="STRING_UPDATE_TEXT" xml:space="preserve">
     <value>The update file is being downloaded and will be automatically installed when the download is complete. Please wait...</value>
@@ -234,6 +227,7 @@ Would you like to find your WoW folder now?</value>
   <data name="STRING_WINDOW_ADVANCED_HAPTICS" xml:space="preserve">
     <value>Advanced Haptics</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="wowmapper3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WoWmapperLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -278,16 +272,16 @@ Please select an input plugin before configuring keybindings.</value>
     <value>Miscellaneous</value>
   </data>
   <data name="STRING_SETTING_CONFIG_ADVANCED_HAPTICS" xml:space="preserve">
-    <value>Configure advanced haptics</value>
+    <value>Configure enhanced interaction</value>
   </data>
   <data name="STRING_SETTING_DISABLE_WOW_NOT_RUNNING" xml:space="preserve">
     <value>Disable when WoW not running</value>
   </data>
   <data name="STRING_SETTING_ENABLE_ADVANCED_HAPTICS" xml:space="preserve">
-    <value>Enable advanced haptics</value>
+    <value>Enable enhanced interaction</value>
   </data>
-  <data name="STRING_SETTING_HAPTIC" xml:space="preserve">
-    <value>Haptic Settings</value>
+  <data name="STRING_SETTING_ADVANCED" xml:space="preserve">
+    <value>Advanced Settings</value>
   </data>
   <data name="STRING_SETTING_DONE" xml:space="preserve">
     <value>Done</value>
@@ -306,5 +300,20 @@ Please select an input plugin before configuring keybindings.</value>
   </data>
   <data name="STRING_PLUGIN_TITLE" xml:space="preserve">
     <value>Input Plugins</value>
+  </data>
+  <data name="STRING_HAPTIC_AUTO_CENTER" xml:space="preserve">
+    <value>Auto-center cursor after mouselook</value>
+  </data>
+  <data name="Bluetooth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bluetooth22.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_CONTROLLER_DEFAULT" xml:space="preserve">
+    <value>Controller</value>
+  </data>
+  <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\connector7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Wireless" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\internet119.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

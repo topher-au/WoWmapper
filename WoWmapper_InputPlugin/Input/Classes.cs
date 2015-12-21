@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WoWmapper.Input
+﻿namespace WoWmapper.Input
 {
-
     public class InputTouch
     {
         public int DeltaX, DeltaY, AbsX, AbsY;

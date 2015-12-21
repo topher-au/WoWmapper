@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace WoWmapper
 {
-    public partial class HapticSettingsForm : Form
+    public partial class EnhancedSettingsForm : Form
     {
-        public HapticSettingsForm()
+        public EnhancedSettingsForm()
         {
             InitializeComponent();
 
@@ -18,7 +18,7 @@ namespace WoWmapper
             checkColorHealth.Text = Properties.Resources.STRING_HAPTIC_LED_HEALTH;
             checkRumbleDamage.Text = Properties.Resources.STRING_HAPTIC_RUMBLE_DAMAGE;
             checkRumbleTarget.Text = Properties.Resources.STRING_HAPTIC_RUMBLE_TARGET;
-            checkStickyCursor.Text = Properties.Resources.STRING_HAPTIC_STICKY_CURSOR;
+            checkAutoCenter.Text = Properties.Resources.STRING_HAPTIC_AUTO_CENTER;
 
             labelCritical.Text = Properties.Resources.STRING_COLOR_CRIT;
             labelLow.Text = Properties.Resources.STRING_COLOR_LOW;
@@ -30,10 +30,7 @@ namespace WoWmapper
             checkColorHealth.Checked = Properties.Settings.Default.EnableLightbarHealth;
             checkRumbleDamage.Checked = Properties.Settings.Default.EnableRumbleDamage;
             checkRumbleTarget.Checked = Properties.Settings.Default.EnableRumbleTarget;
-            checkStickyCursor.Checked = Properties.Settings.Default.EnableStickyCursor;
-
-            numDamageIntensity.Value = Properties.Settings.Default.DamageRumbleMod;
-            numTargetIntensity.Value = Properties.Settings.Default.TargetRumbleMod;
+            checkAutoCenter.Checked = Properties.Settings.Default.AutoCenter;
 
             panelColorCritical.BackColor = Properties.Settings.Default.ColorCritical;
             panelColorLow.BackColor = Properties.Settings.Default.ColorLow;
@@ -121,26 +118,14 @@ namespace WoWmapper
             Properties.Settings.Default.Save();
         }
 
-        private void checkStickyCursor_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.EnableStickyCursor = checkStickyCursor.Checked;
-            Properties.Settings.Default.Save();
-        }
-
         private void buttonDone_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void numDamageIntensity_ValueChanged(object sender, EventArgs e)
+        private void checkAutoCenter_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.DamageRumbleMod = (int)numDamageIntensity.Value;
-            Properties.Settings.Default.Save();
-        }
-
-        private void numTargetIntensity_ValueChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.TargetRumbleMod = (int)numTargetIntensity.Value;
+            Properties.Settings.Default.AutoCenter = checkAutoCenter.Checked;
             Properties.Settings.Default.Save();
         }
     }

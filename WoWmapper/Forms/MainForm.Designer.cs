@@ -51,6 +51,7 @@
             this.checkWindowAttached = new System.Windows.Forms.CheckBox();
             this.menuNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.WoWmapperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keybindingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -60,7 +61,6 @@
             this.buttonConfig = new System.Windows.Forms.Button();
             this.buttonKeybinds = new System.Windows.Forms.Button();
             this.buttonSelectPlugin = new System.Windows.Forms.Button();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupVersion.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picConnectionType)).BeginInit();
@@ -80,7 +80,7 @@
             this.pictureBox1.Image = global::WoWmapper.Properties.Resources.wowmapper3;
             this.pictureBox1.Location = new System.Drawing.Point(12, -38);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(546, 299);
+            this.pictureBox1.Size = new System.Drawing.Size(547, 299);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -203,16 +203,16 @@
             // 
             // picConnectionType
             // 
-            this.picConnectionType.Location = new System.Drawing.Point(6, 22);
+            this.picConnectionType.Location = new System.Drawing.Point(237, 15);
             this.picConnectionType.Name = "picConnectionType";
-            this.picConnectionType.Size = new System.Drawing.Size(39, 20);
+            this.picConnectionType.Size = new System.Drawing.Size(32, 32);
             this.picConnectionType.TabIndex = 1;
             this.picConnectionType.TabStop = false;
             // 
             // labelConnectionStatus
             // 
             this.labelConnectionStatus.AutoSize = true;
-            this.labelConnectionStatus.Location = new System.Drawing.Point(51, 25);
+            this.labelConnectionStatus.Location = new System.Drawing.Point(6, 23);
             this.labelConnectionStatus.Name = "labelConnectionStatus";
             this.labelConnectionStatus.Size = new System.Drawing.Size(79, 15);
             this.labelConnectionStatus.TabIndex = 0;
@@ -292,6 +292,11 @@
             this.WoWmapperToolStripMenuItem.Text = "WoWmapper";
             this.WoWmapperToolStripMenuItem.Click += new System.EventHandler(this.NotifyIcon_DoubleClick);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
@@ -340,7 +345,7 @@
             this.panelContent.Controls.Add(this.buttonCPUpdateNow);
             this.panelContent.Location = new System.Drawing.Point(12, 244);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(557, 186);
+            this.panelContent.Size = new System.Drawing.Size(554, 186);
             this.panelContent.TabIndex = 28;
             // 
             // buttonConfig
@@ -372,11 +377,6 @@
             this.buttonSelectPlugin.Text = "plugins";
             this.buttonSelectPlugin.UseVisualStyleBackColor = true;
             this.buttonSelectPlugin.Click += new System.EventHandler(this.buttonSelectPlugin_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
             // 
             // MainForm
             // 

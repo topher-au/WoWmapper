@@ -1,7 +1,8 @@
-﻿using WoWmapper.Input;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using WoWmapper.Input;
+using WoWmapper.Xbox360.Properties;
 
 namespace WoWmapper_360Driver.Forms
 {
@@ -11,38 +12,27 @@ namespace WoWmapper_360Driver.Forms
         public string SwapWith = string.Empty;
         private Keybind bindings;
 
-        public BindKeyForm(Bitmap ButtonImage, InputButton Button, Keys CurrentKey, Keybind Bindings)
+        public BindKeyForm(Bitmap ButtonImage, string BindText, Keys CurrentKey, Keybind Bindings)
         {
             InitializeComponent();
             picBindImage.Image = ButtonImage;
             textKeyBind.Text = CurrentKey.ToString();
             bindings = Bindings;
-            labelBindName.Text = string.Format("set bind", Button.ToString());
-
-
-
+            labelBindName.Text = string.Format(Resources.STRING_BIND_SET, BindText);
         }
 
-        private void textKeyBind_KeyDown(object sender, KeyEventArgs e)
+        private void buttonControl_Click(object sender, EventArgs e)
         {
-            // Illegal key code
-            if (Defaults.IllegalKeyCodes.Contains(e.KeyCode))
-            {
-                labelKeyError.Text = string.Format("illegal", e.KeyCode.ToString());
-                return;
-            }
-
             // Existing bind
-            var existing = bindings.FromKey(e.KeyCode);
+            var existing = bindings.FromKey(Keys.LControlKey);
             if (!existing.Equals(default(WoWmapper.Input.Binding)))
             {
                 SwapWith = existing.Name;
             }
 
             // Bind success
-            textKeyBind.Text = e.KeyCode.ToString();
-            Key = e.KeyCode;
-
+            textKeyBind.Text = Keys.LControlKey.ToString();
+            Key = Keys.LControlKey;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -63,18 +53,26 @@ namespace WoWmapper_360Driver.Forms
             this.Close();
         }
 
-        private void buttonControl_Click(object sender, EventArgs e)
+        private void textKeyBind_KeyDown(object sender, KeyEventArgs e)
         {
+            // Illegal key code
+            if (Defaults.IllegalKeyCodes.Contains(e.KeyCode))
+            {
+                labelKeyError.Text = string.Format(Resources.STRING_BIND_ILLEGAL, e.KeyCode.ToString());
+                return;
+            }
+
             // Existing bind
-            var existing = bindings.FromKey(Keys.LControlKey);
+            var existing = bindings.FromKey(e.KeyCode);
             if (!existing.Equals(default(WoWmapper.Input.Binding)))
             {
                 SwapWith = existing.Name;
             }
 
             // Bind success
-            textKeyBind.Text = Keys.LControlKey.ToString();
-            Key = Keys.LControlKey;
+            textKeyBind.Text = e.KeyCode.ToString();
+            Key = e.KeyCode;
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WoWmapper.Input;
 
-namespace WoWmapper_360Driver.Forms
+namespace WoWmapper_DS4Driver.Forms
 {
     public partial class KeybindForm : Form
     {
@@ -23,8 +23,8 @@ namespace WoWmapper_360Driver.Forms
             TriggerConfigForm triggerConfig = new TriggerConfigForm(device, device.TriggerSensitivity.L2, device.TriggerSensitivity.R2);
             triggerConfig.ShowDialog();
             if (triggerConfig.DialogResult == DialogResult.Cancel) return;
-            kb.Settings.Write("L2Sensitivity", triggerConfig.L2Threshold);
-            kb.Settings.Write("R2Sensitivity", triggerConfig.R2Threshold);
+            kb.Settings.Write("TriggerLeft", triggerConfig.L2Threshold);
+            kb.Settings.Write("TriggerRight", triggerConfig.R2Threshold);
             device.TriggerSensitivity = new DS4.DS4Sensitivity()
             {
                 L2 = triggerConfig.L2Threshold,
@@ -61,15 +61,16 @@ namespace WoWmapper_360Driver.Forms
             labelRightSpeed.Text = Properties.Resources.STRING_BIND_MOUSE_SPEED;
             labelRightCurve.Text = Properties.Resources.STRING_BIND_MOUSE_CURVE;
 
-            int rSpeed, rCurve, rDead, touchMode;
+            float rSpeed, rCurve, rDead;
+            int touchMode;
             kb.Settings.Read("RightDead", out rDead);
             kb.Settings.Read("RightCurve", out rCurve);
             kb.Settings.Read("RightSpeed", out rSpeed);
             kb.Settings.Read("TouchMode", out touchMode);
 
-            numRCurve.Value = rCurve;
-            numRSpeed.Value = rSpeed;
-            numRDeadzone.Value = rDead;
+            numRCurve.Value = (int)rCurve;
+            numRSpeed.Value = (int)rSpeed;
+            numRDeadzone.Value = (int)rDead;
             comboTouchMode.SelectedIndex = touchMode;
 
             // Set right stick panel to double buffered
@@ -108,27 +109,25 @@ namespace WoWmapper_360Driver.Forms
 
         private void numRCurve_ValueChanged(object sender, EventArgs e)
         {
-            kb.Settings.Write<int>("RightCurve", (int)numRCurve.Value);
+            kb.Settings.Write<float>("RightCurve", (float)numRCurve.Value);
             kb.Save();
         }
 
         private void numRDeadzone_ValueChanged(object sender, EventArgs e)
         {
-            kb.Settings.Write<int>("RightDead", (int)numRDeadzone.Value);
+            kb.Settings.Write<float>("RightDead", (float)numRDeadzone.Value);
             kb.Save();
         }
 
         private void numRSpeed_ValueChanged(object sender, EventArgs e)
         {
-            kb.Settings.Write<int>("RightSpeed", (int)numRSpeed.Value);
+            kb.Settings.Write<float>("RightSpeed", (float)numRSpeed.Value);
             kb.Save();
         }
 
         private void panelRStick_Paint(object sender, PaintEventArgs e)
         {
-            int rightDead = 15;
-            kb.Settings.Read<int>("RightDead", out rightDead);
-            var deadDisplay = rightDead /2;
+            var deadzoneRadius = (int)(numRDeadzone.Value);
             var ptRightStick = device.GetStickPoint(DS4Stick.Right);
             Rectangle rectRightBounds = panelRStickAxis.DisplayRectangle;
             Rectangle rectStickOutline = new Rectangle(
@@ -137,10 +136,10 @@ namespace WoWmapper_360Driver.Forms
                 rectRightBounds.Width - 7,
                 rectRightBounds.Height - 7);
             Rectangle rectStickDeadzone = new Rectangle(
-                rectRightBounds.X + rectRightBounds.Width / 2 - (deadDisplay / 2),
-                rectRightBounds.Y + rectRightBounds.Width / 2 - (deadDisplay / 2),
-                deadDisplay,
-                deadDisplay);
+                rectRightBounds.X + rectRightBounds.Width / 2 - (deadzoneRadius / 2),
+                rectRightBounds.Y + rectRightBounds.Width / 2 - (deadzoneRadius / 2),
+                deadzoneRadius,
+                deadzoneRadius);
             Rectangle rectStickIndicator = new Rectangle(
                 (rectRightBounds.Width / 2) + (ptRightStick.X / 4) - 2,
                 (rectRightBounds.Height / 2) + (ptRightStick.Y / 4) - 2,
@@ -182,7 +181,7 @@ namespace WoWmapper_360Driver.Forms
         }
 
 
-        private void DoKeyBind(TextBox BindBox, Bitmap Image, InputButton Button, Keys Key)
+        private void DoKeyBind(TextBox BindBox, Bitmap Image, string Button, Keys Key)
         {
             var BindForm = new BindKeyForm(Image, Button, Key, kb.Keybinds);
             BindForm.ShowDialog();
@@ -209,15 +208,9 @@ namespace WoWmapper_360Driver.Forms
         private void BindBox_DoubleClick(object sender, EventArgs e)
         {
             var bindBox = sender as TextBox;
-
-            // Attempt to find button name from tag
-            InputButton button;
-            var success = Enum.TryParse<InputButton>(bindBox.Tag.ToString(), out button);
-            if (!success) return;
-
             DoKeyBind(bindBox,
                 Properties.Resources.ResourceManager.GetObject(bindBox.Tag.ToString()) as Bitmap,
-                button,
+                bindBox.Tag.ToString(),
                 kb.Keybinds.FromName(bindBox.Tag.ToString()).Key.Value);
         }
 

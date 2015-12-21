@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WoWmapper.Input;
 using SlimDX.XInput;
+using WoWmapper.Xbox360.Properties;
 
 namespace WoWmapper_360Driver.Forms
 {
@@ -39,7 +40,7 @@ namespace WoWmapper_360Driver.Forms
 
         public Point GetStickPoint(InputStick Stick)
         {
-            if (device != null)
+            if (device != null && device.IsConnected)
             {
                 var state = device.GetState();
                 switch (Stick)
@@ -69,15 +70,15 @@ namespace WoWmapper_360Driver.Forms
             kb = BindFile;
             device = InputDevice;
 
-            int rSpeed, rCurve, rDead, touchMode;
+            float rSpeed, rCurve, rDead, touchMode;
             kb.Settings.Read("RightDead", out rDead);
             kb.Settings.Read("RightCurve", out rCurve);
             kb.Settings.Read("RightSpeed", out rSpeed);
             kb.Settings.Read("TouchMode", out touchMode);
 
-            numRCurve.Value = rCurve;
-            numRSpeed.Value = rSpeed;
-            numRDeadzone.Value = rDead;
+            numRCurve.Value = (int)rCurve;
+            numRSpeed.Value = (int)rSpeed;
+            numRDeadzone.Value = (int)rDead;
 
             // Set right stick panel to double buffered
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -113,47 +114,37 @@ namespace WoWmapper_360Driver.Forms
 
         private void numRCurve_ValueChanged(object sender, EventArgs e)
         {
-            kb.Settings.Write<int>("RightCurve", (int)numRCurve.Value);
+            kb.Settings.Write("RightCurve", (float)numRCurve.Value);
             kb.Save();
         }
 
         private void numRDeadzone_ValueChanged(object sender, EventArgs e)
         {
-            kb.Settings.Write<int>("RightDead", (int)numRDeadzone.Value);
+            kb.Settings.Write("RightDead", (float)numRDeadzone.Value);
             kb.Save();
         }
 
         private void numRSpeed_ValueChanged(object sender, EventArgs e)
         {
-            kb.Settings.Write<int>("RightSpeed", (int)numRSpeed.Value);
+            kb.Settings.Write("RightSpeed", (float)numRSpeed.Value);
             kb.Save();
         }
 
         private void panelRStick_Paint(object sender, PaintEventArgs e)
         {
-            int rightDead = 15;
-            kb.Settings.Read<int>("RightDead", out rightDead);
-            var deadDisplay = rightDead /2;
+            var deadzoneRadius = (int)(numRDeadzone.Value);
             var ptRightStick = GetStickPoint(InputStick.Right);
             Rectangle rectRightBounds = panelRStickAxis.DisplayRectangle;
-            Rectangle rectStickOutline = new Rectangle(
-                rectRightBounds.X + 3,
-                rectRightBounds.Y + 3,
-                rectRightBounds.Width - 7,
-                rectRightBounds.Height - 7);
             Rectangle rectStickDeadzone = new Rectangle(
-                rectRightBounds.X + rectRightBounds.Width / 2 - (deadDisplay / 2),
-                rectRightBounds.Y + rectRightBounds.Width / 2 - (deadDisplay / 2),
-                deadDisplay,
-                deadDisplay);
+                rectRightBounds.X + rectRightBounds.Width / 2 - (deadzoneRadius / 2),
+                rectRightBounds.Y + rectRightBounds.Width / 2 - (deadzoneRadius / 2),
+                deadzoneRadius,
+                deadzoneRadius);
             Rectangle rectStickIndicator = new Rectangle(
-                (rectRightBounds.Width / 2) + (ptRightStick.X / 4) - 2,
+                (rectRightBounds.Width / 2) + (ptRightStick.X /4) - 2,
                 (rectRightBounds.Height / 2) + (ptRightStick.Y / 4) - 2,
                 4,
                 4);
-
-            e.Graphics.DrawEllipse(new Pen(Color.Black, 4f), rectStickOutline);
-            e.Graphics.FillEllipse(Brushes.White, rectStickOutline);
 
             e.Graphics.DrawEllipse(Pens.Blue, rectStickIndicator);
             e.Graphics.FillEllipse(Brushes.Blue, rectStickIndicator);
@@ -170,7 +161,7 @@ namespace WoWmapper_360Driver.Forms
         }
 
 
-        private void DoKeyBind(TextBox BindBox, Bitmap Image, InputButton Button, Keys Key)
+        private void DoKeyBind(TextBox BindBox, Bitmap Image, string Button, Keys Key)
         {
             var BindForm = new BindKeyForm(Image, Button, Key, kb.Keybinds);
             BindForm.ShowDialog();
@@ -197,16 +188,12 @@ namespace WoWmapper_360Driver.Forms
         private void BindBox_DoubleClick(object sender, EventArgs e)
         {
             var bindBox = sender as TextBox;
+            
+                DoKeyBind(bindBox,
+    Resources.ResourceManager.GetObject(bindBox.Tag.ToString()) as Bitmap,
+    bindBox.Tag.ToString(), kb.Keybinds.FromName(bindBox.Tag.ToString()).Key.Value);
 
-            // Attempt to find button name from tag
-            InputButton button;
-            var success = Enum.TryParse<InputButton>(bindBox.Tag.ToString(), out button);
-            if (!success) return;
-
-            DoKeyBind(bindBox,
-                new Bitmap(32,32), //Properties.Resources.ResourceManager.GetObject(bindBox.Tag.ToString()) as Bitmap,
-                button,
-                kb.Keybinds.FromName(bindBox.Tag.ToString()).Key.Value);
+                
         }
 
         private void timerUpdateUI_Tick(object sender, EventArgs e)

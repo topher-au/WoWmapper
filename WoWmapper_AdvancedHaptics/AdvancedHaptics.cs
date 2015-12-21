@@ -1,14 +1,29 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Forms;
 using WoWmapper.Input;
 using WoWmapper.WoWData;
 
-namespace WoWmapper.AdvancedHaptics
+namespace WoWmapper.EnhancedInteraction
 {
     public class HapticsModule : IDisposable
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;        // x position of upper-left corner
+            public int Top;         // y position of upper-left corner
+            public int Right;       // x position of lower-right corner
+            public int Bottom;      // y position of lower-right corner
+        }
+
         public bool Enabled { get; set; } = false;
         public WoWReader wowReader = new WoWReader();
         private IInputPlugin hapticDevice;
@@ -18,8 +33,11 @@ namespace WoWmapper.AdvancedHaptics
         public bool LedHealth { get; set; } = true;
         public bool RumbleDamage { get; set; } = true;
         public bool RumbleTarget { get; set; } = true;
+        public bool AutoCenter { get; set; } = false;
 
         public bool LightbarOverride { get; set; } = false;
+
+        private bool wasMouseLooking = false;
 
         public WoWState GameState
         {
@@ -127,11 +145,27 @@ namespace WoWmapper.AdvancedHaptics
                     {
                         lastHealthPercent = 100;
                     }
+
+                    if (wasMouseLooking && !wowReader.IsMouselooking && AutoCenter)
+                    {
+                        RECT wowRect;
+                        GetWindowRect(new HandleRef(this, wowReader.WoWProcess.MainWindowHandle), out wowRect);
+                        var wowWidth = wowRect.Right - wowRect.Left;
+                        var wowHeight = wowRect.Bottom - wowRect.Top;
+                        Cursor.Position = new Point(
+                            wowRect.Left + (wowWidth / 2),
+                            wowRect.Top + (wowHeight / 2)
+                            );
+                        wasMouseLooking = false;
+                    }
+
+                    if (wowReader.IsMouselooking) wasMouseLooking = true;
                 }
                 else
                 {
                     lastHealthPercent = 100;
                 }
+
                 Thread.Sleep(100);
             }
         }
@@ -142,8 +176,8 @@ namespace WoWmapper.AdvancedHaptics
 
             while (true)
             {
-                if (wowReader.IsAttached && 
-                    wowReader.GameState == WoWState.LoggedIn && 
+                if (wowReader.IsAttached &&
+                    wowReader.GameState == WoWState.LoggedIn &&
                     Enabled &&
                     !LightbarOverride)
                 {

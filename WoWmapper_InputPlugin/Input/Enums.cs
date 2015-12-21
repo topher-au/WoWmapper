@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WoWmapper.Input
+﻿namespace WoWmapper.Input
 {
-    public enum InputStick
+    public enum InputAxis
     {
-        Left,
-        Right
+        LeftStickX,
+        LeftStickY,
+        RightStickX,
+        RightStickY,
+        LeftTrigger,
+        RightTrigger,
+        GyroX,
+        GyroY,
+        GyroZ
     }
 
     public enum InputButton
@@ -17,6 +18,7 @@ namespace WoWmapper.Input
         // DS4 Button Name
         // ---------------
         BumperLeft,     // L1
+
         BumperRight,    // R1
         TriggerLeft,    // L2
         TriggerRight,   // R2
@@ -38,17 +40,12 @@ namespace WoWmapper.Input
         Extra3,         // Touch Upper
     }
 
-    public enum InputAxis
+    public enum InputConnectionType
     {
-        LeftStickX,
-        LeftStickY,
-        RightStickX,
-        RightStickY,
-        LeftTrigger,
-        RightTrigger,
-        GyroX,
-        GyroY,
-        GyroZ
+        Disconnected,
+        Wired,
+        Wireless,
+        Bluetooth
     }
 
     public enum InputRumbleMotor
@@ -58,11 +55,9 @@ namespace WoWmapper.Input
         Both
     }
 
-    public enum InputConnectionType
+    public enum InputStick
     {
-        Disconnected,
-        Wired,
-        Wireless
+        Left,
+        Right
     }
-
 }

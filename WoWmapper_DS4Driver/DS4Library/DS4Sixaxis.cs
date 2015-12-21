@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DS4Windows
 {
@@ -10,6 +6,7 @@ namespace DS4Windows
     {
         public readonly SixAxis sixAxis;
         public readonly System.DateTime timeStamp;
+
         public SixAxisEventArgs(System.DateTime utcTimestamp, SixAxis sa)
         {
             sixAxis = sa;
@@ -22,6 +19,7 @@ namespace DS4Windows
         public readonly int gyroX, gyroY, gyroZ, deltaX, deltaY, deltaZ, accelX, accelY, accelZ;
         public readonly byte touchID;
         public readonly SixAxis previousAxis;
+
         public SixAxis(int X, int Y, int Z, int aX, int aY, int aZ, SixAxis prevAxis = null)
         {
             gyroX = X;
@@ -43,11 +41,11 @@ namespace DS4Windows
     public class DS4SixAxis
     {
         public event EventHandler<SixAxisEventArgs> SixAxisMoved = null; // deltaX/deltaY are set because one or both fingers were already down on a prior sensor reading
+
         public event EventHandler<SixAxisEventArgs> SixAccelMoved = null; // no status change for the touchpad itself... but other sensors may have changed, or you may just want to do some processing
 
         internal int lastGyroX, lastGyroY, lastGyroZ, lastAX, lastAY, lastAZ; // tracks 0, 1 or 2 touches; we maintain touch 1 and 2 separately
         internal byte[] previousPacket = new byte[8];
-        
 
         public void handleSixaxis(byte[] gyro, byte[] accel, DS4State state)
         {
@@ -72,7 +70,7 @@ namespace DS4Windows
                 if (SixAxisMoved != null)
                 {
                     SixAxis sPrev, now;
-                    sPrev = new SixAxis(lastGyroX, lastGyroY, lastGyroZ, lastAX,lastAY,lastAZ);
+                    sPrev = new SixAxis(lastGyroX, lastGyroY, lastGyroZ, lastAX, lastAY, lastAZ);
                     now = new SixAxis(currentX, currentY, currentZ, AccelX, AccelY, AccelZ, sPrev);
                     args = new SixAxisEventArgs(state.ReportTimeStamp, now);
                     SixAxisMoved(this, args);

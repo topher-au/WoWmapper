@@ -334,5 +334,17 @@ namespace WoWmapper.Properties {
                 this["ColorLightbar"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoCenter {
+            get {
+                return ((bool)(this["AutoCenter"]));
+            }
+            set {
+                this["AutoCenter"] = value;
+            }
+        }
     }
 }

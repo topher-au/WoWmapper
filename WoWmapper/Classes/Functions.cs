@@ -63,7 +63,8 @@ namespace WoWmapper
                 string wowRegPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Blizzard Entertainment\\World of Warcraft", "InstallPath", String.Empty).ToString();
                 if (wowRegPath != string.Empty)
                     testPaths.Insert(0, wowRegPath);
-            } catch { }
+            }
+            catch { }
 
             // Find install path
             foreach (string Path in testPaths)

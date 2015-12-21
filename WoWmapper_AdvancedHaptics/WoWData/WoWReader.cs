@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using WoWmapper;
-using WoWmapper.WoWData;
 
 namespace WoWmapper.WoWData
 {
@@ -28,14 +24,18 @@ namespace WoWmapper.WoWData
         public bool OffsetsLoaded { get; private set; }
 
         private Thread watcherThread;
-        private Process wowProcess;
+
+        public Process WoWProcess
+        {
+            get; set;
+        }
+
         private IntPtr wowHandle;
 
         public WoWReader()
         {
             watcherThread = new Thread(WatcherThread);
             watcherThread.Start();
-            //Offsets.WriteOffsets();
         }
 
         public void Dispose()
@@ -53,13 +53,13 @@ namespace WoWmapper.WoWData
                     // No process attached, scan for WoW process
                     if (wowProcs.Length > 0) // found process
                     {
-                        wowProcess = wowProcs.First();
-                        var handle = OpenProcess(PROCESS_WM_READ, true, wowProcess.Id);
+                        WoWProcess = wowProcs.First();
+                        var handle = OpenProcess(PROCESS_WM_READ, true, WoWProcess.Id);
                         if (handle != IntPtr.Zero)
                         {
                             try
                             {
-                                var wowBuild = wowProcess.MainModule.FileVersionInfo.ProductPrivatePart;
+                                var wowBuild = WoWProcess.MainModule.FileVersionInfo.ProductPrivatePart;
                                 if (offsetReader.BuildExists(wowBuild, 64))
                                 {
                                     offsets = offsetReader.LoadOffsets(wowBuild, 64);
@@ -74,28 +74,28 @@ namespace WoWmapper.WoWData
                                 wowHandle = handle;
                                 IsAttached = true;
                                 Console.WriteLine("WoW Process Attached");
-                            } catch(Exception ex)
+                            }
+                            catch (Exception ex)
                             {
                                 Console.WriteLine("Failed to attach to process: " + ex.Message);
                                 IsAttached = false;
                                 wowHandle = IntPtr.Zero;
                             }
-                            
                         }
                     }
                 }
-                else if (wowProcess != null)
+                else if (WoWProcess != null)
                 {
                     // Check if process has exited
-                    if (wowProcess.HasExited)
+                    if (WoWProcess.HasExited)
                     {
                         wowHandle = IntPtr.Zero;
-                        wowProcess = null;
+                        WoWProcess = null;
                         IsAttached = false;
                         Console.WriteLine("WoW Process Exited");
                     }
                 }
-                else if (wowProcess == null)
+                else if (WoWProcess == null)
                 {
                     wowHandle = IntPtr.Zero;
                     IsAttached = false;
@@ -114,12 +114,13 @@ namespace WoWmapper.WoWData
                     int bytesRead = 0;
                     try
                     {
-                        ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("GameState"), state, state.Length, ref bytesRead);
-                    } catch
+                        ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("GameState"), state, state.Length, ref bytesRead);
+                    }
+                    catch
                     {
                         return WoWState.NotRunning;
                     }
-                    
+
                     if (bytesRead > 0)
                     {
                         return (WoWState)state[0];
@@ -135,8 +136,27 @@ namespace WoWmapper.WoWData
             {
                 byte[] targetGuid = new byte[16];
                 int bytesRead = 0;
-                ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("TargetGuid"), targetGuid, targetGuid.Length, ref bytesRead);
+                ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("TargetGuid"), targetGuid, targetGuid.Length, ref bytesRead);
                 return targetGuid;
+            }
+        }
+
+        public bool IsMouselooking
+        {
+            get
+            {
+                int bytesRead = 0;
+                byte[] ptrMouseLook = new byte[IntPtr.Size];
+                byte[] isMouseLooking = new byte[8];
+
+                // Read the location of the mouse info from memory
+                ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + 0x165AF58, ptrMouseLook, ptrMouseLook.Length, ref bytesRead);
+
+                // Read the byte that represents mouselook
+                ReadProcessMemory(wowHandle, (IntPtr)BitConverter.ToInt64(ptrMouseLook, 0), isMouseLooking, isMouseLooking.Length, ref bytesRead);
+
+                if (((int)isMouseLooking[4] & 1) == 1) return true;
+                return false;
             }
         }
 
@@ -146,7 +166,7 @@ namespace WoWmapper.WoWData
             {
                 byte[] mouseGuid = new byte[16];
                 int bytesRead = 0;
-                ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("MouseGuid"), mouseGuid, mouseGuid.Length, ref bytesRead);
+                ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("MouseGuid"), mouseGuid, mouseGuid.Length, ref bytesRead);
                 return mouseGuid;
             }
         }
@@ -156,7 +176,7 @@ namespace WoWmapper.WoWData
             if (IsAttached && GameState == WoWState.LoggedIn)
             {
                 var PlayerBase = ReadPlayerBase();
-                if(PlayerBase != IntPtr.Zero)
+                if (PlayerBase != IntPtr.Zero)
                 {
                     int bytesRead = 0;
                     byte[] Name = new byte[12];
@@ -164,11 +184,11 @@ namespace WoWmapper.WoWData
                     byte[] Level = new byte[1];
                     byte[] CurrentHP = new byte[4];
                     byte[] MaxHP = new byte[4];
-                    
+
                     try
                     {
-                        ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("Name"), Name, Name.Length, ref bytesRead);
-                        ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("Class"), Class, Class.Length, ref bytesRead);
+                        ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("Name"), Name, Name.Length, ref bytesRead);
+                        ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("Class"), Class, Class.Length, ref bytesRead);
                         ReadProcessMemory(wowHandle, PlayerBase + offsets.ReadOffset("Level"), Level, Level.Length, ref bytesRead);
                         ReadProcessMemory(wowHandle, PlayerBase + offsets.ReadOffset("CurrentHP"), CurrentHP, CurrentHP.Length, ref bytesRead);
                         ReadProcessMemory(wowHandle, PlayerBase + offsets.ReadOffset("MaxHP"), MaxHP, MaxHP.Length, ref bytesRead);
@@ -177,7 +197,6 @@ namespace WoWmapper.WoWData
                     {
                         return default(PlayerInfo);
                     }
-
 
                     return new PlayerInfo()
                     {
@@ -202,7 +221,7 @@ namespace WoWmapper.WoWData
                 // Read playerbase pointer from memory
                 try
                 {
-                    ReadProcessMemory(wowHandle, wowProcess.MainModule.BaseAddress + offsets.ReadOffset("Player"), playerBase, playerBase.Length, ref bytesRead);
+                    ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("Player"), playerBase, playerBase.Length, ref bytesRead);
                     IntPtr playerPointer = (IntPtr)BitConverter.ToInt64(playerBase, 0);
 
                     // Read player pointer from memory
@@ -210,11 +229,11 @@ namespace WoWmapper.WoWData
                     playerPointer = (IntPtr)BitConverter.ToInt64(playerBase, 0);
 
                     return playerPointer;
-                } catch
+                }
+                catch
                 {
                     return IntPtr.Zero;
                 }
-                
             }
             return IntPtr.Zero;
         }

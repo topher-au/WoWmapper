@@ -36,12 +36,12 @@
             this.labelAppPrefs = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panelBatteryColor = new System.Windows.Forms.Panel();
-            this.buttonAdvancedHaptics = new System.Windows.Forms.Button();
+            this.buttonEnhancedSettings = new System.Windows.Forms.Button();
             this.panelLEDColor = new System.Windows.Forms.Panel();
             this.checkEnableAdvancedHaptics = new System.Windows.Forms.CheckBox();
             this.checkLightbarBatteryLow = new System.Windows.Forms.CheckBox();
             this.checkLightbarColor = new System.Windows.Forms.CheckBox();
-            this.labelHapticSettings = new System.Windows.Forms.Label();
+            this.labelAdvancedSettings = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.buttonLocateWoW = new System.Windows.Forms.Button();
             this.textWoWPath = new System.Windows.Forms.TextBox();
@@ -121,12 +121,12 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.panelBatteryColor);
-            this.panel2.Controls.Add(this.buttonAdvancedHaptics);
+            this.panel2.Controls.Add(this.buttonEnhancedSettings);
             this.panel2.Controls.Add(this.panelLEDColor);
             this.panel2.Controls.Add(this.checkEnableAdvancedHaptics);
             this.panel2.Controls.Add(this.checkLightbarBatteryLow);
             this.panel2.Controls.Add(this.checkLightbarColor);
-            this.panel2.Controls.Add(this.labelHapticSettings);
+            this.panel2.Controls.Add(this.labelAdvancedSettings);
             this.panel2.Location = new System.Drawing.Point(12, 236);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(228, 138);
@@ -141,15 +141,15 @@
             this.panelBatteryColor.TabIndex = 5;
             this.panelBatteryColor.Click += new System.EventHandler(this.panelBatteryColor_Click);
             // 
-            // buttonAdvancedHaptics
+            // buttonEnhancedSettings
             // 
-            this.buttonAdvancedHaptics.Location = new System.Drawing.Point(12, 110);
-            this.buttonAdvancedHaptics.Name = "buttonAdvancedHaptics";
-            this.buttonAdvancedHaptics.Size = new System.Drawing.Size(202, 23);
-            this.buttonAdvancedHaptics.TabIndex = 5;
-            this.buttonAdvancedHaptics.Text = "configure advanced haptics";
-            this.buttonAdvancedHaptics.UseVisualStyleBackColor = true;
-            this.buttonAdvancedHaptics.Click += new System.EventHandler(this.buttonAdvancedHaptics_Click);
+            this.buttonEnhancedSettings.Location = new System.Drawing.Point(12, 110);
+            this.buttonEnhancedSettings.Name = "buttonEnhancedSettings";
+            this.buttonEnhancedSettings.Size = new System.Drawing.Size(202, 23);
+            this.buttonEnhancedSettings.TabIndex = 5;
+            this.buttonEnhancedSettings.Text = "configure enhanced interaction";
+            this.buttonEnhancedSettings.UseVisualStyleBackColor = true;
+            this.buttonEnhancedSettings.Click += new System.EventHandler(this.buttonAdvancedHaptics_Click);
             // 
             // panelLEDColor
             // 
@@ -165,9 +165,9 @@
             this.checkEnableAdvancedHaptics.AutoSize = true;
             this.checkEnableAdvancedHaptics.Location = new System.Drawing.Point(12, 84);
             this.checkEnableAdvancedHaptics.Name = "checkEnableAdvancedHaptics";
-            this.checkEnableAdvancedHaptics.Size = new System.Drawing.Size(156, 19);
+            this.checkEnableAdvancedHaptics.Size = new System.Drawing.Size(176, 19);
             this.checkEnableAdvancedHaptics.TabIndex = 3;
-            this.checkEnableAdvancedHaptics.Text = "enable advanced haptics";
+            this.checkEnableAdvancedHaptics.Text = "enable enhanced interaction";
             this.checkEnableAdvancedHaptics.UseVisualStyleBackColor = true;
             this.checkEnableAdvancedHaptics.CheckedChanged += new System.EventHandler(this.checkEnableAdvancedHaptics_CheckedChanged);
             // 
@@ -193,15 +193,15 @@
             this.checkLightbarColor.UseVisualStyleBackColor = true;
             this.checkLightbarColor.CheckedChanged += new System.EventHandler(this.checkLightbarColor_CheckedChanged);
             // 
-            // labelHapticSettings
+            // labelAdvancedSettings
             // 
-            this.labelHapticSettings.AutoSize = true;
-            this.labelHapticSettings.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHapticSettings.Location = new System.Drawing.Point(-2, 0);
-            this.labelHapticSettings.Name = "labelHapticSettings";
-            this.labelHapticSettings.Size = new System.Drawing.Size(140, 25);
-            this.labelHapticSettings.TabIndex = 0;
-            this.labelHapticSettings.Text = "haptic settings";
+            this.labelAdvancedSettings.AutoSize = true;
+            this.labelAdvancedSettings.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelAdvancedSettings.Location = new System.Drawing.Point(-2, 0);
+            this.labelAdvancedSettings.Name = "labelAdvancedSettings";
+            this.labelAdvancedSettings.Size = new System.Drawing.Size(171, 25);
+            this.labelAdvancedSettings.TabIndex = 0;
+            this.labelAdvancedSettings.Text = "advanced settings";
             // 
             // panel3
             // 
@@ -286,8 +286,8 @@
         private System.Windows.Forms.CheckBox checkStartMinimized;
         private System.Windows.Forms.Label labelAppPrefs;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label labelHapticSettings;
-        private System.Windows.Forms.Button buttonAdvancedHaptics;
+        private System.Windows.Forms.Label labelAdvancedSettings;
+        private System.Windows.Forms.Button buttonEnhancedSettings;
         private System.Windows.Forms.Panel panelLEDColor;
         private System.Windows.Forms.CheckBox checkEnableAdvancedHaptics;
         private System.Windows.Forms.CheckBox checkLightbarBatteryLow;

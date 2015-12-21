@@ -63,9 +63,9 @@ namespace WoWmapper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BT {
+        internal static System.Drawing.Bitmap Bluetooth {
             get {
-                object obj = ResourceManager.GetObject("BT", resourceCulture);
+                object obj = ResourceManager.GetObject("Bluetooth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -125,11 +125,20 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {1} connected ({0}%).
+        ///   Looks up a localized string similar to Connected ({0}%).
         /// </summary>
         internal static string STRING_CONTROLLER_CONNECTED {
             get {
                 return ResourceManager.GetString("STRING_CONTROLLER_CONNECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controller.
+        /// </summary>
+        internal static string STRING_CONTROLLER_DEFAULT {
+            get {
+                return ResourceManager.GetString("STRING_CONTROLLER_DEFAULT", resourceCulture);
             }
         }
         
@@ -152,7 +161,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to {0} Status.
         /// </summary>
         internal static string STRING_GROUP_STATUS {
             get {
@@ -170,11 +179,20 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced haptics attached.
+        ///   Looks up a localized string similar to Enhanced interaction attached.
         /// </summary>
         internal static string STRING_HAPTIC_ATTACHED {
             get {
                 return ResourceManager.GetString("STRING_HAPTIC_ATTACHED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-center cursor after mouselook.
+        /// </summary>
+        internal static string STRING_HAPTIC_AUTO_CENTER {
+            get {
+                return ResourceManager.GetString("STRING_HAPTIC_AUTO_CENTER", resourceCulture);
             }
         }
         
@@ -251,7 +269,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Haptics.
+        ///   Looks up a localized string similar to Enhanced Interaction.
         /// </summary>
         internal static string STRING_HAPTIC_STATUS {
             get {
@@ -305,7 +323,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced haptics was disabled because there was an error loading the module..
+        ///   Looks up a localized string similar to Enhanced interaction was disabled because there was an error loading the module..
         /// </summary>
         internal static string STRING_MESSAGE_HAPTICS_DISABLED_ERROR {
             get {
@@ -314,7 +332,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced haptics was disabled because there are no offsets available for your version..
+        ///   Looks up a localized string similar to Enhanced interaction was disabled because there are no offsets available for your version..
         /// </summary>
         internal static string STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS {
             get {
@@ -407,6 +425,15 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced Settings.
+        /// </summary>
+        internal static string STRING_SETTING_ADVANCED {
+            get {
+                return ResourceManager.GetString("STRING_SETTING_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application Preferences.
         /// </summary>
         internal static string STRING_SETTING_APP_PREFS {
@@ -425,7 +452,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure advanced haptics.
+        ///   Looks up a localized string similar to Configure enhanced interaction.
         /// </summary>
         internal static string STRING_SETTING_CONFIG_ADVANCED_HAPTICS {
             get {
@@ -452,20 +479,11 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable advanced haptics.
+        ///   Looks up a localized string similar to Enable enhanced interaction.
         /// </summary>
         internal static string STRING_SETTING_ENABLE_ADVANCED_HAPTICS {
             get {
                 return ResourceManager.GetString("STRING_SETTING_ENABLE_ADVANCED_HAPTICS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Haptic Settings.
-        /// </summary>
-        internal static string STRING_SETTING_HAPTIC {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_HAPTIC", resourceCulture);
             }
         }
         
@@ -601,6 +619,16 @@ namespace WoWmapper.Properties {
         internal static System.Drawing.Bitmap USB {
             get {
                 object obj = ResourceManager.GetObject("USB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Wireless {
+            get {
+                object obj = ResourceManager.GetObject("Wireless", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

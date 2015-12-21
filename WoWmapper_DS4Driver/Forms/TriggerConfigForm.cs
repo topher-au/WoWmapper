@@ -1,8 +1,7 @@
-﻿using WoWmapper.Input;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
-namespace WoWmapper_360Driver.Forms
+namespace WoWmapper_DS4Driver.Forms
 {
     public partial class TriggerConfigForm : Form
     {

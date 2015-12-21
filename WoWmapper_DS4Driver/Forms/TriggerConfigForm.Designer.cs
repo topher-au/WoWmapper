@@ -1,4 +1,4 @@
-﻿namespace WoWmapper_360Driver.Forms
+﻿namespace WoWmapper_DS4Driver.Forms
 {
     partial class TriggerConfigForm
     {

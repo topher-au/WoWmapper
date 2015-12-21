@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WoWmapper_360Driver.Properties {
+namespace WoWmapper_DS4Driver.Properties {
     using System;
     
     
@@ -123,9 +123,9 @@ namespace WoWmapper_360Driver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DS4_Config {
+        internal static System.Drawing.Bitmap Dualshock4 {
             get {
-                object obj = ResourceManager.GetObject("DS4_Config", resourceCulture);
+                object obj = ResourceManager.GetObject("Dualshock4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Microsoft.Win32.SafeHandles;
+
 namespace DS4Windows
 {
     public class HidDevice : IDisposable
@@ -23,8 +23,10 @@ namespace DS4Windows
         private readonly HidDeviceAttributes _deviceAttributes;
 
         private readonly HidDeviceCapabilities _deviceCapabilities;
+
         // private bool _monitorDeviceEvents;
         private string serial = null;
+
         internal HidDevice(string devicePath, string description = null)
         {
             _devicePath = devicePath;
@@ -110,7 +112,6 @@ namespace DS4Windows
             return NativeMethods.HidD_GetInputReport(safeReadHandle, data, data.Length);
         }
 
-
         private static HidDeviceAttributes GetDeviceAttributes(SafeFileHandle hidHandle)
         {
             var deviceAttributes = default(NativeMethods.HIDD_ATTRIBUTES);
@@ -142,7 +143,6 @@ namespace DS4Windows
             {
                 safeReadHandle.Close();
                 Console.WriteLine("Close sh");
-
             }
             safeReadHandle = null;
         }
@@ -173,6 +173,7 @@ namespace DS4Windows
                 return ReadStatus.ReadError;
             }
         }
+
         public ReadStatus ReadFile(byte[] inputBuffer)
         {
             if (safeReadHandle == null)
@@ -205,7 +206,6 @@ namespace DS4Windows
                     fileStream = new FileStream(safeReadHandle, FileAccess.ReadWrite, inputBuffer.Length, false);
                 if (!safeReadHandle.IsInvalid && fileStream.CanRead)
                 {
-
                     Task<ReadStatus> readFileTask = new Task<ReadStatus>(() => ReadWithFileStreamTask(inputBuffer));
                     readFileTask.Start();
                     bool success = readFileTask.Wait(timeout);
@@ -227,7 +227,6 @@ namespace DS4Windows
                     else
                         return ReadStatus.WaitTimedOut;
                 }
-
             }
             catch (Exception e)
             {
@@ -241,9 +240,6 @@ namespace DS4Windows
                     return ReadStatus.ReadError;
                 }
             }
-
-
-
 
             return ReadStatus.ReadError;
         }
@@ -301,7 +297,6 @@ namespace DS4Windows
             {
                 return false;
             }
-
         }
 
         private SafeFileHandle OpenHandle(String devicePathName, Boolean isExclusive)
@@ -340,8 +335,8 @@ namespace DS4Windows
             {
                 byte[] buffer = new byte[16];
                 buffer[0] = 18;
-                readFeatureData(buffer);                
-                serial =  String.Format("{0:X02}:{1:X02}:{2:X02}:{3:X02}:{4:X02}:{5:X02}", buffer[6], buffer[5], buffer[4], buffer[3], buffer[2], buffer[1]);
+                readFeatureData(buffer);
+                serial = String.Format("{0:X02}:{1:X02}:{2:X02}:{3:X02}:{4:X02}:{5:X02}", buffer[6], buffer[5], buffer[4], buffer[3], buffer[2], buffer[1]);
                 return serial;
             }
             else

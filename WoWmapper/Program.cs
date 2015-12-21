@@ -9,7 +9,7 @@ namespace WoWmapper
     internal static class Program
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", EntryPoint = "SendMessageTimeout", CharSet = CharSet.Auto)]
         public static extern int SendMessageTimeout(
@@ -22,7 +22,7 @@ namespace WoWmapper
             out int lpdwResult);
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern uint RegisterWindowMessage(string lpString);
+        private static extern uint RegisterWindowMessage(string lpString);
 
         public static readonly uint WM_ACTIVATE_DS4 = RegisterWindowMessage("WM_ACTIVATE_DS4");
 

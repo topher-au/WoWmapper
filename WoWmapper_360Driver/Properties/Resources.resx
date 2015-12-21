@@ -118,7 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="_360_drawn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\360_drawn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BumperLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BumperLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BumperRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BumperRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CenterLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CenterLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CenterMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CenterMiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CenterRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CenterRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LFaceDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LFaceDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LFaceLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LFaceLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LFaceRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LFaceRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LFaceUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LFaceUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RFaceDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RFaceDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RFaceLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RFaceLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RFaceRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RFaceRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RFaceUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RFaceUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StickLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftStick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="StickRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightStick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="STRING_BIND_ILLEGAL" xml:space="preserve">
+    <value>{0} is not a valid keybind!</value>
+  </data>
+  <data name="STRING_BIND_SET" xml:space="preserve">
+    <value>Press new keybind for {0}</value>
+  </data>
+  <data name="TriggerLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TriggerLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TriggerRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TriggerRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Xbox360" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xbox360-controller-bg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

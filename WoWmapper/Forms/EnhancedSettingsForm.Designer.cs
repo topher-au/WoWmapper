@@ -1,6 +1,6 @@
 ﻿namespace WoWmapper
 {
-    partial class HapticSettingsForm
+    partial class EnhancedSettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.groupVibration = new System.Windows.Forms.GroupBox();
-            this.labelRumbleIntensity = new System.Windows.Forms.Label();
-            this.numTargetIntensity = new System.Windows.Forms.NumericUpDown();
-            this.numDamageIntensity = new System.Windows.Forms.NumericUpDown();
             this.checkRumbleTarget = new System.Windows.Forms.CheckBox();
             this.checkRumbleDamage = new System.Windows.Forms.CheckBox();
             this.groupLightBar = new System.Windows.Forms.GroupBox();
@@ -46,56 +43,23 @@
             this.checkColorClass = new System.Windows.Forms.CheckBox();
             this.panelColorCritical = new System.Windows.Forms.Panel();
             this.groupMiscellaneous = new System.Windows.Forms.GroupBox();
-            this.checkStickyCursor = new System.Windows.Forms.CheckBox();
+            this.checkAutoCenter = new System.Windows.Forms.CheckBox();
             this.buttonDone = new System.Windows.Forms.Button();
             this.groupVibration.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTargetIntensity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDamageIntensity)).BeginInit();
             this.groupLightBar.SuspendLayout();
             this.groupMiscellaneous.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupVibration
             // 
-            this.groupVibration.Controls.Add(this.labelRumbleIntensity);
-            this.groupVibration.Controls.Add(this.numTargetIntensity);
-            this.groupVibration.Controls.Add(this.numDamageIntensity);
             this.groupVibration.Controls.Add(this.checkRumbleTarget);
             this.groupVibration.Controls.Add(this.checkRumbleDamage);
-            this.groupVibration.Location = new System.Drawing.Point(14, 14);
+            this.groupVibration.Location = new System.Drawing.Point(8, 8);
             this.groupVibration.Name = "groupVibration";
             this.groupVibration.Size = new System.Drawing.Size(283, 81);
             this.groupVibration.TabIndex = 0;
             this.groupVibration.TabStop = false;
             this.groupVibration.Text = "vibration settings";
-            // 
-            // labelRumbleIntensity
-            // 
-            this.labelRumbleIntensity.AutoSize = true;
-            this.labelRumbleIntensity.Location = new System.Drawing.Point(219, 0);
-            this.labelRumbleIntensity.Name = "labelRumbleIntensity";
-            this.labelRumbleIntensity.Size = new System.Drawing.Size(52, 15);
-            this.labelRumbleIntensity.TabIndex = 4;
-            this.labelRumbleIntensity.Text = "intensity";
-            this.labelRumbleIntensity.Visible = false;
-            // 
-            // numTargetIntensity
-            // 
-            this.numTargetIntensity.Location = new System.Drawing.Point(222, 47);
-            this.numTargetIntensity.Name = "numTargetIntensity";
-            this.numTargetIntensity.Size = new System.Drawing.Size(50, 23);
-            this.numTargetIntensity.TabIndex = 3;
-            this.numTargetIntensity.Visible = false;
-            this.numTargetIntensity.ValueChanged += new System.EventHandler(this.numTargetIntensity_ValueChanged);
-            // 
-            // numDamageIntensity
-            // 
-            this.numDamageIntensity.Location = new System.Drawing.Point(222, 21);
-            this.numDamageIntensity.Name = "numDamageIntensity";
-            this.numDamageIntensity.Size = new System.Drawing.Size(50, 23);
-            this.numDamageIntensity.TabIndex = 2;
-            this.numDamageIntensity.Visible = false;
-            this.numDamageIntensity.ValueChanged += new System.EventHandler(this.numDamageIntensity_ValueChanged);
             // 
             // checkRumbleTarget
             // 
@@ -131,9 +95,9 @@
             this.groupLightBar.Controls.Add(this.checkColorHealth);
             this.groupLightBar.Controls.Add(this.checkColorClass);
             this.groupLightBar.Controls.Add(this.panelColorCritical);
-            this.groupLightBar.Location = new System.Drawing.Point(14, 102);
+            this.groupLightBar.Location = new System.Drawing.Point(8, 96);
             this.groupLightBar.Name = "groupLightBar";
-            this.groupLightBar.Size = new System.Drawing.Size(283, 125);
+            this.groupLightBar.Size = new System.Drawing.Size(283, 124);
             this.groupLightBar.TabIndex = 1;
             this.groupLightBar.TabStop = false;
             this.groupLightBar.Text = "lightbar settings";
@@ -141,7 +105,7 @@
             // panelColorHigh
             // 
             this.panelColorHigh.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelColorHigh.Location = new System.Drawing.Point(185, 90);
+            this.panelColorHigh.Location = new System.Drawing.Point(201, 88);
             this.panelColorHigh.Name = "panelColorHigh";
             this.panelColorHigh.Size = new System.Drawing.Size(25, 25);
             this.panelColorHigh.TabIndex = 8;
@@ -150,7 +114,7 @@
             // panelColorMedium
             // 
             this.panelColorMedium.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelColorMedium.Location = new System.Drawing.Point(136, 90);
+            this.panelColorMedium.Location = new System.Drawing.Point(153, 88);
             this.panelColorMedium.Name = "panelColorMedium";
             this.panelColorMedium.Size = new System.Drawing.Size(25, 25);
             this.panelColorMedium.TabIndex = 1;
@@ -159,7 +123,7 @@
             // panelColorLow
             // 
             this.panelColorLow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelColorLow.Location = new System.Drawing.Point(94, 90);
+            this.panelColorLow.Location = new System.Drawing.Point(105, 88);
             this.panelColorLow.Name = "panelColorLow";
             this.panelColorLow.Size = new System.Drawing.Size(25, 25);
             this.panelColorLow.TabIndex = 7;
@@ -168,7 +132,7 @@
             // labelHigh
             // 
             this.labelHigh.AutoSize = true;
-            this.labelHigh.Location = new System.Drawing.Point(184, 72);
+            this.labelHigh.Location = new System.Drawing.Point(198, 72);
             this.labelHigh.Name = "labelHigh";
             this.labelHigh.Size = new System.Drawing.Size(31, 15);
             this.labelHigh.TabIndex = 6;
@@ -177,7 +141,7 @@
             // labelMedium
             // 
             this.labelMedium.AutoSize = true;
-            this.labelMedium.Location = new System.Drawing.Point(127, 72);
+            this.labelMedium.Location = new System.Drawing.Point(137, 72);
             this.labelMedium.Name = "labelMedium";
             this.labelMedium.Size = new System.Drawing.Size(52, 15);
             this.labelMedium.TabIndex = 5;
@@ -186,7 +150,7 @@
             // labelLow
             // 
             this.labelLow.AutoSize = true;
-            this.labelLow.Location = new System.Drawing.Point(93, 72);
+            this.labelLow.Location = new System.Drawing.Point(105, 72);
             this.labelLow.Name = "labelLow";
             this.labelLow.Size = new System.Drawing.Size(26, 15);
             this.labelLow.TabIndex = 4;
@@ -195,7 +159,7 @@
             // labelCritical
             // 
             this.labelCritical.AutoSize = true;
-            this.labelCritical.Location = new System.Drawing.Point(43, 72);
+            this.labelCritical.Location = new System.Drawing.Point(49, 72);
             this.labelCritical.Name = "labelCritical";
             this.labelCritical.Size = new System.Drawing.Size(42, 15);
             this.labelCritical.TabIndex = 3;
@@ -226,7 +190,7 @@
             // panelColorCritical
             // 
             this.panelColorCritical.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelColorCritical.Location = new System.Drawing.Point(51, 90);
+            this.panelColorCritical.Location = new System.Drawing.Point(57, 88);
             this.panelColorCritical.Name = "panelColorCritical";
             this.panelColorCritical.Size = new System.Drawing.Size(25, 25);
             this.panelColorCritical.TabIndex = 0;
@@ -234,28 +198,28 @@
             // 
             // groupMiscellaneous
             // 
-            this.groupMiscellaneous.Controls.Add(this.checkStickyCursor);
-            this.groupMiscellaneous.Location = new System.Drawing.Point(14, 233);
+            this.groupMiscellaneous.Controls.Add(this.checkAutoCenter);
+            this.groupMiscellaneous.Location = new System.Drawing.Point(8, 226);
             this.groupMiscellaneous.Name = "groupMiscellaneous";
-            this.groupMiscellaneous.Size = new System.Drawing.Size(283, 48);
+            this.groupMiscellaneous.Size = new System.Drawing.Size(283, 44);
             this.groupMiscellaneous.TabIndex = 2;
             this.groupMiscellaneous.TabStop = false;
             this.groupMiscellaneous.Text = "miscellaneous";
             // 
-            // checkStickyCursor
+            // checkAutoCenter
             // 
-            this.checkStickyCursor.AutoSize = true;
-            this.checkStickyCursor.Location = new System.Drawing.Point(7, 22);
-            this.checkStickyCursor.Name = "checkStickyCursor";
-            this.checkStickyCursor.Size = new System.Drawing.Size(130, 19);
-            this.checkStickyCursor.TabIndex = 0;
-            this.checkStickyCursor.Text = "enable sticky cursor";
-            this.checkStickyCursor.UseVisualStyleBackColor = true;
-            this.checkStickyCursor.CheckedChanged += new System.EventHandler(this.checkStickyCursor_CheckedChanged);
+            this.checkAutoCenter.AutoSize = true;
+            this.checkAutoCenter.Location = new System.Drawing.Point(7, 22);
+            this.checkAutoCenter.Name = "checkAutoCenter";
+            this.checkAutoCenter.Size = new System.Drawing.Size(213, 19);
+            this.checkAutoCenter.TabIndex = 1;
+            this.checkAutoCenter.Text = "auto-center cursor after mouselook";
+            this.checkAutoCenter.UseVisualStyleBackColor = true;
+            this.checkAutoCenter.CheckedChanged += new System.EventHandler(this.checkAutoCenter_CheckedChanged);
             // 
             // buttonDone
             // 
-            this.buttonDone.Location = new System.Drawing.Point(210, 288);
+            this.buttonDone.Location = new System.Drawing.Point(204, 276);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new System.Drawing.Size(87, 27);
             this.buttonDone.TabIndex = 3;
@@ -263,12 +227,12 @@
             this.buttonDone.UseVisualStyleBackColor = true;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);
             // 
-            // HapticSettingsForm
+            // EnhancedSettingsForm
             // 
             this.AcceptButton = this.buttonDone;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 327);
+            this.ClientSize = new System.Drawing.Size(299, 311);
             this.Controls.Add(this.buttonDone);
             this.Controls.Add(this.groupMiscellaneous);
             this.Controls.Add(this.groupLightBar);
@@ -277,14 +241,12 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "HapticSettingsForm";
+            this.Name = "EnhancedSettingsForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Advanced Haptics";
+            this.Text = "Enhanced Interaction Settings";
             this.groupVibration.ResumeLayout(false);
             this.groupVibration.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numTargetIntensity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numDamageIntensity)).EndInit();
             this.groupLightBar.ResumeLayout(false);
             this.groupLightBar.PerformLayout();
             this.groupMiscellaneous.ResumeLayout(false);
@@ -296,9 +258,6 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupVibration;
-        private System.Windows.Forms.Label labelRumbleIntensity;
-        private System.Windows.Forms.NumericUpDown numTargetIntensity;
-        private System.Windows.Forms.NumericUpDown numDamageIntensity;
         private System.Windows.Forms.CheckBox checkRumbleTarget;
         private System.Windows.Forms.CheckBox checkRumbleDamage;
         private System.Windows.Forms.GroupBox groupLightBar;
@@ -313,7 +272,7 @@
         private System.Windows.Forms.CheckBox checkColorClass;
         private System.Windows.Forms.Panel panelColorCritical;
         private System.Windows.Forms.GroupBox groupMiscellaneous;
-        private System.Windows.Forms.CheckBox checkStickyCursor;
         private System.Windows.Forms.Button buttonDone;
+        private System.Windows.Forms.CheckBox checkAutoCenter;
     }
 }

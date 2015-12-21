@@ -1,10 +1,8 @@
-﻿using WoWmapper.Input;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using System.Reflection;
 
 namespace WoWmapper.Input
 {
@@ -24,15 +22,12 @@ namespace WoWmapper.Input
 
         public SettingsFile()
         {
-
         }
 
         public SettingsFile(string FileName)
         {
             fileName = FileName;
         }
-
-
 
         /// <summary>
         /// Write the plugin settings to file
@@ -155,17 +150,25 @@ namespace WoWmapper.Input
         public bool Read<T>(string SettingName, out T Value)
         {
             var setting = Settings.FirstOrDefault(set => set.Name == SettingName);
-            if(!setting.Equals(default(Setting)))
+            if (!setting.Equals(default(Setting)))
             {
-                Value = (T)setting.Value;
-                return true;
+                try
+                {
+                    Value = (T)setting.Value;
+                    return true;
+                }
+                catch
+                {
+                    Value = default(T);
+                    return false;
+                }
             }
             Value = default(T);
             return false;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="SettingName"></param>
@@ -182,9 +185,10 @@ namespace WoWmapper.Input
                     Name = SettingName,
                     Value = Value
                 };
-                
+
                 return true;
-            } else
+            }
+            else
             {
                 Settings.Add(new Setting()
                 {
@@ -195,13 +199,13 @@ namespace WoWmapper.Input
 
             return false;
         }
-
     }
 
     public struct Setting
     {
         [XmlAttribute("Name")]
         public string Name { get; set; }
+
         [XmlElement("Value")]
         public object Value { get; set; }
     }

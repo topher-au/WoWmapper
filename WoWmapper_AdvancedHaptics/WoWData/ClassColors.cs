@@ -1,5 +1,4 @@
-﻿using WoWmapper.WoWData;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace WoWmapper.WoWData
 {

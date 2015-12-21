@@ -3,7 +3,7 @@ using DS4Wrapper;
 using System;
 using System.Reflection;
 using WoWmapper.Input;
-using WoWmapper_360Driver.Forms;
+using WoWmapper_DS4Driver.Forms;
 
 namespace DS4Driver
 {
@@ -17,57 +17,18 @@ namespace DS4Driver
         public WoWmapper_DS4Plugin()
         {
             InitializeSettings();
-
-
         }
 
         public WoWmapper_DS4Plugin(bool LoadPlugin)
         {
             InitializeSettings();
-            if(LoadPlugin)
+            if (LoadPlugin)
             {
                 Controller = new DS4();
-                Controller.ControllerConnected += Controller_ControllerConnected;
-                Controller.ControllerDisconnected += Controller_ControllerDisconnected;
                 Controller.ButtonDown += Controller_ButtonDown;
                 Controller.ButtonUp += Controller_ButtonUp;
                 Controller.TouchpadMoved += Controller_TouchpadMoved;
             }
-        }
-
-        public void InitializeSettings()
-        {
-            settings.Load();
-            int rDead, rCurve, rSpeed, touchMode, tLeft, tRight;
-
-            // setup defaults
-            if (!settings.Settings.Read("RightDead", out rDead))
-            {
-                settings.Settings.Write("RightDead", 15);
-            }
-            if (!settings.Settings.Read("TriggerLeft", out tLeft))
-            {
-                settings.Settings.Write("TriggerLeft", 15);
-            }
-            if (!settings.Settings.Read("TriggerRight", out tRight))
-            {
-                settings.Settings.Write("TriggerRight", 15);
-            }
-            if (!settings.Settings.Read("RightCurve", out rCurve))
-            {
-                settings.Settings.Write("RightCurve", 5);
-            }
-            if (!settings.Settings.Read("RightSpeed", out rSpeed))
-            {
-                settings.Settings.Write("RightSpeed", 2);
-            }
-            if (!settings.Settings.Read("TouchMode", out touchMode))
-            {
-                settings.Settings.Write("TouchMode", 0);
-            }
-
-            settings.Version = "0.1.0";
-            settings.Save();
         }
 
         public event ButtonDown OnButtonDown;
@@ -124,7 +85,7 @@ namespace DS4Driver
                     switch (DS4Connection)
                     {
                         case DS4Windows.ConnectionType.BT:
-                            return InputConnectionType.Wireless;
+                            return InputConnectionType.Bluetooth;
 
                         case DS4Windows.ConnectionType.USB:
                             return InputConnectionType.Wired;
@@ -138,7 +99,7 @@ namespace DS4Driver
         {
             get
             {
-                return "DualShock4";
+                return "DualShock 4";
             }
         }
 
@@ -162,7 +123,7 @@ namespace DS4Driver
         {
             get
             {
-                return "WoWmapper DualShock4 Plugin";
+                return "DualShock 4";
             }
         }
 
@@ -177,6 +138,51 @@ namespace DS4Driver
                     Gyro = true,
                     LED = true
                 };
+            }
+        }
+
+        public float RightCurve
+        {
+            get
+            {
+                float RightCurve;
+                settings.Settings.Read<float>("RightCurve", out RightCurve);
+                return RightCurve;
+            }
+
+            set
+            {
+                settings.Settings.Write<float>("RightCurve", value);
+            }
+        }
+
+        public float RightDead
+        {
+            get
+            {
+                float RightDead;
+                settings.Settings.Read<float>("RightDead", out RightDead);
+                return RightDead;
+            }
+
+            set
+            {
+                settings.Settings.Write<float>("RightDead", value);
+            }
+        }
+
+        public float RightSpeed
+        {
+            get
+            {
+                float RightSpeed;
+                settings.Settings.Read<float>("RightSpeed", out RightSpeed);
+                return RightSpeed;
+            }
+
+            set
+            {
+                settings.Settings.Write<float>("RightSpeed", value);
             }
         }
 
@@ -203,6 +209,21 @@ namespace DS4Driver
             set
             {
                 Threshold = value;
+            }
+        }
+
+        public int touchMode
+        {
+            get
+            {
+                int TouchMode;
+                settings.Settings.Read("TouchMode", out TouchMode);
+                return TouchMode;
+            }
+
+            set
+            {
+                settings.Settings.Write("TouchMode", value);
             }
         }
 
@@ -370,6 +391,46 @@ namespace DS4Driver
             return null;
         }
 
+        public void InitializeSettings()
+        {
+            settings.Load();
+            float rDead, rCurve, rSpeed;
+            int tLeft, tRight, touchMode;
+
+            // setup defaults
+            if (!settings.Settings.Read("RightDead", out rDead))
+            {
+                settings.Settings.Write("RightDead", 15f);
+            }
+            if (!settings.Settings.Read("TriggerLeft", out tLeft))
+            {
+                settings.Settings.Write("TriggerLeft", 40);
+            }
+            if (!settings.Settings.Read("TriggerRight", out tRight))
+            {
+                settings.Settings.Write("TriggerRight", 40);
+            }
+            if (!settings.Settings.Read("RightCurve", out rCurve))
+            {
+                settings.Settings.Write("RightCurve", 5f);
+            }
+            if (!settings.Settings.Read("RightSpeed", out rSpeed))
+            {
+                settings.Settings.Write("RightSpeed", 5f);
+            }
+            if (!settings.Settings.Read("TouchMode", out touchMode))
+            {
+                settings.Settings.Write("TouchMode", 0);
+            }
+
+            settings.Version = "0.1.0";
+            settings.Save();
+        }
+        public void Kill()
+        {
+            if (Controller != null) Controller.Dispose();
+        }
+
         public void SendRumble(InputRumbleMotor Motor, byte Strength, int Duration)
         {
             if (Connected)
@@ -377,7 +438,7 @@ namespace DS4Driver
                 switch (Motor)
                 {
                     case InputRumbleMotor.Left:
-                        Controller.Rumble(0,(byte)Strength, Duration);
+                        Controller.Rumble(0, (byte)Strength, Duration);
                         break;
 
                     case InputRumbleMotor.Right:
@@ -627,12 +688,12 @@ namespace DS4Driver
 
         private void Controller_ControllerConnected()
         {
-            OnControllerDisconnected();
+            OnControllerConnected();
         }
 
         private void Controller_ControllerDisconnected()
         {
-            OnControllerConnected();
+            OnControllerDisconnected();
         }
 
         private void Controller_TouchpadMoved(TouchpadEventArgs e)
@@ -656,12 +717,6 @@ namespace DS4Driver
                 touches = inputTouch
             });
         }
-
-        public void Kill()
-        {
-            if(Controller != null) Controller.Dispose();
-        }
-
         // To detect redundant calls
     }
 }

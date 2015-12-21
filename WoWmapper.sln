@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper", "WoWmapper\WoWm
 		{C9DC9CB2-3352-41FF-8084-9ADE0EE4ABFA} = {C9DC9CB2-3352-41FF-8084-9ADE0EE4ABFA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_AdvancedHaptics", "WoWmapper_AdvancedHaptics\WoWmapper_AdvancedHaptics.csproj", "{14FCCDD6-7741-4D4A-BF33-4A9C04917F76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_EnhancedInteraction", "WoWmapper_AdvancedHaptics\WoWmapper_EnhancedInteraction.csproj", "{14FCCDD6-7741-4D4A-BF33-4A9C04917F76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_Updater", "WoWmapper_Updater\WoWmapper_Updater.csproj", "{C9DC9CB2-3352-41FF-8084-9ADE0EE4ABFA}"
 EndProject
