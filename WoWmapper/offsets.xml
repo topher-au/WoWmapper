@@ -13,6 +13,7 @@
         <Offset Name="Level" Address="344" />
         <Offset Name="CurrentHP" Address="240" />
         <Offset Name="MaxHP" Address="268" />
+        <Offset Name="MouseLook" Address="23441240" />
       </Offsets>
     </GameOffset>
     <GameOffset GameBuild="20779" GameArchitecture="64">
@@ -27,6 +28,7 @@
         <Offset Name="Level" Address="344" />
         <Offset Name="CurrentHP" Address="240" />
         <Offset Name="MaxHP" Address="268" />
+        <Offset Name="MouseLook" Address="23441240" />
       </Offsets>
     </GameOffset>
   </GameOffsets>

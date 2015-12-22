@@ -147,15 +147,15 @@ namespace WoWmapper.WoWData
             {
                 int bytesRead = 0;
                 byte[] ptrMouseLook = new byte[IntPtr.Size];
-                byte[] isMouseLooking = new byte[8];
+                byte[] isMouseLooking = new byte[1];
 
                 // Read the location of the mouse info from memory
-                ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + 0x165AF58, ptrMouseLook, ptrMouseLook.Length, ref bytesRead);
+                ReadProcessMemory(wowHandle, WoWProcess.MainModule.BaseAddress + offsets.ReadOffset("MouseLook"), ptrMouseLook, ptrMouseLook.Length, ref bytesRead);
 
                 // Read the byte that represents mouselook
-                ReadProcessMemory(wowHandle, (IntPtr)BitConverter.ToInt64(ptrMouseLook, 0), isMouseLooking, isMouseLooking.Length, ref bytesRead);
+                ReadProcessMemory(wowHandle, (IntPtr)BitConverter.ToInt64(ptrMouseLook, 0) + 4, isMouseLooking, isMouseLooking.Length, ref bytesRead);
 
-                if (((int)isMouseLooking[4] & 1) == 1) return true;
+                if (((int)isMouseLooking[0] & 1) == 1) return true;
                 return false;
             }
         }

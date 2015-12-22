@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdvancedHaptics.cs" />
+    <Compile Include="EnhancedInteraction.cs" />
     <Compile Include="WoWData\ClassColors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WoWData\Offsets.cs" />

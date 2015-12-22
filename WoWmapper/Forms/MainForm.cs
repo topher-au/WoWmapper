@@ -112,7 +112,7 @@ namespace WoWmapper
             if (true)
             {
                 // check website version
-                var dsVer = await Github.GetLatestRelease("topher-au", "DS4ConsolePort");
+                var dsVer = await Github.GetLatestRelease("topher-au", "WoWmapper");
 
                 if (dsVer != null)
                 {
@@ -192,7 +192,7 @@ namespace WoWmapper
         {
             if (Functions.CheckIsWowRunning())
             {
-                MessageBox.Show(Properties.Resources.STRING_MESSAGE_CLOSE_WOW, "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Resources.STRING_MESSAGE_CLOSE_WOW, "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             var cpVer = Github.GetLatestRelease2("seblindfors", "ConsolePort");
@@ -229,7 +229,14 @@ namespace WoWmapper
 
             var outFile = dlf.OutputFile;
             FastZip fz = new FastZip();
-            fz.ExtractZip(outFile, ".", "WoWmapper_Updater.exe");
+            try
+            {
+                fz.ExtractZip(outFile, ".", "WoWmapper_Updater.exe");
+            } catch
+            {
+                MessageBox.Show("Error extracting WoWmapper updater");
+            }
+            
             Process updater = new Process();
             updater.StartInfo.FileName = "WoWmapper_Updater.exe";
             updater.StartInfo.Arguments = string.Format("-update \"{0}\"", outFile);
@@ -246,7 +253,7 @@ namespace WoWmapper
             }
             else
             {
-                MessageBox.Show(Properties.Resources.STRING_MESSAGE_NO_PLUGIN_SELECTED, Properties.Resources.STRING_APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.STRING_MESSAGE_NO_PLUGIN_SELECTED, Properties.Resources.STRING_APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -427,15 +434,15 @@ namespace WoWmapper
                     switch (inputDevice.ConnectionType)
                     {
                         case InputConnectionType.Wireless:
-                            picConnectionType.Image = Properties.Resources.Wireless;
+                            picConnectionType.Image = Resources.Wireless;
                             break;
 
                         case InputConnectionType.Bluetooth:
-                            picConnectionType.Image = Properties.Resources.Bluetooth;
+                            picConnectionType.Image = Resources.Bluetooth;
                             break;
 
                         case InputConnectionType.Wired:
-                            picConnectionType.Image = Properties.Resources.USB;
+                            picConnectionType.Image = Resources.USB;
                             break;
                     }
                     labelConnectionStatus.Text = string.Format(Resources.STRING_CONTROLLER_CONNECTED, battery);
