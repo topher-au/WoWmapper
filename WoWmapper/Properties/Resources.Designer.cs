@@ -152,6 +152,25 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to WoWmapper requires the SlimDX 4.0 redistributable to be installed, but it does not appear to be on your system.
+        ///Would you like to visit the SlimDX download page now?.
+        /// </summary>
+        internal static string STRING_DEP_SLIMDX_ERROR {
+            get {
+                return ResourceManager.GetString("STRING_DEP_SLIMDX_ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://slimdx.org/download.php.
+        /// </summary>
+        internal static string STRING_DEP_SLIMDX_URL {
+            get {
+                return ResourceManager.GetString("STRING_DEP_SLIMDX_URL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find WoW.
         /// </summary>
         internal static string STRING_FIND_WOW {

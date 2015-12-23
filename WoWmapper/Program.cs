@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -29,6 +30,16 @@ namespace WoWmapper
         [STAThread]
         private static void Main()
         {
+            // Check for assembly dependencies
+            // SlimDX (any version)
+            if(!Functions.CheckSlimDX())
+            {
+                var openDXpage = MessageBox.Show(Properties.Resources.STRING_DEP_SLIMDX_ERROR, "WoWmapper", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (openDXpage == DialogResult.Yes) Process.Start(Properties.Resources.STRING_DEP_SLIMDX_URL);
+                return;
+            }
+
+            // Check for an existing instance of the application, focus it instead
             bool createdNew = false;
 
             using (Mutex ds4Mutex = new Mutex(true, "{7522ee2c-3977-4ffa-b6aa-4990d4d0bf5f}", out createdNew))

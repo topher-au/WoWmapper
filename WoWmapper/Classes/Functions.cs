@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.GACManagedAccess;
 
 namespace WoWmapper
 {
@@ -77,6 +79,20 @@ namespace WoWmapper
             }
 
             return wowPath;
+        }
+
+        public static bool CheckSlimDX()
+        {
+            try
+            {
+                // SlimDX is installed
+                var dxInfo = AssemblyCache.QueryAssemblyInfo("SlimDX");
+                return true;
+            } catch
+            {
+                // Error reading assembly info
+            }
+            return false;
         }
 
         public static bool CheckForWowExe(string Folder)
