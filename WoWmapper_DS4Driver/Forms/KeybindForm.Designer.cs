@@ -82,9 +82,9 @@
             // labelTouchUpper
             // 
             this.labelTouchUpper.ForeColor = System.Drawing.Color.Yellow;
-            this.labelTouchUpper.Location = new System.Drawing.Point(335, 25);
+            this.labelTouchUpper.Location = new System.Drawing.Point(337, 25);
             this.labelTouchUpper.Name = "labelTouchUpper";
-            this.labelTouchUpper.Size = new System.Drawing.Size(132, 64);
+            this.labelTouchUpper.Size = new System.Drawing.Size(130, 60);
             this.labelTouchUpper.TabIndex = 70;
             this.labelTouchUpper.Text = "Press the upper touchpad to toggle mouse control";
             this.labelTouchUpper.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -92,9 +92,9 @@
             // labelTouchMode
             // 
             this.labelTouchMode.ForeColor = System.Drawing.Color.White;
-            this.labelTouchMode.Location = new System.Drawing.Point(332, 89);
+            this.labelTouchMode.Location = new System.Drawing.Point(314, 89);
             this.labelTouchMode.Name = "labelTouchMode";
-            this.labelTouchMode.Size = new System.Drawing.Size(145, 17);
+            this.labelTouchMode.Size = new System.Drawing.Size(175, 21);
             this.labelTouchMode.TabIndex = 69;
             this.labelTouchMode.Text = "Touchpad Mode";
             this.labelTouchMode.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -148,14 +148,14 @@
             // 
             // labelBindHow
             // 
-            this.labelBindHow.AutoSize = true;
             this.labelBindHow.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBindHow.ForeColor = System.Drawing.Color.White;
-            this.labelBindHow.Location = new System.Drawing.Point(283, 4);
+            this.labelBindHow.Location = new System.Drawing.Point(182, 1);
             this.labelBindHow.Name = "labelBindHow";
-            this.labelBindHow.Size = new System.Drawing.Size(249, 21);
+            this.labelBindHow.Size = new System.Drawing.Size(433, 21);
             this.labelBindHow.TabIndex = 65;
             this.labelBindHow.Text = "Double click binding to change";
+            this.labelBindHow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textOptions
             // 
@@ -501,7 +501,7 @@
             // 
             // picConfigL2
             // 
-            this.picConfigL2.Location = new System.Drawing.Point(67, 52);
+            this.picConfigL2.Location = new System.Drawing.Point(67, 57);
             this.picConfigL2.Name = "picConfigL2";
             this.picConfigL2.Size = new System.Drawing.Size(28, 28);
             this.picConfigL2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -528,7 +528,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(55)))), ((int)(((byte)(145)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(130)))), ((int)(((byte)(145)))));
             this.BackgroundImage = global::WoWmapper_DS4Driver.Properties.Resources.Dualshock4;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(799, 507);
