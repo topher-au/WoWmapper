@@ -274,6 +274,14 @@ namespace input_360
             }
         }
 
+        public int TouchMode
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
         public int GetAxis(InputAxis Axis)
         {
             if (controller != null && controller.IsConnected)
@@ -417,9 +425,10 @@ namespace input_360
                 {
                     // pull controller state using secret_get_gamepad -- needed for Guide button
                     var stat = secret_get_gamepad(activeControllerNumber, out controllerState);
-                    var buttons = controllerState.wButtons;
-                    if (GetFlag(buttons, (short)GamepadButtonFlags.A))
+                    var guideButton = controllerState.wButtons & 0x4000;
+                    var state = controller.GetState();
 
+                    var buttons = controllerState.wButtons;
                         // check for and raise button press events
                         if (GetFlag(buttons, (short)GamepadButtonFlags.A) && !buttonStates[(int)XboxButtons.A])
                             DoButtonDown(InputButton.RFaceDown, XboxButtons.A);
@@ -606,14 +615,15 @@ namespace input_360
 
         public struct XINPUT_GAMEPAD_SECRET
         {
+            public UInt32 eventCount;
+            public ushort wButtons;
             public Byte bLeftTrigger;
             public Byte bRightTrigger;
-            public UInt32 eventCount;
             public short sThumbLX;
             public short sThumbLY;
             public short sThumbRX;
             public short sThumbRY;
-            public ushort wButtons;
+
         }
         #region Unsupported Functions
 

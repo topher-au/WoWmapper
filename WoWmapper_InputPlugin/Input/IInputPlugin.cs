@@ -21,6 +21,8 @@ namespace WoWmapper.Input
 
         bool Connected { get; }
 
+        int TouchMode { get; }
+
         InputConnectionType ConnectionType { get; }
 
         string ControllerName { get; }

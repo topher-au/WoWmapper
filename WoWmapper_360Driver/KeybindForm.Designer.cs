@@ -98,14 +98,14 @@
             // 
             // labelBindHow
             // 
-            this.labelBindHow.AutoSize = true;
             this.labelBindHow.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelBindHow.ForeColor = System.Drawing.Color.White;
-            this.labelBindHow.Location = new System.Drawing.Point(256, 5);
+            this.labelBindHow.Location = new System.Drawing.Point(171, 5);
             this.labelBindHow.Name = "labelBindHow";
-            this.labelBindHow.Size = new System.Drawing.Size(249, 21);
+            this.labelBindHow.Size = new System.Drawing.Size(421, 21);
             this.labelBindHow.TabIndex = 65;
             this.labelBindHow.Text = "Double click binding to change";
+            this.labelBindHow.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // textOptions
             // 

@@ -10,7 +10,7 @@ namespace DS4CP_Updater
     {
         private static List<string> bannedFiles = new List<string>()
         {
-            "ds4cp_updater.exe",
+            "wowmapper_updater.exe",
             "icsharpcode.sharpziplib.dll"
         };
 

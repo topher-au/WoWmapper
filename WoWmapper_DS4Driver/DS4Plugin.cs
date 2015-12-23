@@ -243,6 +243,19 @@ namespace DS4Driver
             }
         }
 
+        public int TouchMode
+        {
+            get
+            {
+                int touchMode = 0;
+                if( Settings.Settings.Read<int>("TouchMode", out touchMode))
+                {
+                    return touchMode;
+                }
+                return 0;
+            }
+        }
+
         public void Dispose()
         {
             Dispose(true);
