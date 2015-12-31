@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -35,15 +36,12 @@ namespace WoWmapper
 
             inputDllFiles = null;
 
-            if (Directory.Exists(path))
-            {
-                // Get all input assemblies in folder
-                inputDllFiles = Directory.GetFiles(path, "input_*.dll");
-            }
-            else
-            {
-                return;
-            }
+            if (!Directory.Exists(path)) return;
+
+            inputDllFiles = Directory.GetFiles(path, "input_*.dll");
+            
+            if (inputDllFiles == null) return;
+            if (inputDllFiles.Length == 0) return;
 
             // Load all asemblies in folder
             ICollection<Assembly> assemblies = new List<Assembly>(inputDllFiles.Length);
@@ -98,9 +96,15 @@ namespace WoWmapper
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
+            if (listInputPlugins.SelectedItems.Count != 1) return;
             Properties.Settings.Default.InputPlugin = Path.GetFileName(inputDllFiles[listInputPlugins.SelectedIndex]);
             Properties.Settings.Default.Save();
             DialogResult = DialogResult.OK;
+        }
+
+        private void buttonOpenPlugins_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer", $"{Application.StartupPath}\\plugins");
         }
     }
 }

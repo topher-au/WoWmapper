@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -30,6 +31,7 @@ namespace WoWmapper
         [STAThread]
         private static void Main()
         {
+            if (!Directory.Exists($"{Application.StartupPath}\\plugins")) Directory.CreateDirectory($"{Application.StartupPath}\\plugins");
             // Check for assembly dependencies
             // SlimDX (any version)
             if(!Functions.CheckSlimDX())

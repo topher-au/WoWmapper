@@ -31,6 +31,8 @@
             this.listInputPlugins = new System.Windows.Forms.ListBox();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.labelSelectPlugin = new System.Windows.Forms.Label();
+            this.buttonOpenPlugins = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listInputPlugins
@@ -39,14 +41,14 @@
             this.listInputPlugins.ItemHeight = 15;
             this.listInputPlugins.Location = new System.Drawing.Point(12, 27);
             this.listInputPlugins.Name = "listInputPlugins";
-            this.listInputPlugins.Size = new System.Drawing.Size(167, 64);
+            this.listInputPlugins.Size = new System.Drawing.Size(191, 64);
             this.listInputPlugins.TabIndex = 0;
             // 
             // buttonLoad
             // 
             this.buttonLoad.Location = new System.Drawing.Point(12, 97);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(167, 31);
+            this.buttonLoad.Size = new System.Drawing.Size(191, 31);
             this.buttonLoad.TabIndex = 1;
             this.buttonLoad.Text = "load plugin";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -61,11 +63,33 @@
             this.labelSelectPlugin.TabIndex = 2;
             this.labelSelectPlugin.Text = "select plugin";
             // 
+            // buttonOpenPlugins
+            // 
+            this.buttonOpenPlugins.Location = new System.Drawing.Point(12, 190);
+            this.buttonOpenPlugins.Name = "buttonOpenPlugins";
+            this.buttonOpenPlugins.Size = new System.Drawing.Size(191, 24);
+            this.buttonOpenPlugins.TabIndex = 3;
+            this.buttonOpenPlugins.Text = "Open Plugins Folder";
+            this.buttonOpenPlugins.UseVisualStyleBackColor = true;
+            this.buttonOpenPlugins.Click += new System.EventHandler(this.buttonOpenPlugins_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 142);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(193, 45);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "If no plugins are visible you may\r\nneed to right click the input DLLs\r\nand select" +
+    " Properties, then Unblock";
+            // 
             // PluginSelectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(190, 143);
+            this.ClientSize = new System.Drawing.Size(215, 224);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.buttonOpenPlugins);
             this.Controls.Add(this.labelSelectPlugin);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.listInputPlugins);
@@ -85,5 +109,7 @@
         private System.Windows.Forms.ListBox listInputPlugins;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Label labelSelectPlugin;
+        private System.Windows.Forms.Button buttonOpenPlugins;
+        private System.Windows.Forms.Label label1;
     }
 }

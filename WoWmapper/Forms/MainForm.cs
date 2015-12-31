@@ -271,7 +271,7 @@ namespace WoWmapper
             notifyIcon.Visible = false;
             if (wowMapper != null) wowMapper.Dispose();
 
-            inputDevice.Kill();
+            if(inputDevice != null) inputDevice.Kill();
             if (hapticModule != null) hapticModule.Dispose();
 
             Application.Exit();
@@ -292,6 +292,11 @@ namespace WoWmapper
 
             Type pluginType = typeof(IInputPlugin);
             string pluginPath = Path.Combine("plugins", DllFile);
+            if(!File.Exists(pluginPath))
+            {
+                MessageBox.Show("Error loading input plugin: file not found", "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             var pluginName = AssemblyName.GetAssemblyName(pluginPath);
             Assembly pluginAssembly;
             pluginAssembly = Assembly.Load(pluginName);
