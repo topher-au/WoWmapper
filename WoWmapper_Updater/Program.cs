@@ -36,7 +36,16 @@ namespace DS4CP_Updater
                 {
                     if (bannedFiles.Contains(ze.Name.ToLower())) continue;
                     var outDir = Path.GetDirectoryName(ze.Name);
-                    if (!Directory.Exists(outDir) && outDir != string.Empty) Directory.CreateDirectory(outDir);
+                    if (!Directory.Exists(outDir) && outDir != string.Empty)
+                        try
+                        {
+                            Directory.CreateDirectory(outDir);
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                    if (Path.GetFileName(ze.Name) == string.Empty) continue;
                     using (FileStream of = new FileStream(ze.Name, FileMode.Create))
                     {
                         zf.GetInputStream(ze).CopyTo(of);
