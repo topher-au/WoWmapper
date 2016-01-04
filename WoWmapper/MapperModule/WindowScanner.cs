@@ -67,13 +67,23 @@ namespace WoWmapper.MapperModule
 
         private bool FindWoWProcess(out Process WoWProcess)
         {
-            var processList = Process.GetProcessesByName(GetWoWImageName());
-            if (processList.Length > 0)
+            var processList32 = Process.GetProcessesByName("WoW");
+            var processList64 = Process.GetProcessesByName("WoW-64");
+
+            if (processList32.Length > 0)
             {
                 // find first non-exited wow process
-                WoWProcess = processList.First(process => process.HasExited == false);
+                WoWProcess = processList32.First(process => process.HasExited == false);
                 return true;
             }
+
+            if (processList64.Length > 0)
+            {
+                // find first non-exited wow process
+                WoWProcess = processList64.First(process => process.HasExited == false);
+                return true;
+            }
+
             WoWProcess = null;
             return false;
         }

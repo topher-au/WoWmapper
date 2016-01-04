@@ -34,18 +34,18 @@ namespace WoWmapper
             // Load resources
             Icon = Properties.Resources.WoWConsolePort;
 
-            groupStatus.Text = Properties.Resources.STRING_STATUS;
-            labelConnectionStatus.Text = Properties.Resources.STRING_CONTROLLER_DISCONNECTED;
-            checkWindowAttached.Text = Properties.Resources.STRING_WOW_WINDOW_FOUND;
+            groupStatus.Text = Resources.STRING_STATUS;
+            labelConnectionStatus.Text = Resources.STRING_CONTROLLER_DISCONNECTED;
+            checkWindowAttached.Text = Resources.STRING_WOW_WINDOW_FOUND;
 
-            groupAdvancedHaptics.Text = Properties.Resources.STRING_HAPTIC_STATUS;
-            checkHapticsAttached.Text = Properties.Resources.STRING_HAPTIC_ATTACHED;
-            checkHapticsUserLoggedIn.Text = Properties.Resources.STRING_HAPTIC_CHARLOGGEDIN;
+            groupAdvancedHaptics.Text = Resources.STRING_HAPTIC_STATUS;
+            checkHapticsAttached.Text = Resources.STRING_HAPTIC_ATTACHED;
+            checkHapticsUserLoggedIn.Text = Resources.STRING_HAPTIC_CHARLOGGEDIN;
             labelPlayerInfo.Text = string.Empty;
 
-            buttonConfig.Text = Properties.Resources.STRING_SHOW_CONFIG;
-            buttonKeybinds.Text = Properties.Resources.STRING_SHOW_KEYBINDS;
-            buttonSelectPlugin.Text = Properties.Resources.STRING_SHOW_PLUGINS;
+            buttonConfig.Text = Resources.STRING_SHOW_CONFIG;
+            buttonKeybinds.Text = Resources.STRING_SHOW_KEYBINDS;
+            buttonSelectPlugin.Text = Resources.STRING_SHOW_PLUGINS;
 
             // Set up tray icon
             notifyIcon.Icon = Icon;
@@ -57,7 +57,7 @@ namespace WoWmapper
             // Check for a valid wow directory
             if (!Functions.CheckWoWPath()) // check for valid install path
             {
-                var findWoWNow = MessageBox.Show(Properties.Resources.STRING_MESSAGE_NO_WOW_PATH, "WoWmapper", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var findWoWNow = MessageBox.Show(Resources.STRING_MESSAGE_NO_WOW_PATH, "WoWmapper", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (findWoWNow == DialogResult.Yes)
                 {
                     FolderSelectDialog fbd = new FolderSelectDialog();
@@ -158,7 +158,7 @@ namespace WoWmapper
                     {
                         if (addonVersion == null) // addon not installed
                         {
-                            buttonCPUpdateNow.Text = Properties.Resources.STRING_INSTALL_BUTTON;
+                            buttonCPUpdateNow.Text = Resources.STRING_INSTALL_BUTTON;
                             buttonCPUpdateNow.Visible = true;
                         }
                         else if (addonVersion < v) // addon out of date
@@ -201,7 +201,7 @@ namespace WoWmapper
 
             var outFile = dlf.OutputFile;
             Functions.InstallAddOn(outFile);
-            MessageBox.Show(string.Format(Properties.Resources.STRING_MESSAGE_CP_UPDATE_SUCCESS, cpVer.tag_name), "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(string.Format(Resources.STRING_MESSAGE_CP_UPDATE_SUCCESS, cpVer.tag_name), "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Information);
             File.Delete(outFile);
             var vCheck = DoVersionCheck();
         }
@@ -210,7 +210,7 @@ namespace WoWmapper
         {
             if (Functions.CheckIsWowRunning())
             {
-                MessageBox.Show(Properties.Resources.STRING_MESSAGE_CLOSE_WOW, "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(Resources.STRING_MESSAGE_CLOSE_WOW, "WoWmapper", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             var dsVer = Github.GetLatestRelease2("topher-au", "WoWmapper");
@@ -253,7 +253,7 @@ namespace WoWmapper
             }
             else
             {
-                MessageBox.Show(Resources.STRING_MESSAGE_NO_PLUGIN_SELECTED, Properties.Resources.STRING_APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.STRING_MESSAGE_NO_PLUGIN_SELECTED, Resources.STRING_APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
