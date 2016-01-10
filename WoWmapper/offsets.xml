@@ -31,5 +31,20 @@
         <Offset Name="MouseLook" Address="23441240" />
       </Offsets>
     </GameOffset>
+    <GameOffset GameBuild="20886" GameArchitecture="64">
+      <Offsets>
+        <Offset Name="GameState" Address="23730078" />
+        <Offset Name="GameBuild" Address="16654516" />
+        <Offset Name="Player" Address="23094048" />
+        <Offset Name="Name" Address="25092160" />
+        <Offset Name="Class" Address="25092565" />
+        <Offset Name="TargetGuid" Address="23731720" />
+        <Offset Name="MouseGuid" Address="23731672" />
+        <Offset Name="Level" Address="344" />
+        <Offset Name="CurrentHP" Address="240" />
+        <Offset Name="MaxHP" Address="268" />
+        <Offset Name="MouseLook" Address="23441240" />
+      </Offsets>
+    </GameOffset>
   </GameOffsets>
 </OffsetFile>
