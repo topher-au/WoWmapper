@@ -688,6 +688,7 @@ namespace WoWmapper
 
             if (updateSuccess)
             {
+                File.Delete("consoleport_update.zip");
                 ShowMessageBox(Properties.Resources.DIALOG_CONSOLEPORT_UPDATE_TITLE, string.Format(Properties.Resources.DIALOG_CONSOLEPORT_UPDATE_SUCCESS, cpRelease.TagName));
                 buttonUpdateConsolePort.Visibility = Visibility.Collapsed;
                 UpdateVersionDisplay();
