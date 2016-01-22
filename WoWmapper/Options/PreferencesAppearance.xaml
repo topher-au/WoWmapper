@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="WoWmapper.Options.PreferencesAppearance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:p="clr-namespace:WoWmapper.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox x:Name="groupBox" Header="Appearance">
+        <ScrollViewer>
+            <StackPanel Margin="5">
+                <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5">
+                    <Label Content="{x:Static p:Resources.OPTIONS_APPEARANCE_THEME}" />
+                    <ComboBox Name="comboTheme" Width="120" HorizontalAlignment="Right" SelectionChanged="comboTheme_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5">
+                    <Label Content="{x:Static p:Resources.OPTIONS_APPEARANCE_ACCENT}" />
+                    <ComboBox Name="comboAccent" Width="120" HorizontalAlignment="Right" SelectionChanged="comboAccent_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5" Visibility="Collapsed">
+                    <Label Content="{x:Static p:Resources.OPTIONS_APPEARANCE_LANGUAGE}" />
+                    <ComboBox Name="comboLanguage" Width="120" HorizontalAlignment="Right" SelectionChanged="comboLanguage_SelectionChanged" Text="English" IsEnabled="False"/>
+                </DockPanel>
+                <CheckBox Name="checkDropShadow" Content="{x:Static p:Resources.OPTIONS_APPEARANCE_DROP_SHADOW}" Margin="0,5,0,0" Checked="checkDropShadow_Checked" Unchecked="checkDropShadow_Checked"/>
+                <TextBlock Name="textNextStartup" Text="{x:Static p:Resources.OPTIONS_APPEARANCE_RESTART_APP}" TextWrapping="Wrap" Margin="20,10,20,0" TextAlignment="Center" Foreground="Yellow" Visibility="Collapsed"/>
+                <GroupBox Header="{x:Static p:Resources.OPTIONS_ADVANCED_FEATURES_HEADER}" Margin="5,15,5,0">
+                    <StackPanel Margin="5">
+                        <TextBlock x:Name="AdvancedNote"  Text="{x:Static p:Resources.OPTIONS_HAPTICS_ENABLE_ADVANCED}" TextWrapping="Wrap" />
+                        <StackPanel x:Name="PanelAdvanced">
+                            <CheckBox Content="{x:Static p:Resources.OPTIONS_APPEARANCE_CLASS_COLOR}" IsChecked="{Binding AutoClassAccent, Source={x:Static p:Settings.Default}}" Checked="SaveSettings" Unchecked="SaveSettings"/>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

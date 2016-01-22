@@ -25,145 +25,37 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
-        public string SettingsVersion {
+        [global::System.Configuration.DefaultSettingValueAttribute("BaseLight")]
+        public string AppTheme {
             get {
-                return ((string)(this["SettingsVersion"]));
+                return ((string)(this["AppTheme"]));
             }
             set {
-                this["SettingsVersion"] = value;
+                this["AppTheme"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WoWInstallPath {
+        [global::System.Configuration.DefaultSettingValueAttribute("Blue")]
+        public string AppAccent {
             get {
-                return ((string)(this["WoWInstallPath"]));
+                return ((string)(this["AppAccent"]));
             }
             set {
-                this["WoWInstallPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableAdvancedHaptics {
-            get {
-                return ((bool)(this["EnableAdvancedHaptics"]));
-            }
-            set {
-                this["EnableAdvancedHaptics"] = value;
+                this["AppAccent"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableLightbarClass {
+        public bool AppDropShadow {
             get {
-                return ((bool)(this["EnableLightbarClass"]));
+                return ((bool)(this["AppDropShadow"]));
             }
             set {
-                this["EnableLightbarClass"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableLightbarHealth {
-            get {
-                return ((bool)(this["EnableLightbarHealth"]));
-            }
-            set {
-                this["EnableLightbarHealth"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableRumbleTarget {
-            get {
-                return ((bool)(this["EnableRumbleTarget"]));
-            }
-            set {
-                this["EnableRumbleTarget"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableRumbleDamage {
-            get {
-                return ((bool)(this["EnableRumbleDamage"]));
-            }
-            set {
-                this["EnableRumbleDamage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SendKeysDirect {
-            get {
-                return ((bool)(this["SendKeysDirect"]));
-            }
-            set {
-                this["SendKeysDirect"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SendMouseDirect {
-            get {
-                return ((bool)(this["SendMouseDirect"]));
-            }
-            set {
-                this["SendMouseDirect"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool InactiveDisable {
-            get {
-                return ((bool)(this["InactiveDisable"]));
-            }
-            set {
-                this["InactiveDisable"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MinToTray {
-            get {
-                return ((bool)(this["MinToTray"]));
-            }
-            set {
-                this["MinToTray"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CloseToTray {
-            get {
-                return ((bool)(this["CloseToTray"]));
-            }
-            set {
-                this["CloseToTray"] = value;
+                this["AppDropShadow"] = value;
             }
         }
         
@@ -182,18 +74,378 @@ namespace WoWmapper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool LightbarBattery {
+        public bool MinimizeToTray {
             get {
-                return ((bool)(this["LightbarBattery"]));
+                return ((bool)(this["MinimizeToTray"]));
             }
             set {
-                this["LightbarBattery"] = value;
+                this["MinimizeToTray"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CloseToTray {
+            get {
+                return ((bool)(this["CloseToTray"]));
+            }
+            set {
+                this["CloseToTray"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAdvancedFeatures {
+            get {
+                return ((bool)(this["EnableAdvancedFeatures"]));
+            }
+            set {
+                this["EnableAdvancedFeatures"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WoWFolder {
+            get {
+                return ((string)(this["WoWFolder"]));
+            }
+            set {
+                this["WoWFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int ForceArchitecture {
+            get {
+                return ((int)(this["ForceArchitecture"]));
+            }
+            set {
+                this["ForceArchitecture"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableDS4 {
+            get {
+                return ((bool)(this["EnableDS4"]));
+            }
+            set {
+                this["EnableDS4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableXbox {
+            get {
+                return ((bool)(this["EnableXbox"]));
+            }
+            set {
+                this["EnableXbox"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoConnectDevice {
+            get {
+                return ((bool)(this["AutoConnectDevice"]));
+            }
+            set {
+                this["AutoConnectDevice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int ThresholdLeft {
+            get {
+                return ((int)(this["ThresholdLeft"]));
+            }
+            set {
+                this["ThresholdLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public int ThresholdRight {
+            get {
+                return ((int)(this["ThresholdRight"]));
+            }
+            set {
+                this["ThresholdRight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public int ThresholdLeftClick {
+            get {
+                return ((int)(this["ThresholdLeftClick"]));
+            }
+            set {
+                this["ThresholdLeftClick"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("255")]
+        public int ThresholdRightClick {
+            get {
+                return ((int)(this["ThresholdRightClick"]));
+            }
+            set {
+                this["ThresholdRightClick"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableTriggerGrip {
+            get {
+                return ((bool)(this["EnableTriggerGrip"]));
+            }
+            set {
+                this["EnableTriggerGrip"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("480")]
+        public int SettingsHeight {
+            get {
+                return ((int)(this["SettingsHeight"]));
+            }
+            set {
+                this["SettingsHeight"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int LeftDeadzone {
+            get {
+                return ((int)(this["LeftDeadzone"]));
+            }
+            set {
+                this["LeftDeadzone"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int RightDeadzone {
+            get {
+                return ((int)(this["RightDeadzone"]));
+            }
+            set {
+                this["RightDeadzone"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SendKeysDirect {
+            get {
+                return ((bool)(this["SendKeysDirect"]));
+            }
+            set {
+                this["SendKeysDirect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MouselookCenterCursor {
+            get {
+                return ((bool)(this["MouselookCenterCursor"]));
+            }
+            set {
+                this["MouselookCenterCursor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF00FF")]
+        public global::System.Windows.Media.Color LightbarColorDefault {
+            get {
+                return ((global::System.Windows.Media.Color)(this["LightbarColorDefault"]));
+            }
+            set {
+                this["LightbarColorDefault"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF0000")]
+        public global::System.Windows.Media.Color LightbarColorBatteryLow {
+            get {
+                return ((global::System.Windows.Media.Color)(this["LightbarColorBatteryLow"]));
+            }
+            set {
+                this["LightbarColorBatteryLow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableColorLightbar {
+            get {
+                return ((bool)(this["EnableColorLightbar"]));
+            }
+            set {
+                this["EnableColorLightbar"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableColorLightbarBatteryLow {
+            get {
+                return ((bool)(this["EnableColorLightbarBatteryLow"]));
+            }
+            set {
+                this["EnableColorLightbarBatteryLow"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableVibrateTriggerGrip {
+            get {
+                return ((bool)(this["EnableVibrateTriggerGrip"]));
+            }
+            set {
+                this["EnableVibrateTriggerGrip"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TouchpadMode {
+            get {
+                return ((int)(this["TouchpadMode"]));
+            }
+            set {
+                this["TouchpadMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int RightCurve {
+            get {
+                return ((int)(this["RightCurve"]));
+            }
+            set {
+                this["RightCurve"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int RightSpeed {
+            get {
+                return ((int)(this["RightSpeed"]));
+            }
+            set {
+                this["RightSpeed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoClassAccent {
+            get {
+                return ((bool)(this["AutoClassAccent"]));
+            }
+            set {
+                this["AutoClassAccent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableVibrateDamage {
+            get {
+                return ((bool)(this["EnableVibrateDamage"]));
+            }
+            set {
+                this["EnableVibrateDamage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableVibrateTarget {
+            get {
+                return ((bool)(this["EnableVibrateTarget"]));
+            }
+            set {
+                this["EnableVibrateTarget"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableLightbarHealth {
+            get {
+                return ((bool)(this["EnableLightbarHealth"]));
+            }
+            set {
+                this["EnableLightbarHealth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableLightbarClass {
+            get {
+                return ((bool)(this["EnableLightbarClass"]));
+            }
+            set {
+                this["EnableLightbarClass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int LightbarBatteryThreshold {
             get {
                 return ((int)(this["LightbarBatteryThreshold"]));
@@ -205,145 +457,49 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
-        public global::System.Drawing.Color LightbarBatteryColor {
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF0000")]
+        public global::System.Windows.Media.Color LightbarHealthCritical {
             get {
-                return ((global::System.Drawing.Color)(this["LightbarBatteryColor"]));
+                return ((global::System.Windows.Media.Color)(this["LightbarHealthCritical"]));
             }
             set {
-                this["LightbarBatteryColor"] = value;
+                this["LightbarHealthCritical"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
-        public global::System.Drawing.Color ColorCritical {
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFA500")]
+        public global::System.Windows.Media.Color LightbarHealthLow {
             get {
-                return ((global::System.Drawing.Color)(this["ColorCritical"]));
+                return ((global::System.Windows.Media.Color)(this["LightbarHealthLow"]));
             }
             set {
-                this["ColorCritical"] = value;
+                this["LightbarHealthLow"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
-        public global::System.Drawing.Color ColorLow {
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFF00")]
+        public global::System.Windows.Media.Color LightbarHealthMedium {
             get {
-                return ((global::System.Drawing.Color)(this["ColorLow"]));
+                return ((global::System.Windows.Media.Color)(this["LightbarHealthMedium"]));
             }
             set {
-                this["ColorLow"] = value;
+                this["LightbarHealthMedium"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Yellow")]
-        public global::System.Drawing.Color ColorMedium {
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF00FF00")]
+        public global::System.Windows.Media.Color LightbarHealthHigh {
             get {
-                return ((global::System.Drawing.Color)(this["ColorMedium"]));
+                return ((global::System.Windows.Media.Color)(this["LightbarHealthHigh"]));
             }
             set {
-                this["ColorMedium"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("LimeGreen")]
-        public global::System.Drawing.Color ColorHigh {
-            get {
-                return ((global::System.Drawing.Color)(this["ColorHigh"]));
-            }
-            set {
-                this["ColorHigh"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int TargetRumbleMod {
-            get {
-                return ((int)(this["TargetRumbleMod"]));
-            }
-            set {
-                this["TargetRumbleMod"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int DamageRumbleMod {
-            get {
-                return ((int)(this["DamageRumbleMod"]));
-            }
-            set {
-                this["DamageRumbleMod"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableStickyCursor {
-            get {
-                return ((bool)(this["EnableStickyCursor"]));
-            }
-            set {
-                this["EnableStickyCursor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("input_ds4.dll")]
-        public string InputPlugin {
-            get {
-                return ((string)(this["InputPlugin"]));
-            }
-            set {
-                this["InputPlugin"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Magenta")]
-        public global::System.Drawing.Color ColorDefault {
-            get {
-                return ((global::System.Drawing.Color)(this["ColorDefault"]));
-            }
-            set {
-                this["ColorDefault"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ColorLightbar {
-            get {
-                return ((bool)(this["ColorLightbar"]));
-            }
-            set {
-                this["ColorLightbar"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoCenter {
-            get {
-                return ((bool)(this["AutoCenter"]));
-            }
-            set {
-                this["AutoCenter"] = value;
+                this["LightbarHealthHigh"] = value;
             }
         }
     }

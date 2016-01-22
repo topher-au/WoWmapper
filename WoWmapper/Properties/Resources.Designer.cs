@@ -22,7 +22,7 @@ namespace WoWmapper.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace WoWmapper.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WoWmapper.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace WoWmapper.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,603 +61,1175 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Bluetooth {
-            get {
-                object obj = ResourceManager.GetObject("Bluetooth", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to WoWmapper.
         /// </summary>
-        internal static string STRING_APP_NAME {
+        public static string APP_NAME {
             get {
-                return ResourceManager.GetString("STRING_APP_NAME", resourceCulture);
+                return ResourceManager.GetString("APP_NAME", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string STRING_CANCEL {
+        public static string COMMON_ERROR {
             get {
-                return ResourceManager.GetString("STRING_CANCEL", resourceCulture);
+                return ResourceManager.GetString("COMMON_ERROR", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Critical.
+        ///   Looks up a localized string similar to Left.
         /// </summary>
-        internal static string STRING_COLOR_CRIT {
+        public static string COMMON_LEFT {
             get {
-                return ResourceManager.GetString("STRING_COLOR_CRIT", resourceCulture);
+                return ResourceManager.GetString("COMMON_LEFT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to High.
+        ///   Looks up a localized string similar to Right.
         /// </summary>
-        internal static string STRING_COLOR_HIGH {
+        public static string COMMON_RIGHT {
             get {
-                return ResourceManager.GetString("STRING_COLOR_HIGH", resourceCulture);
+                return ResourceManager.GetString("COMMON_RIGHT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Low.
+        ///   Looks up a localized string similar to (Active).
         /// </summary>
-        internal static string STRING_COLOR_LOW {
+        public static string CONTROLLER_ACTIVE {
             get {
-                return ResourceManager.GetString("STRING_COLOR_LOW", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_ACTIVE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Medium.
+        ///   Looks up a localized string similar to Charging... [{0}%].
         /// </summary>
-        internal static string STRING_COLOR_MED {
+        public static string CONTROLLER_BATTERY_CHARGING {
             get {
-                return ResourceManager.GetString("STRING_COLOR_MED", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_BATTERY_CHARGING", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connected ({0}%).
+        ///   Looks up a localized string similar to Connected.
         /// </summary>
-        internal static string STRING_CONTROLLER_CONNECTED {
+        public static string CONTROLLER_BATTERY_CONNECTED {
             get {
-                return ResourceManager.GetString("STRING_CONTROLLER_CONNECTED", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_BATTERY_CONNECTED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Controller.
+        ///   Looks up a localized string similar to Discharging... [{0}%].
         /// </summary>
-        internal static string STRING_CONTROLLER_DEFAULT {
+        public static string CONTROLLER_BATTERY_DISCHARGING {
             get {
-                return ResourceManager.GetString("STRING_CONTROLLER_DEFAULT", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_BATTERY_DISCHARGING", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disconnected.
+        ///   Looks up a localized string similar to Not connected.
         /// </summary>
-        internal static string STRING_CONTROLLER_DISCONNECTED {
+        public static string CONTROLLER_BATTERY_DISCONNECTED {
             get {
-                return ResourceManager.GetString("STRING_CONTROLLER_DISCONNECTED", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_BATTERY_DISCONNECTED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WoWmapper requires the SlimDX 4.0 redistributable to be installed, but it does not appear to be on your system.
-        ///Would you like to visit the SlimDX download page now?.
+        ///   Looks up a localized string similar to {0} Connected.
         /// </summary>
-        internal static string STRING_DEP_SLIMDX_ERROR {
+        public static string CONTROLLER_CONNECTED {
             get {
-                return ResourceManager.GetString("STRING_DEP_SLIMDX_ERROR", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_CONNECTED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://slimdx.org/download.php.
+        ///   Looks up a localized string similar to No active controller.
         /// </summary>
-        internal static string STRING_DEP_SLIMDX_URL {
+        public static string CONTROLLER_NOT_ACTIVE {
             get {
-                return ResourceManager.GetString("STRING_DEP_SLIMDX_URL", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_NOT_ACTIVE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find WoW.
+        ///   Looks up a localized string similar to Controller {0}.
         /// </summary>
-        internal static string STRING_FIND_WOW {
+        public static string CONTROLLER_NUMBER {
             get {
-                return ResourceManager.GetString("STRING_FIND_WOW", resourceCulture);
+                return ResourceManager.GetString("CONTROLLER_NUMBER", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Status.
+        ///   Looks up a localized string similar to Press the new key for {0}. Existing keys will be swapped..
         /// </summary>
-        internal static string STRING_GROUP_STATUS {
+        public static string DIALOG_BIND_KEY_TEXT {
             get {
-                return ResourceManager.GetString("STRING_GROUP_STATUS", resourceCulture);
+                return ResourceManager.GetString("DIALOG_BIND_KEY_TEXT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WoW Installation Folder.
+        ///   Looks up a localized string similar to Key Binding.
         /// </summary>
-        internal static string STRING_GROUP_WOW_PATH {
+        public static string DIALOG_BIND_KEY_TITLE {
             get {
-                return ResourceManager.GetString("STRING_GROUP_WOW_PATH", resourceCulture);
+                return ResourceManager.GetString("DIALOG_BIND_KEY_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enhanced interaction attached.
+        ///   Looks up a localized string similar to An error occurred while updating ConsolePort..
         /// </summary>
-        internal static string STRING_HAPTIC_ATTACHED {
+        public static string DIALOG_CONSOLEPORT_UPDATE_FAILED {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_ATTACHED", resourceCulture);
+                return ResourceManager.GetString("DIALOG_CONSOLEPORT_UPDATE_FAILED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Auto-center cursor after mouselook.
+        ///   Looks up a localized string similar to An error occurred while updating ConsolePort:
+        ///{0}.
         /// </summary>
-        internal static string STRING_HAPTIC_AUTO_CENTER {
+        public static string DIALOG_CONSOLEPORT_UPDATE_FAILED_MESSAGE {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_AUTO_CENTER", resourceCulture);
+                return ResourceManager.GetString("DIALOG_CONSOLEPORT_UPDATE_FAILED_MESSAGE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Character logged in.
+        ///   Looks up a localized string similar to ConsolePort was successfully updated to version {0}!.
         /// </summary>
-        internal static string STRING_HAPTIC_CHARLOGGEDIN {
+        public static string DIALOG_CONSOLEPORT_UPDATE_SUCCESS {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_CHARLOGGEDIN", resourceCulture);
+                return ResourceManager.GetString("DIALOG_CONSOLEPORT_UPDATE_SUCCESS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color LED/Lightbar.
+        ///   Looks up a localized string similar to ConsolePort Update.
         /// </summary>
-        internal static string STRING_HAPTIC_LED {
+        public static string DIALOG_CONSOLEPORT_UPDATE_TITLE {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_LED", resourceCulture);
+                return ResourceManager.GetString("DIALOG_CONSOLEPORT_UPDATE_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flash when battery low.
+        ///   Looks up a localized string similar to There was an error downloading the file, please try again later..
         /// </summary>
-        internal static string STRING_HAPTIC_LED_BATTERY {
+        public static string DIALOG_DOWNLOAD_FAILED_TEXT {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_LED_BATTERY", resourceCulture);
+                return ResourceManager.GetString("DIALOG_DOWNLOAD_FAILED_TEXT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color by class.
+        ///   Looks up a localized string similar to Download failed.
         /// </summary>
-        internal static string STRING_HAPTIC_LED_CLASS {
+        public static string DIALOG_DOWNLOAD_FAILED_TITLE {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_LED_CLASS", resourceCulture);
+                return ResourceManager.GetString("DIALOG_DOWNLOAD_FAILED_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color by remaining health.
+        ///   Looks up a localized string similar to File download in progress, please wait....
         /// </summary>
-        internal static string STRING_HAPTIC_LED_HEALTH {
+        public static string DIALOG_DOWNLOAD_TEXT {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_LED_HEALTH", resourceCulture);
+                return ResourceManager.GetString("DIALOG_DOWNLOAD_TEXT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rumble.
+        ///   Looks up a localized string similar to Downloading.
         /// </summary>
-        internal static string STRING_HAPTIC_RUMBLE {
+        public static string DIALOG_DOWNLOAD_TITLE {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_RUMBLE", resourceCulture);
+                return ResourceManager.GetString("DIALOG_DOWNLOAD_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rumble when taking damage.
+        ///   Looks up a localized string similar to When enabled, the left and right triggers will activate an extra binding when they reach a certain point. With the triggers as Shift or Control, you can use a full trigger press to activate an extra binding..
         /// </summary>
-        internal static string STRING_HAPTIC_RUMBLE_DAMAGE {
+        public static string DIALOG_HELP_TRIGGER_GRIP_TEXT {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_RUMBLE_DAMAGE", resourceCulture);
+                return ResourceManager.GetString("DIALOG_HELP_TRIGGER_GRIP_TEXT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rumble when switching target.
+        ///   Looks up a localized string similar to Trigger Grip Binding.
         /// </summary>
-        internal static string STRING_HAPTIC_RUMBLE_TARGET {
+        public static string DIALOG_HELP_TRIGGER_GRIP_TITLE {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_RUMBLE_TARGET", resourceCulture);
+                return ResourceManager.GetString("DIALOG_HELP_TRIGGER_GRIP_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enhanced Interaction.
+        ///   Looks up a localized string similar to You must select your World of Warcraft installation directory first..
         /// </summary>
-        internal static string STRING_HAPTIC_STATUS {
+        public static string DIALOG_SELECT_WOW {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_STATUS", resourceCulture);
+                return ResourceManager.GetString("DIALOG_SELECT_WOW", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Slow the cursor when over an object.
+        ///   Looks up a localized string similar to WoW not found.
         /// </summary>
-        internal static string STRING_HAPTIC_STICKY_CURSOR {
+        public static string DIALOG_SELECT_WOW_TITLE {
             get {
-                return ResourceManager.GetString("STRING_HAPTIC_STICKY_CURSOR", resourceCulture);
+                return ResourceManager.GetString("DIALOG_SELECT_WOW_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Install.
-        /// </summary>
-        internal static string STRING_INSTALL_BUTTON {
-            get {
-                return ResourceManager.GetString("STRING_INSTALL_BUTTON", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please close World of Warcraft before updating..
-        /// </summary>
-        internal static string STRING_MESSAGE_CLOSE_WOW {
-            get {
-                return ResourceManager.GetString("STRING_MESSAGE_CLOSE_WOW", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ConsolePort successfully updated to version {0}..
-        /// </summary>
-        internal static string STRING_MESSAGE_CP_UPDATE_SUCCESS {
-            get {
-                return ResourceManager.GetString("STRING_MESSAGE_CP_UPDATE_SUCCESS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WoWmapper successfully updated to version {0}..
-        /// </summary>
-        internal static string STRING_MESSAGE_DS4_UPDATE_SUCCESS {
-            get {
-                return ResourceManager.GetString("STRING_MESSAGE_DS4_UPDATE_SUCCESS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enhanced interaction was disabled because there was an error loading the module..
-        /// </summary>
-        internal static string STRING_MESSAGE_HAPTICS_DISABLED_ERROR {
-            get {
-                return ResourceManager.GetString("STRING_MESSAGE_HAPTICS_DISABLED_ERROR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enhanced interaction was disabled because there are no offsets available for your version..
-        /// </summary>
-        internal static string STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS {
-            get {
-                return ResourceManager.GetString("STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No input plugin selected.
-        ///Please select an input plugin before configuring keybindings..
-        /// </summary>
-        internal static string STRING_MESSAGE_NO_PLUGIN_SELECTED {
-            get {
-                return ResourceManager.GetString("STRING_MESSAGE_NO_PLUGIN_SELECTED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unable to locate your World of Warcraft installation folder. This is required for some features.
+        ///   Looks up a localized string similar to We were unable to locate your WoW installation. This is required for some features.
         ///
-        ///Would you like to find your WoW folder now?.
+        ///Would you like to locate it now?.
         /// </summary>
-        internal static string STRING_MESSAGE_NO_WOW_PATH {
+        public static string DIALOG_WOW_NOT_FOUND_TEXT {
             get {
-                return ResourceManager.GetString("STRING_MESSAGE_NO_WOW_PATH", resourceCulture);
+                return ResourceManager.GetString("DIALOG_WOW_NOT_FOUND_TEXT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Miscellaneous.
+        ///   Looks up a localized string similar to Unable to locate World of Warcraft.
         /// </summary>
-        internal static string STRING_MISC {
+        public static string DIALOG_WOW_NOT_FOUND_TITLE {
             get {
-                return ResourceManager.GetString("STRING_MISC", resourceCulture);
+                return ResourceManager.GetString("DIALOG_WOW_NOT_FOUND_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exit.
+        ///   Looks up a localized string similar to An error occurred with the DS4 driver, and it has been disabled.
+        ///
+        ///The error was:
+        ///{0}.
         /// </summary>
-        internal static string STRING_NOTIFY_MENU_EXIT {
+        public static string ERROR_DS4_DISABLED {
             get {
-                return ResourceManager.GetString("STRING_NOTIFY_MENU_EXIT", resourceCulture);
+                return ResourceManager.GetString("ERROR_DS4_DISABLED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WoWmapper.
+        ///   Looks up a localized string similar to Driver error.
         /// </summary>
-        internal static string STRING_NOTIFY_TOOLTIP {
+        public static string ERROR_TITLE_DRIVER {
             get {
-                return ResourceManager.GetString("STRING_NOTIFY_TOOLTIP", resourceCulture);
+                return ResourceManager.GetString("ERROR_TITLE_DRIVER", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load Plugin.
+        ///   Looks up a localized string similar to An error occurred with the Xbox driver, and it has been disabled.
+        ///
+        ///The error was:
+        ///{0}.
         /// </summary>
-        internal static string STRING_PLUGIN_LOAD {
+        public static string ERROR_XBOX_DISABLED {
             get {
-                return ResourceManager.GetString("STRING_PLUGIN_LOAD", resourceCulture);
+                return ResourceManager.GetString("ERROR_XBOX_DISABLED", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select an input plugin:.
+        ///   Looks up a localized string similar to By continuing, you acknowledge the risks associated with this feature..
         /// </summary>
-        internal static string STRING_PLUGIN_SELECT {
+        public static string FEEDBACK_WARNING_TEXT {
             get {
-                return ResourceManager.GetString("STRING_PLUGIN_SELECT", resourceCulture);
+                return ResourceManager.GetString("FEEDBACK_WARNING_TEXT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input Plugins.
+        ///   Looks up a localized string similar to Advanced Features Warning.
         /// </summary>
-        internal static string STRING_PLUGIN_TITLE {
+        public static string FEEDBACK_WARNING_TITLE {
             get {
-                return ResourceManager.GetString("STRING_PLUGIN_TITLE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Save.
-        /// </summary>
-        internal static string STRING_SAVE {
-            get {
-                return ResourceManager.GetString("STRING_SAVE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Advanced Settings.
-        /// </summary>
-        internal static string STRING_SETTING_ADVANCED {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_ADVANCED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Application Preferences.
-        /// </summary>
-        internal static string STRING_SETTING_APP_PREFS {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_APP_PREFS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Close to tray.
-        /// </summary>
-        internal static string STRING_SETTING_CLOSE_TRAY {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_CLOSE_TRAY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Configure enhanced interaction.
-        /// </summary>
-        internal static string STRING_SETTING_CONFIG_ADVANCED_HAPTICS {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_CONFIG_ADVANCED_HAPTICS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable when WoW not running.
-        /// </summary>
-        internal static string STRING_SETTING_DISABLE_WOW_NOT_RUNNING {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_DISABLE_WOW_NOT_RUNNING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Done.
-        /// </summary>
-        internal static string STRING_SETTING_DONE {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_DONE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable enhanced interaction.
-        /// </summary>
-        internal static string STRING_SETTING_ENABLE_ADVANCED_HAPTICS {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_ENABLE_ADVANCED_HAPTICS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Haptics.
-        /// </summary>
-        internal static string STRING_SETTING_HAPTICS {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_HAPTICS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locate WoW.
-        /// </summary>
-        internal static string STRING_SETTING_LOCATE_WOW {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_LOCATE_WOW", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Minimize to tray.
-        /// </summary>
-        internal static string STRING_SETTING_MIN_TRAY {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_MIN_TRAY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disable controller when WoW is not running.
-        /// </summary>
-        internal static string STRING_SETTING_NO_WOW_DIABLE {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_NO_WOW_DIABLE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start minimized.
-        /// </summary>
-        internal static string STRING_SETTING_START_MINIMIZED {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_START_MINIMIZED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WoW Settings.
-        /// </summary>
-        internal static string STRING_SETTING_WOW {
-            get {
-                return ResourceManager.GetString("STRING_SETTING_WOW", resourceCulture);
+                return ResourceManager.GetString("FEEDBACK_WARNING_TITLE", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string STRING_SHOW_CONFIG {
+        public static string MAIN_BUTTON_SETTINGS {
             get {
-                return ResourceManager.GetString("STRING_SHOW_CONFIG", resourceCulture);
+                return ResourceManager.GetString("MAIN_BUTTON_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controller Status.
+        /// </summary>
+        public static string MAIN_CONTROLLER_TITLE {
+            get {
+                return ResourceManager.GetString("MAIN_CONTROLLER_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Software Updates.
+        /// </summary>
+        public static string MAIN_UPDATE_TITLE {
+            get {
+                return ResourceManager.GetString("MAIN_UPDATE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World of Warcraft Status.
+        /// </summary>
+        public static string MAIN_WOW_TITLE {
+            get {
+                return ResourceManager.GetString("MAIN_WOW_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controllers.
+        /// </summary>
+        public static string NOTIFY_MENU_CONTROLLERS {
+            get {
+                return ResourceManager.GetString("NOTIFY_MENU_CONTROLLERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string NOTIFY_MENU_EXIT {
+            get {
+                return ResourceManager.GetString("NOTIFY_MENU_EXIT", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Keybinds.
         /// </summary>
-        internal static string STRING_SHOW_KEYBINDS {
+        public static string NOTIFY_MENU_KEYBINDS {
             get {
-                return ResourceManager.GetString("STRING_SHOW_KEYBINDS", resourceCulture);
+                return ResourceManager.GetString("NOTIFY_MENU_KEYBINDS", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugins.
+        ///   Looks up a localized string similar to Open WoWmapper.
         /// </summary>
-        internal static string STRING_SHOW_PLUGINS {
+        public static string NOTIFY_MENU_OPEN_WOWMAPPER {
             get {
-                return ResourceManager.GetString("STRING_SHOW_PLUGINS", resourceCulture);
+                return ResourceManager.GetString("NOTIFY_MENU_OPEN_WOWMAPPER", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to About WoWmapper.
         /// </summary>
-        internal static string STRING_STATUS {
+        public static string OPTIONS_ABOUT_TITLE {
             get {
-                return ResourceManager.GetString("STRING_STATUS", resourceCulture);
+                return ResourceManager.GetString("OPTIONS_ABOUT_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English translation by Topher Sheridan.
+        /// </summary>
+        public static string OPTIONS_ABOUT_TRANSLATION_CREDIT {
+            get {
+                return ResourceManager.GetString("OPTIONS_ABOUT_TRANSLATION_CREDIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Advanced Features.
+        /// </summary>
+        public static string OPTIONS_ADVANCED_FEATURES_CHECKBOX {
+            get {
+                return ResourceManager.GetString("OPTIONS_ADVANCED_FEATURES_CHECKBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Features.
+        /// </summary>
+        public static string OPTIONS_ADVANCED_FEATURES_HEADER {
+            get {
+                return ResourceManager.GetString("OPTIONS_ADVANCED_FEATURES_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabling this option allows WoWmapper to read certain values from the game&apos;s memory, such as your character&apos;s level, health and target.
+        ///
+        ///Accessing the game in this manner may be a violation of the World of Warcraft Terms of Use. For more information, please visit the link below..
+        /// </summary>
+        public static string OPTIONS_ADVANCED_FEATURES_WARNING {
+            get {
+                return ResourceManager.GetString("OPTIONS_ADVANCED_FEATURES_WARNING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Settings.
+        /// </summary>
+        public static string OPTIONS_ADVANCED_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_ADVANCED_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_ACCENT {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_ACCENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color window automatically by class.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_CLASS_COLOR {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_CLASS_COLOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable drop shadow.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_DROP_SHADOW {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_DROP_SHADOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_LANGUAGE {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_LANGUAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting will be applied the next time you start WoWmapper.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_RESTART_APP {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_RESTART_APP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_THEME {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_THEME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string OPTIONS_APPEARANCE_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_APPEARANCE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Activate.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_ACTIVATE {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_ACTIVATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically activate controller.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_AUTO_SELECT {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_AUTO_SELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detected Controllers.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_DETECTED {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_DETECTED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable DualShock 4.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_ENABLE_DS4 {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_ENABLE_DS4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Xbox Controller.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_ENABLE_XBOX {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_ENABLE_XBOX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-scan.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_SCAN {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_SCAN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Controllers.
+        /// </summary>
+        public static string OPTIONS_CONTROLLERS_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_CONTROLLERS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        public static string OPTIONS_CURSOR_ADVANCED {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analog Stick.
+        /// </summary>
+        public static string OPTIONS_CURSOR_ANALOG {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_ANALOG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto-center cursor after mouselook.
+        /// </summary>
+        public static string OPTIONS_CURSOR_AUTO_CENTER {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_AUTO_CENTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Curve.
+        /// </summary>
+        public static string OPTIONS_CURSOR_CURVE {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_CURVE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deadzone.
+        /// </summary>
+        public static string OPTIONS_CURSOR_DEADZONE {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_DEADZONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed.
+        /// </summary>
+        public static string OPTIONS_CURSOR_SPEED {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_SPEED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cursor.
+        /// </summary>
+        public static string OPTIONS_CURSOR_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Touchpad.
+        /// </summary>
+        public static string OPTIONS_CURSOR_TOUCHPAD {
+            get {
+                return ResourceManager.GetString("OPTIONS_CURSOR_TOUCHPAD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Advanced Features from the Advanced Settings menu for more options..
+        /// </summary>
+        public static string OPTIONS_HAPTICS_ENABLE_ADVANCED {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_ENABLE_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color lightbar with class color.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_LIGHTBAR_CLASS {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_LIGHTBAR_CLASS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color lightbar.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_LIGHTBAR_COLOR {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_LIGHTBAR_COLOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color lightbar by remaining health.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_LIGHTBAR_HEALTH {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_LIGHTBAR_HEALTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flash lightbar when battery is low.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_LIGHTBAR_LOW_BATTERY {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_LIGHTBAR_LOW_BATTERY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Haptic Feedback.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibrate when taking damage.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_VIBRATE_DAMAGE {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_VIBRATE_DAMAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibrate when battery is low.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_VIBRATE_LOW_BATTERY {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_VIBRATE_LOW_BATTERY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibrate when switching target.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_VIBRATE_TARGET {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_VIBRATE_TARGET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vibrate when activating trigger click.
+        /// </summary>
+        public static string OPTIONS_HAPTICS_VIBRATE_TRIGGER_CLICK {
+            get {
+                return ResourceManager.GetString("OPTIONS_HAPTICS_VIBRATE_TRIGGER_CLICK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string OPTIONS_HEADER {
+            get {
+                return ResourceManager.GetString("OPTIONS_HEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EXPORT.
+        /// </summary>
+        public static string OPTIONS_KEYBINDS_EXPORT {
+            get {
+                return ResourceManager.GetString("OPTIONS_KEYBINDS_EXPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IMPORT.
+        /// </summary>
+        public static string OPTIONS_KEYBINDS_IMPORT {
+            get {
+                return ResourceManager.GetString("OPTIONS_KEYBINDS_IMPORT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RESET KEYBINDS.
+        /// </summary>
+        public static string OPTIONS_KEYBINDS_RESET {
+            get {
+                return ResourceManager.GetString("OPTIONS_KEYBINDS_RESET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keybinds.
+        /// </summary>
+        public static string OPTIONS_KEYBINDS_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_KEYBINDS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset all settings.
+        /// </summary>
+        public static string OPTIONS_RESET_ALL {
+            get {
+                return ResourceManager.GetString("OPTIONS_RESET_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will delete all WoWmapper settings and keybinds and exit the program. Are you sure you want to continue?.
+        /// </summary>
+        public static string OPTIONS_RESET_ALL_TEXT {
+            get {
+                return ResourceManager.GetString("OPTIONS_RESET_ALL_TEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset all settings.
+        /// </summary>
+        public static string OPTIONS_RESET_ALL_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_RESET_ALL_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About WoWmapper.
+        /// </summary>
+        public static string OPTIONS_TREE_ABOUT {
+            get {
+                return ResourceManager.GetString("OPTIONS_TREE_ABOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        public static string OPTIONS_TREE_ADVANCED {
+            get {
+                return ResourceManager.GetString("OPTIONS_TREE_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced Settings.
+        /// </summary>
+        public static string OPTIONS_TREE_ADVANCED_SETTINGS {
+            get {
+                return ResourceManager.GetString("OPTIONS_TREE_ADVANCED_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input.
+        /// </summary>
+        public static string OPTIONS_TREE_INPUT {
+            get {
+                return ResourceManager.GetString("OPTIONS_TREE_INPUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preferences.
+        /// </summary>
+        public static string OPTIONS_TREE_PREFERENCES {
+            get {
+                return ResourceManager.GetString("OPTIONS_TREE_PREFERENCES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Trigger Grip.
+        /// </summary>
+        public static string OPTIONS_TRIGGERS_ENABLE_CLICK {
+            get {
+                return ResourceManager.GetString("OPTIONS_TRIGGERS_ENABLE_CLICK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trigger Grip Thresholds.
+        /// </summary>
+        public static string OPTIONS_TRIGGERS_GRIP_THRESHOLDS {
+            get {
+                return ResourceManager.GetString("OPTIONS_TRIGGERS_GRIP_THRESHOLDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trigger Thresholds.
+        /// </summary>
+        public static string OPTIONS_TRIGGERS_THRESHOLDS {
+            get {
+                return ResourceManager.GetString("OPTIONS_TRIGGERS_THRESHOLDS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Triggers.
+        /// </summary>
+        public static string OPTIONS_TRIGGERS_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_TRIGGERS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Architecture.
+        /// </summary>
+        public static string OPTIONS_WOW_ARCHITECTURE {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_ARCHITECTURE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 32-bit.
+        /// </summary>
+        public static string OPTIONS_WOW_ARCHITECTURE_32 {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_ARCHITECTURE_32", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 64-bit.
+        /// </summary>
+        public static string OPTIONS_WOW_ARCHITECTURE_64 {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_ARCHITECTURE_64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Select.
+        /// </summary>
+        public static string OPTIONS_WOW_ARCHITECTURE_AUTO {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_ARCHITECTURE_AUTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installation Path.
+        /// </summary>
+        public static string OPTIONS_WOW_FOLDER {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_FOLDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Locate Installation Path.
+        /// </summary>
+        public static string OPTIONS_WOW_FOLDER_BROWSE {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_FOLDER_BROWSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select WoW installation folder.
+        /// </summary>
+        public static string OPTIONS_WOW_FOLDER_BROWSE_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_FOLDER_BROWSE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The folder you selected does not appear to contain World of Warcraft..
+        /// </summary>
+        public static string OPTIONS_WOW_FOLDER_INVALID_TEXT {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_FOLDER_INVALID_TEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid folder.
+        /// </summary>
+        public static string OPTIONS_WOW_FOLDER_INVALID_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_FOLDER_INVALID_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send keystrokes directly to game window.
+        /// </summary>
+        public static string OPTIONS_WOW_SEND_KEYS_DIRECT {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_SEND_KEYS_DIRECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World of Warcraft.
+        /// </summary>
+        public static string OPTIONS_WOW_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOW_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close to tray.
+        /// </summary>
+        public static string OPTIONS_WOWMAPPER_CLOSE_TRAY {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOWMAPPER_CLOSE_TRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize to tray.
+        /// </summary>
+        public static string OPTIONS_WOWMAPPER_MINIMIZE_TRAY {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOWMAPPER_MINIMIZE_TRAY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start minimized.
+        /// </summary>
+        public static string OPTIONS_WOWMAPPER_START_MINIMIZED {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOWMAPPER_START_MINIMIZED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WoWmapper.
+        /// </summary>
+        public static string OPTIONS_WOWMAPPER_TITLE {
+            get {
+                return ResourceManager.GetString("OPTIONS_WOWMAPPER_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap playstation_24 {
+            get {
+                object obj = ResourceManager.GetObject("playstation_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Touchpad mode.
+        /// </summary>
+        public static string TOUCHPAD_MODE {
+            get {
+                return ResourceManager.GetString("TOUCHPAD_MODE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Touch Buttons.
+        /// </summary>
+        public static string TOUCHPAD_MODE_BUTTONS {
+            get {
+                return ResourceManager.GetString("TOUCHPAD_MODE_BUTTONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share &amp; Options.
+        /// </summary>
+        public static string TOUCHPAD_MODE_EMULATE_CENTER {
+            get {
+                return ResourceManager.GetString("TOUCHPAD_MODE_EMULATE_CENTER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mouse Control.
+        /// </summary>
+        public static string TOUCHPAD_MODE_MOUSE {
+            get {
+                return ResourceManager.GetString("TOUCHPAD_MODE_MOUSE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checking....
+        /// </summary>
+        public static string VERSION_CHECKING {
+            get {
+                return ResourceManager.GetString("VERSION_CHECKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0} is available!.
+        /// </summary>
+        public static string VERSION_CONSOLEPORT_AVAILABLE {
+            get {
+                return ResourceManager.GetString("VERSION_CONSOLEPORT_AVAILABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ConsolePort {0}.
+        /// </summary>
+        public static string VERSION_CONSOLEPORT_CURRENT {
+            get {
+                return ResourceManager.GetString("VERSION_CONSOLEPORT_CURRENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No new version available.
+        /// </summary>
+        public static string VERSION_NO_NEW_VERSION {
+            get {
+                return ResourceManager.GetString("VERSION_NO_NEW_VERSION", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
-        internal static string STRING_UPDATE_BUTTON {
+        public static string VERSION_UPDATE_BUTTON {
             get {
-                return ResourceManager.GetString("STRING_UPDATE_BUTTON", resourceCulture);
+                return ResourceManager.GetString("VERSION_UPDATE_BUTTON", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The update file is being downloaded and will be automatically installed when the download is complete. Please wait....
+        ///   Looks up a localized string similar to Install.
         /// </summary>
-        internal static string STRING_UPDATE_TEXT {
+        public static string VERSION_UPDATE_INSTALL {
             get {
-                return ResourceManager.GetString("STRING_UPDATE_TEXT", resourceCulture);
+                return ResourceManager.GetString("VERSION_UPDATE_INSTALL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Advanced Haptics.
+        ///   Looks up a localized string similar to ConsolePort is not installed!.
         /// </summary>
-        internal static string STRING_WINDOW_ADVANCED_HAPTICS {
+        public static string VERSION_UPDATE_NO_CONSOLEPORT {
             get {
-                return ResourceManager.GetString("STRING_WINDOW_ADVANCED_HAPTICS", resourceCulture);
+                return ResourceManager.GetString("VERSION_UPDATE_NO_CONSOLEPORT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to World of Warcraft currently running.
+        ///   Looks up a localized string similar to Version {0} is available!.
         /// </summary>
-        internal static string STRING_WOW_WINDOW_FOUND {
+        public static string VERSION_WOWMAPPER_AVAILABLE {
             get {
-                return ResourceManager.GetString("STRING_WOW_WINDOW_FOUND", resourceCulture);
+                return ResourceManager.GetString("VERSION_WOWMAPPER_AVAILABLE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to WoWmapper {0}.
         /// </summary>
-        internal static System.Drawing.Bitmap USB {
+        public static string VERSION_WOWMAPPER_CURRENT {
             get {
-                object obj = ResourceManager.GetObject("USB", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("VERSION_WOWMAPPER_CURRENT", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to World of Warcraft not running.
         /// </summary>
-        internal static System.Drawing.Bitmap Wireless {
+        public static string WOW_NOT_RUNNING {
             get {
-                object obj = ResourceManager.GetObject("Wireless", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("WOW_NOT_RUNNING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World of Warcraft is running (32-bit).
+        /// </summary>
+        public static string WOW_RUNNING_32 {
+            get {
+                return ResourceManager.GetString("WOW_RUNNING_32", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World of Warcraft is running (64-bit).
+        /// </summary>
+        public static string WOW_RUNNING_64 {
+            get {
+                return ResourceManager.GetString("WOW_RUNNING_64", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon WoWConsolePort {
+        public static System.Drawing.Icon WoWmapper_Icon {
             get {
-                object obj = ResourceManager.GetObject("WoWConsolePort", resourceCulture);
+                object obj = ResourceManager.GetObject("WoWmapper_Icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -665,9 +1237,9 @@ namespace WoWmapper.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap wowmapper3 {
+        public static System.Drawing.Bitmap xbox_24 {
             get {
-                object obj = ResourceManager.GetObject("wowmapper3", resourceCulture);
+                object obj = ResourceManager.GetObject("xbox_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

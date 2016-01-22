@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="WoWmapper.Options.InputTriggers"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:p="clr-namespace:WoWmapper.Properties"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox Header="{x:Static p:Resources.OPTIONS_TRIGGERS_TITLE}">
+        <ScrollViewer>
+            <StackPanel Margin="5">
+                <GroupBox Header="{x:Static p:Resources.OPTIONS_TRIGGERS_THRESHOLDS}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="5">
+                            <DockPanel>
+                                <TextBlock Text="{x:Static p:Resources.COMMON_LEFT}" />
+                                <TextBlock Name="TextLeftValue" Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeft}" HorizontalAlignment="Right"/>
+                            </DockPanel>
+                            <Slider Name="SliderLeft" Minimum="1" Maximum="255" Value="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeft}" ValueChanged="SliderChanged"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5">
+                            <DockPanel>
+                                <TextBlock Text="{x:Static p:Resources.COMMON_RIGHT}" />
+                                <TextBlock Name="TextRightValue" Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdRight}" HorizontalAlignment="Right"/>
+                            </DockPanel>
+
+                            <Slider Name="SliderRight" Minimum="1" Maximum="255" Value="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdRight}" ValueChanged="SliderChanged"/>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+
+                <GroupBox Header="{x:Static p:Resources.OPTIONS_TRIGGERS_GRIP_THRESHOLDS}">
+                    <StackPanel>
+                        <DockPanel Grid.ColumnSpan="2" Margin="5" VerticalAlignment="Top">
+                            <CheckBox IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableTriggerGrip}" Content="{x:Static p:Resources.OPTIONS_TRIGGERS_ENABLE_CLICK}" Checked="checkEnableTriggerClick_Checked" Unchecked="checkEnableTriggerClick_Checked"/>
+                            <Image Source="pack://application:,,,/Resources/Help.png" Width="16" Height="16" MouseUp="Image_MouseUp" HorizontalAlignment="Right"/>
+                        </DockPanel>
+                        <DockPanel Name="PanelTriggerClickSliders">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="5" >
+                                    <DockPanel>
+                                        <TextBlock Text="{x:Static p:Resources.COMMON_LEFT}" />
+                                        <TextBlock Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeftClick}" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+                                    <Slider Name="SliderLeftClick" ValueChanged="SliderChanged" Minimum="1" Maximum="255" Value="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeftClick}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="5" >
+                                    <DockPanel>
+                                        <TextBlock Text="{x:Static p:Resources.COMMON_RIGHT}" />
+                                        <TextBlock Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdRightClick}" HorizontalAlignment="Right"/>
+                                    </DockPanel>
+
+                                    <Slider Name="SliderRightClick" ValueChanged="SliderChanged" Minimum="1" Maximum="255" Value="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdRightClick}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DockPanel>
+                    </StackPanel>
+
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

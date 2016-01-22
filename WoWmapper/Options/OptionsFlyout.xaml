@@ -1,0 +1,42 @@
+﻿<Controls:Flyout x:Class="WoWmapper.Options.OptionsFlyout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 xmlns:p="clr-namespace:WoWmapper.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Header="{x:Static p:Resources.OPTIONS_HEADER}" Width="460" Margin="0,15,0,0">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <TreeView x:Name="treeSettings" Grid.Column="0" Grid.RowSpan="2" BorderThickness="1" Margin="5,5,0,5" BorderBrush="{DynamicResource AccentColorBrush}" SelectedItemChanged="treeSettings_SelectedItemChanged">
+            <TreeViewItem Header="{x:Static p:Resources.OPTIONS_TREE_PREFERENCES}">
+                <TreeViewItem Name="TreeViewItemPreferencesWoWmapper" Header="{x:Static p:Resources.OPTIONS_WOWMAPPER_TITLE}" Selected="TreeViewItemPreferencesWoWmapper_Selected"/>
+                <TreeViewItem Name="TreeViewItemPreferencesWoW" Header="{x:Static p:Resources.OPTIONS_WOW_TITLE}" Selected="TreeViewItemPreferencesWoW_Selected"/>
+                <TreeViewItem Name="TreeViewItemPreferencesAppearance" Header="{x:Static p:Resources.OPTIONS_APPEARANCE_TITLE}" Selected="TreeViewItemPreferencesAppearance_Selected"/>
+            </TreeViewItem>
+            <TreeViewItem Header="Input">
+                <TreeViewItem Name="TreeViewItemInputControllers" Header="{x:Static p:Resources.OPTIONS_CONTROLLERS_TITLE}" Selected="TreeViewItemInputControllers_Selected"/>
+                <TreeViewItem Name="TreeViewItemInputKeybinds" Header="{x:Static p:Resources.OPTIONS_KEYBINDS_TITLE}" Selected="TreeViewItemInputKeybinds_Selected"/>
+                <TreeViewItem Name="TreeViewItemInputTriggers" Header="{x:Static p:Resources.OPTIONS_TRIGGERS_TITLE}" Selected="TreeViewItemInputTriggers_Selected" />
+                <TreeViewItem Name="TreeViewItemInputCursor" Header="{x:Static p:Resources.OPTIONS_CURSOR_TITLE}" Selected="TreeViewItemInputCursor_Selected" />
+                <TreeViewItem Name="TreeViewItemInputHapticFeedback" Header="{x:Static p:Resources.OPTIONS_HAPTICS_TITLE}" Selected="TreeViewItemInputHapticFeedback_Selected"/>
+                
+            </TreeViewItem>
+            <TreeViewItem Header="{x:Static p:Resources.OPTIONS_TREE_ADVANCED}">
+                <TreeViewItem Name="TreeViewItemAdvancedSettings" Header="{x:Static p:Resources.OPTIONS_TREE_ADVANCED_SETTINGS}" Selected="TreeViewItemAdvancedSettings_Selected"/>
+            </TreeViewItem>
+        </TreeView>
+        <ContentControl Name="SettingsContent" Grid.Column="1" Margin="-6,0,0,0" Grid.RowSpan="2"/>
+        <Button Grid.Row="1" Grid.Column="0"  Margin="10,5,5,10" Content="{x:Static p:Resources.OPTIONS_TREE_ABOUT}" Click="AboutWoWmapper_Click"/>
+    </Grid>
+</Controls:Flyout>

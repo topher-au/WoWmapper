@@ -117,210 +117,406 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="STRING_HAPTIC_ATTACHED" xml:space="preserve">
-    <value>Enhanced interaction attached</value>
+  <data name="APP_NAME" xml:space="preserve">
+    <value>WoWmapper</value>
   </data>
-  <data name="STRING_HAPTIC_CHARLOGGEDIN" xml:space="preserve">
-    <value>Character logged in</value>
+  <data name="CONTROLLER_CONNECTED" xml:space="preserve">
+    <value>{0} Connected</value>
   </data>
-  <data name="STRING_WOW_WINDOW_FOUND" xml:space="preserve">
-    <value>World of Warcraft currently running</value>
+  <data name="CONTROLLER_BATTERY_CHARGING" xml:space="preserve">
+    <value>Charging... [{0}%]</value>
   </data>
-  <data name="STRING_HAPTIC_STATUS" xml:space="preserve">
-    <value>Enhanced Interaction</value>
+  <data name="CONTROLLER_NOT_ACTIVE" xml:space="preserve">
+    <value>No active controller</value>
   </data>
-  <data name="STRING_NOTIFY_MENU_EXIT" xml:space="preserve">
+  <data name="DIALOG_WOW_NOT_FOUND_TEXT" xml:space="preserve">
+    <value>We were unable to locate your WoW installation. This is required for some features.
+
+Would you like to locate it now?</value>
+  </data>
+  <data name="DIALOG_WOW_NOT_FOUND_TITLE" xml:space="preserve">
+    <value>Unable to locate World of Warcraft</value>
+  </data>
+  <data name="FEEDBACK_WARNING_TEXT" xml:space="preserve">
+    <value>By continuing, you acknowledge the risks associated with this feature.</value>
+  </data>
+  <data name="FEEDBACK_WARNING_TITLE" xml:space="preserve">
+    <value>Advanced Features Warning</value>
+  </data>
+  <data name="MAIN_CONTROLLER_TITLE" xml:space="preserve">
+    <value>Controller Status</value>
+  </data>
+  <data name="MAIN_UPDATE_TITLE" xml:space="preserve">
+    <value>Software Updates</value>
+  </data>
+  <data name="MAIN_WOW_TITLE" xml:space="preserve">
+    <value>World of Warcraft Status</value>
+  </data>
+  <data name="NOTIFY_MENU_CONTROLLERS" xml:space="preserve">
+    <value>Controllers</value>
+  </data>
+  <data name="NOTIFY_MENU_EXIT" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="STRING_NOTIFY_TOOLTIP" xml:space="preserve">
-    <value>WoWmapper</value>
-  </data>
-  <data name="STRING_SETTING_APP_PREFS" xml:space="preserve">
-    <value>Application Preferences</value>
-  </data>
-  <data name="STRING_STATUS" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="STRING_SHOW_CONFIG" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="STRING_SETTING_CLOSE_TRAY" xml:space="preserve">
-    <value>Close to tray</value>
-  </data>
-  <data name="STRING_SETTING_NO_WOW_DIABLE" xml:space="preserve">
-    <value>Disable controller when WoW is not running</value>
-  </data>
-  <data name="STRING_SETTING_MIN_TRAY" xml:space="preserve">
-    <value>Minimize to tray</value>
-  </data>
-  <data name="STRING_SETTING_START_MINIMIZED" xml:space="preserve">
-    <value>Start minimized</value>
-  </data>
-  <data name="STRING_CONTROLLER_CONNECTED" xml:space="preserve">
-    <value>Connected ({0}%)</value>
-  </data>
-  <data name="STRING_CONTROLLER_DISCONNECTED" xml:space="preserve">
-    <value>Disconnected</value>
-  </data>
-  <data name="STRING_MESSAGE_HAPTICS_DISABLED_ERROR" xml:space="preserve">
-    <value>Enhanced interaction was disabled because there was an error loading the module.</value>
-  </data>
-  <data name="STRING_MESSAGE_HAPTICS_DISABLED_NO_OFFSETS" xml:space="preserve">
-    <value>Enhanced interaction was disabled because there are no offsets available for your version.</value>
-  </data>
-  <data name="STRING_SETTING_HAPTICS" xml:space="preserve">
-    <value>Haptics</value>
-  </data>
-  <data name="STRING_GROUP_STATUS" xml:space="preserve">
-    <value>{0} Status</value>
-  </data>
-  <data name="STRING_UPDATE_TEXT" xml:space="preserve">
-    <value>The update file is being downloaded and will be automatically installed when the download is complete. Please wait...</value>
-  </data>
-  <data name="STRING_FIND_WOW" xml:space="preserve">
-    <value>Find WoW</value>
-  </data>
-  <data name="STRING_GROUP_WOW_PATH" xml:space="preserve">
-    <value>WoW Installation Folder</value>
-  </data>
-  <data name="STRING_MESSAGE_NO_WOW_PATH" xml:space="preserve">
-    <value>Unable to locate your World of Warcraft installation folder. This is required for some features.
-
-Would you like to find your WoW folder now?</value>
-  </data>
-  <data name="STRING_MESSAGE_CP_UPDATE_SUCCESS" xml:space="preserve">
-    <value>ConsolePort successfully updated to version {0}.</value>
-  </data>
-  <data name="STRING_MESSAGE_DS4_UPDATE_SUCCESS" xml:space="preserve">
-    <value>WoWmapper successfully updated to version {0}.</value>
-  </data>
-  <data name="STRING_INSTALL_BUTTON" xml:space="preserve">
-    <value>Install</value>
-  </data>
-  <data name="STRING_UPDATE_BUTTON" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="STRING_MESSAGE_CLOSE_WOW" xml:space="preserve">
-    <value>Please close World of Warcraft before updating.</value>
-  </data>
-  <data name="STRING_CANCEL" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="STRING_SAVE" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="STRING_COLOR_CRIT" xml:space="preserve">
-    <value>Critical</value>
-  </data>
-  <data name="STRING_COLOR_HIGH" xml:space="preserve">
-    <value>High</value>
-  </data>
-  <data name="STRING_COLOR_LOW" xml:space="preserve">
-    <value>Low</value>
-  </data>
-  <data name="STRING_COLOR_MED" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="STRING_HAPTIC_STICKY_CURSOR" xml:space="preserve">
-    <value>Slow the cursor when over an object</value>
-  </data>
-  <data name="STRING_WINDOW_ADVANCED_HAPTICS" xml:space="preserve">
-    <value>Advanced Haptics</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="wowmapper3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WoWmapperLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="WoWConsolePort" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WoWConsolePort.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="STRING_HAPTIC_LED_BATTERY" xml:space="preserve">
-    <value>Flash when battery low</value>
-  </data>
-  <data name="STRING_HAPTIC_LED_CLASS" xml:space="preserve">
-    <value>Color by class</value>
-  </data>
-  <data name="STRING_HAPTIC_LED_HEALTH" xml:space="preserve">
-    <value>Color by remaining health</value>
-  </data>
-  <data name="STRING_HAPTIC_RUMBLE_DAMAGE" xml:space="preserve">
-    <value>Rumble when taking damage</value>
-  </data>
-  <data name="STRING_HAPTIC_RUMBLE_TARGET" xml:space="preserve">
-    <value>Rumble when switching target</value>
-  </data>
-  <data name="STRING_SHOW_KEYBINDS" xml:space="preserve">
+  <data name="NOTIFY_MENU_KEYBINDS" xml:space="preserve">
     <value>Keybinds</value>
   </data>
-  <data name="STRING_SHOW_PLUGINS" xml:space="preserve">
-    <value>Plugins</value>
+  <data name="NOTIFY_MENU_OPEN_WOWMAPPER" xml:space="preserve">
+    <value>Open WoWmapper</value>
   </data>
-  <data name="STRING_APP_NAME" xml:space="preserve">
-    <value>WoWmapper</value>
-  </data>
-  <data name="STRING_HAPTIC_LED" xml:space="preserve">
-    <value>Color LED/Lightbar</value>
-  </data>
-  <data name="STRING_HAPTIC_RUMBLE" xml:space="preserve">
-    <value>Rumble</value>
-  </data>
-  <data name="STRING_MESSAGE_NO_PLUGIN_SELECTED" xml:space="preserve">
-    <value>No input plugin selected.
-Please select an input plugin before configuring keybindings.</value>
-  </data>
-  <data name="STRING_MISC" xml:space="preserve">
-    <value>Miscellaneous</value>
-  </data>
-  <data name="STRING_SETTING_CONFIG_ADVANCED_HAPTICS" xml:space="preserve">
-    <value>Configure enhanced interaction</value>
-  </data>
-  <data name="STRING_SETTING_DISABLE_WOW_NOT_RUNNING" xml:space="preserve">
-    <value>Disable when WoW not running</value>
-  </data>
-  <data name="STRING_SETTING_ENABLE_ADVANCED_HAPTICS" xml:space="preserve">
-    <value>Enable enhanced interaction</value>
-  </data>
-  <data name="STRING_SETTING_ADVANCED" xml:space="preserve">
+  <data name="OPTIONS_ADVANCED_TITLE" xml:space="preserve">
     <value>Advanced Settings</value>
   </data>
-  <data name="STRING_SETTING_DONE" xml:space="preserve">
-    <value>Done</value>
+  <data name="OPTIONS_APPEARANCE_ACCENT" xml:space="preserve">
+    <value>Accent</value>
   </data>
-  <data name="STRING_SETTING_LOCATE_WOW" xml:space="preserve">
-    <value>Locate WoW</value>
+  <data name="OPTIONS_APPEARANCE_DROP_SHADOW" xml:space="preserve">
+    <value>Enable drop shadow</value>
   </data>
-  <data name="STRING_SETTING_WOW" xml:space="preserve">
-    <value>WoW Settings</value>
+  <data name="OPTIONS_APPEARANCE_LANGUAGE" xml:space="preserve">
+    <value>Language</value>
   </data>
-  <data name="STRING_PLUGIN_LOAD" xml:space="preserve">
-    <value>Load Plugin</value>
+  <data name="OPTIONS_APPEARANCE_RESTART_APP" xml:space="preserve">
+    <value>The setting will be applied the next time you start WoWmapper</value>
   </data>
-  <data name="STRING_PLUGIN_SELECT" xml:space="preserve">
-    <value>Please select an input plugin:</value>
+  <data name="OPTIONS_APPEARANCE_THEME" xml:space="preserve">
+    <value>Theme</value>
   </data>
-  <data name="STRING_PLUGIN_TITLE" xml:space="preserve">
-    <value>Input Plugins</value>
+  <data name="OPTIONS_APPEARANCE_TITLE" xml:space="preserve">
+    <value>Appearance</value>
   </data>
-  <data name="STRING_HAPTIC_AUTO_CENTER" xml:space="preserve">
+  <data name="OPTIONS_CONTROLLERS_ACTIVATE" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="OPTIONS_CONTROLLERS_DETECTED" xml:space="preserve">
+    <value>Detected Controllers</value>
+  </data>
+  <data name="OPTIONS_CONTROLLERS_ENABLE_DS4" xml:space="preserve">
+    <value>Enable DualShock 4</value>
+  </data>
+  <data name="OPTIONS_CONTROLLERS_ENABLE_XBOX" xml:space="preserve">
+    <value>Enable Xbox Controller</value>
+  </data>
+  <data name="OPTIONS_CONTROLLERS_TITLE" xml:space="preserve">
+    <value>Controllers</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_ENABLE_ADVANCED" xml:space="preserve">
+    <value>Enable Advanced Features from the Advanced Settings menu for more options.</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_LIGHTBAR_CLASS" xml:space="preserve">
+    <value>Color lightbar with class color</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_LIGHTBAR_COLOR" xml:space="preserve">
+    <value>Color lightbar</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_LIGHTBAR_HEALTH" xml:space="preserve">
+    <value>Color lightbar by remaining health</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_LIGHTBAR_LOW_BATTERY" xml:space="preserve">
+    <value>Flash lightbar when battery is low</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_TITLE" xml:space="preserve">
+    <value>Haptic Feedback</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_VIBRATE_DAMAGE" xml:space="preserve">
+    <value>Vibrate when taking damage</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_VIBRATE_LOW_BATTERY" xml:space="preserve">
+    <value>Vibrate when battery is low</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_VIBRATE_TARGET" xml:space="preserve">
+    <value>Vibrate when switching target</value>
+  </data>
+  <data name="OPTIONS_HAPTICS_VIBRATE_TRIGGER_CLICK" xml:space="preserve">
+    <value>Vibrate when activating trigger click</value>
+  </data>
+  <data name="OPTIONS_HEADER" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="OPTIONS_KEYBINDS_TITLE" xml:space="preserve">
+    <value>Keybinds</value>
+  </data>
+  <data name="OPTIONS_RESET_ALL" xml:space="preserve">
+    <value>Reset all settings</value>
+  </data>
+  <data name="OPTIONS_RESET_ALL_TEXT" xml:space="preserve">
+    <value>This will delete all WoWmapper settings and keybinds and exit the program. Are you sure you want to continue?</value>
+  </data>
+  <data name="OPTIONS_RESET_ALL_TITLE" xml:space="preserve">
+    <value>Reset all settings</value>
+  </data>
+  <data name="OPTIONS_TREE_ADVANCED" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="OPTIONS_TREE_ADVANCED_SETTINGS" xml:space="preserve">
+    <value>Advanced Settings</value>
+  </data>
+  <data name="OPTIONS_TREE_INPUT" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="OPTIONS_TREE_PREFERENCES" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="OPTIONS_WOWMAPPER_CLOSE_TRAY" xml:space="preserve">
+    <value>Close to tray</value>
+  </data>
+  <data name="OPTIONS_WOWMAPPER_MINIMIZE_TRAY" xml:space="preserve">
+    <value>Minimize to tray</value>
+  </data>
+  <data name="OPTIONS_WOWMAPPER_START_MINIMIZED" xml:space="preserve">
+    <value>Start minimized</value>
+  </data>
+  <data name="OPTIONS_WOWMAPPER_TITLE" xml:space="preserve">
+    <value>WoWmapper</value>
+  </data>
+  <data name="OPTIONS_WOW_ARCHITECTURE" xml:space="preserve">
+    <value>Game Architecture</value>
+  </data>
+  <data name="OPTIONS_WOW_ARCHITECTURE_32" xml:space="preserve">
+    <value>32-bit</value>
+  </data>
+  <data name="OPTIONS_WOW_ARCHITECTURE_64" xml:space="preserve">
+    <value>64-bit</value>
+  </data>
+  <data name="OPTIONS_WOW_ARCHITECTURE_AUTO" xml:space="preserve">
+    <value>Auto Select</value>
+  </data>
+  <data name="OPTIONS_WOW_FOLDER" xml:space="preserve">
+    <value>Installation Path</value>
+  </data>
+  <data name="OPTIONS_WOW_FOLDER_BROWSE" xml:space="preserve">
+    <value>Locate Installation Path</value>
+  </data>
+  <data name="OPTIONS_WOW_TITLE" xml:space="preserve">
+    <value>World of Warcraft</value>
+  </data>
+  <data name="VERSION_CONSOLEPORT_AVAILABLE" xml:space="preserve">
+    <value>Version {0} is available!</value>
+  </data>
+  <data name="VERSION_CONSOLEPORT_CURRENT" xml:space="preserve">
+    <value>ConsolePort {0}</value>
+  </data>
+  <data name="VERSION_UPDATE_BUTTON" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="VERSION_WOWMAPPER_AVAILABLE" xml:space="preserve">
+    <value>Version {0} is available!</value>
+  </data>
+  <data name="VERSION_WOWMAPPER_CURRENT" xml:space="preserve">
+    <value>WoWmapper {0}</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="WoWmapper_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\wowmapper_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WOW_NOT_RUNNING" xml:space="preserve">
+    <value>World of Warcraft not running</value>
+  </data>
+  <data name="WOW_RUNNING_32" xml:space="preserve">
+    <value>World of Warcraft is running (32-bit)</value>
+  </data>
+  <data name="WOW_RUNNING_64" xml:space="preserve">
+    <value>World of Warcraft is running (64-bit)</value>
+  </data>
+  <data name="OPTIONS_WOW_FOLDER_BROWSE_TITLE" xml:space="preserve">
+    <value>Select WoW installation folder</value>
+  </data>
+  <data name="OPTIONS_WOW_FOLDER_INVALID_TEXT" xml:space="preserve">
+    <value>The folder you selected does not appear to contain World of Warcraft.</value>
+  </data>
+  <data name="OPTIONS_WOW_FOLDER_INVALID_TITLE" xml:space="preserve">
+    <value>Invalid folder</value>
+  </data>
+  <data name="VERSION_CHECKING" xml:space="preserve">
+    <value>Checking...</value>
+  </data>
+  <data name="VERSION_NO_NEW_VERSION" xml:space="preserve">
+    <value>No new version available</value>
+  </data>
+  <data name="OPTIONS_CONTROLLERS_SCAN" xml:space="preserve">
+    <value>Re-scan</value>
+  </data>
+  <data name="playstation_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\playstation-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xbox_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xbox-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CONTROLLER_NUMBER" xml:space="preserve">
+    <value>Controller {0}</value>
+  </data>
+  <data name="OPTIONS_WOW_SEND_KEYS_DIRECT" xml:space="preserve">
+    <value>Send keystrokes directly to game window</value>
+  </data>
+  <data name="CONTROLLER_BATTERY_CONNECTED" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="CONTROLLER_BATTERY_DISCHARGING" xml:space="preserve">
+    <value>Discharging... [{0}%]</value>
+  </data>
+  <data name="MAIN_BUTTON_SETTINGS" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="OPTIONS_ABOUT_TITLE" xml:space="preserve">
+    <value>About WoWmapper</value>
+  </data>
+  <data name="OPTIONS_ABOUT_TRANSLATION_CREDIT" xml:space="preserve">
+    <value>English translation by Topher Sheridan</value>
+  </data>
+  <data name="OPTIONS_TREE_ABOUT" xml:space="preserve">
+    <value>About WoWmapper</value>
+  </data>
+  <data name="CONTROLLER_BATTERY_DISCONNECTED" xml:space="preserve">
+    <value>Not connected</value>
+  </data>
+  <data name="CONTROLLER_ACTIVE" xml:space="preserve">
+    <value>(Active)</value>
+  </data>
+  <data name="OPTIONS_CONTROLLERS_AUTO_SELECT" xml:space="preserve">
+    <value>Automatically activate controller</value>
+  </data>
+  <data name="DIALOG_HELP_TRIGGER_GRIP_TEXT" xml:space="preserve">
+    <value>When enabled, the left and right triggers will activate an extra binding when they reach a certain point. With the triggers as Shift or Control, you can use a full trigger press to activate an extra binding.</value>
+  </data>
+  <data name="DIALOG_HELP_TRIGGER_GRIP_TITLE" xml:space="preserve">
+    <value>Trigger Grip Binding</value>
+  </data>
+  <data name="OPTIONS_TRIGGERS_GRIP_THRESHOLDS" xml:space="preserve">
+    <value>Trigger Grip Thresholds</value>
+  </data>
+  <data name="OPTIONS_TRIGGERS_ENABLE_CLICK" xml:space="preserve">
+    <value>Enable Trigger Grip</value>
+  </data>
+  <data name="OPTIONS_TRIGGERS_THRESHOLDS" xml:space="preserve">
+    <value>Trigger Thresholds</value>
+  </data>
+  <data name="OPTIONS_TRIGGERS_TITLE" xml:space="preserve">
+    <value>Triggers</value>
+  </data>
+  <data name="COMMON_LEFT" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="COMMON_RIGHT" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="DIALOG_BIND_KEY_TEXT" xml:space="preserve">
+    <value>Press the new key for {0}. Existing keys will be swapped.</value>
+  </data>
+  <data name="DIALOG_BIND_KEY_TITLE" xml:space="preserve">
+    <value>Key Binding</value>
+  </data>
+  <data name="OPTIONS_KEYBINDS_EXPORT" xml:space="preserve">
+    <value>EXPORT</value>
+  </data>
+  <data name="OPTIONS_KEYBINDS_IMPORT" xml:space="preserve">
+    <value>IMPORT</value>
+  </data>
+  <data name="OPTIONS_KEYBINDS_RESET" xml:space="preserve">
+    <value>RESET KEYBINDS</value>
+  </data>
+  <data name="OPTIONS_ADVANCED_FEATURES_CHECKBOX" xml:space="preserve">
+    <value>Enable Advanced Features</value>
+  </data>
+  <data name="OPTIONS_ADVANCED_FEATURES_HEADER" xml:space="preserve">
+    <value>Advanced Features</value>
+  </data>
+  <data name="OPTIONS_ADVANCED_FEATURES_WARNING" xml:space="preserve">
+    <value>Enabling this option allows WoWmapper to read certain values from the game's memory, such as your character's level, health and target.
+
+Accessing the game in this manner may be a violation of the World of Warcraft Terms of Use. For more information, please visit the link below.</value>
+  </data>
+  <data name="OPTIONS_CURSOR_TITLE" xml:space="preserve">
+    <value>Cursor</value>
+  </data>
+  <data name="OPTIONS_CURSOR_ADVANCED" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="OPTIONS_CURSOR_ANALOG" xml:space="preserve">
+    <value>Analog Stick</value>
+  </data>
+  <data name="OPTIONS_CURSOR_AUTO_CENTER" xml:space="preserve">
     <value>Auto-center cursor after mouselook</value>
   </data>
-  <data name="Bluetooth" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\bluetooth22.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OPTIONS_CURSOR_CURVE" xml:space="preserve">
+    <value>Curve</value>
   </data>
-  <data name="STRING_CONTROLLER_DEFAULT" xml:space="preserve">
-    <value>Controller</value>
+  <data name="OPTIONS_CURSOR_DEADZONE" xml:space="preserve">
+    <value>Deadzone</value>
   </data>
-  <data name="USB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\connector7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OPTIONS_CURSOR_SPEED" xml:space="preserve">
+    <value>Speed</value>
   </data>
-  <data name="Wireless" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\internet119.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="OPTIONS_CURSOR_TOUCHPAD" xml:space="preserve">
+    <value>Touchpad</value>
   </data>
-  <data name="STRING_DEP_SLIMDX_ERROR" xml:space="preserve">
-    <value>WoWmapper requires the SlimDX 4.0 redistributable to be installed, but it does not appear to be on your system.
-Would you like to visit the SlimDX download page now?</value>
+  <data name="OPTIONS_APPEARANCE_CLASS_COLOR" xml:space="preserve">
+    <value>Color window automatically by class</value>
   </data>
-  <data name="STRING_DEP_SLIMDX_URL" xml:space="preserve">
-    <value>https://slimdx.org/download.php</value>
+  <data name="ERROR_DS4_DISABLED" xml:space="preserve">
+    <value>An error occurred with the DS4 driver, and it has been disabled.
+
+The error was:
+{0}</value>
+  </data>
+  <data name="ERROR_TITLE_DRIVER" xml:space="preserve">
+    <value>Driver error</value>
+  </data>
+  <data name="ERROR_XBOX_DISABLED" xml:space="preserve">
+    <value>An error occurred with the Xbox driver, and it has been disabled.
+
+The error was:
+{0}</value>
+  </data>
+  <data name="COMMON_ERROR" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="DIALOG_CONSOLEPORT_UPDATE_FAILED" xml:space="preserve">
+    <value>An error occurred while updating ConsolePort.</value>
+  </data>
+  <data name="DIALOG_CONSOLEPORT_UPDATE_FAILED_MESSAGE" xml:space="preserve">
+    <value>An error occurred while updating ConsolePort:
+{0}</value>
+  </data>
+  <data name="DIALOG_CONSOLEPORT_UPDATE_SUCCESS" xml:space="preserve">
+    <value>ConsolePort was successfully updated to version {0}!</value>
+  </data>
+  <data name="DIALOG_CONSOLEPORT_UPDATE_TITLE" xml:space="preserve">
+    <value>ConsolePort Update</value>
+  </data>
+  <data name="DIALOG_DOWNLOAD_FAILED_TEXT" xml:space="preserve">
+    <value>There was an error downloading the file, please try again later.</value>
+  </data>
+  <data name="DIALOG_DOWNLOAD_FAILED_TITLE" xml:space="preserve">
+    <value>Download failed</value>
+  </data>
+  <data name="TOUCHPAD_MODE" xml:space="preserve">
+    <value>Touchpad mode</value>
+  </data>
+  <data name="TOUCHPAD_MODE_BUTTONS" xml:space="preserve">
+    <value>Touch Buttons</value>
+  </data>
+  <data name="TOUCHPAD_MODE_EMULATE_CENTER" xml:space="preserve">
+    <value>Share &amp; Options</value>
+  </data>
+  <data name="TOUCHPAD_MODE_MOUSE" xml:space="preserve">
+    <value>Mouse Control</value>
+  </data>
+  <data name="VERSION_UPDATE_INSTALL" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="VERSION_UPDATE_NO_CONSOLEPORT" xml:space="preserve">
+    <value>ConsolePort is not installed!</value>
+  </data>
+  <data name="DIALOG_DOWNLOAD_TEXT" xml:space="preserve">
+    <value>File download in progress, please wait...</value>
+  </data>
+  <data name="DIALOG_DOWNLOAD_TITLE" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="DIALOG_SELECT_WOW" xml:space="preserve">
+    <value>You must select your World of Warcraft installation directory first.</value>
+  </data>
+  <data name="DIALOG_SELECT_WOW_TITLE" xml:space="preserve">
+    <value>WoW not found</value>
   </data>
 </root>

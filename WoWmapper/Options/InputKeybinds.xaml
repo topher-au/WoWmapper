@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="WoWmapper.Options.InputKeybinds"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WoWmapper"
+             xmlns:p="clr-namespace:WoWmapper.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox Header="{x:Static p:Resources.OPTIONS_KEYBINDS_TITLE}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <DockPanel>
+                <Button Margin="2" Click="ButtonImport_Click">
+                    <DockPanel>
+                        <Image Source="pack://application:,,,/Resources/Import.png" Margin="0,0,2,0"/>
+                        <TextBlock Text="IMPORT" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    
+                </Button>
+                <Button Margin="2" Click="ButtonExport_Click">
+                    <DockPanel>
+                        <Image Source="pack://application:,,,/Resources/Export.png" Margin="0,0,2,0"/>
+                        <TextBlock Text="EXPORT" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Button>
+                <Button HorizontalAlignment="Right" Margin="2" Click="ButtonResetDefaults_Click">
+                    <DockPanel>
+                        <Image Source="pack://application:,,,/Resources/Reset.png" Margin="0,0,2,0"/>
+                        <TextBlock Text="RESET KEYBINDS" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </Button>
+            </DockPanel>
+            <ScrollViewer Grid.Row="1" Margin="0,2,0,0">
+                <ListBox Name="listKeybinds" PreviewMouseWheel="listKeybinds_PreviewMouseWheel" MouseDoubleClick="ListKeybinds_OnMouseDoubleClick">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="0,2,0,2">
+                                <Image Source="{Binding DisplayImage}" Width="16" Height="16"/>
+                                <TextBlock Text="{Binding DisplayButton}" Margin="8,0,0,0"/>
+                                <TextBlock Text="{Binding DisplayKey}" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>
+    </GroupBox>
+</UserControl>
