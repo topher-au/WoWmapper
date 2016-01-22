@@ -187,7 +187,7 @@ namespace WoWmapper.Input
                     {
                         if (state.TriggerLeft >= Settings.Default.ThresholdLeftClick && !_leftGrip)
                         {
-                            controller.SendRumble(255, 255, 150);
+                            controller.SendRumble(255, 255, 200);
                             _leftGrip = true;
                         }
                         else if (state.TriggerLeft < Settings.Default.ThresholdLeftClick && _leftGrip)
@@ -197,7 +197,7 @@ namespace WoWmapper.Input
 
                         if (state.TriggerRight >= Settings.Default.ThresholdRightClick && !_rightGrip)
                         {
-                            controller.SendRumble(255, 255, 150);
+                            controller.SendRumble(255, 255, 200);
                             _rightGrip = true;
                         }
                         else if (state.TriggerRight < Settings.Default.ThresholdRightClick && _rightGrip)

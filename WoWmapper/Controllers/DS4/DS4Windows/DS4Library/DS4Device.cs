@@ -105,7 +105,7 @@ namespace DS4Windows
         }
         public bool IsRumbleSet()
         {
-            return RumbleMotorsExplicitlyOff;
+            return RumbleMotorsExplicitlyOff || RumbleMotorStrengthLeftHeavySlow != 0 || RumbleMotorStrengthRightLightFast != 0;
         }
     }
     
@@ -514,7 +514,7 @@ namespace DS4Windows
         private void sendOutputReport(bool synchronous)
         {
             setTestRumble();
-            //setHapticState();
+            setHapticState();
             if (conType == ConnectionType.BT)
             {
                 outputReportBuffer[0] = 0x11;
