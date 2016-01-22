@@ -101,11 +101,11 @@ namespace DS4Windows
         public bool RumbleMotorsExplicitlyOff;
         public bool IsLightBarSet()
         {
-            return LightBarExplicitlyOff || LightBarColor.red != 0 || LightBarColor.green != 0 || LightBarColor.blue != 0;
+            return LightBarExplicitlyOff && LightBarColor.red != 0 && LightBarColor.blue != 0 && LightBarColor.green != 0;
         }
         public bool IsRumbleSet()
         {
-            return RumbleMotorsExplicitlyOff || RumbleMotorStrengthLeftHeavySlow != 0 || RumbleMotorStrengthRightLightFast != 0;
+            return RumbleMotorsExplicitlyOff;
         }
     }
     
@@ -128,7 +128,6 @@ namespace DS4Windows
         private byte rightLightFastRumble;
         private byte leftHeavySlowRumble;
         private DS4Color ligtBarColor;
-        private byte ledFlashOn, ledFlashOff;
         private Thread ds4Input, ds4Output;
         private int battery;
         public DateTime lastActive = DateTime.UtcNow;
@@ -181,29 +180,9 @@ namespace DS4Windows
             }
         }
 
-        public byte LightBarOnDuration
-        {
-            get { return ledFlashOn; }
-            set
-            {
-                if (ledFlashOn != value)
-                {
-                    ledFlashOn = value;
-                }
-            }
-        }
-        
-        public byte LightBarOffDuration
-        {
-            get { return ledFlashOff; }
-            set
-            {
-                if (ledFlashOff != value)
-                {
-                    ledFlashOff = value;
-                }
-            }
-        }
+        public byte LightBarOnDuration { get; set; }
+
+        public byte LightBarOffDuration { get; set; }
 
         public DS4Touchpad Touchpad { get { return touchpad; } }
         public DS4SixAxis SixAxis { get { return sixAxis; } }
@@ -535,7 +514,7 @@ namespace DS4Windows
         private void sendOutputReport(bool synchronous)
         {
             setTestRumble();
-            setHapticState();
+            //setHapticState();
             if (conType == ConnectionType.BT)
             {
                 outputReportBuffer[0] = 0x11;
@@ -543,11 +522,11 @@ namespace DS4Windows
                 outputReportBuffer[3] = 0xff;
                 outputReportBuffer[6] = rightLightFastRumble; //fast motor
                 outputReportBuffer[7] = leftHeavySlowRumble; //slow motor
-                outputReportBuffer[8] = LightBarColor.red; //red
-                outputReportBuffer[9] = LightBarColor.green; //green
-                outputReportBuffer[10] = LightBarColor.blue; //blue
-                outputReportBuffer[11] = ledFlashOn; //flash on duration
-                outputReportBuffer[12] = ledFlashOff; //flash off duration
+                outputReportBuffer[8] = ligtBarColor.red; //red
+                outputReportBuffer[9] = ligtBarColor.green; //green
+                outputReportBuffer[10] = ligtBarColor.blue; //blue
+                outputReportBuffer[11] = LightBarOnDuration; //flash on duration
+                outputReportBuffer[12] = LightBarOffDuration; //flash off duration
             }
             else
             {
@@ -555,11 +534,11 @@ namespace DS4Windows
                 outputReportBuffer[1] = 0xff;
                 outputReportBuffer[4] = rightLightFastRumble; //fast motor
                 outputReportBuffer[5] = leftHeavySlowRumble; //slow  motor
-                outputReportBuffer[6] = LightBarColor.red; //red
-                outputReportBuffer[7] = LightBarColor.green; //green
-                outputReportBuffer[8] = LightBarColor.blue; //blue
-                outputReportBuffer[9] = ledFlashOn; //flash on duration
-                outputReportBuffer[10] = ledFlashOff; //flash off duration
+                outputReportBuffer[6] = ligtBarColor.red; //red
+                outputReportBuffer[7] = ligtBarColor.green; //green
+                outputReportBuffer[8] = ligtBarColor.blue; //blue
+                outputReportBuffer[9] = LightBarOnDuration; //flash on duration
+                outputReportBuffer[10] = LightBarOffDuration; //flash off duration
             }
             lock (outputReport)
             {

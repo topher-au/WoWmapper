@@ -6,6 +6,7 @@
              xmlns:p="clr-namespace:WoWmapper.Properties"
              xmlns:c="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
              xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:classes="clr-namespace:WoWmapper.Classes"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="300">
     <GroupBox Header="{x:Static p:Resources.OPTIONS_CURSOR_TITLE}">
@@ -50,8 +51,8 @@
                 </GroupBox>
                 <GroupBox Header="{x:Static p:Resources.OPTIONS_CURSOR_ADVANCED}">
                     <StackPanel Margin="5">
-                        <TextBlock Name="AdvancedNote"  Text="{x:Static p:Resources.OPTIONS_HAPTICS_ENABLE_ADVANCED}" TextWrapping="Wrap" />
-                        <StackPanel Name="PanelAdvanced">
+                        <TextBlock Text="{x:Static p:Resources.OPTIONS_REQUIRES_ADVANCED}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <StackPanel>
                             <CheckBox Content="{x:Static p:Resources.OPTIONS_CURSOR_AUTO_CENTER}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=MouselookCenterCursor}" Checked="SaveSettings" Unchecked="SaveSettings"/>
                         </StackPanel>
                     </StackPanel>

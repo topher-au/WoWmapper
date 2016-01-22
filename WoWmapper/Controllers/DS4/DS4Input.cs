@@ -16,9 +16,11 @@ namespace WoWmapper.Controllers.DS4
         private int _touchY;
         private bool wasTouching1;
 
-        public DS4Input(HidDevice HidDevice)
+        public DS4Input(string MAC)
         {
-            _controller = new DS4Device(HidDevice);
+            var control = DS4Devices.getDS4Controller(MAC);
+            if (control == null) return;
+            _controller = control;
             _controller.StartUpdate();
         }
 
@@ -169,16 +171,21 @@ namespace WoWmapper.Controllers.DS4
         public void SetLightbar(byte r, byte g, byte b)
         {
             if (_controller == null) return;
-            _controller.LightBarColor = new DS4Color(r, g, b);
-            _controller.LightBarOffDuration = 0;
-            _controller.LightBarOnDuration = 255;
+            if (_controller.LightBarColor.red != r || _controller.LightBarColor.green != g ||
+                _controller.LightBarColor.blue != b)
+            {
+                _controller.LightBarColor = new DS4Color(r, g, b);
+                _controller.LightBarOffDuration = 1;
+                _controller.LightBarOnDuration = 255;
+            }
+            
         }
 
         public void SetLightbar(byte r, byte g, byte b, int flashOn, int flashOff)
         {
             if (_controller == null) return;
             _controller.LightBarColor = new DS4Color(r, g, b);
-            byte on = (byte)(flashOn/10);
+            byte on = (byte)(flashOn / 10);
             byte off = (byte)(flashOff / 10);
             _controller.LightBarOffDuration = off;
             _controller.LightBarOnDuration = on;
@@ -186,6 +193,7 @@ namespace WoWmapper.Controllers.DS4
 
         public void Stop()
         {
+            Console.WriteLine("stopping");
             if (_controller == null) return;
             _controller.LightBarColor=new DS4Color(0,0,0);
             _controller.LightBarOnDuration = 0;

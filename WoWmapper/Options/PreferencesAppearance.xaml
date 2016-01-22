@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WoWmapper.Options"
              xmlns:p="clr-namespace:WoWmapper.Properties"
+             xmlns:classes="clr-namespace:WoWmapper.Classes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <GroupBox x:Name="groupBox" Header="Appearance">
@@ -38,8 +39,8 @@
                 <TextBlock Name="textNextStartup" Text="{x:Static p:Resources.OPTIONS_APPEARANCE_RESTART_APP}" TextWrapping="Wrap" Margin="20,10,20,0" TextAlignment="Center" Foreground="Yellow" Visibility="Collapsed"/>
                 <GroupBox Header="{x:Static p:Resources.OPTIONS_ADVANCED_FEATURES_HEADER}" Margin="5,15,5,0">
                     <StackPanel Margin="5">
-                        <TextBlock x:Name="AdvancedNote"  Text="{x:Static p:Resources.OPTIONS_HAPTICS_ENABLE_ADVANCED}" TextWrapping="Wrap" />
-                        <StackPanel x:Name="PanelAdvanced">
+                        <TextBlock Text="{x:Static p:Resources.OPTIONS_REQUIRES_ADVANCED}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <StackPanel>
                             <CheckBox Content="{x:Static p:Resources.OPTIONS_APPEARANCE_CLASS_COLOR}" IsChecked="{Binding AutoClassAccent, Source={x:Static p:Settings.Default}}" Checked="SaveSettings" Unchecked="SaveSettings"/>
                         </StackPanel>
                     </StackPanel>

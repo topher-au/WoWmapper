@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:WoWmapper"
         xmlns:p="clr-namespace:WoWmapper.Properties"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="WoWmapper" Height="350" Width="460" Closed="MetroWindow_Closed" Loaded="MetroWindow_Loaded" ShowMaxRestoreButton="False" Closing="MetroWindow_Closing" StateChanged="MetroWindow_StateChanged" WindowStartupLocation="CenterScreen" Icon="Resources/WoWmapper_Icon.ico" ShowIconOnTitleBar="False" ResizeMode="CanMinimize">
     <Controls:MetroWindow.RightWindowCommands>

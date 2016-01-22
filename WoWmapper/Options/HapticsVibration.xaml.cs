@@ -12,34 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
 using WoWmapper.Properties;
 
 namespace WoWmapper.Options
 {
     /// <summary>
-    /// Interaction logic for ColorsFlyout.xaml
+    /// Interaction logic for HapticsVibration.xaml
     /// </summary>
-    public partial class ColorsFlyout : Flyout
+    public partial class HapticsVibration : UserControl
     {
-        public ColorsFlyout()
+        public HapticsVibration()
         {
             InitializeComponent();
         }
 
-        private void SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        private void CheckboxChanged(object sender, RoutedEventArgs e)
         {
             Settings.Default.Save();
-        }
-
-        private void SliderChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Settings.Default.Save();
-        }
-
-        private void CloseFlyout(object sender, RoutedEventArgs e)
-        {
-            this.IsOpen = false;
         }
     }
 }

@@ -519,4 +519,7 @@ The error was:
   <data name="DIALOG_SELECT_WOW_TITLE" xml:space="preserve">
     <value>WoW not found</value>
   </data>
+  <data name="OPTIONS_REQUIRES_ADVANCED" xml:space="preserve">
+    <value>These options will have no effect unless advanced features are enabled</value>
+  </data>
 </root>

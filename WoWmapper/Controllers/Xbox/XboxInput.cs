@@ -88,8 +88,10 @@ namespace WoWmapper.Controllers.Xbox
 
         public void SendRumble(byte Left, byte Right, int Duration)
         {
-            
-            _controller?.Vibrate(new XInputVibration() { LeftMotorSpeed=Left, RightMotorSpeed=Right}, TimeSpan.FromMilliseconds(Duration));
+            var rLeft = (ushort)(((float) Left/255)*ushort.MaxValue);
+            var rRight = (ushort)(((float) Right/255)*ushort.MaxValue);
+            Console.WriteLine($"Vibrating: {rLeft}/{rRight} for {Duration}ms");
+            _controller?.Vibrate(new XInputVibration() { LeftMotorSpeed=rLeft, RightMotorSpeed=rRight }, TimeSpan.FromMilliseconds(Duration));
         }
 
         public void SetLightbar(byte r, byte g, byte b)

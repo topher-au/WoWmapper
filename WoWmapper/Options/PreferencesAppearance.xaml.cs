@@ -49,18 +49,6 @@ namespace WoWmapper.Options
                 if (Accent.Name == Settings.Default.AppAccent) comboAccent.SelectedIndex = comboAccent.Items.Count - 1;
             }
 
-            switch (Settings.Default.EnableAdvancedFeatures)
-            {
-                case true:
-                    PanelAdvanced.Visibility = Visibility.Visible;
-                    AdvancedNote.Visibility = Visibility.Collapsed;
-                    break;
-                case false:
-                    PanelAdvanced.Visibility = Visibility.Collapsed;
-                    AdvancedNote.Visibility = Visibility.Visible;
-                    break;
-            }
-
             // Load other settings
             checkDropShadow.IsChecked = Settings.Default.AppDropShadow;
         }

@@ -16,8 +16,9 @@ namespace WoWmapper.Options
         private InputControllers pControllers = new InputControllers();
         private InputCursor pCursor = new InputCursor();
         private InputTriggers pTriggers = new InputTriggers();
-        private InputHaptics pHaptics = new InputHaptics();
         private InputKeybinds pKeybinds = new InputKeybinds();
+        private HapticsColors pColors = new HapticsColors();
+        private HapticsVibration pVibration = new HapticsVibration();
         private AdvancedSettings pAdvanced = new AdvancedSettings();
         private AboutWoWmapper pAbout = new AboutWoWmapper();
         
@@ -74,12 +75,6 @@ namespace WoWmapper.Options
             SettingsContent.Content = pControllers;
         }
 
-        private void TreeViewItemInputHapticFeedback_Selected(object sender, RoutedEventArgs e)
-        {
-            SettingsContent.Content = pHaptics;
-            pHaptics.UpdateAdvancedFeedback();
-        }
-
         private void TreeViewItemInputKeybinds_Selected(object sender, RoutedEventArgs e)
         {
             SettingsContent.Content = pKeybinds;
@@ -110,6 +105,21 @@ namespace WoWmapper.Options
         private void TreeViewItemInputCursor_Selected(object sender, RoutedEventArgs e)
         {
             SettingsContent.Content = pCursor;
+        }
+
+        private void CloseFlyout(object sender, RoutedEventArgs e)
+        {
+            this.IsOpen = false;
+        }
+
+        private void TreeViewItemHapticsVibration_OnSelected(object sender, RoutedEventArgs e)
+        {
+            SettingsContent.Content = pVibration;
+        }
+
+        private void TreeViewItemHapticsColors_OnSelected(object sender, RoutedEventArgs e)
+        {
+            SettingsContent.Content = pColors;
         }
     }
 }

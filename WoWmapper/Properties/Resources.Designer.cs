@@ -828,6 +828,15 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to These options will have no effect unless advanced features are enabled.
+        /// </summary>
+        public static string OPTIONS_REQUIRES_ADVANCED {
+            get {
+                return ResourceManager.GetString("OPTIONS_REQUIRES_ADVANCED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset all settings.
         /// </summary>
         public static string OPTIONS_RESET_ALL {

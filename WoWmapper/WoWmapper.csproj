@@ -52,6 +52,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\WoWmapper_Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MahApps.Metro, Version=1.1.2.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.1.2.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -90,6 +93,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\ShowWhenEnabled.cs" />
+    <Compile Include="Options\HapticsColors.xaml.cs">
+      <DependentUpon>HapticsColors.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Options\HapticsVibration.xaml.cs">
+      <DependentUpon>HapticsVibration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorldOfWarcraft\AddonParser.cs" />
     <Compile Include="WorldOfWarcraft\GameInfo.cs" />
     <Compile Include="Input\HapticManager.cs" />
@@ -129,14 +139,8 @@
     <Compile Include="Options\AdvancedSettings.xaml.cs">
       <DependentUpon>AdvancedSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Options\ColorsFlyout.xaml.cs">
-      <DependentUpon>ColorsFlyout.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Options\InputControllers.xaml.cs">
       <DependentUpon>InputControllers.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Options\InputHaptics.xaml.cs">
-      <DependentUpon>InputHaptics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Options\InputKeybinds.xaml.cs">
       <DependentUpon>InputKeybinds.xaml</DependentUpon>
@@ -166,7 +170,11 @@
     <Compile Include="WorldOfWarcraft\ProcessWatcher.cs" />
     <Compile Include="WorldOfWarcraft\Vector2.cs" />
     <Compile Include="WorldOfWarcraft\Offsets.cs" />
-    <Page Include="Options\ColorsFlyout.xaml">
+    <Page Include="Options\HapticsColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Options\HapticsVibration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,10 +231,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Options\InputControllers.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Options\InputHaptics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -329,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Controllers\DS4\DS4Windows\HidLibrary\LICENSE.htm" />
+    <Resource Include="Resources\Icons\FlyoutClose_Left.png" />
     <Resource Include="Resources\WoWmapper_Logo.png" />
     <Resource Include="Resources\ConnectionIcons\UsbLight.png" />
     <Resource Include="Resources\ConnectionIcons\UsbDark.png" />

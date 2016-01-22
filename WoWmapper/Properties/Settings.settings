@@ -90,7 +90,7 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="RightSpeed" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="AutoClassAccent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

@@ -12,23 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
-using WoWmapper;
-using WoWmapper.Controllers;
 
 namespace WoWmapper.Options
 {
     /// <summary>
-    /// Interaction logic for InputCursor.xaml
+    /// Interaction logic for HapticsColors.xaml
     /// </summary>
-    public partial class InputCursor : UserControl
+    public partial class HapticsColors : UserControl
     {
-        public InputCursor()
+        public HapticsColors()
         {
             InitializeComponent();
         }
 
-        private void SaveSettings(object sender, RoutedEventArgs e)
+        private void CheckboxChanged(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
+        }
+
+        private void SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             Properties.Settings.Default.Save();
         }

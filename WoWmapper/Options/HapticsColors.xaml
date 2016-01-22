@@ -1,0 +1,59 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WoWmapper.Options"
+            xmlns:classes="clr-namespace:WoWmapper.Classes"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:Properties="clr-namespace:WoWmapper.Properties" x:Class="WoWmapper.Options.HapticsColors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox Header="Colors">
+        <ScrollViewer>
+            <StackPanel Margin="5">
+                <GroupBox Header="Basic">
+                    <StackPanel Margin="2">
+                        <DockPanel Height="24" Margin="0,0,0,2">
+                            <CheckBox Content="{x:Static Properties:Resources.OPTIONS_HAPTICS_LIGHTBAR_COLOR}" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=EnableColorLightbar}" VerticalAlignment="Center" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                            <xctk:ColorPicker Foreground="Black" ShowDropDownButton="False" Width="24" HorizontalAlignment="Right" SelectedColor="{Binding LightbarColorDefault, Source={x:Static Properties:Settings.Default}}" SelectedColorChanged="SelectedColorChanged" ShowStandardColors="False" Background="#FF4F4F4F"/>
+                        </DockPanel>
+                        <DockPanel Height="24">
+                            <CheckBox Content="Flash lightbar at " VerticalAlignment="Center" IsChecked="{Binding Source={x:Static Properties:Settings.Default}, Path=EnableColorLightbarBatteryLow}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                            <TextBlock Text="{Binding LightbarBatteryThreshold, Source={x:Static Properties:Settings.Default}}" VerticalAlignment="Center" />
+                            <TextBlock Text="%" VerticalAlignment="Center" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Slider x:Name="SliderLightbarThreshold" Width="50" Minimum="1" Maximum="50" Value="{Binding LightbarBatteryThreshold, Source={x:Static Properties:Settings.Default}}" ValueChanged="CheckboxChanged"/>
+                                <xctk:ColorPicker Foreground="Black" ShowDropDownButton="False" Width="24" Margin="10,0,0,0" SelectedColor="{Binding LightbarColorBatteryLow, Source={x:Static Properties:Settings.Default}}" SelectedColorChanged="SelectedColorChanged" ShowStandardColors="False" Background="#FF4F4F4F"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Advanced">
+                    <StackPanel Margin="2">
+                        <TextBlock Text="{x:Static Properties:Resources.OPTIONS_REQUIRES_ADVANCED}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static Properties:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <CheckBox Content="Color lightbar by class" Margin="0,0,0,5" IsChecked="{Binding EnableLightbarClass, Source={x:Static Properties:Settings.Default}}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                        <CheckBox Content="Color lightbar by health value" Margin="0,0,0,5" IsChecked="{Binding EnableLightbarHealth, Source={x:Static Properties:Settings.Default}}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                        <DockPanel Height="24" Margin="0,0,0,2">
+                            <TextBlock Text="Critical (Less than 20%)" VerticalAlignment="Center"/>
+                            <xctk:ColorPicker Foreground="Black" ShowDropDownButton="False" Width="24" HorizontalAlignment="Right" SelectedColor="{Binding LightbarHealthCritical, Source={x:Static Properties:Settings.Default}}" SelectedColorChanged="SelectedColorChanged" ShowStandardColors="False" Background="#FF4F4F4F" Height="24" VerticalAlignment="Top"/>
+                        </DockPanel>
+                        <DockPanel Height="24" Margin="0,0,0,2">
+                            <TextBlock Text="Low Health (More than 20%)" VerticalAlignment="Center"/>
+                            <xctk:ColorPicker Foreground="Black" ShowDropDownButton="False" Width="24" HorizontalAlignment="Right" SelectedColor="{Binding LightbarHealthLow, Source={x:Static Properties:Settings.Default}}" SelectedColorChanged="SelectedColorChanged" ShowStandardColors="False" Background="#FF4F4F4F"/>
+                        </DockPanel>
+                        <DockPanel Height="24" Margin="0,0,0,2">
+                            <TextBlock Text="Medium Health (More than 50%)" VerticalAlignment="Center"/>
+                            <xctk:ColorPicker Foreground="Black" ShowDropDownButton="False" Width="24" HorizontalAlignment="Right" SelectedColor="{Binding LightbarHealthMedium, Source={x:Static Properties:Settings.Default}}" SelectedColorChanged="SelectedColorChanged" ShowStandardColors="False" Background="#FF4F4F4F"/>
+                        </DockPanel>
+                        <DockPanel Height="24">
+                            <TextBlock Text="High Health (More than 90%)" VerticalAlignment="Center"/>
+                            <xctk:ColorPicker Foreground="Black" ShowDropDownButton="False" Width="24" HorizontalAlignment="Right" SelectedColor="{Binding LightbarHealthHigh, Source={x:Static Properties:Settings.Default}}" SelectedColorChanged="SelectedColorChanged" ShowStandardColors="False" Background="#FF4F4F4F"/>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+
+
+            </StackPanel>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="WoWmapper.Options.HapticsVibration"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:classes="clr-namespace:WoWmapper.Classes"
+             xmlns:p="clr-namespace:WoWmapper.Properties"
+             xmlns:conv="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox Header="Vibration">
+        <ScrollViewer>
+            <StackPanel Margin="5">
+                <GroupBox Header="Basic">
+                    <StackPanel Margin="2">
+                        <CheckBox Name="CheckVibrateTriggerClick" Content="{x:Static p:Resources.OPTIONS_HAPTICS_VIBRATE_TRIGGER_CLICK}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableVibrateTriggerGrip}" Checked="CheckboxChanged"  Unchecked="CheckboxChanged"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Advanced">
+                    <StackPanel Margin="2">
+                        <TextBlock Text="{x:Static p:Resources.OPTIONS_REQUIRES_ADVANCED}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <CheckBox Name="CheckVibrateDamage" Content="{x:Static p:Resources.OPTIONS_HAPTICS_VIBRATE_DAMAGE}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableVibrateDamage}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                        <CheckBox Name="CheckVibrateTarget" Content="{x:Static p:Resources.OPTIONS_HAPTICS_VIBRATE_TARGET}"  Margin="0,5,0,0" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableVibrateTarget}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                    </StackPanel>
+                    
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </GroupBox>
+</UserControl>

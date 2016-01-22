@@ -38,6 +38,8 @@ namespace WoWmapper.Controllers
             _watcherThread.Start();
             if(Settings.Default.EnableXbox)
                 XboxController.StartPolling();
+            if(Settings.Default.EnableDS4)
+                DS4Devices.findControllers();
         }
 
         public static void Stop()
@@ -131,7 +133,7 @@ namespace WoWmapper.Controllers
                         {
                             if (_allControllers.Count(c => c.UnderlyingDevice == controller.HidDevice) == 0)
                             {
-                                _allControllers.Add(new DS4Input(controller.HidDevice));
+                                _allControllers.Add(new DS4Input(controller.MacAddress));
                                 ControllersUpdated?.Invoke();
                             }
 

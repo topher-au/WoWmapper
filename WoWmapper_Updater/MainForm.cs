@@ -20,6 +20,21 @@ namespace WoWmapper_Updater
         public MainForm()
         {
             InitializeComponent();
+
+            // Check previous version
+            if (File.Exists("WoWmapper.exe"))
+            {
+                var wmVersionInfo = FileVersionInfo.GetVersionInfo("WoWmapper.exe");
+                if (wmVersionInfo != null)
+                {
+                    var versionCurrent = new Version(wmVersionInfo.ProductVersion);
+                    if (versionCurrent < new Version(0, 5))
+                    {
+                        CleanupOldVersion();
+                    }
+                }
+            }
+
             var FileName = Environment.GetCommandLineArgs()[1];
 
             Text = Resources.WindowTitle;
@@ -37,6 +52,19 @@ namespace WoWmapper_Updater
             if (File.Exists("Wowmapper.exe")) Process.Start("WoWmapper.exe", "-updated");
 
             Close();
+        }
+
+        public void CleanupOldVersion()
+        {
+            if (File.Exists("ICSharpCode.SharpZipLib.dll")) File.Delete("ICSharpCode.SharpZipLib.dll");
+            if (File.Exists("Newtonsoft.Json.dll")) File.Delete("Newtonsoft.Json.dll");
+            if (File.Exists("input_360.xml")) File.Delete("input_360.xml");
+            if (File.Exists("input_ds4.xml")) File.Delete("input_ds4.xml");
+            if (File.Exists("offsets.xml")) File.Delete("offsets.xml");
+            if (File.Exists("SlimDX.dll")) File.Delete("SlimDX.dll");
+            if (File.Exists("WoWmapper_Input.dll")) File.Delete("WoWmapper_Input.dll");
+            if (File.Exists("WoWmapperEI.dll")) File.Delete("WoWmapperEI.dll");
+            if (Directory.Exists("plugins")) Directory.Delete("plugins", true);
         }
 
         public void ExtractUpdate(string zipFile)
@@ -65,6 +93,7 @@ namespace WoWmapper_Updater
 
                 Directory.Delete(_update,true);
             }
+            File.Delete(zipFile);
         }
     }
 }

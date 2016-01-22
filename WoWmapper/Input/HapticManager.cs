@@ -58,7 +58,8 @@ namespace WoWmapper.Input
                         if (controller.Battery < Settings.Default.LightbarBatteryThreshold &&
                             controller.BatteryState == ControllerBatteryState.Discharging)
                         {
-                            controller.SetLightbar(255, 0, 0, 1000, 1000);
+                            var color = Settings.Default.LightbarColorBatteryLow;
+                            controller.SetLightbar(color.R, color.G, color.B, 1000, 1000);
                             setLightbar = true;
                         }
                     }

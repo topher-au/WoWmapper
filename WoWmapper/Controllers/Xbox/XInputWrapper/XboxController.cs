@@ -187,7 +187,7 @@ namespace J2i.Net.XInputWrapper
             get
             {
                 var stateSecret = new XInputStateSecret();
-                XInput.XInputGetStateSecret(0, out stateSecret);
+                XInput.XInputGetStateSecret(_playerIndex, out stateSecret);
                 return (stateSecret.wButtons & 0x0400) == 0x0400;
             }
         }
