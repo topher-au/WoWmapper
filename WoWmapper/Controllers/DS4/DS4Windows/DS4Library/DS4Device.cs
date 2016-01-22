@@ -101,7 +101,7 @@ namespace DS4Windows
         public bool RumbleMotorsExplicitlyOff;
         public bool IsLightBarSet()
         {
-            return LightBarExplicitlyOff && LightBarColor.red != 0 && LightBarColor.blue != 0 && LightBarColor.green != 0;
+            return LightBarExplicitlyOff || LightBarColor.red != 0 || LightBarColor.blue != 0 || LightBarColor.green != 0;
         }
         public bool IsRumbleSet()
         {
@@ -127,7 +127,6 @@ namespace DS4Windows
         private readonly DS4SixAxis sixAxis = null;
         private byte rightLightFastRumble;
         private byte leftHeavySlowRumble;
-        private DS4Color ligtBarColor;
         private Thread ds4Input, ds4Output;
         private int battery;
         public DateTime lastActive = DateTime.UtcNow;
@@ -168,17 +167,7 @@ namespace DS4Windows
             }
         }
 
-        public DS4Color LightBarColor
-        {
-            get { return ligtBarColor; }
-            set
-            {
-                if (ligtBarColor.red != value.red || ligtBarColor.green != value.green || ligtBarColor.blue != value.blue)
-                {
-                    ligtBarColor = value;
-                }
-            }
-        }
+        public DS4Color LightBarColor { get; set; }
 
         public byte LightBarOnDuration { get; set; }
 
@@ -522,9 +511,9 @@ namespace DS4Windows
                 outputReportBuffer[3] = 0xff;
                 outputReportBuffer[6] = rightLightFastRumble; //fast motor
                 outputReportBuffer[7] = leftHeavySlowRumble; //slow motor
-                outputReportBuffer[8] = ligtBarColor.red; //red
-                outputReportBuffer[9] = ligtBarColor.green; //green
-                outputReportBuffer[10] = ligtBarColor.blue; //blue
+                outputReportBuffer[8] = LightBarColor.red; //red
+                outputReportBuffer[9] = LightBarColor.green; //green
+                outputReportBuffer[10] = LightBarColor.blue; //blue
                 outputReportBuffer[11] = LightBarOnDuration; //flash on duration
                 outputReportBuffer[12] = LightBarOffDuration; //flash off duration
             }
@@ -534,9 +523,9 @@ namespace DS4Windows
                 outputReportBuffer[1] = 0xff;
                 outputReportBuffer[4] = rightLightFastRumble; //fast motor
                 outputReportBuffer[5] = leftHeavySlowRumble; //slow  motor
-                outputReportBuffer[6] = ligtBarColor.red; //red
-                outputReportBuffer[7] = ligtBarColor.green; //green
-                outputReportBuffer[8] = ligtBarColor.blue; //blue
+                outputReportBuffer[6] = LightBarColor.red; //red
+                outputReportBuffer[7] = LightBarColor.green; //green
+                outputReportBuffer[8] = LightBarColor.blue; //blue
                 outputReportBuffer[9] = LightBarOnDuration; //flash on duration
                 outputReportBuffer[10] = LightBarOffDuration; //flash off duration
             }

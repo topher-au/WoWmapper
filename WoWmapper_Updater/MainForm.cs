@@ -21,21 +21,7 @@ namespace WoWmapper_Updater
         {
             InitializeComponent();
 
-            // Check previous version
-            if (File.Exists("WoWmapper.exe"))
-            {
-                var wmVersionInfo = FileVersionInfo.GetVersionInfo("WoWmapper.exe");
-                if (wmVersionInfo != null)
-                {
-                    var versionCurrent = new Version(wmVersionInfo.ProductVersion);
-                    if (versionCurrent < new Version(0, 5))
-                    {
-                        CleanupOldVersion();
-                    }
-                }
-            }
-
-            var FileName = Environment.GetCommandLineArgs()[1];
+            var FileName = Program.UpdateFile;
 
             Text = Resources.WindowTitle;
             this.labelInstallText.Text = Resources.UpdateWaiting;
@@ -44,6 +30,23 @@ namespace WoWmapper_Updater
             while(Process.GetProcesses().Count(process => process.ProcessName.ToLower() == "wowmapper") > 0)
                 Application.DoEvents();
 
+            try
+            {
+                // Check previous version
+                if (File.Exists("WoWmapper.exe"))
+                {
+                    var wmVersionInfo = FileVersionInfo.GetVersionInfo("WoWmapper.exe");
+                    if (!wmVersionInfo.Equals(null))
+                    {
+                        var versionCurrent = new Version(wmVersionInfo.ProductVersion);
+                        if (versionCurrent < new Version(0, 5))
+                        {
+                            CleanupOldVersion();
+                        }
+                    }
+                }
+            }
+            catch { }
 
             this.labelInstallText.Text = Resources.UpdateInstalling;
 

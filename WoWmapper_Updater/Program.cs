@@ -7,20 +7,24 @@ using System.Windows.Forms;
 
 namespace WoWmapper_Updater
 {
-    static class Program
+    public static class Program
     {
+        public static string UpdateFile = string.Empty;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            if (args.Length != 1 || !File.Exists(args[0])) return;
+            if (args.Length == 0) return;
 
+            UpdateFile = args.FirstOrDefault(arg => File.Exists(arg.Trim('\"')))?.Trim('\"');
+
+            if (UpdateFile == string.Empty) return;
+            //MessageBox.Show(UpdateFile);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
-            
         }
     }
 }

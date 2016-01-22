@@ -171,24 +171,34 @@ namespace WoWmapper.Controllers.DS4
         public void SetLightbar(byte r, byte g, byte b)
         {
             if (_controller == null) return;
-            if (_controller.LightBarColor.red != r || _controller.LightBarColor.green != g ||
-                _controller.LightBarColor.blue != b)
+
+            if (!_controller.LightBarColor.Equals(new DS4Color(r, g, b)))
             {
-                _controller.LightBarColor = new DS4Color(r, g, b);
-                _controller.LightBarOffDuration = 1;
-                _controller.LightBarOnDuration = 255;
+                lock (_controller)
+                {
+                    _controller.LightBarOffDuration = 0;
+                    _controller.LightBarOnDuration = 255;
+                    Thread.Sleep(5);
+                    _controller.LightBarColor = new DS4Color(r, g, b);
+                }
             }
-            
         }
 
         public void SetLightbar(byte r, byte g, byte b, int flashOn, int flashOff)
         {
-            if (_controller == null) return;
-            _controller.LightBarColor = new DS4Color(r, g, b);
-            byte on = (byte)(flashOn / 10);
-            byte off = (byte)(flashOff / 10);
-            _controller.LightBarOffDuration = off;
-            _controller.LightBarOnDuration = on;
+            if (_controller == null ||
+                _controller.LightBarColor.Equals(new DS4Color(r, g, b))) return;
+            
+            var on = (byte)(flashOn / 10);
+            var off = (byte)(flashOff / 10);
+
+            lock (_controller)
+            {
+                _controller.LightBarOffDuration = off;
+                _controller.LightBarOnDuration = on;
+                Thread.Sleep(5);
+                _controller.LightBarColor = new DS4Color(r, g, b);
+            }
         }
 
         public void Stop()
