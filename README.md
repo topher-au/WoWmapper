@@ -1,4 +1,4 @@
-![WoWmapper Logo](https://github.com/topher-au/WoWmapper/raw/master/WoWmapper/Resources/WoWmapperLogo.png)
+![WoWmapper Logo](https://github.com/topher-au/WoWmapper/raw/master/WoWmapper/Resources/WoWmapper_Logo.png)
 
 # WoWmapper
 
