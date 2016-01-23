@@ -1,6 +1,6 @@
 ![WoWmapper](https://github.com/topher-au/WoWmapper/raw/master/WoWmapper/Resources/WoWmapper_Logo.png)
 
-WoWmapper is a game controller input mapper for World of Warcraft, designed for use with the addon [ConsolePort by MunkDev](http://www.wowinterface.com/downloads/info23536-ConsolePort-GameControllerAddon.html). It provides standard keyboard mapping support as well as various other features designed to make gameplay with a controller easier.
+WoWmapper is a game controller input mapper for World of Warcraft, designed for use with the addon [ConsolePort by MunkDev](http://www.curse.com/addons/wow/console-port). It provides standard keyboard mapping support as well as various other features designed to make gameplay with a controller easier.
 
 ## Getting Started
 
