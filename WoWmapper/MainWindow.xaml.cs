@@ -66,21 +66,21 @@ namespace WoWmapper
             {
                 new MenuItem
                 {
-                    Header = Properties.Resources.NOTIFY_MENU_OPEN_WOWMAPPER
+                    Header = Properties.Resources.NotifyMenuOpenWowmapper
                 },
                 new Separator(),
                 new MenuItem
                 {
-                    Header = Properties.Resources.NOTIFY_MENU_CONTROLLERS
+                    Header = Properties.Resources.NotifyMenuControllers
                 },
                 new MenuItem
                 {
-                    Header = Properties.Resources.NOTIFY_MENU_KEYBINDS
+                    Header = Properties.Resources.NotifyMenuKeybinds
                 },
                 new Separator(),
                 new MenuItem
                 {
-                    Header = Properties.Resources.NOTIFY_MENU_EXIT
+                    Header = Properties.Resources.NotifyMenuExit
                 }
             }
         };
@@ -92,6 +92,10 @@ namespace WoWmapper
         public MainWindow()
         {
             InitializeComponent();
+
+            Logger.Write("------------------------------------------");
+            Logger.Write("WoWmapper {0} initializing...", Assembly.GetExecutingAssembly().GetName().Version);
+            Logger.Write("Operating System: Windows {0}, {1}", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "x64" : "x86");
 
             // Add notification menu items
             ((MenuItem)_notifyMenu.Items[0]).Click += NotifyMenu_Open_WoWmapper;
@@ -171,7 +175,7 @@ namespace WoWmapper
         {
             
             var bindName = ControllerManager.GetActiveController().Type == ControllerType.DualShock4 ? ControllerData.DS4.ButtonNames[Button] : ControllerData.Xbox.ButtonNames[Button];
-            _bindDialog = await this.ShowProgressAsync(Properties.Resources.DIALOG_BIND_KEY_TITLE, string.Format(Properties.Resources.DIALOG_BIND_KEY_TEXT, bindName), true);
+            _bindDialog = await this.ShowProgressAsync(Properties.Resources.DialogBindKeyTitle, string.Format(Properties.Resources.DialogBindKeyText, bindName), true);
 
             await Task.Run((Action)
             delegate
@@ -255,7 +259,7 @@ namespace WoWmapper
         private async Task<bool> DownloadFile(string URL, string fileName)
         {
             var pdController =
-                await this.ShowProgressAsync(Properties.Resources.DIALOG_DOWNLOAD_TITLE, Properties.Resources.DIALOG_DOWNLOAD_TEXT, true);
+                await this.ShowProgressAsync(Properties.Resources.DialogDownloadingTitle, Properties.Resources.DialogDownloadingText, true);
             Functions.DownloadFileProgressChanged +=
                 e =>
                 {
@@ -272,8 +276,8 @@ namespace WoWmapper
             if (pdController.IsOpen)
                 await pdController.CloseAsync();
             if (!downloadSuccess)
-                ShowMessageBox(Properties.Resources.DIALOG_DOWNLOAD_FAILED_TITLE,
-                    Properties.Resources.DIALOG_DOWNLOAD_FAILED_TEXT);
+                ShowMessageBox(Properties.Resources.DialogErrorDownloadFailedTitle,
+                    Properties.Resources.DialogErrorDownloadFailedText);
             return downloadSuccess;
         }
 
@@ -314,8 +318,8 @@ namespace WoWmapper
         {
             var result =
                 await
-                    this.ShowMessageAsync(Properties.Resources.OPTIONS_RESET_ALL_TITLE,
-                        Properties.Resources.OPTIONS_RESET_ALL_TEXT, MessageDialogStyle.AffirmativeAndNegative);
+                    this.ShowMessageAsync(Properties.Resources.DialogResetAllTitle,
+                        Properties.Resources.DialogResetAllText, MessageDialogStyle.AffirmativeAndNegative);
             if (result == MessageDialogResult.Affirmative)
             {
                 File.Delete("keybinds.dat");
@@ -353,11 +357,11 @@ namespace WoWmapper
                 switch (ProcessWatcher.GameArchitecture)
                 {
                     case Enums.GameArchitecture.X86:
-                        textWoWStatus.Text = Properties.Resources.WOW_RUNNING_32;
+                        textWoWStatus.Text = Properties.Resources.MainWindowWowRunning32;
                         break;
 
                     case Enums.GameArchitecture.X64:
-                        textWoWStatus.Text = Properties.Resources.WOW_RUNNING_64;
+                        textWoWStatus.Text = Properties.Resources.MainWindowWoWRunning64;
                         break;
                 }
                 if (ProcessWatcher.CanReadMemory)
@@ -381,12 +385,12 @@ namespace WoWmapper
                             break;
 
                         case GameInfo.GameState.LoggedOut:
-                            textWoWStatus2.Text = "Logged out";
+                            textWoWStatus2.Text = Properties.Resources.MainWindowWoWLoggedOut;
                             SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
                             break;
 
                         case GameInfo.GameState.NotRunning:
-                            textWoWStatus2.Text = "Not running/error";
+                            textWoWStatus2.Text = Properties.Resources.MainWindowWoWError;
                             SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
                             break;
                     }
@@ -398,7 +402,7 @@ namespace WoWmapper
             }
             else
             {
-                textWoWStatus.Text = Properties.Resources.WOW_NOT_RUNNING;
+                textWoWStatus.Text = Properties.Resources.MainWindowWoWNotRunning;
                 SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
             }
 
@@ -415,7 +419,7 @@ namespace WoWmapper
 
             if (actiCont != null)
             {
-                textControllerStatus.Text = string.Format(Properties.Resources.CONTROLLER_CONNECTED, actiCont.Type);
+                textControllerStatus.Text = string.Format(Properties.Resources.MainWindowControllerConnected, actiCont.Type);
 
                 switch (actiCont.ConnectionType)
                 {
@@ -443,21 +447,21 @@ namespace WoWmapper
                 {
                     case ControllerBatteryState.None:
 
-                        textBatteryStatus.Text = string.Format(Properties.Resources.CONTROLLER_BATTERY_CONNECTED);
+                        textBatteryStatus.Text = string.Format(Properties.Resources.MainWindowBatteryConnected);
                         break;
 
                     case ControllerBatteryState.Charging:
-                        textBatteryStatus.Text = string.Format(Properties.Resources.CONTROLLER_BATTERY_CHARGING,
+                        textBatteryStatus.Text = string.Format(Properties.Resources.MainWindowBatteryCharging,
                             actiCont.Battery);
                         break;
 
                     case ControllerBatteryState.Discharging:
-                        textBatteryStatus.Text = string.Format(Properties.Resources.CONTROLLER_BATTERY_DISCHARGING,
+                        textBatteryStatus.Text = string.Format(Properties.Resources.MainWindowBatteryDischarging,
                             actiCont.Battery);
                         break;
 
                     case ControllerBatteryState.Full:
-                        textBatteryStatus.Text = string.Format(Properties.Resources.CONTROLLER_BATTERY_CONNECTED);
+                        textBatteryStatus.Text = string.Format(Properties.Resources.MainWindowBatteryConnected);
                         break;
 
                     default:
@@ -466,9 +470,9 @@ namespace WoWmapper
             }
             else
             {
-                textControllerStatus.Text = Properties.Resources.CONTROLLER_NOT_ACTIVE;
+                textControllerStatus.Text = Properties.Resources.MainWindowControllerNotActive;
                 imageConnectionType.Source = null;
-                textBatteryStatus.Text = Properties.Resources.CONTROLLER_BATTERY_DISCONNECTED;
+                textBatteryStatus.Text = Properties.Resources.MainWindowControllerBatteryNotConnected;
             }
         }
 
@@ -476,8 +480,8 @@ namespace WoWmapper
         {
             var result =
                 await
-                    this.ShowMessageAsync(Properties.Resources.FEEDBACK_WARNING_TITLE,
-                        Properties.Resources.FEEDBACK_WARNING_TEXT, MessageDialogStyle.AffirmativeAndNegative);
+                    this.ShowMessageAsync(Properties.Resources.DialogAdvancedFeaturesWarningTitle,
+                        Properties.Resources.DialogAdvancedFeaturesWarningText, MessageDialogStyle.AffirmativeAndNegative);
             if (result == MessageDialogResult.Affirmative)
             {
                 Settings.Default.EnableAdvancedFeatures = true;
@@ -492,8 +496,8 @@ namespace WoWmapper
         {
             return
                 await
-                    this.ShowMessageAsync(Properties.Resources.DIALOG_WOW_NOT_FOUND_TITLE,
-                        Properties.Resources.DIALOG_WOW_NOT_FOUND_TEXT, MessageDialogStyle.AffirmativeAndNegative);
+                    this.ShowMessageAsync(Properties.Resources.DialogWoWNotFoundTitle,
+                        Properties.Resources.DialogWoWNotFoundText, MessageDialogStyle.AffirmativeAndNegative);
         }
 
         private void MetroWindow_Closed(object sender, EventArgs e)
@@ -556,13 +560,13 @@ namespace WoWmapper
             cpCurrent = AddonParser.GetAddonVersion(cpInfo);
             else
             cpCurrent = null;
-            textWoWmapperCurrent.Text = string.Format(Properties.Resources.VERSION_WOWMAPPER_CURRENT, wmCurrent);
+            textWoWmapperCurrent.Text = string.Format(Properties.Resources.MainWindowVersionWowmapperCurrent, wmCurrent);
             if (cpCurrent == null)
             {
-                textConsolePortCurrent.Text = Properties.Resources.VERSION_UPDATE_NO_CONSOLEPORT;
-                buttonUpdateConsolePort.Content = Properties.Resources.VERSION_UPDATE_INSTALL;
+                textConsolePortCurrent.Text = Properties.Resources.MainWindowVersionConsolePortIsNotInstalled;
+                buttonUpdateConsolePort.Content = Properties.Resources.MainWindowVersionInstall;
                 cpCurrent = new Version(0,0,0);
-            } else { textConsolePortCurrent.Text = string.Format(Properties.Resources.VERSION_CONSOLEPORT_CURRENT, cpCurrent); }
+            } else { textConsolePortCurrent.Text = string.Format(Properties.Resources.MainWindowVersionConsoleportCurrent, cpCurrent); }
             
 
             // fetch latest
@@ -573,24 +577,24 @@ namespace WoWmapper
             if (wmRelease != null && wmCurrent < new Version(wmRelease.TagName))
             {
                 // new version available
-                textWoWmapperAvailable.Text = string.Format(Properties.Resources.VERSION_WOWMAPPER_AVAILABLE, wmRelease.TagName);
+                textWoWmapperAvailable.Text = string.Format(Properties.Resources.MainWindowVersionWowmapperAvailable, wmRelease.TagName);
                 buttonUpdateWoWmapper.Visibility = Visibility.Visible;
             }
             else
             {
-                textWoWmapperAvailable.Text = Properties.Resources.VERSION_NO_NEW_VERSION;
+                textWoWmapperAvailable.Text = Properties.Resources.MainWindowVersionNoNewVersion;
             }
 
             if (cpRelease != null && cpCurrent < new Version(cpRelease.TagName))
             {
                 // New version available
-                textConsolePortAvailable.Text = string.Format(Properties.Resources.VERSION_CONSOLEPORT_AVAILABLE,
+                textConsolePortAvailable.Text = string.Format(Properties.Resources.MainWindowVersionConsoleportAvailable,
                     cpRelease.TagName);
                 buttonUpdateConsolePort.Visibility = Visibility.Visible;
             }
             else
             {
-                textConsolePortAvailable.Text = Properties.Resources.VERSION_NO_NEW_VERSION;
+                textConsolePortAvailable.Text = Properties.Resources.MainWindowVersionNoNewVersion;
             }
         }
 
@@ -644,8 +648,8 @@ namespace WoWmapper
         {
             if (!Directory.Exists(Settings.Default.WoWFolder))
             {
-                ShowMessage(Properties.Resources.DIALOG_SELECT_WOW_TITLE,
-                    Properties.Resources.DIALOG_SELECT_WOW);
+                ShowMessage(Properties.Resources.DialogSelectWoWFirstTitle,
+                    Properties.Resources.DialogSelectWoWFirstText);
                 return;
             }
 
@@ -689,13 +693,13 @@ namespace WoWmapper
             if (updateSuccess)
             {
                 File.Delete("consoleport_update.zip");
-                ShowMessageBox(Properties.Resources.DIALOG_CONSOLEPORT_UPDATE_TITLE, string.Format(Properties.Resources.DIALOG_CONSOLEPORT_UPDATE_SUCCESS, cpRelease.TagName));
+                ShowMessageBox(Properties.Resources.DialogConsoleportUpdateTitle, string.Format(Properties.Resources.DialogConsolePortUpdateSuccessText, cpRelease.TagName));
                 buttonUpdateConsolePort.Visibility = Visibility.Collapsed;
                 UpdateVersionDisplay();
             }
             else
             {
-                ShowMessageBox(Properties.Resources.DIALOG_CONSOLEPORT_UPDATE_TITLE, string.Format(Properties.Resources.DIALOG_CONSOLEPORT_UPDATE_FAILED_MESSAGE, exceptionMessage));
+                ShowMessageBox(Properties.Resources.DialogConsoleportUpdateTitle, string.Format(Properties.Resources.DialogConsolePortUpdateFailedText, exceptionMessage));
                 buttonUpdateConsolePort.Visibility = Visibility.Visible;
             }
         }

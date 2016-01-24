@@ -8,10 +8,10 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox Header="{x:Static p:Resources.OPTIONS_TRIGGERS_TITLE}">
+    <GroupBox Header="{x:Static p:Resources.SettingsTriggers}">
         <ScrollViewer>
             <StackPanel Margin="5">
-                <GroupBox Header="{x:Static p:Resources.OPTIONS_TRIGGERS_THRESHOLDS}">
+                <GroupBox Header="{x:Static p:Resources.TriggersThresholdsBox}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -19,14 +19,14 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="5">
                             <DockPanel>
-                                <TextBlock Text="{x:Static p:Resources.COMMON_LEFT}" />
+                                <TextBlock Text="{x:Static p:Resources.CommonLeft}" />
                                 <TextBlock Name="TextLeftValue" Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeft}" HorizontalAlignment="Right"/>
                             </DockPanel>
                             <Slider Name="SliderLeft" Minimum="1" Maximum="255" Value="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeft}" ValueChanged="SliderChanged"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="5">
                             <DockPanel>
-                                <TextBlock Text="{x:Static p:Resources.COMMON_RIGHT}" />
+                                <TextBlock Text="{x:Static p:Resources.CommonRight}" />
                                 <TextBlock Name="TextRightValue" Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdRight}" HorizontalAlignment="Right"/>
                             </DockPanel>
 
@@ -35,10 +35,10 @@
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="{x:Static p:Resources.OPTIONS_TRIGGERS_GRIP_THRESHOLDS}">
+                <GroupBox Header="{x:Static p:Resources.TriggersGripThresholds}">
                     <StackPanel>
                         <DockPanel Grid.ColumnSpan="2" Margin="5" VerticalAlignment="Top">
-                            <CheckBox IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableTriggerGrip}" Content="{x:Static p:Resources.OPTIONS_TRIGGERS_ENABLE_CLICK}" Checked="checkEnableTriggerClick_Checked" Unchecked="checkEnableTriggerClick_Checked"/>
+                            <CheckBox IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableTriggerGrip}" Content="{x:Static p:Resources.TriggersEnableTriggerGrip}" Checked="checkEnableTriggerClick_Checked" Unchecked="checkEnableTriggerClick_Checked"/>
                             <Image Source="pack://application:,,,/Resources/Help.png" Width="16" Height="16" MouseUp="Image_MouseUp" HorizontalAlignment="Right"/>
                         </DockPanel>
                         <DockPanel Name="PanelTriggerClickSliders">
@@ -49,14 +49,14 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Margin="5" >
                                     <DockPanel>
-                                        <TextBlock Text="{x:Static p:Resources.COMMON_LEFT}" />
+                                        <TextBlock Text="{x:Static p:Resources.CommonLeft}" />
                                         <TextBlock Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeftClick}" HorizontalAlignment="Right"/>
                                     </DockPanel>
                                     <Slider Name="SliderLeftClick" ValueChanged="SliderChanged" Minimum="1" Maximum="255" Value="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdLeftClick}"/>
                                 </StackPanel>
                                 <StackPanel Grid.Column="1" Margin="5" >
                                     <DockPanel>
-                                        <TextBlock Text="{x:Static p:Resources.COMMON_RIGHT}" />
+                                        <TextBlock Text="{x:Static p:Resources.CommonRight}" />
                                         <TextBlock Text="{Binding Source={x:Static p:Settings.Default}, Path=ThresholdRightClick}" HorizontalAlignment="Right"/>
                                     </DockPanel>
 

@@ -79,7 +79,7 @@ namespace WoWmapper.Options
                 {
                     DisplayImage = displayImage,
                     ControllerName = Name,
-                    ControllerNumber = string.Format(Properties.Resources.CONTROLLER_NUMBER, i+1),
+                    ControllerNumber = string.Format(Properties.Resources.ControllersControllerNumber, i+1),
                     DisplayID = currentControllers[i].ControllerID,
                     ForeColor = Color.FromArgb(255,123,45,142)
                 });

@@ -502,5 +502,29 @@ namespace WoWmapper.Properties {
                 this["LightbarHealthHigh"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.0")]
+        public string LastRunVersion {
+            get {
+                return ((string)(this["LastRunVersion"]));
+            }
+            set {
+                this["LastRunVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableLogging {
+            get {
+                return ((bool)(this["EnableLogging"]));
+            }
+            set {
+                this["EnableLogging"] = value;
+            }
+        }
     }
 }

@@ -7,12 +7,14 @@
              xmlns:p="clr-namespace:WoWmapper.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox x:Name="groupBox" Header="{x:Static p:Resources.OPTIONS_WOWMAPPER_TITLE}">
+    <GroupBox x:Name="groupBox" Header="{x:Static p:Resources.SettingsWoWmapper}">
         <ScrollViewer>
             <StackPanel Margin="5">
-                <CheckBox Name="checkStartMinimized" Content="{x:Static p:Resources.OPTIONS_WOWMAPPER_START_MINIMIZED}" Margin="0" Checked="checkStartMinimized_Checked" Unchecked="checkStartMinimized_Checked"/>
-                <CheckBox Name="checkMinimizeTray" Content="{x:Static p:Resources.OPTIONS_WOWMAPPER_MINIMIZE_TRAY}"  Margin="0,5,0,0" Checked="checkMinimizeTray_Checked" Unchecked="checkMinimizeTray_Checked"/>
-                <CheckBox Name="checkCloseTray" Content="{x:Static p:Resources.OPTIONS_WOWMAPPER_CLOSE_TRAY}"  Margin="0,5,0,0" Checked="checkCloseTray_Checked" Unchecked="checkCloseTray_Checked" />
+                <CheckBox Name="checkStartMinimized" Content="{x:Static p:Resources.WoWmapperStartMinimized}" Margin="0" IsChecked="{Binding StartMinimized, Source={x:Static p:Settings.Default}}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                <CheckBox Name="checkMinimizeTray" Content="{x:Static p:Resources.WoWmapperMinimizeToTray}" Margin="0,5,0,0" IsChecked="{Binding MinimizeToTray, Source={x:Static p:Settings.Default}}" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>
+                <CheckBox Name="checkCloseTray" Content="{x:Static p:Resources.WoWmapperCloseToTray}"  Margin="0,5,0,0" IsChecked="{Binding CloseToTray, Source={x:Static p:Settings.Default}}" Checked="CheckboxChanged" Unchecked="CheckboxChanged" />
+                <CheckBox Content="{x:Static p:Resources.WoWmapperEnableLogging}"  Margin="0,5,0,5" IsChecked="{Binding EnableLogging, Source={x:Static p:Settings.Default}}" Checked="CheckboxChanged" Unchecked="CheckboxChanged" />
+                <Button Content="{x:Static p:Resources.WoWmapperViewLog}" Click="ViewLog_Click"/>
             </StackPanel>
         </ScrollViewer>
     </GroupBox>

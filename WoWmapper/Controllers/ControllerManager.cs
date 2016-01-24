@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WoWmapper.Properties;
 using J2i.Net.XInputWrapper;
+using WoWmapper.Classes;
 using WoWmapper.Input;
 
 namespace WoWmapper.Controllers
@@ -33,7 +34,7 @@ namespace WoWmapper.Controllers
         public static void Start()
         {
             if (_watcherThread != null) return;
-
+            Logger.Write("Starting controller manager");
             _watcherThread = new Thread(ControllerWatcher) {IsBackground=true};
             _watcherThread.Start();
             if(Settings.Default.EnableXbox)
@@ -45,7 +46,7 @@ namespace WoWmapper.Controllers
         public static void Stop()
         {
             if (_watcherThread == null) return;
-            
+            Logger.Write("Stopping controller manager");
             _watcherThread.Abort();
             _watcherThread = null;
             foreach (var controller in _allControllers) controller?.Stop();
@@ -65,7 +66,7 @@ namespace WoWmapper.Controllers
                     // Test current controller
                     if (!_activeController.IsAlive())
                     {
-                        Console.WriteLine("Controller disconnected");
+                        Logger.Write("Controller disconnected");
                         _allControllers.Remove(_activeController);
                         _activeController.Stop();
                         _activeController = null;
@@ -112,6 +113,7 @@ namespace WoWmapper.Controllers
                 {
                     foreach (var device in removeThese)
                     {
+                        Logger.Write("Removing invalid device: {0}", device.ControllerID);
                         try
                         {
                             device.Stop();
@@ -133,6 +135,7 @@ namespace WoWmapper.Controllers
                         {
                             if (_allControllers.Count(c => c.UnderlyingDevice == controller.HidDevice) == 0)
                             {
+                                Logger.Write("Found new DS4 device: {0}", controller.MacAddress);
                                 _allControllers.Add(new DS4Input(controller.MacAddress));
                                 ControllersUpdated?.Invoke();
                             }
@@ -143,7 +146,8 @@ namespace WoWmapper.Controllers
                     { }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(string.Format(Resources.ERROR_DS4_DISABLED, ex.Message), Resources.ERROR_TITLE_DRIVER, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Logger.Write("DS4 driver error: ", ex);
+                        MessageBox.Show(string.Format(Resources.ErrorDriverDs4Disabled, ex.Message), Resources.ErrorDriverDisabledTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                         Settings.Default.EnableDS4 = false;
                         Settings.Default.Save();
                     }
@@ -163,6 +167,7 @@ namespace WoWmapper.Controllers
                                 var controller = XboxController.RetrieveController(i);
                                 if (_allControllers.Count(c => c.UnderlyingDevice == controller) == 0)
                                 {
+                                    Logger.Write("Found new XInput device: {0}", i);
                                     _allControllers.Add(new XboxInput(i));
                                     ControllersUpdated?.Invoke();
                                 }
@@ -174,16 +179,13 @@ namespace WoWmapper.Controllers
                     { }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(string.Format(Resources.ERROR_XBOX_DISABLED, ex.Message), Resources.ERROR_TITLE_DRIVER, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Logger.Write("XInput driver error: ", ex);
+                        MessageBox.Show(string.Format(Resources.ErrorDriverXboxDisabled, ex.Message), Resources.ErrorDriverDisabledTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                         Settings.Default.EnableXbox = false;
                         Settings.Default.Save();
                     }
                 }
-
             }
-
-
-
         }
 
         public static void SetActiveController(IController Controller)

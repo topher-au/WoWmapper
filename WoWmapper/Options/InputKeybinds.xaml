@@ -7,7 +7,7 @@
              xmlns:p="clr-namespace:WoWmapper.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox Header="{x:Static p:Resources.OPTIONS_KEYBINDS_TITLE}">
+    <GroupBox Header="{x:Static p:Resources.SettingsKeybinds}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
@@ -17,20 +17,20 @@
                 <Button Margin="2" Click="ButtonImport_Click">
                     <DockPanel>
                         <Image Source="pack://application:,,,/Resources/Import.png" Margin="0,0,2,0"/>
-                        <TextBlock Text="IMPORT" VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Static p:Resources.KeybindsImport}" VerticalAlignment="Center"/>
                     </DockPanel>
                     
                 </Button>
                 <Button Margin="2" Click="ButtonExport_Click">
                     <DockPanel>
                         <Image Source="pack://application:,,,/Resources/Export.png" Margin="0,0,2,0"/>
-                        <TextBlock Text="EXPORT" VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Static p:Resources.KeybindsExport}" VerticalAlignment="Center"/>
                     </DockPanel>
                 </Button>
                 <Button HorizontalAlignment="Right" Margin="2" Click="ButtonResetDefaults_Click">
                     <DockPanel>
                         <Image Source="pack://application:,,,/Resources/Reset.png" Margin="0,0,2,0"/>
-                        <TextBlock Text="RESET KEYBINDS" VerticalAlignment="Center"/>
+                        <TextBlock Text="{x:Static p:Resources.KeybindsReset}" VerticalAlignment="Center"/>
                     </DockPanel>
                 </Button>
             </DockPanel>

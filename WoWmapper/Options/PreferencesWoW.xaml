@@ -7,23 +7,23 @@
              xmlns:p="clr-namespace:WoWmapper.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox Header="{x:Static p:Resources.OPTIONS_WOW_TITLE}">
+    <GroupBox Header="{x:Static p:Resources.SettingsWoW}">
         <ScrollViewer>
             <StackPanel Margin="5">
-                <TextBlock Text="{x:Static p:Resources.OPTIONS_WOW_FOLDER}"/>
+                <TextBlock Text="{x:Static p:Resources.WoWInstallationPath}" />
                 <StackPanel Orientation="Vertical">
-                    <TextBox Name="textWoWPath" Margin="0,5,0,0" IsReadOnly="True"/>
-                    <Button Name="buttonLocateWoW" Content="{x:Static p:Resources.OPTIONS_WOW_FOLDER_BROWSE}" Margin="0,5,0,0" Click="buttonLocateWoW_Click" />
+                    <TextBox Name="textWoWPath" Text="{Binding WoWFolder, Source={x:Static p:Settings.Default}}" Margin="0,5,0,0" IsReadOnly="True"/>
+                    <Button Name="buttonLocateWoW" Content="{x:Static p:Resources.WoWFolderBrowse}" Margin="0,5,0,0" Click="buttonLocateWoW_Click" />
                 </StackPanel>
                 <DockPanel Margin="0,10,0,0">
-                    <TextBlock Text="{x:Static p:Resources.OPTIONS_WOW_ARCHITECTURE}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Static p:Resources.WoWGameArchitecture}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     <ComboBox Name="comboGameArchitecture" Width="120"  HorizontalAlignment="Right" SelectionChanged="comboGameArchitecture_SelectionChanged">
-                        <ComboBoxItem Content="{x:Static p:Resources.OPTIONS_WOW_ARCHITECTURE_AUTO}"/>
-                        <ComboBoxItem Content="{x:Static p:Resources.OPTIONS_WOW_ARCHITECTURE_64}" />
-                        <ComboBoxItem Content="{x:Static p:Resources.OPTIONS_WOW_ARCHITECTURE_32}" />
+                        <ComboBoxItem Content="{x:Static p:Resources.WoWArchitectureAuto}"/>
+                        <ComboBoxItem Content="{x:Static p:Resources.WoWArchitecture64}" />
+                        <ComboBoxItem Content="{x:Static p:Resources.WoWArchitecture32}" />
                     </ComboBox>
                 </DockPanel>
-                <CheckBox Content="{x:Static p:Resources.OPTIONS_WOW_SEND_KEYS_DIRECT}" Margin="0,5,0,0" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SendKeysDirect}" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnChecked"/>
+                <CheckBox Visibility="Collapsed" Content="{x:Static p:Resources.WoWSendKeysDirect}" Margin="0,5,0,0" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=SendKeysDirect}" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnChecked"/>
             </StackPanel>
         </ScrollViewer>
     </GroupBox>

@@ -17,6 +17,7 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
+using WoWmapper.Classes;
 using WoWmapper.Controllers;
 
 namespace WoWmapper.Input
@@ -89,12 +90,14 @@ namespace WoWmapper.Input
                 {
                     using (var f = new FileStream("bindings.dat", FileMode.Open))
                     {
+                        Logger.Write("Loading keybind profile");
                         var x = new DataContractSerializer(typeof (KeybindProfile));
                         _keybind = (KeybindProfile) x.ReadObject(f);
                     }
                 }
                 catch
                 {
+                    Logger.Write("No profile found. Loading default keybinds.");
                     _keybind = new KeybindProfile { Keybinds = ControllerData.DefaultBinds };
                 }
             }

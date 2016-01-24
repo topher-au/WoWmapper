@@ -121,37 +121,37 @@
     <value>WoWmapper</value>
   </data>
   <data name="MainWindowControllerConnected" xml:space="preserve">
-    <value>{0} Connected</value>
+    <value>{0} ansluten</value>
   </data>
   <data name="MainWindowBatteryCharging" xml:space="preserve">
-    <value>Charging... [{0}%]</value>
+    <value>Laddning... [{0} %]</value>
   </data>
   <data name="MainWindowControllerNotActive" xml:space="preserve">
-    <value>No active controller</value>
+    <value>Ingen aktiv styrenhet</value>
   </data>
   <data name="DialogWoWNotFoundText" xml:space="preserve">
-    <value>Unable to locate your World of Warcraft installation! Would you like to specify a location now?</value>
+    <value>Det gick inte att hitta din World of Warcraft installation! Vill du ange en plats nu?</value>
   </data>
   <data name="DialogWoWNotFoundTitle" xml:space="preserve">
     <value>Uh oh!</value>
   </data>
   <data name="DialogAdvancedFeaturesWarningText" xml:space="preserve">
-    <value>By continuing you acknowledge that you have read and understand the risks associated with this feature.</value>
+    <value>Genom att fortsätta bekräftar du att du har läst och förstår riskerna med denna funktion.</value>
   </data>
   <data name="DialogAdvancedFeaturesWarningTitle" xml:space="preserve">
-    <value>Warning</value>
+    <value>Varning</value>
   </data>
   <data name="MainWindowControllerTitle" xml:space="preserve">
     <value>Controller Status</value>
   </data>
   <data name="MainWindowUpdateTitle" xml:space="preserve">
-    <value>Software Updates</value>
+    <value>Programuppdateringar</value>
   </data>
   <data name="MainWindowWoWTitle" xml:space="preserve">
-    <value>World of Warcraft Status</value>
+    <value>Värld av Warcraft Status</value>
   </data>
   <data name="NotifyMenuControllers" xml:space="preserve">
-    <value>Controllers</value>
+    <value>Styrenheter</value>
   </data>
   <data name="NotifyMenuExit" xml:space="preserve">
     <value>Exit</value>
@@ -160,382 +160,363 @@
     <value>Keybinds</value>
   </data>
   <data name="NotifyMenuOpenWowmapper" xml:space="preserve">
-    <value>Open WoWmapper</value>
+    <value>Öppna WoWmapper</value>
   </data>
   <data name="SettingsAdvancedTitle" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>Avancerade inställningar</value>
   </data>
   <data name="AppearanceAccent" xml:space="preserve">
     <value>Accent</value>
   </data>
   <data name="AppearanceDropShadow" xml:space="preserve">
-    <value>Enable drop shadow</value>
+    <value>Aktivera skugga</value>
   </data>
   <data name="AppearanceLanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>Språk</value>
   </data>
   <data name="AppearanceRestartApp" xml:space="preserve">
-    <value>The setting will be applied the next time you start WoWmapper</value>
+    <value>Inställningen kommer att tillämpas nästa gång du startar WoWmapper</value>
   </data>
   <data name="AppearanceTheme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Tema</value>
   </data>
   <data name="SettingsAppearance" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Utseende</value>
   </data>
   <data name="ControllersActivate" xml:space="preserve">
-    <value>Activate</value>
+    <value>Aktivera</value>
   </data>
   <data name="ControllersDetected" xml:space="preserve">
-    <value>Detected Controllers</value>
+    <value>Upptäckta styrenheter</value>
   </data>
   <data name="ControllersEnableDs4" xml:space="preserve">
-    <value>Enable DualShock 4</value>
+    <value>Aktivera DualShock 4</value>
   </data>
   <data name="ControllersEnableXbox" xml:space="preserve">
-    <value>Enable Xbox Controller</value>
+    <value>Aktivera Xbox Controller</value>
   </data>
   <data name="SettingsControllers" xml:space="preserve">
-    <value>Controllers</value>
+    <value>Styrenheter</value>
   </data>
   <data name="LightbarWithClassColor" xml:space="preserve">
-    <value>Color lightbar with class color</value>
+    <value>Färg lightbar med klass färg</value>
   </data>
   <data name="HapticsLightbarColor" xml:space="preserve">
-    <value>Color lightbar</value>
+    <value>Färg lightbar</value>
   </data>
   <data name="LightbarByRemainingHealth" xml:space="preserve">
-    <value>Color lightbar by remaining health</value>
+    <value>Färg lightbar av återstående hälsa</value>
   </data>
   <data name="VibrationDamage" xml:space="preserve">
-    <value>Vibrate when taking damage</value>
+    <value>Vibrera när ta skada</value>
   </data>
   <data name="VibrationTarget" xml:space="preserve">
-    <value>Vibrate when switching target</value>
+    <value>Vibrera när du byter mål</value>
   </data>
   <data name="VibrationTriggerGrip" xml:space="preserve">
-    <value>Vibrate when activating trigger click</value>
+    <value>Vibrera när du aktiverar utlösaren klicka</value>
   </data>
   <data name="SettingsHeader" xml:space="preserve">
-    <value>Settings</value>
+    <value>Inställningar</value>
   </data>
   <data name="SettingsKeybinds" xml:space="preserve">
     <value>Keybinds</value>
   </data>
   <data name="SettingsResetAll" xml:space="preserve">
-    <value>Reset all settings</value>
+    <value>Återställ alla inställningar</value>
   </data>
   <data name="DialogResetAllText" xml:space="preserve">
-    <value>This will delete all WoWmapper settings and keybinds and exit the program. Are you sure you want to continue?</value>
+    <value>Detta kommer att radera alla inställningar för WoWmapper och keybinds och avsluta programmet. Är du säker på att du vill fortsätta?</value>
   </data>
   <data name="DialogResetAllTitle" xml:space="preserve">
-    <value>Reset all settings</value>
+    <value>Återställ alla inställningar</value>
   </data>
   <data name="SettingsAdvanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>Avancerad</value>
   </data>
   <data name="SettingsAdvancedSubItem" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>Avancerade inställningar</value>
   </data>
   <data name="SettingsPreferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Preferenser</value>
   </data>
   <data name="WoWmapperCloseToTray" xml:space="preserve">
-    <value>Close to tray</value>
+    <value>Nära till bricka</value>
   </data>
   <data name="WoWmapperMinimizeToTray" xml:space="preserve">
-    <value>Minimize to tray</value>
+    <value>Reducera till bricka</value>
   </data>
   <data name="WoWmapperStartMinimized" xml:space="preserve">
-    <value>Start minimized</value>
+    <value>Starta minimerad</value>
   </data>
   <data name="SettingsWoWmapper" xml:space="preserve">
     <value>WoWmapper</value>
   </data>
   <data name="WoWGameArchitecture" xml:space="preserve">
-    <value>Game Architecture</value>
+    <value>Spel arkitektur</value>
   </data>
   <data name="WoWArchitecture32" xml:space="preserve">
-    <value>32-bit</value>
+    <value>32-bitars</value>
   </data>
   <data name="WoWArchitecture64" xml:space="preserve">
-    <value>64-bit</value>
+    <value>64-bitars</value>
   </data>
   <data name="WoWArchitectureAuto" xml:space="preserve">
-    <value>Auto Select</value>
+    <value>Automatiskt val</value>
   </data>
   <data name="WoWInstallationPath" xml:space="preserve">
-    <value>Installation Path</value>
+    <value>Installationssökväg</value>
   </data>
   <data name="WoWFolderBrowse" xml:space="preserve">
-    <value>Locate Installation Path</value>
+    <value>Leta upp installationen stig</value>
   </data>
   <data name="SettingsWoW" xml:space="preserve">
     <value>World of Warcraft</value>
   </data>
   <data name="MainWindowVersionConsoleportAvailable" xml:space="preserve">
-    <value>Version {0} is available!</value>
+    <value>Serverversionen {0} är tillgängliga!</value>
   </data>
   <data name="MainWindowVersionConsoleportCurrent" xml:space="preserve">
     <value>ConsolePort {0}</value>
   </data>
   <data name="MainWindowVersionUpdateButton" xml:space="preserve">
-    <value>Update</value>
+    <value>Uppdatering</value>
   </data>
   <data name="MainWindowVersionWowmapperAvailable" xml:space="preserve">
-    <value>Version {0} is available!</value>
+    <value>Serverversionen {0} är tillgängliga!</value>
   </data>
   <data name="MainWindowVersionWowmapperCurrent" xml:space="preserve">
     <value>WoWmapper {0}</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="WoWmapper_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\wowmapper_icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="MainWindowWoWNotRunning" xml:space="preserve">
-    <value>World of Warcraft not running</value>
+    <value>World of Warcraft inte körs</value>
   </data>
   <data name="MainWindowWowRunning32" xml:space="preserve">
-    <value>World of Warcraft is running (32-bit)</value>
+    <value>World of Warcraft är igång (32-bitars)</value>
   </data>
   <data name="MainWindowWoWRunning64" xml:space="preserve">
-    <value>World of Warcraft is running (64-bit)</value>
+    <value>World of Warcraft är igång (64-bitars)</value>
   </data>
   <data name="DialogWoWFolderBrowserTitle" xml:space="preserve">
-    <value>Select WoW installation folder</value>
+    <value>Välj installationsmapp för WoW</value>
   </data>
   <data name="ErrorDialogInvalidFolderText" xml:space="preserve">
-    <value>The folder you selected does not appear to contain World of Warcraft.</value>
+    <value>Mappen du valt verkar inte innehålla World of Warcraft.</value>
   </data>
   <data name="ErrorDialogInvalidFolderTitle" xml:space="preserve">
-    <value>Invalid folder</value>
+    <value>Ogiltig mapp</value>
   </data>
   <data name="MainWindowVersionChecking" xml:space="preserve">
-    <value>Checking...</value>
+    <value>Kontrollerar...</value>
   </data>
   <data name="MainWindowVersionNoNewVersion" xml:space="preserve">
-    <value>No new version available</value>
+    <value>Ingen ny version tillgänglig</value>
   </data>
   <data name="ControllersScan" xml:space="preserve">
-    <value>Re-scan</value>
-  </data>
-  <data name="playstation_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\playstation-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="xbox_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\xbox-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Re-avsöka</value>
   </data>
   <data name="ControllersControllerNumber" xml:space="preserve">
     <value>Controller {0}</value>
   </data>
   <data name="WoWSendKeysDirect" xml:space="preserve">
-    <value>Send keystrokes directly to game window</value>
+    <value>Skicka tangenttryckningar direkt till spelfönstret</value>
   </data>
   <data name="MainWindowBatteryConnected" xml:space="preserve">
-    <value>Connected</value>
+    <value>Anslutna</value>
   </data>
   <data name="MainWindowBatteryDischarging" xml:space="preserve">
-    <value>Discharging... [{0}%]</value>
+    <value>Urladdning... [{0} %]</value>
   </data>
   <data name="MainWindowSettingsButton" xml:space="preserve">
-    <value>Settings</value>
+    <value>Inställningar</value>
   </data>
   <data name="SettingsAboutTitle" xml:space="preserve">
-    <value>About WoWmapper</value>
+    <value>Om WoWmapper</value>
   </data>
   <data name="AboutTranslationCredit" xml:space="preserve">
-    <value>English translation by Topher Sheridan</value>
+    <value>Engelsk översättning av Topher Sheridan</value>
   </data>
   <data name="ButtonAboutWowmapper" xml:space="preserve">
-    <value>About WoWmapper</value>
+    <value>Om WoWmapper</value>
   </data>
   <data name="MainWindowControllerBatteryNotConnected" xml:space="preserve">
-    <value>Not connected</value>
+    <value>Inte ansluten</value>
   </data>
   <data name="ControllersAutoSelect" xml:space="preserve">
-    <value>Automatically activate controller</value>
+    <value>Aktivera automatiskt controller</value>
   </data>
   <data name="DialogHelpTriggerGripText" xml:space="preserve">
-    <value>When enabled, the left and right triggers will activate an extra binding when they reach a certain point. With the triggers as Shift or Control, you can use a full trigger press to activate an extra binding.</value>
+    <value>När aktiverad, kommer att vänster och höger triggers aktivera en extra bindande när de når en viss punkt. Med triggers som SKIFT eller kontroll, kan du använda en full avtryckaren tryck för att aktivera en extra bindning.</value>
   </data>
   <data name="DialogHelpTriggerGripTitle" xml:space="preserve">
-    <value>Trigger Grip Binding</value>
+    <value>Utlösa grepp bindande</value>
   </data>
   <data name="TriggersGripThresholds" xml:space="preserve">
-    <value>Trigger Grip Thresholds</value>
+    <value>Trigger Grip tröskelvärden</value>
   </data>
   <data name="TriggersEnableTriggerGrip" xml:space="preserve">
-    <value>Enable Trigger Grip</value>
+    <value>Aktivera utlösaren grepp</value>
   </data>
   <data name="TriggersThresholdsBox" xml:space="preserve">
-    <value>Trigger Thresholds</value>
+    <value>Trigger tröskelvärden</value>
   </data>
   <data name="SettingsTriggers" xml:space="preserve">
-    <value>Triggers</value>
+    <value>Utlösare</value>
   </data>
   <data name="CommonLeft" xml:space="preserve">
-    <value>Left</value>
+    <value>Vänster</value>
   </data>
   <data name="CommonRight" xml:space="preserve">
-    <value>Right</value>
+    <value>Höger</value>
   </data>
   <data name="DialogBindKeyText" xml:space="preserve">
-    <value>Press the new key for {0}. Existing keys will be swapped.</value>
+    <value>Tryck på knappen ny för {0}. Befintliga nycklar kommer att bytas.</value>
   </data>
   <data name="DialogBindKeyTitle" xml:space="preserve">
-    <value>Key Binding</value>
+    <value>Viktiga bindande</value>
   </data>
   <data name="SettingsEnableAdvancedFeatures" xml:space="preserve">
-    <value>Enable Advanced Features</value>
+    <value>Aktivera avancerade funktioner</value>
   </data>
   <data name="AdvancedFeaturesHeader" xml:space="preserve">
-    <value>Advanced Features</value>
+    <value>Avancerade funktioner</value>
   </data>
   <data name="AdvancedFeaturesWarning" xml:space="preserve">
-    <value>Enabling this option allows WoWmapper to read certain values from the game's memory, such as your character's level, health and target.
+    <value>Det här alternativet tillåter WoWmapper att läsa vissa värden från spelets minne, till exempel din karaktärs nivå, hälsa och mål.
 
-Accessing the game in this manner may be a violation of the World of Warcraft Terms of Use. For more information, please visit the link below.</value>
+Tillgång till spelet på detta sätt kan vara ett brott mot världen av Warcraft användarvillkoren. För mer information, besök länken nedan.</value>
   </data>
   <data name="SettingsCursor" xml:space="preserve">
-    <value>Cursor</value>
+    <value>Markören</value>
   </data>
   <data name="CursorAnalogStick" xml:space="preserve">
-    <value>Analog Stick</value>
+    <value>Analog pinne</value>
   </data>
   <data name="CursorAutoCenter" xml:space="preserve">
-    <value>Auto-center cursor after mouselook</value>
+    <value>Auto-center markören efter mouselook</value>
   </data>
   <data name="CursorCurve" xml:space="preserve">
-    <value>Curve</value>
+    <value>Kurva</value>
   </data>
   <data name="CursorDeadzone" xml:space="preserve">
     <value>Deadzone</value>
   </data>
   <data name="CursorSpeed" xml:space="preserve">
-    <value>Speed</value>
+    <value>Hastighet</value>
   </data>
   <data name="CursorTouchpad" xml:space="preserve">
     <value>Touchpad</value>
   </data>
   <data name="AppearanceColorByClass" xml:space="preserve">
-    <value>Color window automatically by class</value>
+    <value>Färg fönster automatiskt av klass</value>
   </data>
   <data name="ErrorDriverDs4Disabled" xml:space="preserve">
-    <value>An error occurred with the DS4 driver, and it has been disabled.
+    <value>Ett fel uppstod med DS4 föraren, och det har inaktiverats.
 
-The error was:
-{0}</value>
+Felet var: {0}</value>
   </data>
   <data name="ErrorDriverDisabledTitle" xml:space="preserve">
-    <value>Driver disabled</value>
+    <value>Drivrutin för funktionshindrade</value>
   </data>
   <data name="ErrorDriverXboxDisabled" xml:space="preserve">
-    <value>An error occurred with the Xbox driver, and it has been disabled.
+    <value>Ett fel uppstod med drivrutinen för Xbox, och det har inaktiverats.
 
-The error was:
-{0}</value>
+Felet var: {0}</value>
   </data>
   <data name="DialogConsolePortUpdateFailedText" xml:space="preserve">
-    <value>An error occurred while updating ConsolePort:
-{0}</value>
+    <value>Ett fel inträffade vid uppdatering av ConsolePort: {0}</value>
   </data>
   <data name="DialogConsolePortUpdateSuccessText" xml:space="preserve">
-    <value>ConsolePort was successfully updated to version {0}!</value>
+    <value>ConsolePort har uppdaterats till version {0}!</value>
   </data>
   <data name="DialogConsoleportUpdateTitle" xml:space="preserve">
-    <value>ConsolePort Update</value>
+    <value>ConsolePort uppdatering</value>
   </data>
   <data name="DialogErrorDownloadFailedText" xml:space="preserve">
-    <value>There was an error downloading the file, please try again later.</value>
+    <value>Det gick inte att hämta filen, försök igen senare.</value>
   </data>
   <data name="DialogErrorDownloadFailedTitle" xml:space="preserve">
-    <value>Download failed</value>
+    <value>Nedladdning misslyckades</value>
   </data>
   <data name="CursorTouchpadMode" xml:space="preserve">
-    <value>Touchpad mode</value>
+    <value>Touchpad läge</value>
   </data>
   <data name="CursorTouchpadModeButtons" xml:space="preserve">
-    <value>Touch Buttons</value>
+    <value>Touch knappar</value>
   </data>
   <data name="CursorTouchpadModeEmulateCenter" xml:space="preserve">
-    <value>Share &amp; Options</value>
+    <value>&amp; Aktieoptioner</value>
   </data>
   <data name="CursorTouchpadModeMouse" xml:space="preserve">
-    <value>Mouse Control</value>
+    <value>Musstyrning</value>
   </data>
   <data name="MainWindowVersionInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>Installera</value>
   </data>
   <data name="MainWindowVersionConsolePortIsNotInstalled" xml:space="preserve">
-    <value>ConsolePort is not installed!</value>
+    <value>ConsolePort är inte installerad!</value>
   </data>
   <data name="DialogDownloadingText" xml:space="preserve">
-    <value>File download in progress, please wait...</value>
+    <value>Filhämtning pågår, vänta...</value>
   </data>
   <data name="DialogDownloadingTitle" xml:space="preserve">
-    <value>Downloading</value>
+    <value>Ladda ner</value>
   </data>
   <data name="DialogSelectWoWFirstText" xml:space="preserve">
-    <value>You must select your World of Warcraft installation directory first.</value>
+    <value>Du måste först välja din World of Warcraft installationskatalog.</value>
   </data>
   <data name="DialogSelectWoWFirstTitle" xml:space="preserve">
-    <value>WoW not found</value>
+    <value>WoW inte hittas</value>
   </data>
   <data name="AdvancedFeaturesRequired" xml:space="preserve">
-    <value>These options will have no effect unless advanced features are enabled</value>
+    <value>Dessa alternativ har ingen effekt om inte avancerade funktioner är aktiverade</value>
   </data>
   <data name="SettingsHaptics" xml:space="preserve">
-    <value>Haptics</value>
+    <value>Haptik</value>
   </data>
   <data name="SettingsHapticsColors" xml:space="preserve">
-    <value>Colors</value>
+    <value>Färger</value>
   </data>
   <data name="SettingsHapticsVibration" xml:space="preserve">
     <value>Vibration</value>
   </data>
   <data name="SettingsInput" xml:space="preserve">
-    <value>Input</value>
+    <value>Ingång</value>
   </data>
   <data name="KeybindsExport" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportera</value>
   </data>
   <data name="KeybindsImport" xml:space="preserve">
     <value>Import</value>
   </data>
   <data name="KeybindsReset" xml:space="preserve">
-    <value>Reset Keybinds</value>
+    <value>Återställa Keybinds</value>
   </data>
   <data name="HapticsBasic" xml:space="preserve">
-    <value>Basic</value>
+    <value>Grundläggande</value>
   </data>
   <data name="HapticsFlashBatteryLow" xml:space="preserve">
-    <value>Flash lightbar at</value>
+    <value>Flash lightbar på</value>
   </data>
   <data name="AdvancedMoreInfo" xml:space="preserve">
-    <value>More Information</value>
+    <value>Mer Information</value>
   </data>
   <data name="HealthLevelCritical" xml:space="preserve">
-    <value>Critical (less than 20%)</value>
+    <value>Kritisk (mindre än 20%)</value>
   </data>
   <data name="HealthLevelHigh" xml:space="preserve">
-    <value>High (more than 90%)</value>
+    <value>Hög (mer än 90%)</value>
   </data>
   <data name="HealthLevelLow" xml:space="preserve">
-    <value>Low (more than 20%)</value>
+    <value>Låg (mer än 20%)</value>
   </data>
   <data name="HealthLevelMedium" xml:space="preserve">
-    <value>Medium (more than 50%)</value>
+    <value>Medium (mer än 50%)</value>
   </data>
   <data name="MainWindowWoWError" xml:space="preserve">
-    <value>Not running/Error</value>
+    <value>Inte kör/fel</value>
   </data>
   <data name="MainWindowWoWLoggedOut" xml:space="preserve">
-    <value>Logged Out</value>
-  </data>
-  <data name="WoWmapperEnableLogging" xml:space="preserve">
-    <value>Enable debug logging</value>
-  </data>
-  <data name="WoWmapperViewLog" xml:space="preserve">
-    <value>View Log File</value>
+    <value>Loggade ut</value>
   </data>
 </root>

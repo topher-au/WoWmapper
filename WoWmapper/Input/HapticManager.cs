@@ -183,7 +183,7 @@ namespace WoWmapper.Input
                     }
 
                     // Vibrate on trigger grip
-                    if (Settings.Default.EnableVibrateTriggerGrip)
+                    if (Settings.Default.EnableVibrateTriggerGrip && Settings.Default.EnableTriggerGrip)
                     {
                         if (state.TriggerLeft >= Settings.Default.ThresholdLeftClick && !_leftGrip)
                         {

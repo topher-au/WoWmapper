@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using WoWmapper.Classes;
 using WoWmapper.Controllers;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
@@ -27,19 +28,22 @@ namespace WoWmapper.Input
         public static void Start()
         {
             if (_inputThread != null) return;
-
+            Logger.Write("Starting controller state thread...");
             _inputThread = new Thread(ControllerThread) { IsBackground = true };
             _inputThread.Start();
         }
 
         public static void Stop()
         {
+            Logger.Write("Stopping controller state thread...");
             _inputThread?.Abort();
             _inputThread = null;
         }
 
         private static void ControllerThread()
         {
+            
+
             while (true)
             {
                 var controller = ControllerManager.GetActiveController();
@@ -99,10 +103,10 @@ namespace WoWmapper.Input
                         switch (Settings.Default.TouchpadMode)
                         {
                             case 0: // Mouse control
-                                if (state.TouchLeft && state.TouchButton) DoMouseDown(MouseButtons.Left);
-                                if (!state.TouchButton) DoMouseUp(MouseButtons.Left);
-                                if (state.TouchRight && state.TouchButton) DoMouseDown(MouseButtons.Right);
-                                if (!state.TouchButton) DoMouseUp(MouseButtons.Right);
+                                if (state.TouchLeft && state.TouchButton) ProcessKeyDown(ControllerButton.TouchLeft);
+                                if (!state.TouchButton) ProcessKeyUp(ControllerButton.TouchLeft);
+                                if (state.TouchRight && state.TouchButton) ProcessKeyDown(ControllerButton.TouchRight);
+                                if (!state.TouchButton) ProcessKeyUp(ControllerButton.TouchRight);
                                 break;
                             case 1: // Share/options
                                 if (state.TouchLeft && state.TouchButton) ProcessKeyDown(ControllerButton.CenterLeft);
@@ -195,10 +199,6 @@ namespace WoWmapper.Input
 
         private static Vector2 ApplyMouseMath(float x, float y)
         {
-
-            //var xMath = (float)(Math.Pow(((double)Settings.Default.RightCurve * modX), 2) + (Settings.Default.RightSpeed * modX));
-            //var yMath = (float)(Math.Pow(((double)Settings.Default.RightCurve * modY), 2) + (Settings.Default.RightSpeed * modY));
-
             double curve = (0.05 * Settings.Default.RightCurve);
 
             var xSpeed = (x < 0 ? -x : x) * Settings.Default.RightSpeed;
@@ -208,7 +208,6 @@ namespace WoWmapper.Input
             double yMath = Math.Pow(curve * ySpeed, 2) + (curve * ySpeed);
 
             var vMath = new Vector2(xMath, yMath);
-            //Console.WriteLine($"{vMath}");
             return vMath;
         }
 
@@ -221,10 +220,12 @@ namespace WoWmapper.Input
             switch (Button)
             {
                 case ControllerButton.StickLeft:
+                case ControllerButton.TouchLeft:
                     DoMouseDown(MouseButtons.Left);
                     break;
 
                 case ControllerButton.StickRight:
+                case ControllerButton.TouchRight:
                     DoMouseDown(MouseButtons.Right);
                     break;
 
@@ -265,31 +266,37 @@ namespace WoWmapper.Input
 
         private static void DoMouseDown(MouseButtons buttons)
         {
-            if (buttons.HasFlag(MouseButtons.Left) && (!keyStates[(int) ControllerButton.TouchLeft]))
+            if (buttons.HasFlag(MouseButtons.Left))
             {
                 mouse_event(MOUSEEVENTF_LEFTDOWN, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
-                keyStates[(int) ControllerButton.TouchLeft] = true;
+                return;
             }
 
 
-            if (buttons.HasFlag(MouseButtons.Right) && (!keyStates[(int) ControllerButton.TouchRight])) { 
+            if (buttons.HasFlag(MouseButtons.Right))
+            { 
                 mouse_event(MOUSEEVENTF_RIGHTDOWN, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
-                keyStates[(int) ControllerButton.TouchRight] = true;
+                return;
             }
     }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buttons"></param>
         private static void DoMouseUp(MouseButtons buttons)
         {
-            if (buttons.HasFlag(MouseButtons.Left) && (keyStates[(int) ControllerButton.TouchLeft]))
+            if (buttons.HasFlag(MouseButtons.Left))
             {
                 mouse_event(MOUSEEVENTF_LEFTUP, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
-                keyStates[(int)ControllerButton.TouchLeft] = false;
+                return;
             }
 
-            if (buttons.HasFlag(MouseButtons.Right) && (keyStates[(int) ControllerButton.TouchRight]))
+            if (buttons.HasFlag(MouseButtons.Right))
             {
+
                 mouse_event(MOUSEEVENTF_RIGHTUP, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
-                keyStates[(int)ControllerButton.TouchRight] = false;
+                return;
             }
         }
     }

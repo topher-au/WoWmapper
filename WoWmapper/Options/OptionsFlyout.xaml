@@ -15,9 +15,9 @@
                     <ColumnDefinition Width="160"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="{x:Static p:Resources.OPTIONS_TREE_ABOUT}" Click="AboutWoWmapper_Click" Height="32" Margin="5,5,0,0" />
+                <Button Grid.Column="0" Content="{x:Static p:Resources.ButtonAboutWowmapper}" Click="AboutWoWmapper_Click" Height="32" Margin="5,5,0,0" />
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Height="32" Margin="0,5,5,0">
-                    <TextBlock Text="{x:Static p:Resources.OPTIONS_HEADER}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,0,5,0"/>
+                    <TextBlock Text="{x:Static p:Resources.SettingsHeader}" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Margin="0,0,5,0"/>
                     <Button Style="{DynamicResource MetroCircleButtonStyle}" HorizontalAlignment="Right" Height="32" Width="32" Click="CloseFlyout">
                         <Image Source="../Resources/Icons/FlyoutClose_Left.png" Width="16" Height="16" />
                     </Button>
@@ -34,23 +34,23 @@
         </Grid.ColumnDefinitions>
 
         <TreeView x:Name="treeSettings" Grid.Column="0" Grid.RowSpan="2" BorderThickness="1" Margin="5,5,0,5" BorderBrush="{DynamicResource AccentColorBrush}" SelectedItemChanged="treeSettings_SelectedItemChanged">
-            <TreeViewItem Header="{x:Static p:Resources.OPTIONS_TREE_PREFERENCES}">
-                <TreeViewItem Name="TreeViewItemPreferencesWoWmapper" Header="{x:Static p:Resources.OPTIONS_WOWMAPPER_TITLE}" Selected="TreeViewItemPreferencesWoWmapper_Selected"/>
-                <TreeViewItem Name="TreeViewItemPreferencesWoW" Header="{x:Static p:Resources.OPTIONS_WOW_TITLE}" Selected="TreeViewItemPreferencesWoW_Selected"/>
-                <TreeViewItem Name="TreeViewItemPreferencesAppearance" Header="{x:Static p:Resources.OPTIONS_APPEARANCE_TITLE}" Selected="TreeViewItemPreferencesAppearance_Selected"/>
+            <TreeViewItem Header="{x:Static p:Resources.SettingsPreferences}">
+                <TreeViewItem Name="TreeViewItemPreferencesWoWmapper" Header="{x:Static p:Resources.SettingsWoWmapper}" Selected="TreeViewItemPreferencesWoWmapper_Selected"/>
+                <TreeViewItem Name="TreeViewItemPreferencesWoW" Header="{x:Static p:Resources.SettingsWoW}" Selected="TreeViewItemPreferencesWoW_Selected"/>
+                <TreeViewItem Name="TreeViewItemPreferencesAppearance" Header="{x:Static p:Resources.SettingsAppearance}" Selected="TreeViewItemPreferencesAppearance_Selected"/>
             </TreeViewItem>
-            <TreeViewItem Header="Input">
-                <TreeViewItem Name="TreeViewItemInputControllers" Header="{x:Static p:Resources.OPTIONS_CONTROLLERS_TITLE}" Selected="TreeViewItemInputControllers_Selected"/>
-                <TreeViewItem Name="TreeViewItemInputKeybinds" Header="{x:Static p:Resources.OPTIONS_KEYBINDS_TITLE}" Selected="TreeViewItemInputKeybinds_Selected"/>
-                <TreeViewItem Name="TreeViewItemInputTriggers" Header="{x:Static p:Resources.OPTIONS_TRIGGERS_TITLE}" Selected="TreeViewItemInputTriggers_Selected" />
-                <TreeViewItem Name="TreeViewItemInputCursor" Header="{x:Static p:Resources.OPTIONS_CURSOR_TITLE}" Selected="TreeViewItemInputCursor_Selected" />
+            <TreeViewItem Header="{x:Static p:Resources.SettingsInput}">
+                <TreeViewItem Name="TreeViewItemInputControllers" Header="{x:Static p:Resources.SettingsControllers}" Selected="TreeViewItemInputControllers_Selected"/>
+                <TreeViewItem Name="TreeViewItemInputKeybinds" Header="{x:Static p:Resources.SettingsKeybinds}" Selected="TreeViewItemInputKeybinds_Selected"/>
+                <TreeViewItem Name="TreeViewItemInputTriggers" Header="{x:Static p:Resources.SettingsTriggers}" Selected="TreeViewItemInputTriggers_Selected" />
+                <TreeViewItem Name="TreeViewItemInputCursor" Header="{x:Static p:Resources.SettingsCursor}" Selected="TreeViewItemInputCursor_Selected" />
             </TreeViewItem>
-            <TreeViewItem Header="Haptics">
-                <TreeViewItem Name="TreeViewItemHapticsVibration" Header="Vibration" Selected="TreeViewItemHapticsVibration_OnSelected"/>
-                <TreeViewItem Name="TreeViewItemHapticsColors" Header="Colors" Selected="TreeViewItemHapticsColors_OnSelected"/>
+            <TreeViewItem Header="{x:Static p:Resources.SettingsHaptics}">
+                <TreeViewItem Name="TreeViewItemHapticsVibration" Header="{x:Static p:Resources.SettingsHapticsVibration}" Selected="TreeViewItemHapticsVibration_OnSelected"/>
+                <TreeViewItem Name="TreeViewItemHapticsColors" Header="{x:Static p:Resources.SettingsHapticsColors}" Selected="TreeViewItemHapticsColors_OnSelected"/>
             </TreeViewItem>
-            <TreeViewItem Header="{x:Static p:Resources.OPTIONS_TREE_ADVANCED}">
-                <TreeViewItem Name="TreeViewItemAdvancedSettings" Header="{x:Static p:Resources.OPTIONS_TREE_ADVANCED_SETTINGS}" Selected="TreeViewItemAdvancedSettings_Selected"/>
+            <TreeViewItem Header="{x:Static p:Resources.SettingsAdvanced}">
+                <TreeViewItem Name="TreeViewItemAdvancedSettings" Header="{x:Static p:Resources.SettingsAdvancedSubItem}" Selected="TreeViewItemAdvancedSettings_Selected"/>
             </TreeViewItem>
         </TreeView>
         <ContentControl Name="SettingsContent" Grid.Column="1" Margin="-6,0,0,0" Grid.RowSpan="2"/>

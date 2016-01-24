@@ -122,5 +122,11 @@
     <Setting Name="LightbarHealthHigh" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FF00FF00</Value>
     </Setting>
+    <Setting Name="LastRunVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.0.0</Value>
+    </Setting>
+    <Setting Name="EnableLogging" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

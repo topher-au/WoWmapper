@@ -9,27 +9,27 @@
              xmlns:classes="clr-namespace:WoWmapper.Classes"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="300">
-    <GroupBox Header="{x:Static p:Resources.OPTIONS_CURSOR_TITLE}">
+    <GroupBox Header="{x:Static p:Resources.SettingsCursor}">
         <ScrollViewer>
             <StackPanel Margin="5">
-                <GroupBox Header="{x:Static p:Resources.OPTIONS_CURSOR_ANALOG}">
+                <GroupBox Header="{x:Static p:Resources.CursorAnalogStick}">
                     <StackPanel Margin="5">
                         <DockPanel>
-                            <TextBlock Text="{x:Static p:Resources.OPTIONS_CURSOR_DEADZONE}" />
+                            <TextBlock Text="{x:Static p:Resources.CursorDeadzone}" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Slider Name="SliderDeadzone" Value="{Binding Source={x:Static p:Settings.Default}, Path=RightDeadzone}" Width="100" SmallChange="1" Maximum="50" Minimum="5" ValueChanged="SaveSettings"/>
                                 <TextBlock Text="{Binding Value, ElementName=SliderDeadzone, StringFormat=\{0:#\}}" Margin="5,0,5,0" Width="16" TextAlignment="Right" />
                             </StackPanel>
                         </DockPanel>
                         <DockPanel Margin="0,5,0,0">
-                            <TextBlock Text="{x:Static p:Resources.OPTIONS_CURSOR_SPEED}" />
+                            <TextBlock Text="{x:Static p:Resources.CursorSpeed}" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Slider Name="SliderSpeed"  Value="{Binding Source={x:Static p:Settings.Default}, Path=RightSpeed}" Width="100" SmallChange="1" Maximum="20" Minimum="1" ValueChanged="SaveSettings"/>
                                 <TextBlock Text="{Binding Value, ElementName=SliderSpeed, StringFormat=\{0:#\}}" Margin="5,0,5,0" Width="16" TextAlignment="Right"/>
                             </StackPanel>
                         </DockPanel>
                         <DockPanel Margin="0,5,0,0">
-                            <TextBlock Text="{x:Static p:Resources.OPTIONS_CURSOR_CURVE}" />
+                            <TextBlock Text="{x:Static p:Resources.CursorCurve}" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Slider Name="SliderCurve"  Value="{Binding Source={x:Static p:Settings.Default}, Path=RightCurve}" Width="100" SmallChange="1" Maximum="10" Minimum="1" ValueChanged="SaveSettings"/>
                                 <TextBlock Text="{Binding Value, ElementName=SliderCurve, StringFormat=\{0:#\}}" Margin="5,0,5,0" Width="16" TextAlignment="Right"/>
@@ -37,23 +37,23 @@
                         </DockPanel>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="{x:Static p:Resources.OPTIONS_CURSOR_TOUCHPAD}" Name="GroupTouchPad">
+                <GroupBox Header="{x:Static p:Resources.CursorTouchpad}" Name="GroupTouchPad">
                     <StackPanel Margin="5">
                         <DockPanel>
-                            <TextBlock Text="{x:Static p:Resources.TOUCHPAD_MODE}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{x:Static p:Resources.CursorTouchpadMode}" VerticalAlignment="Center"/>
                             <ComboBox HorizontalAlignment="Right" Width="120" SelectedIndex="{Binding Source={x:Static p:Settings.Default}, Path=TouchpadMode}" SelectionChanged="SaveSettings">
-                                <ComboBoxItem Content="{x:Static p:Resources.TOUCHPAD_MODE_MOUSE}"/>
-                                <ComboBoxItem Content="{x:Static p:Resources.TOUCHPAD_MODE_EMULATE_CENTER}"/>
-                                <ComboBoxItem Content="{x:Static p:Resources.TOUCHPAD_MODE_BUTTONS}"/>
+                                <ComboBoxItem Content="{x:Static p:Resources.CursorTouchpadModeMouse}"/>
+                                <ComboBoxItem Content="{x:Static p:Resources.CursorTouchpadModeEmulateCenter}"/>
+                                <ComboBoxItem Content="{x:Static p:Resources.CursorTouchpadModeButtons}"/>
                             </ComboBox>
                         </DockPanel>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="{x:Static p:Resources.OPTIONS_CURSOR_ADVANCED}">
+                <GroupBox Header="{x:Static p:Resources.AdvancedFeaturesHeader}">
                     <StackPanel Margin="5">
-                        <TextBlock Text="{x:Static p:Resources.OPTIONS_REQUIRES_ADVANCED}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <TextBlock Text="{x:Static p:Resources.AdvancedFeaturesRequired}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
                         <StackPanel>
-                            <CheckBox Content="{x:Static p:Resources.OPTIONS_CURSOR_AUTO_CENTER}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=MouselookCenterCursor}" Checked="SaveSettings" Unchecked="SaveSettings"/>
+                            <CheckBox Content="{x:Static p:Resources.CursorAutoCenter}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=MouselookCenterCursor}" Checked="SaveSettings" Unchecked="SaveSettings"/>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>

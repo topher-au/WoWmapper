@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,32 +26,17 @@ namespace WoWmapper.Options
         public PreferencesWoWmapper()
         {
             InitializeComponent();
-            MainWindow.UpdateContent += MainWindowUpdateContent;
         }
 
-        private void MainWindowUpdateContent()
-        {
-            checkCloseTray.IsChecked = Settings.Default.CloseToTray;
-            checkMinimizeTray.IsChecked = Settings.Default.MinimizeToTray;
-            checkStartMinimized.IsChecked = Settings.Default.StartMinimized;
-        }
 
-        private void checkStartMinimized_Checked(object sender, RoutedEventArgs e)
+        private void CheckboxChanged(object sender, RoutedEventArgs e)
         {
-            Settings.Default.StartMinimized = checkStartMinimized.IsChecked.Value;
             Settings.Default.Save();
         }
 
-        private void checkMinimizeTray_Checked(object sender, RoutedEventArgs e)
+        private void ViewLog_Click(object sender, RoutedEventArgs e)
         {
-            Settings.Default.MinimizeToTray = checkMinimizeTray.IsChecked.Value;
-            Settings.Default.Save();
-        }
-
-        private void checkCloseTray_Checked(object sender, RoutedEventArgs e)
-        {
-            Settings.Default.CloseToTray = checkCloseTray.IsChecked.Value;
-            Settings.Default.Save();
+            if (File.Exists("log.txt")) Process.Start("log.txt");
         }
     }
 }

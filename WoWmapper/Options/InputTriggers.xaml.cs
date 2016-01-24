@@ -60,7 +60,7 @@ namespace WoWmapper.Options
 
         private void Image_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.ShowMessageBox(Properties.Resources.DIALOG_HELP_TRIGGER_GRIP_TITLE, Properties.Resources.DIALOG_HELP_TRIGGER_GRIP_TEXT);
+            MainWindow.ShowMessageBox(Properties.Resources.DialogHelpTriggerGripTitle, Properties.Resources.DialogHelpTriggerGripText);
         }
 
         private void SliderChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

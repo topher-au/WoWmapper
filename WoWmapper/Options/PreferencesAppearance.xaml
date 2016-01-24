@@ -8,11 +8,11 @@
              xmlns:classes="clr-namespace:WoWmapper.Classes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox x:Name="groupBox" Header="Appearance">
+    <GroupBox Header="{x:Static p:Resources.SettingsAppearance}">
         <ScrollViewer>
             <StackPanel Margin="5">
                 <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5">
-                    <Label Content="{x:Static p:Resources.OPTIONS_APPEARANCE_THEME}" />
+                    <Label Content="{x:Static p:Resources.AppearanceTheme}" />
                     <ComboBox Name="comboTheme" Width="120" HorizontalAlignment="Right" SelectionChanged="comboTheme_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -22,7 +22,7 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5">
-                    <Label Content="{x:Static p:Resources.OPTIONS_APPEARANCE_ACCENT}" />
+                    <Label Content="{x:Static p:Resources.AppearanceAccent}" />
                     <ComboBox Name="comboAccent" Width="120" HorizontalAlignment="Right" SelectionChanged="comboAccent_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -32,16 +32,16 @@
                     </ComboBox>
                 </DockPanel>
                 <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5" Visibility="Collapsed">
-                    <Label Content="{x:Static p:Resources.OPTIONS_APPEARANCE_LANGUAGE}" />
+                    <Label Content="{x:Static p:Resources.AppearanceLanguage}" />
                     <ComboBox Name="comboLanguage" Width="120" HorizontalAlignment="Right" SelectionChanged="comboLanguage_SelectionChanged" Text="English" IsEnabled="False"/>
                 </DockPanel>
-                <CheckBox Name="checkDropShadow" Content="{x:Static p:Resources.OPTIONS_APPEARANCE_DROP_SHADOW}" Margin="0,5,0,0" Checked="checkDropShadow_Checked" Unchecked="checkDropShadow_Checked"/>
-                <TextBlock Name="textNextStartup" Text="{x:Static p:Resources.OPTIONS_APPEARANCE_RESTART_APP}" TextWrapping="Wrap" Margin="20,10,20,0" TextAlignment="Center" Foreground="Yellow" Visibility="Collapsed"/>
-                <GroupBox Header="{x:Static p:Resources.OPTIONS_ADVANCED_FEATURES_HEADER}" Margin="5,15,5,0">
+                <CheckBox Name="checkDropShadow" Content="{x:Static p:Resources.AppearanceDropShadow}" Margin="0,5,0,0" Checked="checkDropShadow_Checked" Unchecked="checkDropShadow_Checked"/>
+                <TextBlock Name="textNextStartup" Text="{x:Static p:Resources.AppearanceRestartApp}" TextWrapping="Wrap" Margin="20,10,20,0" TextAlignment="Center" Foreground="Yellow" Visibility="Collapsed"/>
+                <GroupBox Header="{x:Static p:Resources.AdvancedFeaturesHeader}" Margin="5,15,5,0">
                     <StackPanel Margin="5">
-                        <TextBlock Text="{x:Static p:Resources.OPTIONS_REQUIRES_ADVANCED}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <TextBlock Text="{x:Static p:Resources.AdvancedFeaturesRequired}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
                         <StackPanel>
-                            <CheckBox Content="{x:Static p:Resources.OPTIONS_APPEARANCE_CLASS_COLOR}" IsChecked="{Binding AutoClassAccent, Source={x:Static p:Settings.Default}}" Checked="SaveSettings" Unchecked="SaveSettings"/>
+                            <CheckBox Content="{x:Static p:Resources.AppearanceColorByClass}" IsChecked="{Binding AutoClassAccent, Source={x:Static p:Settings.Default}}" Checked="SaveSettings" Unchecked="SaveSettings"/>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>

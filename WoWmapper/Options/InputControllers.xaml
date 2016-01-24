@@ -8,13 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="480" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="{x:Static p:Resources.OPTIONS_CONTROLLERS_TITLE}">
+        <GroupBox Header="{x:Static p:Resources.SettingsControllers}">
             <ScrollViewer>
                 <StackPanel Margin="5">
-                    <CheckBox Content="{x:Static p:Resources.OPTIONS_CONTROLLERS_AUTO_SELECT}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=AutoConnectDevice}" Checked="UpdateSettings" Unchecked="UpdateSettings" />
-                    <CheckBox Content="{x:Static p:Resources.OPTIONS_CONTROLLERS_ENABLE_DS4}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableDS4}" Checked="UpdateSettings" Unchecked="UpdateSettings" Margin="0,10,0,0"/>
-                    <CheckBox Content="{x:Static p:Resources.OPTIONS_CONTROLLERS_ENABLE_XBOX}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableXbox}" Margin="0,5,0,10" Checked="UpdateSettings" Unchecked="UpdateSettings" />
-                    <GroupBox Header="{x:Static p:Resources.OPTIONS_CONTROLLERS_DETECTED}">
+                    <CheckBox Content="{x:Static p:Resources.ControllersAutoSelect}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=AutoConnectDevice}" Checked="UpdateSettings" Unchecked="UpdateSettings" />
+                    <CheckBox Content="{x:Static p:Resources.ControllersEnableDs4}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableDS4}" Checked="UpdateSettings" Unchecked="UpdateSettings" Margin="0,10,0,0"/>
+                    <CheckBox Content="{x:Static p:Resources.ControllersEnableXbox}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=EnableXbox}" Margin="0,5,0,10" Checked="UpdateSettings" Unchecked="UpdateSettings" />
+                    <GroupBox Header="{x:Static p:Resources.ControllersDetected}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -38,8 +38,8 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                            <Button Grid.Column="1" Grid.Row="1" Name="buttonActivateController" Content="{x:Static p:Resources.OPTIONS_CONTROLLERS_ACTIVATE}" Click="ActivateController_Click" Margin="5,5,0,0"/>
-                            <Button Grid.Column="0" Grid.Row="1" Content="{x:Static p:Resources.OPTIONS_CONTROLLERS_SCAN}" Click="ScanForControllers_Click" Margin="0,5,5,0"/>
+                            <Button Grid.Column="1" Grid.Row="1" Name="buttonActivateController" Content="{x:Static p:Resources.ControllersActivate}" Click="ActivateController_Click" Margin="5,5,0,0"/>
+                            <Button Grid.Column="0" Grid.Row="1" Content="{x:Static p:Resources.ControllersScan}" Click="ScanForControllers_Click" Margin="0,5,5,0"/>
                         </Grid>
                     </GroupBox>
                 </StackPanel>

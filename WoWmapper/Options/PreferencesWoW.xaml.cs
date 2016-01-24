@@ -64,7 +64,7 @@ namespace WoWmapper.Options
         {
             FolderSelectDialog wowFolderDialog = new FolderSelectDialog();
             wowFolderDialog.InitialDirectory = "C:\\";
-            wowFolderDialog.Title = Properties.Resources.OPTIONS_WOW_FOLDER_BROWSE_TITLE;
+            wowFolderDialog.Title = Properties.Resources.DialogWoWFolderBrowserTitle;
 
             // Get main window handle so the form is locked while dialog is open
             IntPtr mainWindowHandle = new WindowInteropHelper(Application.Current.MainWindow).Handle;
@@ -75,7 +75,7 @@ namespace WoWmapper.Options
             if(!Functions.ValidateWoWPath(wowFolderDialog.FileName))
             {
                 // Not a valid path
-                MessageBox.Show(Properties.Resources.OPTIONS_WOW_FOLDER_INVALID_TEXT, Properties.Resources.OPTIONS_WOW_FOLDER_INVALID_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(Properties.Resources.ErrorDialogInvalidFolderText, Properties.Resources.ErrorDialogInvalidFolderTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             } else
             {
                 // Valid path, save and update

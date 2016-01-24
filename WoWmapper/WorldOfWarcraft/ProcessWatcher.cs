@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using WoWmapper.Classes;
 using WoWmapper.Properties;
 
 namespace WoWmapper.WorldOfWarcraft
@@ -77,7 +78,7 @@ namespace WoWmapper.WorldOfWarcraft
         public static void Start()
         {
             if (_watching || _watcherThread != null) return;
-
+            Logger.Write("Starting process watcher...");
             if (Settings.Default.EnableAdvancedFeatures)
                 _offsets = Offsets.Read();
 
@@ -90,6 +91,7 @@ namespace WoWmapper.WorldOfWarcraft
         public static void Stop()
         {
             if (!_watching || _watcherThread == null) return;
+            Logger.Write("Stopping process watcher...");
             _watcherThread?.Abort();
             _gameProcess?.Dispose();
             _watcherThread = null;
@@ -105,7 +107,6 @@ namespace WoWmapper.WorldOfWarcraft
 
         private static void ResetProcess()
         {
-            Console.WriteLine("Clearing current process");
             _gameProcess?.Dispose();
             _gameProcess = null;
             _gameHandle = IntPtr.Zero;
@@ -122,6 +123,7 @@ namespace WoWmapper.WorldOfWarcraft
                     {
                         if (_gameProcess.HasExited || !IsWindow(_gameProcess.MainWindowHandle))
                         {
+                            Logger.Write("WoW process invalidated, clearing!");
                             ResetProcess();
                         }
                         else
@@ -144,20 +146,26 @@ namespace WoWmapper.WorldOfWarcraft
                     {
                         activeProcess =
                         wowProcess.FirstOrDefault(proc => proc.HasExited == false && proc.MainWindowHandle != IntPtr.Zero);
+                        if(activeProcess != null) Logger.Write("Found WoW process! Handle is {0}", activeProcess.Handle);
                     } catch { }
                     
 
                     if (activeProcess != null)
                     {
+                        Logger.Write("Opening process memory for reading...");
                         // Open process memory for advanced features
                         if (Settings.Default.EnableAdvancedFeatures)
+                        {
                             _gameHandle = OpenProcess(PROCESS_WM_READ, false, activeProcess.Id);
+                            Logger.Write("Process memory opened, handle is {0}", _gameHandle);
+                        }
+                            
 
                         _gameProcess = activeProcess;
                     }
                 }
 
-                Thread.Sleep(50);
+                Thread.Sleep(1000);
             }
         }
 
@@ -188,7 +196,10 @@ namespace WoWmapper.WorldOfWarcraft
                             bState.Length, ref bytesRead);
                         return (GameInfo.GameState) bState[0];
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex)
+                    {
+                        Logger.Write("Exception reading game state! {0}", ex);
+                    }
                 return GameInfo.GameState.NotRunning;
             }
 
@@ -208,7 +219,11 @@ namespace WoWmapper.WorldOfWarcraft
                         return Encoding.Default.GetString(bName, 0, length);
                     else
                         return Encoding.Default.GetString(bName, 0, bName.Length);
-                } catch (Exception ex) { }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Write("Exception reading player name! {0}", ex);
+                }
                 return string.Empty;
             }
 
@@ -226,7 +241,7 @@ namespace WoWmapper.WorldOfWarcraft
                             bClass.Length, ref bytesRead);
                         return (GameInfo.Classes) bClass[0];
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex) { Logger.Write("Exception reading player class! {0}", ex); }
                 return GameInfo.Classes.None;
             }
 
@@ -246,9 +261,12 @@ namespace WoWmapper.WorldOfWarcraft
 
                     var bytesRead = 0;
 
-                    ReadProcessMemory(_gameHandle, playerBase + (int)_offsets.Offsets[OffsetType.PlayerLevel], level, level.Length, ref bytesRead);
-                    ReadProcessMemory(_gameHandle, playerBase + (int)_offsets.Offsets[OffsetType.PlayerHealthCurrent], currentHp, currentHp.Length, ref bytesRead);
-                    ReadProcessMemory(_gameHandle, playerBase + (int)_offsets.Offsets[OffsetType.PlayerHealthMax], maxHp, maxHp.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle, playerBase + (int) _offsets.Offsets[OffsetType.PlayerLevel], level,
+                        level.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle, playerBase + (int) _offsets.Offsets[OffsetType.PlayerHealthCurrent],
+                        currentHp, currentHp.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle, playerBase + (int) _offsets.Offsets[OffsetType.PlayerHealthMax],
+                        maxHp, maxHp.Length, ref bytesRead);
 
                     return new PlayerInfo()
                     {
@@ -256,7 +274,11 @@ namespace WoWmapper.WorldOfWarcraft
                         CurrentHealth = BitConverter.ToUInt32(currentHp, 0),
                         MaxHealth = BitConverter.ToUInt32(maxHp, 0)
                     };
-                } catch (Exception Ex) { }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Write("Exception reading player info! {0}", ex);
+                }
                 return null;
             }
 
@@ -271,14 +293,20 @@ namespace WoWmapper.WorldOfWarcraft
                     byte[] isMouseLooking = new byte[1];
 
                     // Read the location of the mouse info from memory
-                    ReadProcessMemory(_gameHandle, _gameProcess.MainModule.BaseAddress + (int)_offsets.Offsets[OffsetType.MouseLook], ptrMouseLook, ptrMouseLook.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle,
+                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.MouseLook], ptrMouseLook,
+                        ptrMouseLook.Length, ref bytesRead);
 
                     // Read the byte that represents mouselook
-                    ReadProcessMemory(_gameHandle, (IntPtr)BitConverter.ToInt64(ptrMouseLook, 0) + 4, isMouseLooking, isMouseLooking.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle, (IntPtr) BitConverter.ToInt64(ptrMouseLook, 0) + 4, isMouseLooking,
+                        isMouseLooking.Length, ref bytesRead);
 
-                    if (((int)isMouseLooking[0] & 1) == 1) return true;
+                    if (((int) isMouseLooking[0] & 1) == 1) return true;
                 }
-                catch (Exception Ex) { }
+                catch (Exception ex)
+                {
+                    Logger.Write("Exception reading mouselook state! {0}", ex);
+                }
                 
                 return false;
             }
@@ -291,9 +319,15 @@ namespace WoWmapper.WorldOfWarcraft
 
                     byte[] targetGuid = new byte[16];
                     int bytesRead = 0;
-                    ReadProcessMemory(_gameHandle, _gameProcess.MainModule.BaseAddress + (int)_offsets.Offsets[OffsetType.TargetGuid], targetGuid, targetGuid.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle,
+                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.TargetGuid], targetGuid,
+                        targetGuid.Length, ref bytesRead);
                     return targetGuid;
-                } catch { }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Write("Exception reading target guid! {0}", ex);
+                }
                 return null;
             }
 
@@ -305,9 +339,15 @@ namespace WoWmapper.WorldOfWarcraft
 
                     byte[] mouseGuid = new byte[16];
                     int bytesRead = 0;
-                    ReadProcessMemory(_gameHandle, _gameProcess.MainModule.BaseAddress + (int)_offsets.Offsets[OffsetType.MouseGuid], mouseGuid, mouseGuid.Length, ref bytesRead);
+                    ReadProcessMemory(_gameHandle,
+                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.MouseGuid], mouseGuid,
+                        mouseGuid.Length, ref bytesRead);
                     return mouseGuid;
-                } catch { }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Write("Exception reading mouseover guid! {0}", ex);
+                }
                 return null;
             }
 
@@ -330,7 +370,7 @@ namespace WoWmapper.WorldOfWarcraft
                     IntPtr playerBase = (IntPtr)BitConverter.ToInt64(pointer, 0);
                     return playerBase; 
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Logger.Write("Exception reading player base! {0}", ex); }
                 return IntPtr.Zero;
             }
 
@@ -346,28 +386,32 @@ namespace WoWmapper.WorldOfWarcraft
         {
             public static void SendKeyDown(Key key)
             {
-                if (Settings.Default.SendKeysDirect && _gameProcess != null)
+                if (true) //Settings.Default.SendKeysDirect && _gameProcess != null)
                 {
                     // direct keys
-                    SendMessage(_gameProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    if(sendResult != 0)
+                        Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", sendResult);
                 }
                 else
                 {
-                    // global keys
+                    // TODO global keys
                 }
                 
             }
 
             public static void SendKeyUp(Key key)
             {
-                if (Settings.Default.SendKeysDirect && _gameProcess != null)
+                if (true) //Settings.Default.SendKeysDirect && _gameProcess != null)
                 {
                     // direct keys
-                    SendMessage(_gameProcess.MainWindowHandle, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    if (sendResult != 0)
+                        Logger.Write("SendMessage WM_KEYUP returned error code: {0}", sendResult);
                 }
                 else
                 {
-                    // global keys
+                    // TODO global keys
                 }
             }
         }

@@ -8,17 +8,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="{x:Static p:Resources.OPTIONS_ADVANCED_TITLE}">
+        <GroupBox Header="{x:Static p:Resources.SettingsAdvancedTitle}">
             <ScrollViewer>
                 <StackPanel Margin="5">
-                    <GroupBox Header="{x:Static p:Resources.OPTIONS_ADVANCED_FEATURES_HEADER}">
+                    <GroupBox Header="{x:Static p:Resources.AdvancedFeaturesHeader}">
                         <StackPanel Margin="5">
-                            <TextBlock TextWrapping="Wrap" Text="{x:Static p:Resources.OPTIONS_ADVANCED_FEATURES_WARNING}" />
-                            <Button Content="More Information" Margin="10" Click="ButtonMoreInfo_Click"/>
-                            <CheckBox Name="CheckEnableAdvancedFeatures" Content="{x:Static p:Resources.OPTIONS_ADVANCED_FEATURES_CHECKBOX}" Margin="10,0,10,0" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>    
+                            <TextBlock TextWrapping="Wrap" Text="{x:Static p:Resources.AdvancedFeaturesWarning}" />
+                            <Button Content="{x:Static p:Resources.AdvancedMoreInfo}" Margin="10" Click="ButtonMoreInfo_Click"/>
+                            <CheckBox Name="CheckEnableAdvancedFeatures" Content="{x:Static p:Resources.SettingsEnableAdvancedFeatures}" Margin="10,0,10,0" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>    
                         </StackPanel>
                     </GroupBox>
-                    <Button Margin="10,5,10,0" Content="{x:Static p:Resources.OPTIONS_RESET_ALL}" Click="Button_Click"/>
+                    <Button Margin="10,5,10,0" Content="{x:Static p:Resources.SettingsResetAll}" Click="Button_Click"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
