@@ -84,11 +84,11 @@ namespace WoWmapper.Input
 
         public static void LoadKeybinds()
         {
-            if (File.Exists("bindings.dat"))
+            if (File.Exists(Path.Combine(MainWindow.AppDataDir, "bindings.dat")))
             {
                 try
                 {
-                    using (var f = new FileStream("bindings.dat", FileMode.Open))
+                    using (var f = new FileStream(Path.Combine(MainWindow.AppDataDir, "bindings.dat"), FileMode.Open))
                     {
                         Logger.Write("Loading keybind profile");
                         var x = new DataContractSerializer(typeof (KeybindProfile));
@@ -110,7 +110,7 @@ namespace WoWmapper.Input
 
         public static void SaveKeybinds()
         {
-            using (var outfile = new FileStream("bindings.dat", FileMode.Create))
+            using (var outfile = new FileStream(Path.Combine(MainWindow.AppDataDir,"bindings.dat"), FileMode.Create))
             {
                 var x = new DataContractSerializer(typeof(KeybindProfile));
                 x.WriteObject(outfile, _keybind);

@@ -46,7 +46,7 @@ namespace WoWmapper
         public static event ShowKeybindHandler ShowKeybindDialogEvent;
 
         public static event ShowMessageHandler ShowMessage;
-
+        public static string AppDataDir;
         public delegate void ShowMessageHandler(string Title, string Text);
         public delegate void ShowKeybindHandler(ControllerButton Button);
         public delegate void WoWmapperEvent();
@@ -93,10 +93,27 @@ namespace WoWmapper
         {
             InitializeComponent();
 
-            Logger.Write("------------------------------------------");
-            Logger.Write("WoWmapper {0} initializing...", Assembly.GetExecutingAssembly().GetName().Version);
-            Logger.Write("Operating System: Windows {0}, {1}", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "x64" : "x86");
+            var currentVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
+            Logger.Write("------------------------------------------");
+            Logger.Write("WoWmapper {0} initializing...",currentVersion);
+            Logger.Write("Operating System: Windows {0}, {1}", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "x64" : "x86");
+            Logger.Write("Application Path: {0}", System.AppDomain.CurrentDomain.BaseDirectory);
+
+            if (new Version(Settings.Default.LastRunVersion) < currentVersion)
+            {
+                Logger.Write("Upgrading settings");
+                Settings.Default.Upgrade();
+            }
+            Settings.Default.LastRunVersion = currentVersion.ToString();
+            Settings.Default.Save();
+
+            AppDataDir = Path.Combine(Environment.GetEnvironmentVariable("LocalAppData"), "WoWmapper");
+            if (!Directory.Exists(AppDataDir))
+            {
+                Logger.Write("App data dir not found\nCreating{0}", AppDataDir);
+                Directory.CreateDirectory(AppDataDir);
+            }
             // Add notification menu items
             ((MenuItem)_notifyMenu.Items[0]).Click += NotifyMenu_Open_WoWmapper;
             ((MenuItem)_notifyMenu.Items[2]).Click += NotifyMenu_Controllers;
@@ -633,14 +650,14 @@ namespace WoWmapper
             var zipDownloadUrl = wmAssets.FirstOrDefault(file => Path.GetExtension(file.BrowserDownloadUrl)?.ToLower() == ".zip");
             if (zipDownloadUrl == null || zipDownloadUrl.BrowserDownloadUrl == string.Empty) return;
 
-            await DownloadFile(zipDownloadUrl.BrowserDownloadUrl, "update.zip");
+            await DownloadFile(zipDownloadUrl.BrowserDownloadUrl, Path.Combine(AppDataDir, "update.zip"));
 
-            var updateZip = ZipFile.Open("update.zip", ZipArchiveMode.Read);
+            var updateZip = ZipFile.Open(Path.Combine(AppDataDir, "update.zip"), ZipArchiveMode.Read);
             var updaterEntry = updateZip.GetEntry("WoWmapper_Updater.exe");
             if(File.Exists(WoWmapperUpdater)) File.Delete(WoWmapperUpdater);
             updaterEntry.ExtractToFile(WoWmapperUpdater);
 
-            Process.Start(WoWmapperUpdater, "update.zip");
+            Process.Start(WoWmapperUpdater, Path.Combine(AppDataDir, "update.zip"));
             Application.Current.Shutdown();
         }
 
@@ -665,7 +682,7 @@ namespace WoWmapper
             var zipDownloadUrl = cpAssets.FirstOrDefault(file => Path.GetExtension(file.BrowserDownloadUrl)?.ToLower() == ".zip");
             if (zipDownloadUrl == null || zipDownloadUrl.BrowserDownloadUrl == string.Empty) return;
 
-            var dlSuccess = await DownloadFile(zipDownloadUrl.BrowserDownloadUrl, "consoleport_update.zip");
+            var dlSuccess = await DownloadFile(zipDownloadUrl.BrowserDownloadUrl, Path.Combine(AppDataDir, "consoleport_update.zip"));
             if (!dlSuccess) return;
 
             // Install ConsolePort update here
@@ -678,7 +695,7 @@ namespace WoWmapper
                 var cpkDir = Path.Combine(installPath, "ConsolePortKeyboard");
                 if (Directory.Exists(cpDir)) Directory.Delete(cpDir, true);
                 if (Directory.Exists(cpkDir)) Directory.Delete(cpkDir, true);
-                using (var zipStream = new FileStream("consoleport_update.zip", System.IO.FileMode.Open))
+                using (var zipStream = new FileStream(Path.Combine(AppDataDir, "consoleport_update.zip"), System.IO.FileMode.Open))
                 {
                     ZipArchive zip = new ZipArchive(zipStream);
                     zip.ExtractToDirectory(installPath);
@@ -692,7 +709,7 @@ namespace WoWmapper
 
             if (updateSuccess)
             {
-                File.Delete("consoleport_update.zip");
+                File.Delete(Path.Combine(AppDataDir, "consoleport_update.zip"));
                 ShowMessageBox(Properties.Resources.DialogConsoleportUpdateTitle, string.Format(Properties.Resources.DialogConsolePortUpdateSuccessText, cpRelease.TagName));
                 buttonUpdateConsolePort.Visibility = Visibility.Collapsed;
                 UpdateVersionDisplay();
