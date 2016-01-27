@@ -8,7 +8,7 @@ WoWmapper is a game controller input mapper for World of Warcraft, designed for 
 - [Microsoft DirectX](https://support.microsoft.com/en-us/kb/179113)
 - [Microsoft .NET Framework v4.5.2 (or later)](https://www.microsoft.com/en-au/download/details.aspx?id=42643)
 - [World of Warcraft](http://www.worldofwarcraft.com/)
-- [ConsolePort by MunkDev](http://www.wowinterface.com/downloads/info23536-ConsolePort-GameControllerAddon.html)
+- [ConsolePort by MunkDev](http://www.curse.com/addons/wow/console-port)
 
 ### Installing WoWmapper
 
