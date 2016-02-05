@@ -42,8 +42,6 @@ namespace WoWmapper.Input
 
         private static void ControllerThread()
         {
-            
-
             while (true)
             {
                 var controller = ControllerManager.GetActiveController();
@@ -278,12 +276,8 @@ namespace WoWmapper.Input
                 mouse_event(MOUSEEVENTF_RIGHTDOWN, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
                 return;
             }
-    }
+        }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="buttons"></param>
         private static void DoMouseUp(MouseButtons buttons)
         {
             if (buttons.HasFlag(MouseButtons.Left))
@@ -294,7 +288,6 @@ namespace WoWmapper.Input
 
             if (buttons.HasFlag(MouseButtons.Right))
             {
-
                 mouse_event(MOUSEEVENTF_RIGHTUP, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
                 return;
             }

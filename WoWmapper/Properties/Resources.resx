@@ -328,9 +328,6 @@
   <data name="ControllersControllerNumber" xml:space="preserve">
     <value>Controller {0}</value>
   </data>
-  <data name="WoWSendKeysDirect" xml:space="preserve">
-    <value>Send keystrokes directly to game window</value>
-  </data>
   <data name="MainWindowBatteryConnected" xml:space="preserve">
     <value>Connected</value>
   </data>
@@ -537,5 +534,8 @@ The error was:
   </data>
   <data name="WoWmapperViewLog" xml:space="preserve">
     <value>View Log File</value>
+  </data>
+  <data name="WoWmapperSendForegroundKeys" xml:space="preserve">
+    <value>Send keys to foreground window</value>
   </data>
 </root>

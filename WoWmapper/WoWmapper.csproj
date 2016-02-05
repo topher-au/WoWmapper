@@ -129,7 +129,7 @@
     <Compile Include="Controllers\Xbox\XInputWrapper\Point.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XboxController.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XboxControllerStateChangedEventArgs.cs" />
-    <Compile Include="Controllers\Xbox\XInputWrapper\XInput.cs" />
+    <Compile Include="Controllers\Xbox\XInputWrapper\XInput1_3.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputBatteryInformation.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputCapabilities.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputConstants.cs" />
@@ -299,7 +299,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.sv-SE.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

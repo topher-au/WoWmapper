@@ -1269,6 +1269,15 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send keys to foreground window.
+        /// </summary>
+        public static string WoWmapperSendForegroundKeys {
+            get {
+                return ResourceManager.GetString("WoWmapperSendForegroundKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start minimized.
         /// </summary>
         public static string WoWmapperStartMinimized {
@@ -1283,15 +1292,6 @@ namespace WoWmapper.Properties {
         public static string WoWmapperViewLog {
             get {
                 return ResourceManager.GetString("WoWmapperViewLog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Send keystrokes directly to game window.
-        /// </summary>
-        public static string WoWSendKeysDirect {
-            get {
-                return ResourceManager.GetString("WoWSendKeysDirect", resourceCulture);
             }
         }
         

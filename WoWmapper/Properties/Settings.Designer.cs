@@ -265,18 +265,6 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool SendKeysDirect {
-            get {
-                return ((bool)(this["SendKeysDirect"]));
-            }
-            set {
-                this["SendKeysDirect"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool MouselookCenterCursor {
             get {
@@ -524,6 +512,18 @@ namespace WoWmapper.Properties {
             }
             set {
                 this["EnableLogging"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SendForegroundKeys {
+            get {
+                return ((bool)(this["SendForegroundKeys"]));
+            }
+            set {
+                this["SendForegroundKeys"] = value;
             }
         }
     }

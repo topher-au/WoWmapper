@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using Octokit;
 using WoWmapper.Classes;
 using WoWmapper.Controllers;
@@ -100,11 +101,29 @@ namespace WoWmapper
             Logger.Write("Operating System: Windows {0}, {1}", Environment.OSVersion, Environment.Is64BitOperatingSystem ? "x64" : "x86");
             Logger.Write("Application Path: {0}", System.AppDomain.CurrentDomain.BaseDirectory);
 
+            var dxKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\DirectX");
+            var dxVersion = new Version();
+
+            var dxVersionString = (string) dxKey?.GetValue("Version");
+            if(dxVersionString != null) dxVersion = new Version(dxVersionString);
+
+            if (dxVersion < new Version("4.09.00.0904"))
+            {
+                var downloadDXnow = System.Windows.MessageBox.Show(
+                    "DirectX 9.0c is required for Xbox controller support. Would you like to download it now?",
+                    "DirectX not found", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (downloadDXnow == MessageBoxResult.Yes) Process.Start("https://www.microsoft.com/en-us/download/confirmation.aspx?id=8109");
+                Settings.Default.EnableXbox = false;
+                Settings.Default.Save();
+            }
+
+
             if (new Version(Settings.Default.LastRunVersion) < currentVersion)
             {
-                Logger.Write("Upgrading settings");
+                Logger.Write("Upgrading application settings");
                 Settings.Default.Upgrade();
             }
+
             Settings.Default.LastRunVersion = currentVersion.ToString();
             Settings.Default.Save();
 
@@ -114,6 +133,7 @@ namespace WoWmapper
                 Logger.Write("App data dir not found\nCreating{0}", AppDataDir);
                 Directory.CreateDirectory(AppDataDir);
             }
+
             // Add notification menu items
             ((MenuItem)_notifyMenu.Items[0]).Click += NotifyMenu_Open_WoWmapper;
             ((MenuItem)_notifyMenu.Items[2]).Click += NotifyMenu_Controllers;
@@ -139,7 +159,7 @@ namespace WoWmapper
             ThemeManager.AddAccent("Warlock", new Uri("pack://application:,,,/Resources/Accents/Warlock.xaml"));
             ThemeManager.AddAccent("Warrior", new Uri("pack://application:,,,/Resources/Accents/Warrior.xaml"));
 
-            // Load theme and accent
+            // Load saved theme and accent
             var appTheme = ThemeManager.AppThemes.FirstOrDefault(theme => theme.Name == Settings.Default.AppTheme);
             var appAccent = ThemeManager.Accents.FirstOrDefault(accent => accent.Name == Settings.Default.AppAccent);
 

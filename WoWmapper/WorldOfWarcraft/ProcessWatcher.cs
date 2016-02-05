@@ -36,6 +36,10 @@ namespace WoWmapper.WorldOfWarcraft
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+
         private const int PROCESS_WM_READ = 0x0010;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -205,7 +209,7 @@ namespace WoWmapper.WorldOfWarcraft
 
             public static string GetPlayerName()
             {
-                if (!CanReadMemory || GetGameState() != GameInfo.GameState.LoggedIn) return string.Empty;
+                if (!CanReadMemory || GetGameState() != GameInfo.GameState.LoggedIn) return String.Empty;
 
                 try
                 {
@@ -224,7 +228,7 @@ namespace WoWmapper.WorldOfWarcraft
                 {
                     Logger.Write("Exception reading player name! {0}", ex);
                 }
-                return string.Empty;
+                return String.Empty;
             }
 
             public static GameInfo.Classes GetPlayerClass()
@@ -386,33 +390,52 @@ namespace WoWmapper.WorldOfWarcraft
         {
             public static void SendKeyDown(Key key)
             {
-                if (true) //Settings.Default.SendKeysDirect && _gameProcess != null)
+                if (Settings.Default.SendForegroundKeys)
                 {
-                    // direct keys
-                    var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
-                    if(sendResult != 0)
-                        Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", sendResult);
+                    // Get foreground window and send message
+                    var hWndFg = GetForegroundWindow();
+                    if (hWndFg == IntPtr.Zero)
+                    {
+                        Logger.Write("Failed to get foreground window handle");
+                        return;
+                    }
+
+                    var foregroundResult = SendMessage(hWndFg, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    if (foregroundResult != 0)
+                        Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", foregroundResult);
+                    return;
                 }
-                else
-                {
-                    // TODO global keys
-                }
-                
+
+                if (!ProcessWatcher.GameRunning) return;
+
+                var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                if (sendResult != 0)
+                    Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", sendResult);
             }
 
             public static void SendKeyUp(Key key)
             {
-                if (true) //Settings.Default.SendKeysDirect && _gameProcess != null)
+                if (Settings.Default.SendForegroundKeys)
                 {
-                    // direct keys
-                    var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
-                    if (sendResult != 0)
-                        Logger.Write("SendMessage WM_KEYUP returned error code: {0}", sendResult);
+                    // Get foreground window and send message
+                    var hWndFg = GetForegroundWindow();
+                    if (hWndFg == IntPtr.Zero)
+                    {
+                        Logger.Write("Failed to get foreground window handle");
+                        return;
+                    }
+
+                    var foregroundResult = SendMessage(hWndFg, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    if (foregroundResult != 0)
+                        Logger.Write("SendMessage WM_KEYUP returned error code: {0}", foregroundResult);
+                    return;
                 }
-                else
-                {
-                    // TODO global keys
-                }
+
+                if (!ProcessWatcher.GameRunning) return;
+
+                var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                if (sendResult != 0)
+                    Logger.Write("SendMessage WM_KEYUP returned error code: {0}", sendResult);
             }
         }
 
