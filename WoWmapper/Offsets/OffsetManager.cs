@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WoWmapper.Classes;
 
 namespace WoWmapper.Offsets
 {
@@ -55,7 +56,8 @@ namespace WoWmapper.Offsets
             }
             catch (Exception ex)
             {
-                
+                // Server returned an error
+                Logger.Write("Error downloading offsets: {0}", ex.Message);
             }
             
             

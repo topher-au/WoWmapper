@@ -461,6 +461,7 @@ namespace WoWmapper
             else
             {
                 textWoWStatus.Text = Properties.Resources.MainWindowWoWNotRunning;
+                textWoWStatus2.Text = String.Empty;
                 SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
             }
 
