@@ -24,6 +24,7 @@ using Octokit;
 using WoWmapper.Classes;
 using WoWmapper.Controllers;
 using WoWmapper.Input;
+using WoWmapper.Offsets;
 using WoWmapper.Options;
 using WoWmapper.WorldOfWarcraft;
 using WoWmapper.Properties;
@@ -401,40 +402,60 @@ namespace WoWmapper
                         textWoWStatus.Text = Properties.Resources.MainWindowWoWRunning64;
                         break;
                 }
-                if (ProcessWatcher.CanReadMemory)
+
+                if (Settings.Default.EnableAdvancedFeatures)
                 {
-                    var gameState = ProcessWatcher.MemoryReader.GetGameState();
-                    switch (gameState)
+                    if (ProcessWatcher.CanReadMemory)
                     {
-                        case GameInfo.GameState.LoggedIn:
-                            var playerInfo = ProcessWatcher.MemoryReader.GetPlayerInfo();
-                            if (Settings.Default.AutoClassAccent)
-                            {
-                                var playerClass = ProcessWatcher.MemoryReader.GetPlayerClass();
-                                SetTheme(playerClass.ToString(), Settings.Default.AppTheme);
-                            }
-                            else
-                            {
+                        // Attempt to read game info
+                        var gameState = ProcessWatcher.MemoryReader.GetGameState();
+
+                        switch (gameState)
+                        {
+                            case GameInfo.GameState.LoggedIn:
+                                var playerInfo = ProcessWatcher.MemoryReader.GetPlayerInfo();
+
+                                // Color accent by class color
+                                if (Settings.Default.AutoClassAccent)
+                                {
+                                    var playerClass = ProcessWatcher.MemoryReader.GetPlayerClass();
+                                    SetTheme(playerClass.ToString(), Settings.Default.AppTheme);
+                                }
+                                else
+                                {
+                                    SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
+                                }
+
+                                textWoWStatus2.Text =
+                                    $"{ProcessWatcher.MemoryReader.GetPlayerName()} [{playerInfo.Level}]: {playerInfo.CurrentHealth}/{playerInfo.MaxHealth}";
+
+                                break;
+
+                            case GameInfo.GameState.LoggedOut:
+                                textWoWStatus2.Text = Properties.Resources.MainWindowWoWLoggedOut;
                                 SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
-                            }
-                            textWoWStatus2.Text =
-                                $"{ProcessWatcher.MemoryReader.GetPlayerName()} [{playerInfo.Level}]: {playerInfo.CurrentHealth}/{playerInfo.MaxHealth}";
-                            break;
+                                break;
 
-                        case GameInfo.GameState.LoggedOut:
-                            textWoWStatus2.Text = Properties.Resources.MainWindowWoWLoggedOut;
-                            SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
-                            break;
+                            case GameInfo.GameState.NotRunning:
+                                textWoWStatus2.Text = Properties.Resources.MainWindowWoWError;
+                                SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
+                                break;
+                        }
+                    }
 
-                        case GameInfo.GameState.NotRunning:
-                            textWoWStatus2.Text = Properties.Resources.MainWindowWoWError;
-                            SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
-                            break;
+                    if (!ProcessWatcher.CanReadMemory)
+                    {
+                        SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
+                    }
+
+                    if (!OffsetManager.OffsetsAvailable)
+                    {
+                        textWoWStatus2.Text = @"Advanced features currently unavailable";
                     }
                 }
                 else
                 {
-                    SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
+                    textWoWStatus2.Text = string.Empty;
                 }
             }
             else

@@ -10,10 +10,12 @@ namespace WoWmapper.Classes
 {
     public static class Logger
     {
+        public static StreamWriter _outWriter = new StreamWriter("log.txt");
+
         public static void Write(string text, params object[] parameters)
         {
             if(Settings.Default.EnableLogging)
-                File.AppendAllLines("log.txt", new[] { string.Format(text, parameters) });
+                _outWriter.WriteLine(text, parameters);
         }
     }
 }

@@ -95,6 +95,9 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\ShowWhenEnabled.cs" />
+    <Compile Include="Offsets\OffsetFile.cs" />
+    <Compile Include="Offsets\OffsetManager.cs" />
+    <Compile Include="Offsets\OffsetType.cs" />
     <Compile Include="Options\HapticsColors.xaml.cs">
       <DependentUpon>HapticsColors.xaml</DependentUpon>
     </Compile>
@@ -129,7 +132,7 @@
     <Compile Include="Controllers\Xbox\XInputWrapper\Point.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XboxController.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XboxControllerStateChangedEventArgs.cs" />
-    <Compile Include="Controllers\Xbox\XInputWrapper\XInput1_3.cs" />
+    <Compile Include="Controllers\Xbox\XInputWrapper\XInput.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputBatteryInformation.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputCapabilities.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputConstants.cs" />
@@ -170,7 +173,6 @@
     <Compile Include="WorldOfWarcraft\Enums.cs" />
     <Compile Include="WorldOfWarcraft\ProcessWatcher.cs" />
     <Compile Include="WorldOfWarcraft\Vector2.cs" />
-    <Compile Include="WorldOfWarcraft\Offsets.cs" />
     <Page Include="Options\HapticsColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

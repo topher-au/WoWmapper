@@ -56,8 +56,6 @@ namespace WoWmapper.Options
                     break;
             }
             Properties.Settings.Default.Save();
-            if(ProcessWatcher.IsRunning)
-                ProcessWatcher.Restart();
         }
 
         private void buttonLocateWoW_Click(object sender, RoutedEventArgs e)

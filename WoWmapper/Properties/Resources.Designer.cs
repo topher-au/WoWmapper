@@ -460,6 +460,24 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your version of World of Warcraft is not currently supported by WoWmapper. Please check for an update and try again..
+        /// </summary>
+        public static string DialogNoOffsetsFoundText {
+            get {
+                return ResourceManager.GetString("DialogNoOffsetsFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offsets outdated.
+        /// </summary>
+        public static string DialogNoOffsetsFoundTitle {
+            get {
+                return ResourceManager.GetString("DialogNoOffsetsFoundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This will delete all WoWmapper settings and keybinds and exit the program. Are you sure you want to continue?.
         /// </summary>
         public static string DialogResetAllText {

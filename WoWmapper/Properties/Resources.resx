@@ -538,4 +538,10 @@ The error was:
   <data name="WoWmapperSendForegroundKeys" xml:space="preserve">
     <value>Send keys to foreground window</value>
   </data>
+  <data name="DialogNoOffsetsFoundText" xml:space="preserve">
+    <value>Your version of World of Warcraft is not currently supported by WoWmapper. Please check for an update and try again.</value>
+  </data>
+  <data name="DialogNoOffsetsFoundTitle" xml:space="preserve">
+    <value>Offsets outdated</value>
+  </data>
 </root>

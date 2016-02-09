@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WoWmapper.Classes;
+using WoWmapper.Offsets;
 using WoWmapper.Properties;
 
 namespace WoWmapper.WorldOfWarcraft
@@ -57,10 +58,9 @@ namespace WoWmapper.WorldOfWarcraft
         private static Process _gameProcess; // Current instance of WoW
         private static Thread _watcherThread; // Thread for monitoring WoW instances
         private static bool _watching; // Current state of the watcher
-        private static OffsetData _offsets;
         private static MemoryReader.PlayerInfo _playerInfo;
 
-        public static bool CanReadMemory => _gameHandle != IntPtr.Zero && GameArchitecture == Enums.GameArchitecture.X64 && Settings.Default.EnableAdvancedFeatures;
+        public static bool CanReadMemory => _gameHandle != IntPtr.Zero && GameArchitecture == Enums.GameArchitecture.X64 && Settings.Default.EnableAdvancedFeatures && OffsetManager.OffsetsAvailable;
         public static bool GameRunning => _gameProcess != null;
         public static bool IsRunning => _watching;
 
@@ -83,8 +83,6 @@ namespace WoWmapper.WorldOfWarcraft
         {
             if (_watching || _watcherThread != null) return;
             Logger.Write("Starting process watcher...");
-            if (Settings.Default.EnableAdvancedFeatures)
-                _offsets = Offsets.Read();
 
             _watching = true;
 
@@ -161,10 +159,21 @@ namespace WoWmapper.WorldOfWarcraft
                         if (Settings.Default.EnableAdvancedFeatures)
                         {
                             _gameHandle = OpenProcess(PROCESS_WM_READ, false, activeProcess.Id);
-                            Logger.Write("Process memory opened, handle is {0}", _gameHandle);
-                        }
-                            
 
+                            // Check current game build
+                            var gameBuild = activeProcess.MainModule.FileVersionInfo.ProductPrivatePart;
+                            var offsetsLoaded = OffsetManager.InitializeOffsets(gameBuild);
+
+                            if (offsetsLoaded)
+                                Logger.Write($"Process memory opened (Handle={_gameHandle}), offsets loaded for build {gameBuild}");
+                            else
+                            {
+                                Logger.Write("Failed to load appropriate offsets, memory reading disabled");
+                                _gameHandle = IntPtr.Zero;
+                            }
+                                
+                        }
+                        
                         _gameProcess = activeProcess;
                     }
                 }
@@ -196,7 +205,7 @@ namespace WoWmapper.WorldOfWarcraft
                         byte[] bState = new byte[1];
                         int bytesRead = 0;
                         ReadProcessMemory(_gameHandle,
-                            _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.GameState], bState,
+                            _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.GameState), bState,
                             bState.Length, ref bytesRead);
                         return (GameInfo.GameState) bState[0];
                     }
@@ -216,7 +225,7 @@ namespace WoWmapper.WorldOfWarcraft
                     byte[] bName = new byte[12];
                     int bytesRead = 0;
                     ReadProcessMemory(_gameHandle,
-                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.PlayerName], bName,
+                        _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.PlayerName), bName,
                         bName.Length, ref bytesRead);
                     var length = Array.FindIndex(bName, item => item == 0x00);
                     if (length > 0)
@@ -241,7 +250,7 @@ namespace WoWmapper.WorldOfWarcraft
                         byte[] bClass = new byte[1];
                         int bytesRead = 0;
                         ReadProcessMemory(_gameHandle,
-                            _gameProcess.MainModule.BaseAddress + (int)_offsets.Offsets[OffsetType.PlayerClass], bClass,
+                            _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.PlayerClass), bClass,
                             bClass.Length, ref bytesRead);
                         return (GameInfo.Classes) bClass[0];
                     }
@@ -265,11 +274,11 @@ namespace WoWmapper.WorldOfWarcraft
 
                     var bytesRead = 0;
 
-                    ReadProcessMemory(_gameHandle, playerBase + (int) _offsets.Offsets[OffsetType.PlayerLevel], level,
+                    ReadProcessMemory(_gameHandle, playerBase + OffsetManager.GetOffset(OffsetType.PlayerLevel), level,
                         level.Length, ref bytesRead);
-                    ReadProcessMemory(_gameHandle, playerBase + (int) _offsets.Offsets[OffsetType.PlayerHealthCurrent],
+                    ReadProcessMemory(_gameHandle, playerBase + OffsetManager.GetOffset(OffsetType.PlayerHealthCurrent),
                         currentHp, currentHp.Length, ref bytesRead);
-                    ReadProcessMemory(_gameHandle, playerBase + (int) _offsets.Offsets[OffsetType.PlayerHealthMax],
+                    ReadProcessMemory(_gameHandle, playerBase + OffsetManager.GetOffset(OffsetType.PlayerHealthMax),
                         maxHp, maxHp.Length, ref bytesRead);
 
                     return new PlayerInfo()
@@ -298,7 +307,7 @@ namespace WoWmapper.WorldOfWarcraft
 
                     // Read the location of the mouse info from memory
                     ReadProcessMemory(_gameHandle,
-                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.MouseLook], ptrMouseLook,
+                        _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.MouseLook), ptrMouseLook,
                         ptrMouseLook.Length, ref bytesRead);
 
                     // Read the byte that represents mouselook
@@ -324,7 +333,7 @@ namespace WoWmapper.WorldOfWarcraft
                     byte[] targetGuid = new byte[16];
                     int bytesRead = 0;
                     ReadProcessMemory(_gameHandle,
-                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.TargetGuid], targetGuid,
+                        _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.TargetGuid), targetGuid,
                         targetGuid.Length, ref bytesRead);
                     return targetGuid;
                 }
@@ -344,7 +353,7 @@ namespace WoWmapper.WorldOfWarcraft
                     byte[] mouseGuid = new byte[16];
                     int bytesRead = 0;
                     ReadProcessMemory(_gameHandle,
-                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.MouseGuid], mouseGuid,
+                        _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.MouseGuid), mouseGuid,
                         mouseGuid.Length, ref bytesRead);
                     return mouseGuid;
                 }
@@ -364,7 +373,7 @@ namespace WoWmapper.WorldOfWarcraft
                     byte[] pointer = new byte[8];
                     int bytesRead = 0;
                     ReadProcessMemory(_gameHandle,
-                        _gameProcess.MainModule.BaseAddress + (int) _offsets.Offsets[OffsetType.PlayerBase], pointer,
+                        _gameProcess.MainModule.BaseAddress + OffsetManager.GetOffset(OffsetType.PlayerBase), pointer,
                         pointer.Length, ref bytesRead);
 
                     IntPtr playerPointer = (IntPtr)BitConverter.ToInt64(pointer, 0);
