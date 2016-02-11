@@ -19,20 +19,22 @@ namespace WoWmapper_Updater
         private const string _update = "_update";
         public MainForm()
         {
+            // Initialize form components
             InitializeComponent();
-
-            var FileName = Program.UpdateFile;
-
             Text = Resources.WindowTitle;
             this.labelInstallText.Text = Resources.UpdateWaiting;
+            
+            var updateFileName = Program.UpdateFile;
 
             Show();
+
+            // Wait for WoWmapper to exit
             while(Process.GetProcesses().Count(process => process.ProcessName.ToLower() == "wowmapper") > 0)
                 Application.DoEvents();
 
             try
             {
-                // Check previous version
+                // Check if upgrading from pre 0.5
                 if (File.Exists("WoWmapper.exe"))
                 {
                     var wmVersionInfo = FileVersionInfo.GetVersionInfo("WoWmapper.exe");
@@ -48,17 +50,26 @@ namespace WoWmapper_Updater
             }
             catch { }
 
+            // Begin installing update
             this.labelInstallText.Text = Resources.UpdateInstalling;
 
-            ExtractUpdate(FileName);
+            ExtractUpdate(updateFileName);
 
+            // Launch WoWmapper
             if (File.Exists("Wowmapper.exe")) Process.Start("WoWmapper.exe", "-updated");
 
             Close();
         }
 
+        public sealed override string Text
+        {
+            get { return base.Text; }
+            set { base.Text = value; }
+        }
+
         public void CleanupOldVersion()
         {
+            // Delete files from pre-0.5 versions of WoWmapper
             if (File.Exists("ICSharpCode.SharpZipLib.dll")) File.Delete("ICSharpCode.SharpZipLib.dll");
             if (File.Exists("Newtonsoft.Json.dll")) File.Delete("Newtonsoft.Json.dll");
             if (File.Exists("input_360.xml")) File.Delete("input_360.xml");
