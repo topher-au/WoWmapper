@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 using WoWmapper.Controllers;
+using WoWmapper.MemoryReader;
 using WoWmapper.WorldOfWarcraft;
 using WoWmapper.Properties;
 
@@ -65,13 +66,17 @@ namespace WoWmapper.Input
                     }
 
                     // Read memory if enabled and update haptics
-                    if (Settings.Default.EnableAdvancedFeatures && ProcessWatcher.CanReadMemory && ProcessWatcher.MemoryReader.GetGameState() == GameInfo.GameState.LoggedIn)
+                    if (Settings.Default.EnableAdvancedFeatures && MemoryManager.Attached && MemoryManager.GetGameState() == GameState.LoggedIn)
                     {
-                        var playerInfo = ProcessWatcher.CurrentPlayerInfo;
-                        if (playerInfo != null)
+                        var updatedPlayerInfo = MemoryManager.UpdatePlayerData();
+
+                        if (updatedPlayerInfo)
                         {
-                            var targetGuid = ProcessWatcher.MemoryReader.GetTargetGuid();
-                            var mouseGuid = ProcessWatcher.MemoryReader.GetMouseGuid();
+                            PlayerInfo playerInfo;
+                            var success = MemoryManager.GetPlayerInfo(out playerInfo);
+
+                            var targetGuid = MemoryManager.GetTargetGuid();
+                            var mouseGuid = MemoryManager.GetMouseGuid();
 
                             float previousPercent = (float)_playerHealthCurrent / playerInfo.MaxHealth;
                             float currentPercent = (float)playerInfo.CurrentHealth / playerInfo.MaxHealth;
@@ -128,7 +133,7 @@ namespace WoWmapper.Input
                                 Color color = new Color();
                                 try
                                 {
-                                    color = GameInfo.RaidClassColors[ProcessWatcher.MemoryReader.GetPlayerClass()];
+                                    color = GameInfo.RaidClassColors[MemoryManager.GetPlayerClass()];
                                 }
                                 catch { }
 
@@ -140,7 +145,7 @@ namespace WoWmapper.Input
                             // Auto-center cursor
                             if (Settings.Default.MouselookCenterCursor)
                             {
-                                var isMouseLooking = ProcessWatcher.MemoryReader.GetMouselooking();
+                                var isMouseLooking = MemoryManager.GetMouselooking();
                                 if (isMouseLooking && !wasMouseLooking)
                                 {
                                     if (mouseLookTimer > MouselookDelay)

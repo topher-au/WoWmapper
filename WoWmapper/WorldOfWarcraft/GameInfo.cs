@@ -26,13 +26,6 @@ namespace WoWmapper.WorldOfWarcraft
             DemonHunter = 13
         }
 
-        public enum GameState
-        {
-            LoggedOut = 0x00,
-            LoggedIn = 0x01,
-            NotRunning = 0xFF
-        }
-
         public static Dictionary<Classes, Color> RaidClassColors = new Dictionary<Classes, Color>()
         {
             { Classes.Warrior, Color.FromArgb(a:0xff, r: 0xc7, g: 0x9c, b: 0x6e) },

@@ -526,5 +526,29 @@ namespace WoWmapper.Properties {
                 this["SendForegroundKeys"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InvertCameraHorizontal {
+            get {
+                return ((bool)(this["InvertCameraHorizontal"]));
+            }
+            set {
+                this["InvertCameraHorizontal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InvertCameraVertical {
+            get {
+                return ((bool)(this["InvertCameraVertical"]));
+            }
+            set {
+                this["InvertCameraVertical"] = value;
+            }
+        }
     }
 }

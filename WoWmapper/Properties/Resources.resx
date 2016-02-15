@@ -544,4 +544,10 @@ The error was:
   <data name="DialogNoOffsetsFoundTitle" xml:space="preserve">
     <value>Offsets outdated</value>
   </data>
+  <data name="CursorCameraInvertHorizontal" xml:space="preserve">
+    <value>Invert camera horizontal (X) axis</value>
+  </data>
+  <data name="CursorCameraInvertVertical" xml:space="preserve">
+    <value>Invert camera vertical (Y) axis</value>
+  </data>
 </root>

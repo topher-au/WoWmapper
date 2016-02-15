@@ -270,6 +270,24 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invert camera horizontal (X) axis.
+        /// </summary>
+        public static string CursorCameraInvertHorizontal {
+            get {
+                return ResourceManager.GetString("CursorCameraInvertHorizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert camera vertical (Y) axis.
+        /// </summary>
+        public static string CursorCameraInvertVertical {
+            get {
+                return ResourceManager.GetString("CursorCameraInvertVertical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Curve.
         /// </summary>
         public static string CursorCurve {

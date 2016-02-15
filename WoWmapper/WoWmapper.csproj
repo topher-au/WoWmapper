@@ -95,9 +95,11 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\ShowWhenEnabled.cs" />
-    <Compile Include="Offsets\OffsetFile.cs" />
-    <Compile Include="Offsets\OffsetManager.cs" />
-    <Compile Include="Offsets\OffsetType.cs" />
+    <Compile Include="MemoryReader\GameState.cs" />
+    <Compile Include="MemoryReader\OffsetFile.cs" />
+    <Compile Include="MemoryReader\OffsetManager.cs" />
+    <Compile Include="MemoryReader\OffsetType.cs" />
+    <Compile Include="MemoryReader\PlayerInfo.cs" />
     <Compile Include="Options\HapticsColors.xaml.cs">
       <DependentUpon>HapticsColors.xaml</DependentUpon>
     </Compile>
@@ -171,6 +173,7 @@
     </Compile>
     <Compile Include="Input\Keymapper.cs" />
     <Compile Include="WorldOfWarcraft\Enums.cs" />
+    <Compile Include="MemoryReader\MemoryManager.cs" />
     <Compile Include="WorldOfWarcraft\ProcessWatcher.cs" />
     <Compile Include="WorldOfWarcraft\Vector2.cs" />
     <Page Include="Options\HapticsColors.xaml">

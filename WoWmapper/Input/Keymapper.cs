@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows.Forms;
 using WoWmapper.Classes;
 using WoWmapper.Controllers;
+using WoWmapper.MemoryReader;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
 
@@ -170,9 +171,21 @@ namespace WoWmapper.Input
                             if (state.RightX < 0) mouseMovement.X = -mouseMovement.X;
                             if (state.RightY < 0) mouseMovement.Y = -mouseMovement.Y;
 
+                            var modX = 1;
+                            var modY = 1;
+
+                            if (Settings.Default.EnableAdvancedFeatures)
+                            {
+                                // Invert cursor option
+                                var mouseLook = MemoryManager.GetMouselooking();
+
+                                if (Settings.Default.InvertCameraHorizontal && mouseLook) modX = modX * -1;
+                                if (Settings.Default.InvertCameraVertical && mouseLook) modY = modY * -1;
+                            }
+
                             var m = Cursor.Position;
-                            m.X += (int)mouseMovement.X;
-                            m.Y += (int)mouseMovement.Y;
+                            m.X += (int)mouseMovement.X * modX;
+                            m.Y += (int)mouseMovement.Y * modY;
                             Cursor.Position = m;
                         }
 

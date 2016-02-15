@@ -54,6 +54,8 @@
                         <TextBlock Text="{x:Static p:Resources.AdvancedFeaturesRequired}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
                         <StackPanel>
                             <CheckBox Content="{x:Static p:Resources.CursorAutoCenter}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=MouselookCenterCursor}" Checked="SaveSettings" Unchecked="SaveSettings"/>
+                            <CheckBox Content="{x:Static p:Resources.CursorCameraInvertHorizontal}" Margin="0,5,0,0" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=InvertCameraHorizontal}" Checked="SaveSettings" Unchecked="SaveSettings"/>
+                            <CheckBox Content="{x:Static p:Resources.CursorCameraInvertVertical}" Margin="0,5,0,0" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=InvertCameraVertical}" Checked="SaveSettings" Unchecked="SaveSettings"/>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>

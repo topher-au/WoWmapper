@@ -24,6 +24,7 @@ using Octokit;
 using WoWmapper.Classes;
 using WoWmapper.Controllers;
 using WoWmapper.Input;
+using WoWmapper.MemoryReader;
 using WoWmapper.Offsets;
 using WoWmapper.Options;
 using WoWmapper.WorldOfWarcraft;
@@ -405,58 +406,59 @@ namespace WoWmapper
 
                 if (Settings.Default.EnableAdvancedFeatures)
                 {
-                    if (ProcessWatcher.CanReadMemory)
+                    if (MemoryManager.Attached)
                     {
-                        // Attempt to read game info
-                        var gameState = ProcessWatcher.MemoryReader.GetGameState();
+                        var gameState = MemoryManager.GetGameState();
 
                         switch (gameState)
                         {
-                            case GameInfo.GameState.LoggedIn:
-                                var playerInfo = ProcessWatcher.MemoryReader.GetPlayerInfo();
+                            case GameState.LoggedIn:
+                                var playerInfo = new PlayerInfo();
 
-                                // Color accent by class color
-                                if (Settings.Default.AutoClassAccent)
+                                var success = MemoryManager.GetPlayerInfo(out playerInfo);
+
+                                if (success)
                                 {
-                                    var playerClass = ProcessWatcher.MemoryReader.GetPlayerClass();
-                                    SetTheme(playerClass.ToString(), Settings.Default.AppTheme);
-                                }
-                                else
-                                {
-                                    SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
-                                }
+                                    // Color accent by class color
+                                    if (Settings.Default.AutoClassAccent)
+                                    {
+                                        var playerClass = MemoryManager.GetPlayerClass();
+                                        SetTheme(playerClass.ToString(), Settings.Default.AppTheme);
+                                    }
+                                    else
+                                    {
+                                        SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
+                                    }
 
-                                textWoWStatus2.Text =
-                                    $"{ProcessWatcher.MemoryReader.GetPlayerName()} [{playerInfo.Level}]: {playerInfo.CurrentHealth}/{playerInfo.MaxHealth}";
+                                    textWoWStatus2.Text =
+                                        $"{MemoryManager.GetPlayerName()} [{playerInfo.Level}]: {playerInfo.CurrentHealth}/{playerInfo.MaxHealth}";
 
+                                }
                                 break;
 
-                            case GameInfo.GameState.LoggedOut:
+                            case GameState.LoggedOut:
                                 textWoWStatus2.Text = Properties.Resources.MainWindowWoWLoggedOut;
                                 SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
                                 break;
 
-                            case GameInfo.GameState.NotRunning:
+                            case GameState.NotRunning:
                                 textWoWStatus2.Text = Properties.Resources.MainWindowWoWError;
                                 SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
                                 break;
                         }
                     }
 
-                    if (!ProcessWatcher.CanReadMemory)
-                    {
-                        SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
-                    }
-
                     if (!OffsetManager.OffsetsAvailable)
                     {
-                        textWoWStatus2.Text = @"Advanced features currently unavailable";
+                        textWoWStatus2.Text = @"Advanced features unavailable";
                     }
                 }
                 else
                 {
+                    SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
                     textWoWStatus2.Text = string.Empty;
                 }
+                
             }
             else
             {
