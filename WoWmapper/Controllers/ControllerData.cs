@@ -119,7 +119,7 @@ namespace WoWmapper.Controllers
                 {ControllerButton.LStickDown,"Resources/Buttons/DS4/DpadDown.png"},
                 {ControllerButton.LStickLeft, "Resources/Buttons/DS4/DpadLeft.png"},
                 {ControllerButton.TouchLeft,"Resources/Buttons/DS4/DpadLeft.png"},
-                {ControllerButton.TouchRight, "Resources/Buttons/DS4/DpadLeft.png"}
+                {ControllerButton.TouchRight, "Resources/Buttons/DS4/DpadRight.png"}
             };
         }
 
