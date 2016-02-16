@@ -60,7 +60,7 @@ namespace WoWmapper
 
         public static void UpdateChildren()
         {
-            UpdateContent?.Invoke();
+            Application.Current.Dispatcher.Invoke(UpdateContent);
         }
 
         private readonly ContextMenu _notifyMenu = new ContextMenu
@@ -469,14 +469,6 @@ namespace WoWmapper
 
             // Check controller status
             var actiCont = ControllerManager.GetActiveController();
-            if (actiCont != null &&
-                ((actiCont.Type == ControllerType.DualShock4 && !Settings.Default.EnableDS4) ||
-                 (actiCont.Type == ControllerType.Xbox && !Settings.Default.EnableXbox)))
-            {
-                actiCont.Stop();
-                actiCont = null;
-                UpdateContent?.Invoke();
-            }
 
             if (actiCont != null)
             {

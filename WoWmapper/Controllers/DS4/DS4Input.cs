@@ -21,7 +21,6 @@ namespace WoWmapper.Controllers.DS4
             var control = DS4Devices.getDS4Controller(MAC);
             if (control == null) return;
             _controller = control;
-            _controller.StartUpdate();
         }
 
         public int Battery
@@ -154,7 +153,8 @@ namespace WoWmapper.Controllers.DS4
 
         public bool IsAlive()
         {
-            return _controller != null && _controller.HidDevice.IsConnected && _controller.HidDevice.IsOpen;
+            if (_controller == null) return false;
+            return _controller.HidDevice.IsConnected && _controller.HidDevice.IsOpen;
         }
 
         public void SendRumble(byte Left, byte Right, int Duration)
@@ -203,7 +203,7 @@ namespace WoWmapper.Controllers.DS4
 
         public void Stop()
         {
-            Console.WriteLine("stopping");
+            Console.WriteLine("DS4 disconnecting");
             if (_controller == null) return;
             _controller.LightBarColor=new DS4Color(0,0,0);
             _controller.LightBarOnDuration = 0;
@@ -211,7 +211,6 @@ namespace WoWmapper.Controllers.DS4
             _controller.FlushHID();
             if (_controller.ConnectionType == DS4Windows.ConnectionType.BT)
                 _controller.DisconnectBT();
-            _controller.StopUpdate();
             _controller = null;
         }
     }

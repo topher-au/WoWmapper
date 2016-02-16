@@ -61,16 +61,20 @@ namespace WoWmapper.Controllers
         {
             while (true)
             {
+                if (_activeController != null && !_activeController.IsAlive())
+                {
+                    Logger.Write($"Controller disconnected");
+                    RemoveDevice(_activeController);
+                    _activeController = null;
+                }
+
                 if (_activeController != null)
                 {
-                    // Test current controller
-                    if (!_activeController.IsAlive())
+                    if ((_activeController.Type == ControllerType.DualShock4 && !Settings.Default.EnableDS4) ||
+                        _activeController.Type == ControllerType.Xbox && !Settings.Default.EnableXbox)
                     {
-                        Logger.Write("Controller disconnected");
-                        _allControllers.Remove(_activeController);
-                        _activeController.Stop();
+                        RemoveDevice(_activeController);
                         _activeController = null;
-                        ControllersUpdated?.Invoke();
                     }
                 }
 
@@ -78,7 +82,7 @@ namespace WoWmapper.Controllers
 
                 if (_activeController == null)
                 {
-                    
+
                     if (Settings.Default.AutoConnectDevice)
                     {
                         // Connect first device
@@ -91,38 +95,19 @@ namespace WoWmapper.Controllers
             }
         }
 
+        private static void RemoveDevice(IController device)
+        {
+            device.Stop();
+            _allControllers.RemoveAll(dev => dev.Equals(device));
+            device = null;
+            ControllersUpdated?.Invoke();
+        }
+
         public static void ScanDevices()
         {
             // Scan for devices
             lock (_allControllers)
             {
-                // remove unused devices
-
-                // Remove dead devices
-                var removeThese = new List<IController>();
-                foreach (var device in _allControllers)
-                {
-                    if(!device.IsAlive()) removeThese.Add(device);
-                    if (!Settings.Default.EnableDS4 && device.UnderlyingDevice.GetType() == typeof (HidDevice))
-                        removeThese.Add(device);
-                    if (!Settings.Default.EnableXbox && device.UnderlyingDevice.GetType() == typeof(XboxController))
-                        removeThese.Add(device);
-                }
-
-                if (removeThese.Count > 0)
-                {
-                    foreach (var device in removeThese)
-                    {
-                        Logger.Write("Removing invalid device: {0}", device.ControllerID);
-                        try
-                        {
-                            device.Stop();
-                        } catch { }
-                        _allControllers.Remove(device);
-                    }
-                    ControllersUpdated?.Invoke();
-                }
-
                 if (Settings.Default.EnableDS4)
                 {
                     try
@@ -202,13 +187,11 @@ namespace WoWmapper.Controllers
         {
             if (_allControllers == null) return;
 
-            _activeController?.Stop();
-
             if (_allControllers.Count <= 0) return;
             try
             {
                 SetActiveController(_allControllers.First());
-            } catch { }
+            } catch (Exception ex) { }
         }
 
         public static IController GetActiveController()
