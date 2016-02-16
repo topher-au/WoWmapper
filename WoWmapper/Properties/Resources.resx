@@ -506,7 +506,7 @@ The error was:
     <value>Basic</value>
   </data>
   <data name="HapticsFlashBatteryLow" xml:space="preserve">
-    <value>Flash lightbar at</value>
+    <value>Flash lightbar at </value>
   </data>
   <data name="AdvancedMoreInfo" xml:space="preserve">
     <value>More Information</value>
@@ -549,5 +549,11 @@ The error was:
   </data>
   <data name="CursorCameraInvertVertical" xml:space="preserve">
     <value>Invert camera vertical (Y) axis</value>
+  </data>
+  <data name="DialogInvalidKeybindFileText" xml:space="preserve">
+    <value>The file you selected does not appear to contain valid keybind data.</value>
+  </data>
+  <data name="DialogInvalidKeybindFileTitle" xml:space="preserve">
+    <value>Invalid file</value>
   </data>
 </root>

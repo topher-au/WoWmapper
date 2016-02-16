@@ -478,6 +478,24 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file you selected does not appear to contain valid keybind data..
+        /// </summary>
+        public static string DialogInvalidKeybindFileText {
+            get {
+                return ResourceManager.GetString("DialogInvalidKeybindFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid file.
+        /// </summary>
+        public static string DialogInvalidKeybindFileTitle {
+            get {
+                return ResourceManager.GetString("DialogInvalidKeybindFileTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your version of World of Warcraft is not currently supported by WoWmapper. Please check for an update and try again..
         /// </summary>
         public static string DialogNoOffsetsFoundText {
@@ -619,7 +637,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Flash lightbar at.
+        ///   Looks up a localized string similar to Flash lightbar at .
         /// </summary>
         public static string HapticsFlashBatteryLow {
             get {

@@ -157,7 +157,7 @@ namespace WoWmapper.Input
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Logger.Write($"Attempt to import keybinds failed: {ex}");
             }
             
             return null;
