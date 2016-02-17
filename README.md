@@ -22,5 +22,9 @@ WoWmapper comes pre-configured for use with ConsolePort. If you wish to change t
 
 WoWmapper supports DualShock 4 and Xbox 360 controllers, and will automatically bind to the first available if one is detected. You can manually select the controller from the Settings menu, under Controllers.
 
+### WoWmapper says I am missing xinput1_3.dll, help!
+
+[You need to install DirectX 9.0c - this is not installed by default with Windows 10.](https://www.microsoft.com/en-us/download/confirmation.aspx?id=8109)
+
 ## Advanced Features
 WoWmapper can optionally provide some extra features, such as vibration and lightbar feedback, by reading some of the game's memory. For more details on this feature, please see [here](https://github.com/topher-au/WoWmapper/wiki/Advanced-Features).

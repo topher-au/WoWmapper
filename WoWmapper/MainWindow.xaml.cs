@@ -600,7 +600,7 @@ namespace WoWmapper
             var wmRelease = await Functions.GetWoWmapperLatest();
             var cpRelease = await Functions.GetConsolePortLatest();
 
-            if (wmRelease != null)// && wmCurrent < new Version(wmRelease.TagName))
+            if (wmRelease != null && wmCurrent < new Version(wmRelease.TagName))
             {
                 // new version available
                 textWoWmapperAvailable.Text = string.Format(Properties.Resources.MainWindowVersionWowmapperAvailable, wmRelease.TagName);
@@ -611,7 +611,7 @@ namespace WoWmapper
                 textWoWmapperAvailable.Text = Properties.Resources.MainWindowVersionNoNewVersion;
             }
 
-            if (cpRelease != null)// && cpCurrent < new Version(cpRelease.TagName))
+            if (cpRelease != null && cpCurrent < new Version(cpRelease.TagName))
             {
                 // New version available
                 textConsolePortAvailable.Text = string.Format(Properties.Resources.MainWindowVersionConsoleportAvailable,
