@@ -437,7 +437,7 @@ The error was:
 {0}</value>
   </data>
   <data name="DialogConsolePortUpdateSuccessText" xml:space="preserve">
-    <value>ConsolePort was successfully updated to version {0}!</value>
+    <value>ConsolePort was successfully updated!</value>
   </data>
   <data name="DialogConsoleportUpdateTitle" xml:space="preserve">
     <value>ConsolePort Update</value>

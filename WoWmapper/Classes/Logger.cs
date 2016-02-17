@@ -14,6 +14,7 @@ namespace WoWmapper.Classes
 
         public static void Write(string text, params object[] parameters)
         {
+            Console.WriteLine(text, parameters);
             if(Settings.Default.EnableLogging)
                 _outWriter.WriteLine(text, parameters);
         }

@@ -11,11 +11,6 @@ namespace WoWmapper.Classes
 {
     public static class Functions
     {
-        public static event DownloadFileCompletedEventHandler DownloadFileCompleted;
-        public static event DownloadFileProgressChangedEventHandler DownloadFileProgressChanged;
-
-        public delegate void DownloadFileCompletedEventHandler();
-        public delegate void DownloadFileProgressChangedEventHandler(DownloadProgressChangedEventArgs Args);
 
         static List<string> DefaultWoWFolders = new List<string>()
         {
@@ -62,12 +57,15 @@ namespace WoWmapper.Classes
 
         public static async Task<Release> GetWoWmapperLatest()
         {
-            try { 
+            try
+            {
                 var client = new GitHubClient(new ProductHeaderValue("WoWmapper"));
                 var releases = await client.Release.GetAll("topher-au", "WoWmapper");
                 return releases[0];
-            } catch
+            }
+            catch (Exception ex)
             {
+                Logger.Write($"Unable to retrieve WoWmapper version: {ex.Message}");
                 return null;
             }
         }
@@ -79,43 +77,13 @@ namespace WoWmapper.Classes
                 var client = new GitHubClient(new ProductHeaderValue("WoWmapper"));
                 var releases = await client.Release.GetAll("seblindfors", "ConsolePort");
                 return releases[0];
-            } catch
+            } catch (Exception ex)
             {
+                Logger.Write($"Unable to retrieve ConsolePort version: {ex.Message}");
                 return null;
             }
             
             
-        }
-
-        public static async Task<bool> DownloadFile(string URL, string DestFile)
-        {
-            try
-            {
-                Uri uri = new Uri(URL);
-
-                var client = new WebClient();
-                client.DownloadFileCompleted += Client_DownloadFileCompleted;
-                client.DownloadProgressChanged += Client_DownloadProgressChanged;
-                if (File.Exists(DestFile)) File.Delete(DestFile);
-                await client.DownloadFileTaskAsync(uri, DestFile);
-                return true;
-            }
-            catch
-            {
-                
-            }
-            return false;
-
-        }
-
-        private static void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            DownloadFileProgressChanged?.Invoke(e);
-        }
-
-        private static void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            DownloadFileCompleted?.Invoke();
         }
     }
 }

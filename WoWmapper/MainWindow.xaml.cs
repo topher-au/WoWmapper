@@ -55,9 +55,6 @@ namespace WoWmapper
         public delegate void WoWmapperEvent();
         private readonly NotifyIcon _notifyIcon;
 
-        private Release cpRelease;
-        private Release wmRelease;
-
         public static void UpdateChildren()
         {
             Application.Current.Dispatcher.Invoke(UpdateContent);
@@ -293,31 +290,6 @@ namespace WoWmapper
                     Activate();
                 })
                 );
-        }
-
-        private async Task<bool> DownloadFile(string URL, string fileName)
-        {
-            var pdController =
-                await this.ShowProgressAsync(Properties.Resources.DialogDownloadingTitle, Properties.Resources.DialogDownloadingText, true);
-            Functions.DownloadFileProgressChanged +=
-                e =>
-                {
-                    if (e.TotalBytesToReceive > e.BytesReceived)
-                    {
-                        pdController.SetProgress((double)e.BytesReceived / e.TotalBytesToReceive);
-                    }
-                    else
-                    {
-                        pdController.SetIndeterminate();
-                    }
-                };
-            var downloadSuccess = await Functions.DownloadFile(URL, fileName);
-            if (pdController.IsOpen)
-                await pdController.CloseAsync();
-            if (!downloadSuccess)
-                ShowMessageBox(Properties.Resources.DialogErrorDownloadFailedTitle,
-                    Properties.Resources.DialogErrorDownloadFailedText);
-            return downloadSuccess;
         }
 
         private void NotifyMenu_Exit(object sender, RoutedEventArgs e)
@@ -605,15 +577,16 @@ namespace WoWmapper
         
         private async void UpdateVersionDisplay()
         {
-            // update current version
+            // Check current version of WoWmapper and ConsolePort
             var wmCurrent = Assembly.GetExecutingAssembly().GetName().Version;
             var cpInfo = AddonParser.GetAddonInfo(Settings.Default.WoWFolder, "ConsolePort");
             Version cpCurrent;
-            if(cpInfo != null)
-            cpCurrent = AddonParser.GetAddonVersion(cpInfo);
-            else
-            cpCurrent = null;
+
+            cpCurrent = cpInfo != null ? AddonParser.GetAddonVersion(cpInfo) : null;
+
+            // Update current version display
             textWoWmapperCurrent.Text = string.Format(Properties.Resources.MainWindowVersionWowmapperCurrent, wmCurrent);
+
             if (cpCurrent == null)
             {
                 textConsolePortCurrent.Text = Properties.Resources.MainWindowVersionConsolePortIsNotInstalled;
@@ -622,12 +595,12 @@ namespace WoWmapper
             } else { textConsolePortCurrent.Text = string.Format(Properties.Resources.MainWindowVersionConsoleportCurrent, cpCurrent); }
             
 
-            // fetch latest
+            // Check latest releases
 
-            wmRelease = await Functions.GetWoWmapperLatest();
-            cpRelease = await Functions.GetConsolePortLatest();
+            var wmRelease = await Functions.GetWoWmapperLatest();
+            var cpRelease = await Functions.GetConsolePortLatest();
 
-            if (wmRelease != null && wmCurrent < new Version(wmRelease.TagName))
+            if (wmRelease != null)// && wmCurrent < new Version(wmRelease.TagName))
             {
                 // new version available
                 textWoWmapperAvailable.Text = string.Format(Properties.Resources.MainWindowVersionWowmapperAvailable, wmRelease.TagName);
@@ -638,7 +611,7 @@ namespace WoWmapper
                 textWoWmapperAvailable.Text = Properties.Resources.MainWindowVersionNoNewVersion;
             }
 
-            if (cpRelease != null && cpCurrent < new Version(cpRelease.TagName))
+            if (cpRelease != null)// && cpCurrent < new Version(cpRelease.TagName))
             {
                 // New version available
                 textConsolePortAvailable.Text = string.Format(Properties.Resources.MainWindowVersionConsoleportAvailable,
@@ -674,31 +647,89 @@ namespace WoWmapper
             Visibility = Visibility.Hidden;
         }
 
+        private async Task<bool> DownloadLatestZip(string author, string repo, string localFile)
+        {
+            // Show progress dialog
+            var progress =
+                await
+                    this.ShowProgressAsync(Properties.Resources.DialogDownloadingTitle,
+                        Properties.Resources.DialogDownloadingText, true);
+
+            // Get list of available releases
+            var ghClient = new GitHubClient(new ProductHeaderValue("WoWmapper"));
+            var ghReleases = await ghClient.Release.GetAll(author, repo);
+
+            // Fetch latest release and list of assets
+            var latestRelease = ghReleases[0];
+            var latestAssets = await ghClient.Release.GetAllAssets(author, repo, latestRelease.Id);
+
+            // Find first zip asset
+            var zipAsset = latestAssets.FirstOrDefault(asset => Path.GetExtension(asset.BrowserDownloadUrl)?.ToLower() == ".zip");
+            if (zipAsset == null) return false;
+
+            // Initialize new WebClient with WoWmapper user agent header
+            var webClient = new WebClient();
+            webClient.Headers.Add(HttpRequestHeader.UserAgent,
+                $"WoWmapper{Assembly.GetExecutingAssembly().GetName().Version}");
+            webClient.DownloadFileCompleted += (sender, args) =>
+            {
+                progress.CloseAsync();
+            };
+            // Add DownloadProgressChanged event to update progress dialog
+            webClient.DownloadProgressChanged += (sender, args) =>
+            {
+                if(progress.IsCanceled) webClient.CancelAsync();
+
+                if(args.BytesReceived < args.TotalBytesToReceive)
+                    progress.SetProgress((double)args.ProgressPercentage/100);
+                else
+                    progress.SetIndeterminate();
+            };
+
+            // Attempt to download asset to local file
+            try
+            {
+                await webClient.DownloadFileTaskAsync(zipAsset.BrowserDownloadUrl, localFile);
+            }
+            catch (Exception ex)
+            {
+                await progress.CloseAsync();
+                Logger.Write($"Error downloading release: {ex}");
+                return false;
+            }
+            await progress.CloseAsync();
+            return true;
+        }
+
         private async void ButtonUpdateWoWmapper_OnClick(object sender, RoutedEventArgs e)
         {
-            var WoWmapperUpdater = "WoWmapper_Updater.exe";
-            if (wmRelease == null) return;
-            var client = new GitHubClient(new ProductHeaderValue("WoWmapper"));
-            var relClient = new ReleasesClient(new ApiConnection(client.Connection));
-            var wmAssets = await relClient.GetAllAssets("topher-au", "WoWmapper", wmRelease.Id);
-            if (wmAssets == null) return;
+            var updaterExeName = "WoWmapper_Updater.exe";
+            var updateFile = Path.Combine(AppDataDir, "update.zip");
+            var success = await DownloadLatestZip("topher-au", "WoWmapper", updateFile);
 
-            var zipDownloadUrl = wmAssets.FirstOrDefault(file => Path.GetExtension(file.BrowserDownloadUrl)?.ToLower() == ".zip");
-            if (zipDownloadUrl == null || zipDownloadUrl.BrowserDownloadUrl == string.Empty) return;
+            if (success)
+            {
+                // Extract updater file from release
+                var updateZip = ZipFile.Open(updateFile, ZipArchiveMode.Read);
+                var updaterEntry = updateZip.GetEntry("WoWmapper_Updater.exe");
+                if (File.Exists(updaterExeName)) File.Delete(updaterExeName);
+                updaterEntry.ExtractToFile(updaterExeName);
 
-            await DownloadFile(zipDownloadUrl.BrowserDownloadUrl, Path.Combine(AppDataDir, "update.zip"));
-
-            var updateZip = ZipFile.Open(Path.Combine(AppDataDir, "update.zip"), ZipArchiveMode.Read);
-            var updaterEntry = updateZip.GetEntry("WoWmapper_Updater.exe");
-            if(File.Exists(WoWmapperUpdater)) File.Delete(WoWmapperUpdater);
-            updaterEntry.ExtractToFile(WoWmapperUpdater);
-
-            Process.Start(WoWmapperUpdater, Path.Combine(AppDataDir, "update.zip"));
-            Application.Current.Shutdown();
+                // Start updater with update args
+                Process.Start(updaterExeName, updateFile);
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                // Download failed, display error message
+                await this.ShowMessageAsync(Properties.Resources.DialogErrorDownloadFailedTitle, Properties.Resources.DialogErrorDownloadFailedText);
+            }
+            
         }
 
         private async void ButtonUpdateConsolePort_OnClick(object sender, RoutedEventArgs e)
         {
+            // Check if user has specified valid WoW folder before continuing
             if (!Directory.Exists(Settings.Default.WoWFolder))
             {
                 ShowMessage(Properties.Resources.DialogSelectWoWFirstTitle,
@@ -706,32 +737,33 @@ namespace WoWmapper
                 return;
             }
 
-            if (cpRelease == null) return;
+            var updateFile = Path.Combine(AppDataDir, "update.zip");
 
-            buttonUpdateConsolePort.Visibility = Visibility.Collapsed;
+            var success = await DownloadLatestZip("seblindfors", "ConsolePort", updateFile);
 
-            var client=new GitHubClient(new ProductHeaderValue("WoWmapper"));
-            var relClient = new ReleasesClient(new ApiConnection(client.Connection));
-            var cpAssets = await relClient.GetAllAssets("seblindfors", "ConsolePort", cpRelease.Id);
-            if (cpAssets == null) return;
+            if (!success)
+            {
+                // Download failed, display error message
+                await this.ShowMessageAsync(Properties.Resources.DialogErrorDownloadFailedTitle, Properties.Resources.DialogErrorDownloadFailedText);
+                return;
+            }
 
-            var zipDownloadUrl = cpAssets.FirstOrDefault(file => Path.GetExtension(file.BrowserDownloadUrl)?.ToLower() == ".zip");
-            if (zipDownloadUrl == null || zipDownloadUrl.BrowserDownloadUrl == string.Empty) return;
-
-            var dlSuccess = await DownloadFile(zipDownloadUrl.BrowserDownloadUrl, Path.Combine(AppDataDir, "consoleport_update.zip"));
-            if (!dlSuccess) return;
-
-            // Install ConsolePort update here
+            // Begin installing ConsolePort update
             var updateSuccess = false;
             var exceptionMessage = string.Empty;
             try
             {
+                // Locate path for addons
                 var installPath = Path.Combine(Settings.Default.WoWFolder, "interface/addons");
                 var cpDir = Path.Combine(installPath, "ConsolePort");
                 var cpkDir = Path.Combine(installPath, "ConsolePortKeyboard");
+
+                // Remove existing files
                 if (Directory.Exists(cpDir)) Directory.Delete(cpDir, true);
                 if (Directory.Exists(cpkDir)) Directory.Delete(cpkDir, true);
-                using (var zipStream = new FileStream(Path.Combine(AppDataDir, "consoleport_update.zip"), System.IO.FileMode.Open))
+
+                // Extract update
+                using (var zipStream = new FileStream(updateFile, System.IO.FileMode.Open))
                 {
                     ZipArchive zip = new ZipArchive(zipStream);
                     zip.ExtractToDirectory(installPath);
@@ -740,20 +772,21 @@ namespace WoWmapper
             }
             catch (Exception ex)
             {
+                // Error occurres
                 exceptionMessage = ex.Message;
             }
 
             if (updateSuccess)
             {
-                File.Delete(Path.Combine(AppDataDir, "consoleport_update.zip"));
-                ShowMessageBox(Properties.Resources.DialogConsoleportUpdateTitle, string.Format(Properties.Resources.DialogConsolePortUpdateSuccessText, cpRelease.TagName));
-                buttonUpdateConsolePort.Visibility = Visibility.Collapsed;
+                // Success, remove update file
+                File.Delete(Path.Combine(AppDataDir, updateFile));
+                ShowMessageBox(Properties.Resources.DialogConsoleportUpdateTitle, string.Format(Properties.Resources.DialogConsolePortUpdateSuccessText));
                 UpdateVersionDisplay();
             }
             else
             {
+                // Show error message
                 ShowMessageBox(Properties.Resources.DialogConsoleportUpdateTitle, string.Format(Properties.Resources.DialogConsolePortUpdateFailedText, exceptionMessage));
-                buttonUpdateConsolePort.Visibility = Visibility.Visible;
             }
         }
     }

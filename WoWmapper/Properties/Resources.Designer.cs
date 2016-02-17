@@ -406,7 +406,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ConsolePort was successfully updated to version {0}!.
+        ///   Looks up a localized string similar to ConsolePort was successfully updated!.
         /// </summary>
         public static string DialogConsolePortUpdateSuccessText {
             get {
