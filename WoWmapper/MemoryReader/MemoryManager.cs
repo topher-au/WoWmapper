@@ -217,17 +217,13 @@ namespace WoWmapper.MemoryReader
 
             try
             {
-                var bMousePointer = new byte[8];
                 var bMouseState = new byte[1];
                 var bytesRead = 0;
 
+
                 // Read the location of the mouse info from memory
                 ReadProcessMemory(_memoryHandle,
-                    _moduleBase + OffsetManager.GetOffset(OffsetType.MouseLook), bMousePointer,
-                    bMousePointer.Length, ref bytesRead);
-
-                // Read the byte that represents mouselook
-                ReadProcessMemory(_memoryHandle, (IntPtr)BitConverter.ToInt64(bMousePointer, 0) + 4, bMouseState,
+                    _moduleBase + OffsetManager.GetOffset(OffsetType.MouseLook), bMouseState,
                     bMouseState.Length, ref bytesRead);
 
                 return (((int)bMouseState[0] & 1) == 1);

@@ -12,18 +12,18 @@ namespace WoWmapper.Offsets
         private const long OffsetFileHeader = 0x4F4646534554;
 
         public uint GameBuild { get; set; }
-            = 20886;
+            = 21742;
 
         public Dictionary<OffsetType, ulong> Offsets { get; set; }
             = new Dictionary<OffsetType, ulong>() {
                 { OffsetType.GameBuild, 0x0FE21B4 },
-                { OffsetType.GameState, 23730078 },
-                { OffsetType.PlayerName, 25092160 },
-                { OffsetType.PlayerClass, 25092565 },
-                { OffsetType.TargetGuid, 23731720 },
-                { OffsetType.MouseGuid, 23731672 },
-                { OffsetType.MouseLook, 23441240 },
-                { OffsetType.PlayerBase, 23094048},
+                { OffsetType.GameState, 22125182 },
+                { OffsetType.PlayerName, 23162640 },
+                { OffsetType.PlayerClass, 23163045 },
+                { OffsetType.TargetGuid, 22126824 },
+                { OffsetType.MouseGuid, 22126776 },
+                { OffsetType.MouseLook, 19605144 },
+                { OffsetType.PlayerBase, 21489280 }, 
                 { OffsetType.PlayerLevel, 344 },
                 { OffsetType.PlayerHealthCurrent, 240 },
                 { OffsetType.PlayerHealthMax, 268 }
