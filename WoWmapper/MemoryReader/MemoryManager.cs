@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WoWmapper.Classes;
 using WoWmapper.Offsets;
 using WoWmapper.WorldOfWarcraft;
@@ -16,10 +17,10 @@ namespace WoWmapper.MemoryReader
         #region Windows Native Methods
 
         [DllImport("kernel32.dll")]
-        private static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
         [DllImport("kernel32.dll")]
-        private static extern bool ReadProcessMemory(IntPtr hProcess,
+        public static extern bool ReadProcessMemory(IntPtr hProcess,
             IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
 
         private const int PROCESS_WM_READ = 0x10;
@@ -29,7 +30,7 @@ namespace WoWmapper.MemoryReader
         private const int PlayerDataLength = 0x2E03;
 
         private static Process _gameProcess = null;             // A Process object that represents the current instance of the game
-        private static IntPtr _memoryHandle = IntPtr.Zero;      // The OpenProcess handle used to read memory from the game
+        public static IntPtr MemoryHandle = IntPtr.Zero;      // The OpenProcess handle used to read memory from the game
         private static IntPtr _moduleBase = IntPtr.Zero;
         private static IntPtr _playerBase = IntPtr.Zero;
         private static bool _attached = false;
@@ -44,28 +45,31 @@ namespace WoWmapper.MemoryReader
             try
             {
                 _gameProcess = process;
-                var offsetsLoaded =
-                    OffsetManager.InitializeOffsets(process.MainModule.FileVersionInfo.ProductPrivatePart);
+                
 
-                if (offsetsLoaded)
+                //var offsetsLoaded =
+                //    OffsetManager.InitializeOffsets(process.MainModule.FileVersionInfo.ProductPrivatePart);
+
+                if (true)
                 {
                     var openProcessHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
                     if (openProcessHandle != IntPtr.Zero)
                     {
                         _gameProcess = process;
-                        _memoryHandle = openProcessHandle;
+                        MemoryHandle = openProcessHandle;
                         _moduleBase = _gameProcess.MainModule.BaseAddress;
                         _attached = true;
+                        MessageBox.Show(PatternScan.OffsetScanner.GetPlayerName(_gameProcess));
                         return true;
                     }
                 }
                 
 
             }
-            catch { }
+            catch (Exception ex) { }
 
             _gameProcess = null;
-            _memoryHandle = IntPtr.Zero;
+            MemoryHandle = IntPtr.Zero;
             _moduleBase = IntPtr.Zero;
             _attached = false;
 
@@ -77,9 +81,39 @@ namespace WoWmapper.MemoryReader
             if (!_attached) return;
 
             _gameProcess.Dispose();
-            _memoryHandle = IntPtr.Zero;
+            MemoryHandle = IntPtr.Zero;
             _moduleBase = IntPtr.Zero;
             _attached = false;
+        }
+
+        public static T Read<T>(IntPtr offset, bool isRelative = true)
+        {
+            var readOffset = offset;
+            if (isRelative) readOffset += (int)_moduleBase;
+
+            var readBuffer = new byte[Marshal.SizeOf<T>()];
+            var bytesRead = 0;
+            var success = ReadProcessMemory(MemoryHandle,
+                readOffset, readBuffer, readBuffer.Length, ref bytesRead);
+            if (success)
+            {
+                IntPtr outPtr = Marshal.AllocHGlobal(readBuffer.Length);
+                try
+                {
+                    Marshal.Copy(readBuffer, 0, outPtr, readBuffer.Length);
+                    var outT = Marshal.PtrToStructure<T>(outPtr);
+                    return outT;
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(outPtr);
+                }
+            }
+            return default(T);
         }
 
         private static bool UpdatePlayerBase()
@@ -89,7 +123,7 @@ namespace WoWmapper.MemoryReader
                 var bPlayerPointer = new byte[8];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(_memoryHandle,
+                var success = ReadProcessMemory(MemoryHandle,
                     _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerBase), bPlayerPointer,
                     bPlayerPointer.Length, ref bytesRead);
 
@@ -97,7 +131,7 @@ namespace WoWmapper.MemoryReader
 
                 var playerPointer = (IntPtr) BitConverter.ToInt64(bPlayerPointer, 0);
 
-                success = ReadProcessMemory(_memoryHandle, playerPointer + 0x08, bPlayerPointer, bPlayerPointer.Length, ref bytesRead);
+                success = ReadProcessMemory(MemoryHandle, playerPointer + 0x08, bPlayerPointer, bPlayerPointer.Length, ref bytesRead);
 
                 if (success)
                 {
@@ -131,7 +165,7 @@ namespace WoWmapper.MemoryReader
                 var bPlayerInfo = new byte[PlayerDataLength];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(_memoryHandle, _playerBase, bPlayerInfo, PlayerDataLength, ref bytesRead);
+                var success = ReadProcessMemory(MemoryHandle, _playerBase, bPlayerInfo, PlayerDataLength, ref bytesRead);
 
                 if (!success) return false;
 
@@ -156,7 +190,7 @@ namespace WoWmapper.MemoryReader
                 var bGameState = new byte[1];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(_memoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.GameState),
+                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.GameState),
                     bGameState, 1, ref bytesRead);
 
 
@@ -178,7 +212,7 @@ namespace WoWmapper.MemoryReader
                 var bTargetGuid = new byte[16];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(_memoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.TargetGuid),
+                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.TargetGuid),
                     bTargetGuid, 16, ref bytesRead);
 
                 return success ? bTargetGuid : null;
@@ -199,7 +233,7 @@ namespace WoWmapper.MemoryReader
                 var bMouseGuid = new byte[16];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(_memoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.MouseGuid),
+                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.MouseGuid),
                     bMouseGuid, 16, ref bytesRead);
 
                 return success ? bMouseGuid : null;
@@ -222,7 +256,7 @@ namespace WoWmapper.MemoryReader
 
 
                 // Read the location of the mouse info from memory
-                ReadProcessMemory(_memoryHandle,
+                ReadProcessMemory(MemoryHandle,
                     _moduleBase + OffsetManager.GetOffset(OffsetType.MouseLook), bMouseState,
                     bMouseState.Length, ref bytesRead);
 
@@ -244,7 +278,7 @@ namespace WoWmapper.MemoryReader
                 var bPlayerClass = new byte[1];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(_memoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerClass),
+                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerClass),
                     bPlayerClass, 1, ref bytesRead);
 
 
@@ -294,7 +328,7 @@ namespace WoWmapper.MemoryReader
                 var bName = new byte[12];
                 var bytesRead = 0;
 
-                ReadProcessMemory(_memoryHandle,
+                ReadProcessMemory(MemoryHandle,
                     _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerName), bName,
                     bName.Length, ref bytesRead);
 

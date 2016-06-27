@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WoWmapper.Classes;
 using WoWmapper.MemoryReader;
@@ -144,6 +145,7 @@ namespace WoWmapper.WorldOfWarcraft
                         if (Settings.Default.EnableAdvancedFeatures)
                             MemoryManager.Attach(activeProcess);
                         
+                        
                         _gameProcess = activeProcess;
                     }
                 }
@@ -223,6 +225,7 @@ namespace WoWmapper.WorldOfWarcraft
             var searchNames = new List<string>();
             if(Settings.Default.ForceArchitecture != 64) searchNames.Add("wow");
             if(Settings.Default.ForceArchitecture != 32) searchNames.Add("wow-64");
+            if (Settings.Default.ForceArchitecture != 32) searchNames.Add("wowt-64");
 
             // Build list of matching processes
             var processes = Process.GetProcesses();
