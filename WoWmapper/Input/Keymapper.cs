@@ -2,11 +2,13 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Input;
 using WoWmapper.Classes;
 using WoWmapper.Controllers;
 using WoWmapper.MemoryReader;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
+using Cursor = System.Windows.Forms.Cursor;
 
 namespace WoWmapper.Input
 {
@@ -21,7 +23,7 @@ namespace WoWmapper.Input
         private const int MOUSEEVENTF_RIGHTUP = 0x10;
 
         private static Thread _inputThread;
-        private static bool[] keyStates = new bool[Enum.GetNames(typeof(ControllerButton)).Length];
+        private static bool[] keyStates = new bool[Enum.GetNames(typeof (ControllerButton)).Length];
 
         private static int _lastTouchX;
         private static int _lastTouchY;
@@ -30,7 +32,7 @@ namespace WoWmapper.Input
         {
             if (_inputThread != null) return;
             Logger.Write("Starting controller state thread...");
-            _inputThread = new Thread(ControllerThread) { IsBackground = true };
+            _inputThread = new Thread(ControllerThread);
             _inputThread.Start();
         }
 
@@ -111,7 +113,8 @@ namespace WoWmapper.Input
                                 if (state.TouchLeft && state.TouchButton) ProcessKeyDown(ControllerButton.CenterLeft);
                                 if (!state.TouchButton && !state.CenterLeft) ProcessKeyUp(ControllerButton.CenterLeft);
                                 if (state.TouchRight && state.TouchButton) ProcessKeyDown(ControllerButton.CenterRight);
-                                if (!state.TouchButton && !state.CenterRight) ProcessKeyUp(ControllerButton.CenterRight);
+                                if (!state.TouchButton && !state.CenterRight)
+                                    ProcessKeyUp(ControllerButton.CenterRight);
                                 break;
                             case 2: // TouchLeft/TouchRight
                                 if (state.TouchLeft && state.TouchButton) ProcessKeyDown(ControllerButton.TouchLeft);
@@ -124,49 +127,57 @@ namespace WoWmapper.Input
                         if (Properties.Settings.Default.EnableTriggerGrip)
                         {
                             if ((state.TriggerLeft >= Properties.Settings.Default.ThresholdLeft) &&
-                                (state.TriggerLeft < Properties.Settings.Default.ThresholdLeftClick)) ProcessKeyDown(ControllerButton.TriggerLeft);
+                                (state.TriggerLeft < Properties.Settings.Default.ThresholdLeftClick))
+                                ProcessKeyDown(ControllerButton.TriggerLeft);
                             if (!(state.TriggerLeft >= Properties.Settings.Default.ThresholdLeft) ||
-                                !(state.TriggerLeft < Properties.Settings.Default.ThresholdLeftClick)) ProcessKeyUp(ControllerButton.TriggerLeft);
+                                !(state.TriggerLeft < Properties.Settings.Default.ThresholdLeftClick))
+                                ProcessKeyUp(ControllerButton.TriggerLeft);
 
                             if ((state.TriggerRight >= Properties.Settings.Default.ThresholdRight) &&
-                                (state.TriggerRight < Properties.Settings.Default.ThresholdRightClick)) ProcessKeyDown(ControllerButton.TriggerRight);
+                                (state.TriggerRight < Properties.Settings.Default.ThresholdRightClick))
+                                ProcessKeyDown(ControllerButton.TriggerRight);
                             if (!(state.TriggerRight >= Properties.Settings.Default.ThresholdRight) ||
-                                !(state.TriggerRight < Properties.Settings.Default.ThresholdRightClick)) ProcessKeyUp(ControllerButton.TriggerRight);
+                                !(state.TriggerRight < Properties.Settings.Default.ThresholdRightClick))
+                                ProcessKeyUp(ControllerButton.TriggerRight);
 
-                            if (state.TriggerLeft >= Properties.Settings.Default.ThresholdLeftClick) ProcessKeyDown(ControllerButton.TriggerLeft2);
-                            if (state.TriggerRight >= Properties.Settings.Default.ThresholdRightClick) ProcessKeyDown(ControllerButton.TriggerRight2);
+                            if (state.TriggerLeft >= Properties.Settings.Default.ThresholdLeftClick)
+                                ProcessKeyDown(ControllerButton.TriggerLeft2);
+                            if (state.TriggerRight >= Properties.Settings.Default.ThresholdRightClick)
+                                ProcessKeyDown(ControllerButton.TriggerRight2);
 
-                            if (state.TriggerLeft < Properties.Settings.Default.ThresholdLeftClick) ProcessKeyUp(ControllerButton.TriggerLeft2);
-                            if (state.TriggerRight < Properties.Settings.Default.ThresholdRightClick) ProcessKeyUp(ControllerButton.TriggerRight2);
+                            if (state.TriggerLeft < Properties.Settings.Default.ThresholdLeftClick)
+                                ProcessKeyUp(ControllerButton.TriggerLeft2);
+                            if (state.TriggerRight < Properties.Settings.Default.ThresholdRightClick)
+                                ProcessKeyUp(ControllerButton.TriggerRight2);
                         }
                         else
                         {
-                            if (state.TriggerLeft >= Properties.Settings.Default.ThresholdLeft) ProcessKeyDown(ControllerButton.TriggerLeft);
-                            if (!(state.TriggerLeft >= Properties.Settings.Default.ThresholdLeft)) ProcessKeyUp(ControllerButton.TriggerLeft);
+                            if (state.TriggerLeft >= Properties.Settings.Default.ThresholdLeft)
+                                ProcessKeyDown(ControllerButton.TriggerLeft);
+                            if (!(state.TriggerLeft >= Properties.Settings.Default.ThresholdLeft))
+                                ProcessKeyUp(ControllerButton.TriggerLeft);
 
-                            if (state.TriggerRight >= Properties.Settings.Default.ThresholdLeft) ProcessKeyDown(ControllerButton.TriggerRight);
-                            if (!(state.TriggerRight >= Properties.Settings.Default.ThresholdLeft)) ProcessKeyUp(ControllerButton.TriggerRight);
+                            if (state.TriggerRight >= Properties.Settings.Default.ThresholdLeft)
+                                ProcessKeyDown(ControllerButton.TriggerRight);
+                            if (!(state.TriggerRight >= Properties.Settings.Default.ThresholdLeft))
+                                ProcessKeyUp(ControllerButton.TriggerRight);
                         }
 
                         // Process analog sticks
-
                         // Left stick/Movement
-                        if (state.LeftY < -40) ProcessKeyDown(ControllerButton.LStickUp);
-                        if (!(state.LeftY < -40)) ProcessKeyUp(ControllerButton.LStickUp);
-                        if (state.LeftY > 40) ProcessKeyDown(ControllerButton.LStickDown);
-                        if (!(state.LeftY > 40)) ProcessKeyUp(ControllerButton.LStickDown);
-                        if (state.LeftX < -40) ProcessKeyDown(ControllerButton.LStickLeft);
-                        if (!(state.LeftX < -40)) ProcessKeyUp(ControllerButton.LStickLeft);
-                        if (state.LeftX > 40) ProcessKeyDown(ControllerButton.LStickRight);
-                        if (!(state.LeftX > 40)) ProcessKeyUp(ControllerButton.LStickRight);
+
+                        MoveCharacter(state.LeftX, state.LeftY);
+                       
 
                         // Right stick/Mouse
                         Vector2 stickInput = new Vector2(state.RightX, state.RightY);
-                        
+
                         if (stickInput.Magnitude > Settings.Default.RightDeadzone)
                         {
-                            stickInput = Vector2.Normalize(stickInput) * ((stickInput.Magnitude - Settings.Default.RightDeadzone) / (127 - Settings.Default.RightDeadzone));
-                            Vector2 mouseMovement = ApplyMouseMath((float)stickInput.X, (float)stickInput.Y);
+                            stickInput = Vector2.Normalize(stickInput)*
+                                         ((stickInput.Magnitude - Settings.Default.RightDeadzone)/
+                                          (127 - Settings.Default.RightDeadzone));
+                            Vector2 mouseMovement = ApplyMouseMath((float) stickInput.X, (float) stickInput.Y);
 
                             if (state.RightX < 0) mouseMovement.X = -mouseMovement.X;
                             if (state.RightY < 0) mouseMovement.Y = -mouseMovement.Y;
@@ -174,18 +185,9 @@ namespace WoWmapper.Input
                             var modX = 1;
                             var modY = 1;
 
-                            if (Settings.Default.EnableAdvancedFeatures)
-                            {
-                                // Invert cursor option
-                                var mouseLook = MemoryManager.GetMouselooking();
-
-                                if (Settings.Default.InvertCameraHorizontal && mouseLook) modX = modX * -1;
-                                if (Settings.Default.InvertCameraVertical && mouseLook) modY = modY * -1;
-                            }
-
                             var m = Cursor.Position;
-                            m.X += (int)mouseMovement.X * modX;
-                            m.Y += (int)mouseMovement.Y * modY;
+                            m.X += (int) mouseMovement.X*modX;
+                            m.Y += (int) mouseMovement.Y*modY;
                             Cursor.Position = m;
                         }
 
@@ -208,24 +210,103 @@ namespace WoWmapper.Input
             }
         }
 
+        private static void MoveCharacter(int x, int y)
+        {
+            // Convert x/y axis to directional movement
+            var moveThreshold = 20;
+            var walkThreshold = 80;
+
+
+            if (y < -moveThreshold)
+            {
+                ProcessKeyDown(ControllerButton.LStickUp);
+            }
+            if (!(y < -moveThreshold))
+            {
+                ProcessKeyUp(ControllerButton.LStickUp);
+            }
+            if (y > moveThreshold)
+            {
+                ProcessKeyDown(ControllerButton.LStickDown);
+            }
+            if (!(y > moveThreshold))
+            {
+                ProcessKeyUp(ControllerButton.LStickDown);
+            }
+            if (x < -moveThreshold)
+            {
+                ProcessKeyDown(ControllerButton.LStickLeft);
+            }
+            if (!(x < -moveThreshold))
+            {
+                ProcessKeyUp(ControllerButton.LStickLeft);
+            }
+            if (x > moveThreshold)
+            {
+                ProcessKeyDown(ControllerButton.LStickRight);
+            }
+            if (!(x > moveThreshold))
+            {
+                ProcessKeyUp(ControllerButton.LStickRight);
+            }
+
+            // Process walk
+            var walkState = MemoryManager.GetPlayerWalk();
+
+            var sqrX = x*x;
+            var sqrY = y*y;
+
+            var hyp = Math.Sqrt(sqrX + sqrY);
+
+            var posX = x < 0 ? -x : x;
+            var posY = y < 0 ? -y : y;
+
+
+            if (!walkState &&
+                (hyp < walkThreshold))
+            {
+                // Toggle walk
+                ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
+                ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
+
+            }
+            else if (walkState &&
+                       (hyp >= walkThreshold))
+            {
+                // Toggle walk
+                ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
+                ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
+            }
+        }
+
         private static Vector2 ApplyMouseMath(float x, float y)
         {
-            double curve = (0.05 * Settings.Default.RightCurve);
+            double curve = (0.05*Settings.Default.RightCurve);
 
-            var xSpeed = (x < 0 ? -x : x) * Settings.Default.RightSpeed;
-            var ySpeed = (y < 0 ? -y : y) * Settings.Default.RightSpeed;
+            var xSpeed = (x < 0 ? -x : x)*Settings.Default.RightSpeed;
+            var ySpeed = (y < 0 ? -y : y)*Settings.Default.RightSpeed;
 
-            double xMath = Math.Pow(curve * xSpeed, 2) + (curve * xSpeed);
-            double yMath = Math.Pow(curve * ySpeed, 2) + (curve * ySpeed);
+            double xMath = Math.Pow(curve*xSpeed, 2) + (curve*xSpeed);
+            double yMath = Math.Pow(curve*ySpeed, 2) + (curve*ySpeed);
 
             var vMath = new Vector2(xMath, yMath);
             return vMath;
         }
 
+        private static void ProcessMovement(ControllerButton Button)
+        {
+            if (MemoryManager.GetPlayerWalk())
+            {
+            }
+            else
+            {
+            }
+        }
+
         private static void ProcessKeyDown(ControllerButton Button)
         {
             // Don't process if key is already held
-            if (keyStates[(int)Button] || BindingManager.CurrentBinds == null) return;
+            if (keyStates[(int) Button] || BindingManager.CurrentBinds == null) return;
 
             // TODO send key logic
             switch (Button)
@@ -247,13 +328,13 @@ namespace WoWmapper.Input
 
             Console.WriteLine("KeyDown " + Button);
 
-            keyStates[(int)Button] = true;
+            keyStates[(int) Button] = true;
         }
 
         private static void ProcessKeyUp(ControllerButton Button)
         {
             // Don't process if key isn't held
-            if (!keyStates[(int)Button] || BindingManager.CurrentBinds == null) return;
+            if (!keyStates[(int) Button] || BindingManager.CurrentBinds == null) return;
 
             // TODO send key logic
             switch (Button)
@@ -272,7 +353,7 @@ namespace WoWmapper.Input
             }
             Console.WriteLine("KeyUp " + Button);
 
-            keyStates[(int)Button] = false;
+            keyStates[(int) Button] = false;
         }
 
         private static void DoMouseDown(MouseButtons buttons)
@@ -285,7 +366,7 @@ namespace WoWmapper.Input
 
 
             if (buttons.HasFlag(MouseButtons.Right))
-            { 
+            {
                 mouse_event(MOUSEEVENTF_RIGHTDOWN, (uint) Cursor.Position.X, (uint) Cursor.Position.Y, 0, 0);
                 return;
             }

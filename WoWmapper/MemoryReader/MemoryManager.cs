@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Farplane.Memory;
 using WoWmapper.Classes;
 using WoWmapper.Offsets;
 using WoWmapper.WorldOfWarcraft;
@@ -29,8 +30,8 @@ namespace WoWmapper.MemoryReader
 
         private const int PlayerDataLength = 0x2E03;
 
-        private static Process _gameProcess = null;             // A Process object that represents the current instance of the game
-        public static IntPtr MemoryHandle = IntPtr.Zero;      // The OpenProcess handle used to read memory from the game
+        public static Process Process = null; // A Process object that represents the current instance of the game
+        public static IntPtr MemoryHandle = IntPtr.Zero; // The OpenProcess handle used to read memory from the game
         private static IntPtr _moduleBase = IntPtr.Zero;
         private static IntPtr _playerBase = IntPtr.Zero;
         private static bool _attached = false;
@@ -44,31 +45,26 @@ namespace WoWmapper.MemoryReader
 
             try
             {
-                _gameProcess = process;
-                
+                Process = process;
 
-                //var offsetsLoaded =
-                //    OffsetManager.InitializeOffsets(process.MainModule.FileVersionInfo.ProductPrivatePart);
-
-                if (true)
+                var openProcessHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+                if (openProcessHandle != IntPtr.Zero)
                 {
-                    var openProcessHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
-                    if (openProcessHandle != IntPtr.Zero)
-                    {
-                        _gameProcess = process;
-                        MemoryHandle = openProcessHandle;
-                        _moduleBase = _gameProcess.MainModule.BaseAddress;
-                        _attached = true;
-                        MessageBox.Show(PatternScan.OffsetScanner.GetPlayerName(_gameProcess));
-                        return true;
-                    }
+                    Process = process;
+                    MemoryHandle = openProcessHandle;
+                    _moduleBase = Process.MainModule.BaseAddress;
+
+                    OffsetManager.InitializeOffsets();
+                    
+                    _attached = true;
+                    return true;
                 }
-                
-
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+            }
 
-            _gameProcess = null;
+            Process = null;
             MemoryHandle = IntPtr.Zero;
             _moduleBase = IntPtr.Zero;
             _attached = false;
@@ -80,7 +76,7 @@ namespace WoWmapper.MemoryReader
         {
             if (!_attached) return;
 
-            _gameProcess.Dispose();
+            Process.Dispose();
             MemoryHandle = IntPtr.Zero;
             _moduleBase = IntPtr.Zero;
             _attached = false;
@@ -89,7 +85,7 @@ namespace WoWmapper.MemoryReader
         public static T Read<T>(IntPtr offset, bool isRelative = true)
         {
             var readOffset = offset;
-            if (isRelative) readOffset += (int)_moduleBase;
+            if (isRelative) readOffset += (int) _moduleBase;
 
             var readBuffer = new byte[Marshal.SizeOf<T>()];
             var bytesRead = 0;
@@ -106,7 +102,6 @@ namespace WoWmapper.MemoryReader
                 }
                 catch (Exception ex)
                 {
-
                 }
                 finally
                 {
@@ -116,32 +111,38 @@ namespace WoWmapper.MemoryReader
             return default(T);
         }
 
+        public static T[] Read<T>(IntPtr offset, int count, bool isRelative = true)
+        {
+            var tLength = Marshal.SizeOf<T>();
+            var tArray = new T[count];
+            for (int i = 0; i < count; i++)
+            {
+                var t = Read<T>(offset + tLength * i, isRelative);
+                tArray[i] = t;
+            }
+            return tArray;
+        }
+
         private static bool UpdatePlayerBase()
         {
             try
             {
+                var offsetPtr = Read<IntPtr>(OffsetManager.Offset.PlayerBase, false);
+
+
+                var ptrBase =  offsetPtr + 16;
+
                 var bPlayerPointer = new byte[8];
                 var bytesRead = 0;
 
                 var success = ReadProcessMemory(MemoryHandle,
-                    _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerBase), bPlayerPointer,
+                    ptrBase, bPlayerPointer,
                     bPlayerPointer.Length, ref bytesRead);
 
                 if (!success) throw new InvalidOperationException("Unable to read player pointer");
 
-                var playerPointer = (IntPtr) BitConverter.ToInt64(bPlayerPointer, 0);
-
-                success = ReadProcessMemory(MemoryHandle, playerPointer + 0x08, bPlayerPointer, bPlayerPointer.Length, ref bytesRead);
-
-                if (success)
-                {
-                    _playerBase = (IntPtr) BitConverter.ToInt64(bPlayerPointer, 0);
-                    return true;
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
+                _playerBase = (IntPtr) BitConverter.ToInt64(bPlayerPointer, 0);
+                return true;
             }
             catch (Exception ex)
             {
@@ -156,14 +157,15 @@ namespace WoWmapper.MemoryReader
             if (!_attached) return false;
 
             // Update player base pointer
-            var update = UpdatePlayerBase();
 
-            if (!update) return false;
-
+                var update = UpdatePlayerBase();
+                if (!update) return false;
+            
             try
             {
-                var bPlayerInfo = new byte[PlayerDataLength];
                 var bytesRead = 0;
+
+                var bPlayerInfo = new byte[PlayerDataLength];
 
                 var success = ReadProcessMemory(MemoryHandle, _playerBase, bPlayerInfo, PlayerDataLength, ref bytesRead);
 
@@ -178,7 +180,6 @@ namespace WoWmapper.MemoryReader
                 _playerData = null;
                 return false;
             }
-            
         }
 
         public static GameState GetGameState()
@@ -190,9 +191,10 @@ namespace WoWmapper.MemoryReader
                 var bGameState = new byte[1];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.GameState),
+                var success = ReadProcessMemory(MemoryHandle, OffsetManager.Offset.GameState,
                     bGameState, 1, ref bytesRead);
 
+                if((GameState)bGameState[0] == GameState.LoggedOut) _playerBase = IntPtr.Zero;
 
                 return success ? (GameState) bGameState[0] : GameState.NotRunning;
             }
@@ -205,6 +207,7 @@ namespace WoWmapper.MemoryReader
 
         public static byte[] GetTargetGuid()
         {
+            return null;
             if (!_attached) return null;
 
             try
@@ -212,10 +215,10 @@ namespace WoWmapper.MemoryReader
                 var bTargetGuid = new byte[16];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.TargetGuid),
-                    bTargetGuid, 16, ref bytesRead);
+                //var success = ReadProcessMemory(MemoryHandle, OffsetManager.GetOffset(OffsetType.TargetGuid),
+                //    bTargetGuid, 16, ref bytesRead);
 
-                return success ? bTargetGuid : null;
+                //return success ? bTargetGuid : null;
             }
             catch (Exception ex)
             {
@@ -226,6 +229,7 @@ namespace WoWmapper.MemoryReader
 
         public static byte[] GetMouseGuid()
         {
+            return null;
             if (!_attached) return null;
 
             try
@@ -233,10 +237,10 @@ namespace WoWmapper.MemoryReader
                 var bMouseGuid = new byte[16];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.MouseGuid),
-                    bMouseGuid, 16, ref bytesRead);
+                //var success = ReadProcessMemory(MemoryHandle, OffsetManager.GetOffset(OffsetType.MouseGuid),
+                //    bMouseGuid, 16, ref bytesRead);
 
-                return success ? bMouseGuid : null;
+                //return success ? bMouseGuid : null;
             }
             catch (Exception ex)
             {
@@ -257,10 +261,10 @@ namespace WoWmapper.MemoryReader
 
                 // Read the location of the mouse info from memory
                 ReadProcessMemory(MemoryHandle,
-                    _moduleBase + OffsetManager.GetOffset(OffsetType.MouseLook), bMouseState,
+                    OffsetManager.Offset.MouseLook, bMouseState,
                     bMouseState.Length, ref bytesRead);
 
-                return (((int)bMouseState[0] & 1) == 1);
+                return (((int) bMouseState[0] & 1) == 1);
             }
             catch (Exception ex)
             {
@@ -278,7 +282,7 @@ namespace WoWmapper.MemoryReader
                 var bPlayerClass = new byte[1];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(MemoryHandle, _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerClass),
+                var success = ReadProcessMemory(MemoryHandle, OffsetManager.Offset.PlayerClass,
                     bPlayerClass, 1, ref bytesRead);
 
 
@@ -306,16 +310,42 @@ namespace WoWmapper.MemoryReader
             }
             else
             {
-                playerInfo = new PlayerInfo()
-                {
-                    CurrentHealth = BitConverter.ToUInt32(_playerData, OffsetManager.GetOffset(OffsetType.PlayerHealthCurrent)),
-                    MaxHealth = BitConverter.ToUInt32(_playerData, OffsetManager.GetOffset(OffsetType.PlayerHealthMax)),
-                    Level = (int)_playerData[OffsetManager.GetOffset(OffsetType.PlayerLevel)]
-                };
-
+                    playerInfo = new PlayerInfo()
+                    {
+                        CurrentHealth = BitConverter.ToUInt32(_playerData, 0xF0),
+                        MaxHealth = BitConverter.ToUInt32(_playerData, 0x110),
+                        Level = (int)_playerData[0x160]
+                    };
                 return true;
             }
             playerInfo = null;
+            return false;
+        }
+
+        public static bool GetPlayerWalk()
+        {
+            if (!_attached) return false;
+
+            try
+            {
+                var offsetPtr = MemoryManager.Read<IntPtr>(OffsetManager.Offset.PlayerWalk, false);
+                var walkPtr = MemoryManager.Read<IntPtr>(offsetPtr + 0x210, false);
+                var oPlayerWalk = walkPtr + 0x58;
+                var bPlayerWalk = new byte[4];
+                var bytesRead = 0;
+
+                var success = ReadProcessMemory(MemoryHandle, oPlayerWalk,
+                    bPlayerWalk, 4, ref bytesRead);
+
+
+                return bPlayerWalk[1] == 1;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Write($"GetPlayerWalk Exception: {ex}");
+            }
+
             return false;
         }
 
@@ -329,7 +359,7 @@ namespace WoWmapper.MemoryReader
                 var bytesRead = 0;
 
                 ReadProcessMemory(MemoryHandle,
-                    _moduleBase + OffsetManager.GetOffset(OffsetType.PlayerName), bName,
+                    OffsetManager.Offset.PlayerName, bName,
                     bName.Length, ref bytesRead);
 
                 var nameLength = Array.FindIndex(bName, item => item == 0x00);

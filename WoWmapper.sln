@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
+
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper", "WoWmapper\WoWmapper.csproj", "{7B09CB4F-E70B-462F-9C53-C0A3E895E47F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper", "WoWmapper\\WoWmapper.csproj", "{7B09CB4F-E70B-462F-9C53-C0A3E895E47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_Updater", "WoWmapper_Updater\WoWmapper_Updater.csproj", "{047A597C-72F8-4237-BD9E-ECBB396D361D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WoWmapper_Updater", "WoWmapper_Updater\\WoWmapper_Updater.csproj", "{047A597C-72F8-4237-BD9E-ECBB396D361D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

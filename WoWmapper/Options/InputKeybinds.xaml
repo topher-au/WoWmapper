@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="WoWmapper.Options.InputKeybinds"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WoWmapper"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:p="clr-namespace:WoWmapper.Properties"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
     <GroupBox Header="{x:Static p:Resources.SettingsKeybinds}">
         <Grid>
             <Grid.RowDefinitions>
@@ -16,32 +17,40 @@
             <DockPanel>
                 <Button Margin="2" Click="ButtonImport_Click">
                     <DockPanel>
-                        <Image Source="pack://application:,,,/Resources/Import.png" Margin="0,0,2,0"/>
-                        <TextBlock Text="{x:Static p:Resources.KeybindsImport}" VerticalAlignment="Center"/>
+                        <Image Margin="0,0,2,0" Source="pack://application:,,,/Resources/Import.png" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.KeybindsImport}" />
                     </DockPanel>
-                    
+
                 </Button>
                 <Button Margin="2" Click="ButtonExport_Click">
                     <DockPanel>
-                        <Image Source="pack://application:,,,/Resources/Export.png" Margin="0,0,2,0"/>
-                        <TextBlock Text="{x:Static p:Resources.KeybindsExport}" VerticalAlignment="Center"/>
+                        <Image Margin="0,0,2,0" Source="pack://application:,,,/Resources/Export.png" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.KeybindsExport}" />
                     </DockPanel>
                 </Button>
-                <Button HorizontalAlignment="Right" Margin="2" Click="ButtonResetDefaults_Click">
+                <Button Margin="2"
+                        HorizontalAlignment="Right"
+                        Click="ButtonResetDefaults_Click">
                     <DockPanel>
-                        <Image Source="pack://application:,,,/Resources/Reset.png" Margin="0,0,2,0"/>
-                        <TextBlock Text="{x:Static p:Resources.KeybindsReset}" VerticalAlignment="Center"/>
+                        <Image Margin="0,0,2,0" Source="pack://application:,,,/Resources/Reset.png" />
+                        <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.KeybindsReset}" />
                     </DockPanel>
                 </Button>
             </DockPanel>
             <ScrollViewer Grid.Row="1" Margin="0,2,0,0">
-                <ListBox Name="listKeybinds" PreviewMouseWheel="listKeybinds_PreviewMouseWheel" MouseDoubleClick="ListKeybinds_OnMouseDoubleClick">
+                <ListBox Name="listKeybinds"
+                         MouseDoubleClick="ListKeybinds_OnMouseDoubleClick"
+                         PreviewMouseWheel="listKeybinds_PreviewMouseWheel">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <DockPanel Margin="0,2,0,2">
-                                <Image Source="{Binding DisplayImage}" Width="16" Height="16"/>
-                                <TextBlock Text="{Binding DisplayButton}" Margin="8,0,0,0"/>
-                                <TextBlock Text="{Binding DisplayKey}" HorizontalAlignment="Right" Margin="0,0,8,0"/>
+                                <Image Width="16"
+                                       Height="16"
+                                       Source="{Binding DisplayImage}" />
+                                <TextBlock Margin="8,0,0,0" Text="{Binding DisplayButton}" />
+                                <TextBlock Margin="0,0,8,0"
+                                           HorizontalAlignment="Right"
+                                           Text="{Binding DisplayKey}" />
                             </DockPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -42,7 +42,7 @@ using Microsoft.Win32.SafeHandles;
 //      IntPtr pAddr = _sigScan.FindPattern(new byte[]{ 0xFF, 0xFF, 0xFF, 0xFF, 0x51, 0x55, 0xFC, 0x11 }, "xxxx?xx?", 12); 
 // 
 // ---------------------------------------------------------------------------------------- 
-namespace PatternScan
+namespace Farplane.Memory
 {
     public class SigScan
     {
@@ -209,8 +209,9 @@ namespace PatternScan
         ///     compared against the given mask. If the pattern is found, the offset 
         ///     is added to the located address and returned to the user. 
         /// </summary> 
-        /// <param name="btPattern">Byte pattern to look for in the dumped region.</param> 
-        /// <param name="strMask">The mask string to compare against.</param> 
+        /// <param name="pattern">Byte pattern to look for in the dumped region.
+        /// It should be in hex with ?? as a wildcard byte, spaces will be stripped
+        /// before the pattern is searched.</param> 
         /// <param name="nOffset">The offset added to the result address.</param> 
         /// <returns>IntPtr - zero if not found, address if found.</returns> 
         public IntPtr FindPattern(string pattern, int nOffset = 0)

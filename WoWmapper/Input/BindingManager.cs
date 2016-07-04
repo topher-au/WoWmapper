@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 //using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -19,6 +19,8 @@ using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using WoWmapper.Classes;
 using WoWmapper.Controllers;
+using WoWmapper.WorldOfWarcraft.AddOns;
+using MessageBox = System.Windows.MessageBox;
 
 namespace WoWmapper.Input
 {
@@ -67,6 +69,99 @@ namespace WoWmapper.Input
             BindingsUpdated?.Invoke();
         }
 
+        public static Dictionary<string, string> GetConsolePortBindDictionary()
+        {
+            if (_keybind == null) return null;
+
+            var bindDict = new Dictionary<string, string>();
+            bindDict.Add("CP_R_UP", GetWoWStringName(CurrentBinds[ControllerButton.RFaceUp]));
+            bindDict.Add("CP_R_DOWN", GetWoWStringName(CurrentBinds[ControllerButton.RFaceDown]));
+            bindDict.Add("CP_R_LEFT", GetWoWStringName(CurrentBinds[ControllerButton.RFaceLeft]));
+            bindDict.Add("CP_R_RIGHT", GetWoWStringName(CurrentBinds[ControllerButton.RFaceRight]));
+            bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderLeft]));
+            bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderRight]));
+            bindDict.Add("CP_L_UP", GetWoWStringName(CurrentBinds[ControllerButton.LFaceUp]));
+            bindDict.Add("CP_L_DOWN", GetWoWStringName(CurrentBinds[ControllerButton.LFaceDown]));
+            bindDict.Add("CP_L_LEFT", GetWoWStringName(CurrentBinds[ControllerButton.LFaceLeft]));
+            bindDict.Add("CP_L_RIGHT", GetWoWStringName(CurrentBinds[ControllerButton.LFaceRight]));
+            bindDict.Add("CP_X_LEFT", GetWoWStringName(CurrentBinds[ControllerButton.CenterLeft]));
+            bindDict.Add("CP_X_CENTER", GetWoWStringName(CurrentBinds[ControllerButton.CenterMiddle]));
+            bindDict.Add("CP_X_RIGHT", GetWoWStringName(CurrentBinds[ControllerButton.CenterRight]));
+            bindDict.Add("CP_L_PULL", GetWoWStringName(CurrentBinds[ControllerButton.TriggerLeft2]));
+            bindDict.Add("CP_R_PULL", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight2]));
+            bindDict.Add("CP_TL1", GetWoWStringName(CurrentBinds[ControllerButton.TriggerLeft]));
+            bindDict.Add("CP_TL2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerLeft]));
+            bindDict.Add("CP_M1", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
+            bindDict.Add("CP_M2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
+            bindDict.Add("T_M1", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftShift).Key));
+            bindDict.Add("T_M2", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftCtrl).Key));
+
+            return bindDict;
+        }
+
+        public static string GetTextureName(ControllerButton button)
+        {
+            switch (button)
+            {
+                case ControllerButton.ShoulderLeft:
+                    return "CP_TL1";
+                case ControllerButton.ShoulderRight:
+                    return "CP_TR1";
+                case ControllerButton.TriggerLeft:
+                    return "CP_TL2";
+                case ControllerButton.TriggerRight:
+                    return "CP_TR2";
+            }
+            return string.Empty;
+        }
+
+        public static Dictionary<Key, string> WowKeysDictionary = new Dictionary<Key, string>()
+        {
+            {Key.LeftShift, "LSHIFT"},
+            {Key.RightShift, "RSHIFT"},
+            {Key.LeftCtrl, "LCTRL"},
+            {Key.RightCtrl, "RCTRL"},
+            {Key.LeftAlt, "LALT"},
+            {Key.RightAlt, "RALT"},
+            {Key.Add, "NUMPADPLUS"},
+            {Key.Subtract, "NUMPADMINUS"},
+            {Key.Multiply, "NUMPADMULTIPLY"},
+            {Key.Divide, "NUMPADDIVIDE"},
+            {Key.Decimal, "NUMPADDECIMAL" },
+            {Key.D0, "0"},
+            {Key.D1, "1"},
+            {Key.D2, "2"},
+            {Key.D3, "3"},
+            {Key.D4, "4"},
+            {Key.D5, "5"},
+            {Key.D6, "6"},
+            {Key.D7, "7"},
+            {Key.D8, "8"},
+            {Key.D9, "9"},
+            {Key.OemMinus, "-" },
+            {Key.OemPlus, "=" },
+            {Key.OemBackslash, "\\"},
+            {Key.OemTilde, "`"},
+            {Key.OemComma, ","},
+            {Key.OemOpenBrackets, "["},
+            {Key.OemCloseBrackets, "]"},
+            {Key.OemSemicolon, ";"},
+            {Key.OemQuestion, "/" },
+            {Key.OemQuotes, "\"" },
+        };
+
+        public static string GetWoWStringName(Key key)
+        {
+            try
+            {
+                return WowKeysDictionary[key];
+            }
+            catch
+            {
+                return key.ToString().ToUpper();
+            }
+        }
+
         public static List<KeybindListItem> GetKeybindList(ControllerType controllerType)
         {
             if (_keybind == null) return null;
@@ -98,7 +193,7 @@ namespace WoWmapper.Input
                 catch
                 {
                     Logger.Write("No profile found. Loading default keybinds.");
-                    _keybind = new KeybindProfile { Keybinds = ControllerData.DefaultBinds };
+                    _keybind = new KeybindProfile {Keybinds = ControllerData.DefaultBinds};
                 }
             }
             else
@@ -110,11 +205,13 @@ namespace WoWmapper.Input
 
         public static void SaveKeybinds()
         {
-            using (var outfile = new FileStream(Path.Combine(MainWindow.AppDataDir,"bindings.dat"), FileMode.Create))
+            using (var outfile = new FileStream(Path.Combine(MainWindow.AppDataDir, "bindings.dat"), FileMode.Create))
             {
-                var x = new DataContractSerializer(typeof(KeybindProfile));
+                var x = new DataContractSerializer(typeof (KeybindProfile));
                 x.WriteObject(outfile, _keybind);
             }
+
+            ConsolePortBindWriter.WriteBindFile("D:\\test.lua");
         }
 
         private static List<KeybindListItem> GetKeybindDS4()
@@ -124,7 +221,8 @@ namespace WoWmapper.Input
             {
                 if (!ControllerData.DS4.ValidButtons.Contains(bind.Key)) continue;
 
-                BitmapImage displayImage = new BitmapImage(new Uri($"pack://application:,,,/{ControllerData.DS4.ButtonIcons[bind.Key]}"));
+                BitmapImage displayImage =
+                    new BitmapImage(new Uri($"pack://application:,,,/{ControllerData.DS4.ButtonIcons[bind.Key]}"));
                 string displayKey = bind.Value.ToString();
                 string displayButton = bind.Key.ToString();
 
@@ -132,11 +230,16 @@ namespace WoWmapper.Input
                 {
                     displayButton = ControllerData.DS4.ButtonNames[bind.Key];
                 }
-                catch { }
+                catch
+                {
+                }
 
                 bindList.Add(new KeybindListItem()
                 {
-                    DisplayImage = displayImage, DisplayKey = displayKey, DisplayButton = displayButton, BindingKey = bind.Key
+                    DisplayImage = displayImage,
+                    DisplayKey = displayKey,
+                    DisplayButton = displayButton,
+                    BindingKey = bind.Key
                 });
             }
             return bindList;
@@ -151,15 +254,15 @@ namespace WoWmapper.Input
             {
                 using (FileStream xmlStream = new FileStream(Filename, FileMode.Open))
                 {
-                    var x = new DataContractSerializer(typeof(KeybindProfile));
-                    return (KeybindProfile)x.ReadObject(xmlStream);
+                    var x = new DataContractSerializer(typeof (KeybindProfile));
+                    return (KeybindProfile) x.ReadObject(xmlStream);
                 }
             }
             catch (Exception ex)
             {
                 Logger.Write($"Attempt to import keybinds failed: {ex}");
             }
-            
+
             return null;
         }
 
@@ -169,7 +272,7 @@ namespace WoWmapper.Input
             {
                 using (var outfile = new FileStream(Filename, FileMode.Create))
                 {
-                    var x = new DataContractSerializer(typeof(KeybindProfile));
+                    var x = new DataContractSerializer(typeof (KeybindProfile));
                     x.WriteObject(outfile, Profile);
                     return true;
                 }
@@ -188,7 +291,8 @@ namespace WoWmapper.Input
             {
                 if (!ControllerData.Xbox.ValidButtons.Contains(bind.Key)) continue;
 
-                BitmapImage displayImage = new BitmapImage(new Uri($"pack://application:,,,/{ControllerData.Xbox.ButtonIcons[bind.Key]}"));
+                BitmapImage displayImage =
+                    new BitmapImage(new Uri($"pack://application:,,,/{ControllerData.Xbox.ButtonIcons[bind.Key]}"));
                 string displayKey = bind.Value.ToString();
                 string displayButton = bind.Key.ToString();
 
@@ -196,7 +300,9 @@ namespace WoWmapper.Input
                 {
                     displayButton = ControllerData.Xbox.ButtonNames[bind.Key];
                 }
-                catch { }
+                catch
+                {
+                }
 
                 bindList.Add(new KeybindListItem()
                 {
@@ -211,14 +317,12 @@ namespace WoWmapper.Input
 
         public static void ResetBinds()
         {
-            
             _keybind = new KeybindProfile();
             _keybind.Keybinds = new Dictionary<ControllerButton, Key>(ControllerData.DefaultBinds);
             SaveKeybinds();
             BindingsUpdated?.Invoke();
         }
     }
-
 
 
     public class KeybindListItem

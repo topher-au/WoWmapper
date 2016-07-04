@@ -75,8 +75,8 @@ namespace WoWmapper.Input
                             PlayerInfo playerInfo;
                             var success = MemoryManager.GetPlayerInfo(out playerInfo);
 
-                            var targetGuid = MemoryManager.GetTargetGuid();
-                            var mouseGuid = MemoryManager.GetMouseGuid();
+                            //var targetGuid = MemoryManager.GetTargetGuid();
+                            //var mouseGuid = MemoryManager.GetMouseGuid();
 
                             float previousPercent = (float)_playerHealthCurrent / playerInfo.MaxHealth;
                             float currentPercent = (float)playerInfo.CurrentHealth / playerInfo.MaxHealth;
@@ -96,11 +96,11 @@ namespace WoWmapper.Input
                             _playerHealthMax = (int)playerInfo.MaxHealth;
 
                             // Vibrate when changing target
-                            if (Settings.Default.EnableVibrateTarget && targetGuid != null && !_targetGuid.SequenceEqual(targetGuid) && !targetGuid.SequenceEqual(new byte[16]))
-                            {
-                                controller.SendRumble(0, 255, 150);
-                                _targetGuid = targetGuid;
-                            }
+                            //if (Settings.Default.EnableVibrateTarget && targetGuid != null && !_targetGuid.SequenceEqual(targetGuid) && !targetGuid.SequenceEqual(new byte[16]))
+                            //{
+                            //    controller.SendRumble(0, 255, 150);
+                            //    _targetGuid = targetGuid;
+                            //}
 
                             // Color lightbar by health
                             if (Settings.Default.EnableLightbarHealth && !setLightbar)

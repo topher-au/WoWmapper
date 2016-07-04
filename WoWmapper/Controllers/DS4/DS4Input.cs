@@ -154,7 +154,15 @@ namespace WoWmapper.Controllers.DS4
         public bool IsAlive()
         {
             if (_controller == null) return false;
-            return _controller.HidDevice.IsConnected && _controller.HidDevice.IsOpen;
+            try
+            {
+                return _controller.HidDevice.IsConnected && _controller.HidDevice.IsOpen;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
 
         public void SendRumble(byte Left, byte Right, int Duration)

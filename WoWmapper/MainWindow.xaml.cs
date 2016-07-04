@@ -194,7 +194,7 @@ namespace WoWmapper
 
             // Initialize UI timer
             _timerUpdateUi.Elapsed += Timer_UpdateUI;
-            _timerUpdateUi.Interval = 100;
+            _timerUpdateUi.Interval = 500;
             _timerUpdateUi.Start();
 
             // Initialize controllers
@@ -378,10 +378,11 @@ namespace WoWmapper
 
                 if (Settings.Default.EnableAdvancedFeatures)
                 {
-                    if (MemoryManager.Attached)
+                    if (MemoryManager.Attached && OffsetManager.OffsetsAvailable)
                     {
                         var gameState = MemoryManager.GetGameState();
-
+                        var playerName = MemoryManager.GetPlayerName();
+                        textWoWStatus2.Text = playerName;
                         switch (gameState)
                         {
                             case GameState.LoggedIn:
@@ -627,6 +628,7 @@ namespace WoWmapper
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
             _optionsFlyout.IsOpen = !_optionsFlyout.IsOpen;
+            
         }
 
         private void MetroWindow_StateChanged(object sender, EventArgs e)

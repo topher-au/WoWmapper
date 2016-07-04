@@ -12,6 +12,7 @@ namespace WoWmapper.Offsets
         GameState,
         PlayerName,
         PlayerClass,
+        PlayerWalk,
         TargetGuid,
         MouseGuid,
         MouseLook,

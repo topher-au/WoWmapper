@@ -97,11 +97,10 @@
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\ShowWhenEnabled.cs" />
     <Compile Include="MemoryReader\GameState.cs" />
-    <Compile Include="MemoryReader\OffsetFile.cs" />
-    <Compile Include="MemoryReader\OffsetManager.cs" />
-    <Compile Include="MemoryReader\OffsetType.cs" />
+    <Compile Include="Offsets\OffsetManager.cs" />
+    <Compile Include="Offsets\OffsetType.cs" />
     <Compile Include="MemoryReader\PlayerInfo.cs" />
-    <Compile Include="Offsets\PatternScan.cs" />
+    <Compile Include="Offsets\OffsetScanner.cs" />
     <Compile Include="Offsets\SigScan.cs" />
     <Compile Include="Options\HapticsColors.xaml.cs">
       <DependentUpon>HapticsColors.xaml</DependentUpon>
