@@ -18,7 +18,7 @@ namespace WoWmapper.WorldOfWarcraft.AddOns
             var templateStream = Application.GetResourceStream(new Uri("pack://application:,,,/WorldOfWarcraft/AddOns/WoWmapper.lua"));
             var textTemplate = new StreamReader(templateStream.Stream);
 
-            using (var outStream = new FileStream("d:\\test.lua", FileMode.Create))
+            using (var outStream = new FileStream(fileName, FileMode.Create))
             using (var outWriter = new StreamWriter(outStream))
 
                 while (!textTemplate.EndOfStream)

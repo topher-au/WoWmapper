@@ -142,10 +142,19 @@ namespace WoWmapper.Input
                                 setLightbar = true;
                             }
 
+                            var isMouseLooking = MemoryManager.GetMouselooking();
+
+                            if (isMouseLooking &&
+                                ProcessWatcher.GetForegroundWindow() != ProcessWatcher.Process.MainWindowHandle)
+                            {
+                                Keymapper.DoMouseDown(MouseButtons.Right);
+                                Keymapper.DoMouseDown(MouseButtons.Right);
+                            }
+
                             // Auto-center cursor
                             if (Settings.Default.MouselookCenterCursor)
                             {
-                                var isMouseLooking = MemoryManager.GetMouselooking();
+                                
                                 if (isMouseLooking && !wasMouseLooking)
                                 {
                                     if (mouseLookTimer > MouselookDelay)

@@ -89,7 +89,8 @@ namespace Farplane.Memory
                     "4C 8D 05 ????????     " + // lea r8,[WowT-64.exe+1160140] { ["ScriptEvents.cpp"] }
                     "48 8D 4C 24 40        " + // lea rcx,[rsp+40]
                     "41 B9 280E0000        ", // mov r9d,00000E28 { 3624 }
-
+
+
                 ByteOffset = 1
             };
 

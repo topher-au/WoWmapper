@@ -84,10 +84,10 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="RightCurve" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="RightSpeed" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">16</Value>
     </Setting>
     <Setting Name="AutoClassAccent" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

@@ -349,7 +349,7 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
         public int RightCurve {
             get {
                 return ((int)(this["RightCurve"]));
@@ -361,7 +361,7 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
         public int RightSpeed {
             get {
                 return ((int)(this["RightSpeed"]));

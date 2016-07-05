@@ -79,33 +79,10 @@ namespace WoWmapper.Options
             UpdateBindList();
         }
 
-        private void ButtonImport_Click(object sender, RoutedEventArgs e)
+
+        private void ButtonCPExport_Click(object sender, RoutedEventArgs e)
         {
-            var openDialog = new OpenFileDialog();
-            openDialog.Filter = "Keybind Data XML|*.xml";
-            var openResult = openDialog.ShowDialog();
-            if (openResult != DialogResult.OK || !File.Exists(openDialog.FileName)) return;
-
-            var newBinds = BindingManager.ReadFile(openDialog.FileName);
-
-            if (newBinds == null)
-            {
-                MainWindow.ShowMessageBox(Properties.Resources.DialogInvalidKeybindFileTitle, Properties.Resources.DialogInvalidKeybindFileText);
-                return;
-            }
-
-            BindingManager.CurrentBinds = newBinds.Keybinds;
             BindingManager.SaveKeybinds();
-        }
-
-        private void ButtonExport_Click(object sender, RoutedEventArgs e)
-        {
-            var saveDialog = new SaveFileDialog();
-            saveDialog.Filter = "Keybind Data XML|*.xml";
-            var saveResult = saveDialog.ShowDialog();
-            if (saveResult != DialogResult.OK) return;
-
-            BindingManager.WriteFile(new KeybindProfile() {Keybinds = BindingManager.CurrentBinds}, saveDialog.FileName);
         }
     }
 }

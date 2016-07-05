@@ -1,24 +1,33 @@
 ﻿<UserControl x:Class="WoWmapper.Options.AdvancedSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:p="clr-namespace:WoWmapper.Properties"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="300">
+             d:DesignHeight="400"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
     <Grid>
         <GroupBox Header="{x:Static p:Resources.SettingsAdvancedTitle}">
             <ScrollViewer>
                 <StackPanel Margin="5">
                     <GroupBox Header="{x:Static p:Resources.AdvancedFeaturesHeader}">
                         <StackPanel Margin="5">
-                            <TextBlock TextWrapping="Wrap" Text="{x:Static p:Resources.AdvancedFeaturesWarning}" />
-                            <Button Content="{x:Static p:Resources.AdvancedMoreInfo}" Margin="10" Click="ButtonMoreInfo_Click"/>
-                            <CheckBox Name="CheckEnableAdvancedFeatures" Content="{x:Static p:Resources.SettingsEnableAdvancedFeatures}" Margin="10,0,10,0" Checked="CheckboxChanged" Unchecked="CheckboxChanged"/>    
+                            <TextBlock Text="{x:Static p:Resources.AdvancedFeaturesWarning}" TextWrapping="Wrap" />
+                            <Button Margin="10"
+                                    Click="ButtonMoreInfo_Click"
+                                    Content="{x:Static p:Resources.AdvancedMoreInfo}" />
+                            <CheckBox Name="CheckEnableAdvancedFeatures"
+                                      Margin="10,0,10,0"
+                                      Checked="CheckboxChanged"
+                                      Content="{x:Static p:Resources.SettingsEnableAdvancedFeatures}"
+                                      Unchecked="CheckboxChanged" />
                         </StackPanel>
                     </GroupBox>
-                    <Button Margin="10,5,10,0" Content="{x:Static p:Resources.SettingsResetAll}" Click="Button_Click"/>
+                    <Button Margin="10,5,10,0"
+                            Click="Button_Click"
+                            Content="{x:Static p:Resources.SettingsResetAll}" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

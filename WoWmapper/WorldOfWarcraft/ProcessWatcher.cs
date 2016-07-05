@@ -17,7 +17,7 @@ namespace WoWmapper.WorldOfWarcraft
 {
     public static class ProcessWatcher
     {
-#region Native Methods and Structs
+        #region Native Methods and Structs
 
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -34,7 +34,7 @@ namespace WoWmapper.WorldOfWarcraft
         private static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
+        public static extern IntPtr GetForegroundWindow();
 
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -42,31 +42,35 @@ namespace WoWmapper.WorldOfWarcraft
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
-            public int Left;        // x position of upper-left corner
-            public int Top;         // y position of upper-left corner
-            public int Right;       // x position of lower-right corner
-            public int Bottom;      // y position of lower-right corner
+            public int Left; // x position of upper-left corner
+            public int Top; // y position of upper-left corner
+            public int Right; // x position of lower-right corner
+            public int Bottom; // y position of lower-right corner
         }
-#endregion Native Methods and Structs
-        private static Process _gameProcess; // Current instance of WoW
+
+        #endregion Native Methods and Structs
+
+        public static Process Process; // Current instance of WoW
         private static Thread _watcherThread; // Thread for monitoring WoW instances
         private static bool _watching; // Current state of the watcher
 
-        // public static bool CanReadMemory => _gameHandle != IntPtr.Zero && GameArchitecture == Enums.GameArchitecture.X64 && Settings.Default.EnableAdvancedFeatures && OffsetManager.OffsetsAvailable;
-        public static bool GameRunning => _gameProcess != null;
+        public static bool GameRunning => Process != null;
         public static bool IsRunning => _watching;
 
         public static Enums.GameArchitecture GameArchitecture
         {
             get
             {
-                if (_gameProcess == null) return Enums.GameArchitecture.None;
+                if (Process == null) return Enums.GameArchitecture.None;
                 try
                 {
                     bool proc64;
-                    var x = IsWow64Process(_gameProcess.Handle, out proc64);
+                    var x = IsWow64Process(Process.Handle, out proc64);
                     return proc64 ? Enums.GameArchitecture.X86 : Enums.GameArchitecture.X64;
-                } catch { }
+                }
+                catch
+                {
+                }
                 return Enums.GameArchitecture.None;
             }
         }
@@ -78,7 +82,7 @@ namespace WoWmapper.WorldOfWarcraft
 
             _watching = true;
 
-            _watcherThread = new Thread(WatcherThread) { IsBackground = true };
+            _watcherThread = new Thread(WatcherThread) {IsBackground = true};
             _watcherThread.Start();
         }
 
@@ -88,7 +92,7 @@ namespace WoWmapper.WorldOfWarcraft
             Logger.Write("Stopping process watcher...");
             MemoryManager.Close();
             _watcherThread?.Abort();
-            _gameProcess?.Dispose();
+            Process?.Dispose();
             _watcherThread = null;
             _watching = false;
         }
@@ -102,8 +106,8 @@ namespace WoWmapper.WorldOfWarcraft
         private static void ResetProcess()
         {
             MemoryManager.Close();
-            _gameProcess?.Dispose();
-            _gameProcess = null;
+            Process?.Dispose();
+            Process = null;
         }
 
         private static void WatcherThread()
@@ -111,11 +115,11 @@ namespace WoWmapper.WorldOfWarcraft
             while (_watching)
             {
                 // Check current process
-                if (_gameProcess != null)
+                if (Process != null)
                 {
                     try
                     {
-                        if (_gameProcess.HasExited || !IsWindow(_gameProcess.MainWindowHandle))
+                        if (Process.HasExited || !IsWindow(Process.MainWindowHandle))
                         {
                             Logger.Write("WoW process invalidated, clearing!");
                             ResetProcess();
@@ -128,25 +132,30 @@ namespace WoWmapper.WorldOfWarcraft
                 }
 
                 // Find game process
-                if (_gameProcess == null)
+                if (Process == null)
                 {
                     var wowProcess = GetWowProcesses();
                     Process activeProcess = null;
                     try
                     {
                         activeProcess =
-                        wowProcess.FirstOrDefault(proc => proc.HasExited == false && proc.MainWindowHandle != IntPtr.Zero);
-                        if(activeProcess != null) Logger.Write("Found WoW process! Handle is {0}", activeProcess.Handle);
-                    } catch { }
-                    
+                            wowProcess.FirstOrDefault(
+                                proc => proc.HasExited == false && proc.MainWindowHandle != IntPtr.Zero);
+                        if (activeProcess != null)
+                            Logger.Write("Found WoW process! Handle is {0}", activeProcess.Handle);
+                    }
+                    catch
+                    {
+                    }
+
 
                     if (activeProcess != null)
                     {
                         if (Settings.Default.EnableAdvancedFeatures)
                             MemoryManager.Attach(activeProcess);
-                        
-                        
-                        _gameProcess = activeProcess;
+
+
+                        Process = activeProcess;
                     }
                 }
 
@@ -158,10 +167,10 @@ namespace WoWmapper.WorldOfWarcraft
         {
             get
             {
-                if (_gameProcess == null || !IsWindow(_gameProcess.MainWindowHandle)) return new RECT();
+                if (Process == null || !IsWindow(Process.MainWindowHandle)) return new RECT();
 
                 RECT windowRect;
-                var gotRect = GetWindowRect(_gameProcess.MainWindowHandle, out windowRect);
+                var gotRect = GetWindowRect(Process.MainWindowHandle, out windowRect);
                 return gotRect ? windowRect : new RECT();
             }
         }
@@ -180,7 +189,8 @@ namespace WoWmapper.WorldOfWarcraft
                         return;
                     }
 
-                    var foregroundResult = SendMessage(hWndFg, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    var foregroundResult = SendMessage(hWndFg, WM_KEYDOWN, (IntPtr) KeyInterop.VirtualKeyFromKey(key),
+                        IntPtr.Zero);
                     if (foregroundResult != 0)
                         Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", foregroundResult);
                     return;
@@ -188,7 +198,8 @@ namespace WoWmapper.WorldOfWarcraft
 
                 if (!ProcessWatcher.GameRunning) return;
 
-                var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYDOWN, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                var sendResult = SendMessage(Process.MainWindowHandle, WM_KEYDOWN,
+                    (IntPtr) KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
                 if (sendResult != 0)
                     Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", sendResult);
             }
@@ -205,7 +216,8 @@ namespace WoWmapper.WorldOfWarcraft
                         return;
                     }
 
-                    var foregroundResult = SendMessage(hWndFg, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                    var foregroundResult = SendMessage(hWndFg, WM_KEYUP, (IntPtr) KeyInterop.VirtualKeyFromKey(key),
+                        IntPtr.Zero);
                     if (foregroundResult != 0)
                         Logger.Write("SendMessage WM_KEYUP returned error code: {0}", foregroundResult);
                     return;
@@ -213,7 +225,8 @@ namespace WoWmapper.WorldOfWarcraft
 
                 if (!ProcessWatcher.GameRunning) return;
 
-                var sendResult = SendMessage(_gameProcess.MainWindowHandle, WM_KEYUP, (IntPtr)KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
+                var sendResult = SendMessage(Process.MainWindowHandle, WM_KEYUP,
+                    (IntPtr) KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
                 if (sendResult != 0)
                     Logger.Write("SendMessage WM_KEYUP returned error code: {0}", sendResult);
             }
@@ -223,9 +236,13 @@ namespace WoWmapper.WorldOfWarcraft
         {
             // Build list of process names to search
             var searchNames = new List<string>();
-            if(Settings.Default.ForceArchitecture != 64) searchNames.Add("wow");
-            if(Settings.Default.ForceArchitecture != 32) searchNames.Add("wow-64");
+
+            if (Settings.Default.ForceArchitecture != 64) searchNames.Add("wow");
+            if (Settings.Default.ForceArchitecture != 64) searchNames.Add("wowt");
+            if (Settings.Default.ForceArchitecture != 64) searchNames.Add("wowb");
+            if (Settings.Default.ForceArchitecture != 32) searchNames.Add("wow-64");
             if (Settings.Default.ForceArchitecture != 32) searchNames.Add("wowt-64");
+            if (Settings.Default.ForceArchitecture != 32) searchNames.Add("wowb-64");
 
             // Build list of matching processes
             var processes = Process.GetProcesses();

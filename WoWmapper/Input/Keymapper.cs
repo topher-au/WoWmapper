@@ -16,7 +16,13 @@ namespace WoWmapper.Input
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
-
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern int SendMessage(IntPtr A_0, int A_1, int A_2, int A_3);
+        static int WM_CLOSE = 0x10;
+        static int WM_LBUTTONDOWN = 0x201;
+        static int WM_LBUTTONUP = 0x202;
+        static int WM_RBUTTONDOWN = 0x204;
+        static int WM_RBUTTONUP = 0x205;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
@@ -256,26 +262,31 @@ namespace WoWmapper.Input
             var sqrX = x*x;
             var sqrY = y*y;
 
-            var hyp = Math.Sqrt(sqrX + sqrY);
+            var moveDistance = Math.Sqrt(sqrX + sqrY);
 
             var posX = x < 0 ? -x : x;
             var posY = y < 0 ? -y : y;
 
-
-            if (!walkState &&
-                (hyp < walkThreshold))
+            if (Settings.Default.EnableAdvancedFeatures)
             {
-                // Toggle walk
-                ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
-                ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
-
-            }
-            else if (walkState &&
-                       (hyp >= walkThreshold))
-            {
-                // Toggle walk
-                ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
-                ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
+                if (walkState && moveDistance < moveThreshold)
+                {
+                    // No input from controller, disable walk
+                    ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
+                    ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
+                }
+                else if (!walkState && moveDistance >= moveThreshold && moveDistance < walkThreshold)
+                {
+                    // Player is walking
+                    ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
+                    ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
+                }
+                else if (walkState && moveDistance >= walkThreshold)
+                {
+                    // Player is running
+                    ProcessWatcher.Interaction.SendKeyDown(Key.Divide);
+                    ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
+                }
             }
         }
 
@@ -356,7 +367,7 @@ namespace WoWmapper.Input
             keyStates[(int) Button] = false;
         }
 
-        private static void DoMouseDown(MouseButtons buttons)
+        public static void DoMouseDown(MouseButtons buttons)
         {
             if (buttons.HasFlag(MouseButtons.Left))
             {

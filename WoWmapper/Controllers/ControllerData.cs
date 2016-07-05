@@ -12,11 +12,11 @@ namespace WoWmapper.Controllers
             {ControllerButton.LStickLeft, Key.A},
             {ControllerButton.LStickDown, Key.S},
             {ControllerButton.LStickRight, Key.D},
-            {ControllerButton.ShoulderLeft, Key.F7},
-            {ControllerButton.ShoulderRight, Key.F8},
-            {ControllerButton.TriggerLeft, Key.LeftCtrl},
+            {ControllerButton.ShoulderLeft, Key.LeftCtrl},
+            {ControllerButton.TriggerLeft, Key.LeftShift},
             {ControllerButton.TriggerLeft2, Key.Subtract},
-            {ControllerButton.TriggerRight, Key.LeftShift},
+            {ControllerButton.ShoulderRight, Key.F7},
+            {ControllerButton.TriggerRight, Key.F8},
             {ControllerButton.TriggerRight2, Key.Add},
             {ControllerButton.LFaceUp, Key.F1},
             {ControllerButton.LFaceRight, Key.F2},
@@ -29,8 +29,8 @@ namespace WoWmapper.Controllers
             {ControllerButton.CenterMiddle, Key.Multiply},
             {ControllerButton.CenterRight, Key.F5},
             {ControllerButton.CenterLeft, Key.F6},
-            {ControllerButton.TouchLeft, Key.F13 },
-            {ControllerButton.TouchRight, Key.F14 }
+            {ControllerButton.TouchLeft, Key.F13},
+            {ControllerButton.TouchRight, Key.F14}
         };
 
         public static class DS4
@@ -114,11 +114,11 @@ namespace WoWmapper.Controllers
                 {ControllerButton.CenterMiddle, "Resources/Buttons/DS4/PS.png"},
                 {ControllerButton.CenterRight, "Resources/Buttons/DS4/Options.png"},
                 {ControllerButton.CenterLeft, "Resources/Buttons/DS4/Share.png"},
-                {ControllerButton.LStickUp,"Resources/Buttons/DS4/DpadUp.png"},
+                {ControllerButton.LStickUp, "Resources/Buttons/DS4/DpadUp.png"},
                 {ControllerButton.LStickRight, "Resources/Buttons/DS4/DpadRight.png"},
-                {ControllerButton.LStickDown,"Resources/Buttons/DS4/DpadDown.png"},
+                {ControllerButton.LStickDown, "Resources/Buttons/DS4/DpadDown.png"},
                 {ControllerButton.LStickLeft, "Resources/Buttons/DS4/DpadLeft.png"},
-                {ControllerButton.TouchLeft,"Resources/Buttons/DS4/DpadLeft.png"},
+                {ControllerButton.TouchLeft, "Resources/Buttons/DS4/DpadLeft.png"},
                 {ControllerButton.TouchRight, "Resources/Buttons/DS4/DpadRight.png"}
             };
         }
@@ -200,9 +200,9 @@ namespace WoWmapper.Controllers
                 {ControllerButton.CenterMiddle, "Resources/Buttons/Xbox/CenterMiddle.png"},
                 {ControllerButton.CenterRight, "Resources/Buttons/Xbox/CenterRight.png"},
                 {ControllerButton.CenterLeft, "Resources/Buttons/Xbox/CenterLeft.png"},
-                {ControllerButton.LStickUp,"Resources/Buttons/Xbox/LFaceUp.png"},
+                {ControllerButton.LStickUp, "Resources/Buttons/Xbox/LFaceUp.png"},
                 {ControllerButton.LStickRight, "Resources/Buttons/Xbox/LFaceRight.png"},
-                {ControllerButton.LStickDown,"Resources/Buttons/Xbox/LFaceDown.png"},
+                {ControllerButton.LStickDown, "Resources/Buttons/Xbox/LFaceDown.png"},
                 {ControllerButton.LStickLeft, "Resources/Buttons/Xbox/LFaceLeft.png"}
             };
         }

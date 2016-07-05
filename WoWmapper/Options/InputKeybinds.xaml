@@ -15,18 +15,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <DockPanel>
-                <Button Margin="2" Click="ButtonImport_Click">
-                    <DockPanel>
-                        <Image Margin="0,0,2,0" Source="pack://application:,,,/Resources/Import.png" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.KeybindsImport}" />
-                    </DockPanel>
-
-                </Button>
-                <Button Margin="2" Click="ButtonExport_Click">
-                    <DockPanel>
-                        <Image Margin="0,0,2,0" Source="pack://application:,,,/Resources/Export.png" />
-                        <TextBlock VerticalAlignment="Center" Text="{x:Static p:Resources.KeybindsExport}" />
-                    </DockPanel>
+                <Button Margin="2"
+                        HorizontalAlignment="Left"
+                        Click="ButtonCPExport_Click">
+                    Export to ConsolePort
                 </Button>
                 <Button Margin="2"
                         HorizontalAlignment="Right"

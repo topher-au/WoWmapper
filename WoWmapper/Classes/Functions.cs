@@ -24,20 +24,7 @@ namespace WoWmapper.Classes
 
         public static bool ValidateWoWPath(string TestPath = null)
         {
-            string SearchPath;
-            if (TestPath != null)
-            {
-                SearchPath = TestPath;
-            } else
-            {
-                SearchPath = Properties.Settings.Default.WoWFolder;
-            }
-            if (File.Exists(Path.Combine(SearchPath, "WoW.exe"))
-            || File.Exists(Path.Combine(SearchPath, "WoW-64.exe")))
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
 
         public static bool FindWoWPath()
