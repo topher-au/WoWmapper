@@ -94,81 +94,24 @@ namespace WoWmapper.Input
             bindDict.Add("CP_M1", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
             bindDict.Add("CP_M2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
 
-            var mod1 = CurrentBinds.First(bind => bind.Value == Key.LeftCtrl);
-            var mod2 = CurrentBinds.First(bind => bind.Value == Key.LeftShift);
-
-            if ((mod1.Key == ControllerButton.ShoulderLeft && mod2.Key == ControllerButton.TriggerLeft) ||
-                (mod1.Key == ControllerButton.TriggerLeft && mod2.Key == ControllerButton.ShoulderLeft))
+            var ModBinds = new List<ControllerButton>
             {
-                // Trigger buttons
-                bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderRight]));
-                bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
+                ControllerButton.ShoulderLeft,
+                ControllerButton.ShoulderRight,
+                ControllerButton.TriggerLeft,
+                ControllerButton.TriggerRight
+            };
 
-                // Trigger textures
-                bindDict.Add("T_T1", GetTextureName(ControllerButton.ShoulderRight));
-                bindDict.Add("T_T2", GetTextureName(ControllerButton.TriggerRight));
+            ModBinds.Remove(CurrentBinds.First(bind => bind.Value == Key.LeftCtrl).Key);
+            ModBinds.Remove(CurrentBinds.First(bind => bind.Value == Key.LeftShift).Key);
 
-            } else if (mod1.Key == ControllerButton.ShoulderRight && mod2.Key == ControllerButton.TriggerRight ||
-                (mod1.Key == ControllerButton.TriggerRight && mod2.Key == ControllerButton.ShoulderRight))
-            {
-                // Trigger buttons
-                bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderLeft]));
-                bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerLeft]));
-
-                // Trigger textures
-                bindDict.Add("T_T1", GetTextureName(ControllerButton.ShoulderLeft));
-                bindDict.Add("T_T2", GetTextureName(ControllerButton.TriggerLeft));
-            }
-            else if (mod1.Key == ControllerButton.ShoulderLeft && mod2.Key == ControllerButton.TriggerRight ||
-                (mod1.Key == ControllerButton.TriggerRight && mod2.Key == ControllerButton.ShoulderLeft))
-            {
-                // Trigger buttons
-                bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderRight]));
-                bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerLeft]));
-
-                // Trigger textures
-                bindDict.Add("T_T1", GetTextureName(ControllerButton.ShoulderRight));
-                bindDict.Add("T_T2", GetTextureName(ControllerButton.TriggerLeft));
-            }
-            else if (mod1.Key == ControllerButton.ShoulderRight && mod2.Key == ControllerButton.TriggerLeft ||
-                (mod1.Key == ControllerButton.TriggerLeft && mod2.Key == ControllerButton.ShoulderLeft))
-            {
-                // Trigger buttons
-                bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderLeft]));
-                bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
-
-                // Trigger textures
-                bindDict.Add("T_T1", GetTextureName(ControllerButton.ShoulderLeft));
-                bindDict.Add("T_T2", GetTextureName(ControllerButton.TriggerRight));
-            }
-            else if (mod1.Key == ControllerButton.TriggerLeft && mod2.Key == ControllerButton.TriggerRight ||
-                (mod1.Key == ControllerButton.TriggerRight && mod2.Key == ControllerButton.TriggerLeft))
-            {
-                // Trigger buttons
-                bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderLeft]));
-                bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.ShoulderRight]));
-
-                // Trigger textures
-                bindDict.Add("T_T1", GetTextureName(ControllerButton.ShoulderLeft));
-                bindDict.Add("T_T2", GetTextureName(ControllerButton.ShoulderRight));
-            }
-            else if (mod1.Key == ControllerButton.ShoulderLeft && mod2.Key == ControllerButton.ShoulderRight ||
-                (mod1.Key == ControllerButton.ShoulderRight && mod2.Key == ControllerButton.ShoulderLeft))
-            {
-                // Trigger buttons
-                bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ControllerButton.TriggerLeft]));
-                bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ControllerButton.TriggerRight]));
-
-                // Trigger textures
-                bindDict.Add("T_T1", GetTextureName(ControllerButton.TriggerLeft));
-                bindDict.Add("T_T2", GetTextureName(ControllerButton.TriggerRight));
-            }
-
-            // Modifier textures
+            bindDict.Add("CP_T1", GetWoWStringName(CurrentBinds[ModBinds[0]]));
+            bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ModBinds[1]]));
+            bindDict.Add("T_T1", GetTextureName(ModBinds[0]));
+            bindDict.Add("T_T2", GetTextureName(ModBinds[1]));
             bindDict.Add("T_M1", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftCtrl).Key));
             bindDict.Add("T_M2", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftShift).Key));
-
-
+            
             return bindDict;
         }
 
