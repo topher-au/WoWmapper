@@ -109,9 +109,19 @@ namespace WoWmapper.Input
             bindDict.Add("CP_T2", GetWoWStringName(CurrentBinds[ModBinds[1]]));
             bindDict.Add("T_T1", GetTextureName(ModBinds[0]));
             bindDict.Add("T_T2", GetTextureName(ModBinds[1]));
-            bindDict.Add("T_M1", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftCtrl).Key));
-            bindDict.Add("T_M2", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftShift).Key));
-            
+            bindDict.Add("T_M1", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftShift).Key));
+            bindDict.Add("T_M2", GetTextureName(CurrentBinds.First(bind => bind.Value == Key.LeftCtrl).Key));
+
+            if (ControllerManager.GetActiveController() == null)
+            {
+                bindDict.Add("TYPE", "XBOX");
+            }
+            else
+            {
+                bindDict.Add("TYPE", ControllerManager.GetActiveController().Type == ControllerType.Xbox ? "XBOX" : "PS4");
+            }
+            bindDict.Add("TOGGLERUN", GetWoWStringName((Key)Enum.Parse(typeof(Key), Settings.Default.CursorWalkHotkey)));
+
             return bindDict;
         }
 
@@ -226,9 +236,8 @@ namespace WoWmapper.Input
             {
                 var x = new DataContractSerializer(typeof (KeybindProfile));
                 x.WriteObject(outfile, _keybind);
-                var consolePortLuaFile = Path.Combine(Settings.Default.WoWFolder, "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua");
-                if(File.Exists(consolePortLuaFile))
-                    ConsolePortBindWriter.WriteBindFile(consolePortLuaFile);
+                if(File.Exists(Path.Combine(Settings.Default.WoWFolder, "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua")))
+                    ConsolePortBindWriter.WriteBindFile(Path.Combine(Settings.Default.WoWFolder, "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua"));
             }
 
             

@@ -207,18 +207,18 @@ namespace WoWmapper.MemoryReader
 
         public static byte[] GetTargetGuid()
         {
-            return null;
             if (!_attached) return null;
 
             try
             {
+                var oTargetGuid = OffsetManager.Offset.PlayerTarget;
                 var bTargetGuid = new byte[16];
                 var bytesRead = 0;
 
-                //var success = ReadProcessMemory(MemoryHandle, OffsetManager.GetOffset(OffsetType.TargetGuid),
-                //    bTargetGuid, 16, ref bytesRead);
+                var success = ReadProcessMemory(MemoryHandle, oTargetGuid,
+                    bTargetGuid, 16, ref bytesRead);
 
-                //return success ? bTargetGuid : null;
+                return success ? bTargetGuid : null;
             }
             catch (Exception ex)
             {
@@ -339,6 +339,30 @@ namespace WoWmapper.MemoryReader
 
 
                 return bPlayerWalk[1] == 1;
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Write($"GetPlayerWalk Exception: {ex}");
+            }
+
+            return false;
+        }
+
+        public static bool GetPlayerAOE()
+        {
+            if (!_attached) return false;
+
+            try
+            {
+                var bPlayerAoe = new byte[1];
+                var bytesRead = 0;
+
+                var success = ReadProcessMemory(MemoryHandle, OffsetManager.Offset.PlayerAOE,
+                    bPlayerAoe, bPlayerAoe.Length, ref bytesRead);
+
+
+                return bPlayerAoe[0] == 1;
 
             }
             catch (Exception ex)

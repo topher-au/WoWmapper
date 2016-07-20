@@ -1,19 +1,25 @@
 ﻿<UserControl x:Class="WoWmapper.Options.PreferencesAppearance"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WoWmapper.Options"
-             xmlns:p="clr-namespace:WoWmapper.Properties"
              xmlns:classes="clr-namespace:WoWmapper.Classes"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WoWmapper.Options"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:WoWmapper.Properties"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
     <GroupBox Header="{x:Static p:Resources.SettingsAppearance}">
         <ScrollViewer>
             <StackPanel Margin="5">
-                <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5">
+                <DockPanel Height="30"
+                           Margin="0,0,10,5"
+                           VerticalAlignment="Top">
                     <Label Content="{x:Static p:Resources.AppearanceTheme}" />
-                    <ComboBox Name="comboTheme" Width="120" HorizontalAlignment="Right" SelectionChanged="comboTheme_SelectionChanged">
+                    <ComboBox Name="comboTheme"
+                              Width="120"
+                              HorizontalAlignment="Right"
+                              SelectionChanged="comboTheme_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -21,9 +27,14 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5">
+                <DockPanel Height="30"
+                           Margin="0,0,10,5"
+                           VerticalAlignment="Top">
                     <Label Content="{x:Static p:Resources.AppearanceAccent}" />
-                    <ComboBox Name="comboAccent" Width="120" HorizontalAlignment="Right" SelectionChanged="comboAccent_SelectionChanged">
+                    <ComboBox Name="comboAccent"
+                              Width="120"
+                              HorizontalAlignment="Right"
+                              SelectionChanged="comboAccent_SelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -31,17 +42,46 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Height="30" VerticalAlignment="Top" Margin="0,0,10,5" Visibility="Collapsed">
+                <DockPanel Height="30"
+                           Margin="0,0,10,5"
+                           VerticalAlignment="Top"
+                           Visibility="Collapsed">
                     <Label Content="{x:Static p:Resources.AppearanceLanguage}" />
-                    <ComboBox Name="comboLanguage" Width="120" HorizontalAlignment="Right" SelectionChanged="comboLanguage_SelectionChanged" Text="English" IsEnabled="False"/>
+                    <ComboBox Name="comboLanguage"
+                              Width="120"
+                              HorizontalAlignment="Right"
+                              IsEnabled="False"
+                              SelectionChanged="comboLanguage_SelectionChanged"
+                              Text="English" />
                 </DockPanel>
-                <CheckBox Name="checkDropShadow" Content="{x:Static p:Resources.AppearanceDropShadow}" Margin="0,5,0,0" Checked="checkDropShadow_Checked" Unchecked="checkDropShadow_Checked"/>
-                <TextBlock Name="textNextStartup" Text="{x:Static p:Resources.AppearanceRestartApp}" TextWrapping="Wrap" Margin="20,10,20,0" TextAlignment="Center" Foreground="Yellow" Visibility="Collapsed"/>
-                <GroupBox Header="{x:Static p:Resources.AdvancedFeaturesHeader}" Margin="5,15,5,0">
+                <CheckBox Name="checkDropShadow"
+                          Margin="0,5,0,0"
+                          Checked="checkDropShadow_Checked"
+                          Content="{x:Static p:Resources.AppearanceDropShadow}"
+                          Unchecked="checkDropShadow_Checked" />
+                <TextBlock Name="textNextStartup"
+                           Margin="20,10,20,0"
+                           Foreground="Yellow"
+                           Text="{x:Static p:Resources.AppearanceRestartApp}"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Visibility="Collapsed" />
+                <GroupBox Margin="5,15,5,0" Header="{x:Static p:Resources.AdvancedFeaturesHeader}">
                     <StackPanel Margin="5">
-                        <TextBlock Text="{x:Static p:Resources.AdvancedFeaturesRequired}" TextWrapping="Wrap" TextAlignment="Center" Foreground="Red" Visibility="{Binding EnableAdvancedFeatures, Source={x:Static p:Settings.Default}, Converter={classes:HideWhenEnabled}}" Margin="0,0,0,5"/>
+                        <TextBlock Margin="0,0,0,5"
+                                   Foreground="Red"
+                                   Text="{x:Static p:Resources.AdvancedFeaturesRequired}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding EnableAdvancedFeatures,
+                                                        Source={x:Static p:Settings.Default},
+                                                        Converter={classes:HideWhenEnabled}}" />
                         <StackPanel>
-                            <CheckBox Content="{x:Static p:Resources.AppearanceColorByClass}" IsChecked="{Binding AutoClassAccent, Source={x:Static p:Settings.Default}}" Checked="SaveSettings" Unchecked="SaveSettings"/>
+                            <CheckBox Checked="SaveSettings"
+                                      Content="{x:Static p:Resources.AppearanceColorByClass}"
+                                      IsChecked="{Binding AutoClassAccent,
+                                                          Source={x:Static p:Settings.Default}}"
+                                      Unchecked="SaveSettings" />
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>

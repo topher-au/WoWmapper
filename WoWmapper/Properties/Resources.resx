@@ -394,10 +394,10 @@
 Accessing the game in this manner may be a violation of the World of Warcraft Terms of Use. For more information, please visit the link below.</value>
   </data>
   <data name="SettingsCursor" xml:space="preserve">
-    <value>Cursor</value>
+    <value>Other Input</value>
   </data>
   <data name="CursorAnalogStick" xml:space="preserve">
-    <value>Analog Stick</value>
+    <value>Right Stick/Cursor</value>
   </data>
   <data name="CursorAutoCenter" xml:space="preserve">
     <value>Auto-center cursor after mouselook</value>
@@ -555,5 +555,17 @@ The error was:
   </data>
   <data name="DialogInvalidKeybindFileTitle" xml:space="preserve">
     <value>Invalid file</value>
+  </data>
+  <data name="CursorAutoCancel" xml:space="preserve">
+    <value>Cancel mouselook on alt-tab</value>
+  </data>
+  <data name="CursorWalkEnable" xml:space="preserve">
+    <value>Auto toggle walk/run when moving</value>
+  </data>
+  <data name="CursorWalkHotkey" xml:space="preserve">
+    <value>Walk/Run Hotkey</value>
+  </data>
+  <data name="CursorWalkThreshold" xml:space="preserve">
+    <value>Threshold</value>
   </data>
 </root>

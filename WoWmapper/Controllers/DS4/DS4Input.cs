@@ -184,10 +184,14 @@ namespace WoWmapper.Controllers.DS4
             {
                 lock (_controller)
                 {
-                    _controller.LightBarOffDuration = 0;
-                    _controller.LightBarOnDuration = 255;
-                    Thread.Sleep(5);
-                    _controller.LightBarColor = new DS4Color(r, g, b);
+                    try
+                    {
+                        _controller.LightBarOffDuration = 0;
+                        _controller.LightBarOnDuration = 255;
+                        Thread.Sleep(5);
+                        _controller.LightBarColor = new DS4Color(r, g, b);
+                    } catch { }
+                    
                 }
             }
         }

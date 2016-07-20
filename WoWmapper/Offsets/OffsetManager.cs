@@ -71,6 +71,16 @@ namespace WoWmapper.Offsets
                     var offset = OffsetScanner.FindPlayerBase();
                     return offset;
                 }
+                case OffsetType.PlayerAOE:
+                    {
+                        var offset = OffsetScanner.FindPlayerAOE();
+                        return offset;
+                    }
+                case OffsetType.PlayerTarget:
+                    {
+                        var offset = OffsetScanner.FindPlayerTarget();
+                        return offset;
+                    }
                 default:
                     return IntPtr.Zero;
             }
@@ -88,6 +98,8 @@ namespace WoWmapper.Offsets
                 PlayerBase = GetOffset(OffsetType.PlayerBase),
                 MouseLook = GetOffset(OffsetType.MouseLook),
                 PlayerWalk = GetOffset(OffsetType.PlayerWalk),
+                PlayerAOE = GetOffset(OffsetType.PlayerAOE),
+                //PlayerTarget = GetOffset(OffsetType.PlayerTarget),
             };
             OffsetsAvailable = true;
         }
@@ -100,6 +112,8 @@ namespace WoWmapper.Offsets
             public IntPtr PlayerBase;
             public IntPtr MouseLook;
             public IntPtr PlayerWalk;
+            public IntPtr PlayerAOE;
+            public IntPtr PlayerTarget;
         }
     }
 }

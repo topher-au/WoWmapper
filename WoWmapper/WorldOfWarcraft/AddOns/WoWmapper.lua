@@ -16,9 +16,11 @@ WoWmapper.Keys = {
     CP_X_RIGHT  = "{CP_X_RIGHT}",
     CP_L_PULL   = "{CP_L_PULL}",
     CP_R_PULL   = "{CP_R_PULL}",
+	TOGGLERUN   = "{TOGGLERUN}",
 }
  
-WoWmapper.Triggers = {
+WoWmapper.Settings = {
+	type    = '{TYPE}',
     CP_M1   = '{T_M1}',
     CP_M2   = '{T_M2}',
     CP_T1   = '{T_T1}',

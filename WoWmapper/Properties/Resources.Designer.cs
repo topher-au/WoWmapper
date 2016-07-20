@@ -252,11 +252,20 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analog Stick.
+        ///   Looks up a localized string similar to Right Stick/Cursor.
         /// </summary>
         public static string CursorAnalogStick {
             get {
                 return ResourceManager.GetString("CursorAnalogStick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel mouselook on alt-tab.
+        /// </summary>
+        public static string CursorAutoCancel {
+            get {
+                return ResourceManager.GetString("CursorAutoCancel", resourceCulture);
             }
         }
         
@@ -356,6 +365,33 @@ namespace WoWmapper.Properties {
         public static string CursorTouchpadModeMouse {
             get {
                 return ResourceManager.GetString("CursorTouchpadModeMouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto toggle walk/run when moving.
+        /// </summary>
+        public static string CursorWalkEnable {
+            get {
+                return ResourceManager.GetString("CursorWalkEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Walk/Run Hotkey.
+        /// </summary>
+        public static string CursorWalkHotkey {
+            get {
+                return ResourceManager.GetString("CursorWalkHotkey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Threshold.
+        /// </summary>
+        public static string CursorWalkThreshold {
+            get {
+                return ResourceManager.GetString("CursorWalkThreshold", resourceCulture);
             }
         }
         
@@ -1061,7 +1097,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cursor.
+        ///   Looks up a localized string similar to Other Input.
         /// </summary>
         public static string SettingsCursor {
             get {

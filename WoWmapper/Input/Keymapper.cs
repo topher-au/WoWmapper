@@ -16,13 +16,7 @@ namespace WoWmapper.Input
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         private static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern int SendMessage(IntPtr A_0, int A_1, int A_2, int A_3);
-        static int WM_CLOSE = 0x10;
-        static int WM_LBUTTONDOWN = 0x201;
-        static int WM_LBUTTONUP = 0x202;
-        static int WM_RBUTTONDOWN = 0x204;
-        static int WM_RBUTTONUP = 0x205;
+
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
@@ -173,7 +167,7 @@ namespace WoWmapper.Input
                         // Left stick/Movement
 
                         MoveCharacter(state.LeftX, state.LeftY);
-                       
+
 
                         // Right stick/Mouse
                         Vector2 stickInput = new Vector2(state.RightX, state.RightY);
@@ -219,9 +213,8 @@ namespace WoWmapper.Input
         private static void MoveCharacter(int x, int y)
         {
             // Convert x/y axis to directional movement
-            var moveThreshold = 20;
-            var walkThreshold = 80;
-
+            var moveThreshold = 30;
+            var walkThreshold = Settings.Default.CursorWalkThreshold;
 
             if (y < -moveThreshold)
             {
@@ -264,10 +257,7 @@ namespace WoWmapper.Input
 
             var moveDistance = Math.Sqrt(sqrX + sqrY);
 
-            var posX = x < 0 ? -x : x;
-            var posY = y < 0 ? -y : y;
-
-            if (Settings.Default.EnableAdvancedFeatures)
+            if (Settings.Default.EnableAdvancedFeatures && Settings.Default.CursorEnableWalk)
             {
                 if (walkState && moveDistance < moveThreshold)
                 {
@@ -304,22 +294,53 @@ namespace WoWmapper.Input
             return vMath;
         }
 
-        private static void ProcessMovement(ControllerButton Button)
-        {
-            if (MemoryManager.GetPlayerWalk())
-            {
-            }
-            else
-            {
-            }
-        }
-
         private static void ProcessKeyDown(ControllerButton Button)
         {
+            
+            
             // Don't process if key is already held
             if (keyStates[(int) Button] || BindingManager.CurrentBinds == null) return;
 
-            // TODO send key logic
+            Console.WriteLine("KeyDown " + Button);
+
+            keyStates[(int) Button] = true;
+            
+            // Check if game is at menu
+            if (Settings.Default.EnableAdvancedFeatures && MemoryManager.GetGameState() == GameState.LoggedOut)
+            {
+                switch (Button)
+                {
+                    case ControllerButton.LFaceDown:
+                        ProcessWatcher.Interaction.SendKeyDown(Key.Down);
+                        break;
+                    case ControllerButton.LFaceUp:
+                        ProcessWatcher.Interaction.SendKeyDown(Key.Up);
+                        break;
+                    case ControllerButton.RFaceDown:
+                        ProcessWatcher.Interaction.SendKeyDown(Key.Enter);
+                        break;
+                    case ControllerButton.CenterMiddle:
+                        ProcessWatcher.Interaction.SendKeyDown(Key.Escape);
+                        break;
+                }
+                return;
+            }
+
+            // Check if player is casting targeted AOE
+            if (Settings.Default.EnableAdvancedFeatures && MemoryManager.GetPlayerAOE())
+            {
+                switch (Button)
+                {
+                    case ControllerButton.RFaceDown:
+                        ProcessWatcher.Interaction.SendLeftClick();
+                        return;
+                    case ControllerButton.RFaceRight:
+                        ProcessWatcher.Interaction.SendRightClick();
+                        return;
+                }
+            }
+            
+            // Send button press
             switch (Button)
             {
                 case ControllerButton.StickLeft:
@@ -336,10 +357,6 @@ namespace WoWmapper.Input
                     ProcessWatcher.Interaction.SendKeyDown(BindingManager.CurrentBinds[Button]);
                     break;
             }
-
-            Console.WriteLine("KeyDown " + Button);
-
-            keyStates[(int) Button] = true;
         }
 
         private static void ProcessKeyUp(ControllerButton Button)
@@ -347,7 +364,30 @@ namespace WoWmapper.Input
             // Don't process if key isn't held
             if (!keyStates[(int) Button] || BindingManager.CurrentBinds == null) return;
 
-            // TODO send key logic
+            Console.WriteLine("KeyUp " + Button);
+
+            keyStates[(int) Button] = false;
+
+            if (Settings.Default.EnableAdvancedFeatures && MemoryManager.GetGameState() == GameState.LoggedOut)
+            {
+                switch (Button)
+                {
+                    case ControllerButton.LFaceDown:
+                        ProcessWatcher.Interaction.SendKeyUp(Key.Down);
+                        break;
+                    case ControllerButton.LFaceUp:
+                        ProcessWatcher.Interaction.SendKeyUp(Key.Up);
+                        break;
+                    case ControllerButton.RFaceDown:
+                        ProcessWatcher.Interaction.SendKeyUp(Key.Enter);
+                        break;
+                    case ControllerButton.CenterMiddle:
+                        ProcessWatcher.Interaction.SendKeyUp(Key.Escape);
+                        break;
+                }
+                return;
+            }
+
             switch (Button)
             {
                 case ControllerButton.StickLeft:
@@ -362,9 +402,6 @@ namespace WoWmapper.Input
                     ProcessWatcher.Interaction.SendKeyUp(BindingManager.CurrentBinds[Button]);
                     break;
             }
-            Console.WriteLine("KeyUp " + Button);
-
-            keyStates[(int) Button] = false;
         }
 
         public static void DoMouseDown(MouseButtons buttons)

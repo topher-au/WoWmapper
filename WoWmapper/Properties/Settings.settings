@@ -134,5 +134,17 @@
     <Setting Name="InvertCameraVertical" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="CursorAutoCancel" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CursorEnableWalk" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CursorWalkHotkey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Divide</Value>
+    </Setting>
+    <Setting Name="CursorWalkThreshold" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

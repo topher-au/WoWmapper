@@ -8,6 +8,7 @@ using DS4Windows;
 using WoWmapper.Controllers.DS4;
 using WoWmapper.Controllers.Xbox;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -17,6 +18,8 @@ using WoWmapper.Properties;
 using J2i.Net.XInputWrapper;
 using WoWmapper.Classes;
 using WoWmapper.Input;
+using WoWmapper.MemoryReader;
+using WoWmapper.WorldOfWarcraft.AddOns;
 
 namespace WoWmapper.Controllers
 {
@@ -181,6 +184,12 @@ namespace WoWmapper.Controllers
             ControllerChanged?.Invoke();
             ControllersUpdated?.Invoke();
             MainWindow.UpdateChildren();
+            if (MemoryManager.Process != null)
+            {
+                var consolePortLuaFile = Path.Combine(Path.GetDirectoryName(MemoryManager.Process.MainModule.FileName), "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua");
+                if (File.Exists(consolePortLuaFile))
+                    ConsolePortBindWriter.WriteBindFile(consolePortLuaFile);
+            }
         }
 
         public static void ActivateFirst()

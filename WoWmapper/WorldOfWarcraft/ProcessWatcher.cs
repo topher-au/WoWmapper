@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -9,9 +10,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WoWmapper.Classes;
+using WoWmapper.Input;
 using WoWmapper.MemoryReader;
 using WoWmapper.Offsets;
 using WoWmapper.Properties;
+using WoWmapper.WorldOfWarcraft.AddOns;
 
 namespace WoWmapper.WorldOfWarcraft
 {
@@ -32,6 +35,15 @@ namespace WoWmapper.WorldOfWarcraft
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr SendMessage(IntPtr hWnd, Int32 Msg, Int32 wParam, Int32 lParam);
+
+        private static int WM_CLOSE = 0x10;
+        private static int WM_LBUTTONDOWN = 0x201;
+        private static int WM_LBUTTONUP = 0x202;
+        private static int WM_RBUTTONDOWN = 0x204;
+        private static int WM_RBUTTONUP = 0x205;
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
@@ -143,8 +155,9 @@ namespace WoWmapper.WorldOfWarcraft
                                 proc => proc.HasExited == false && proc.MainWindowHandle != IntPtr.Zero);
                         if (activeProcess != null)
                             Logger.Write("Found WoW process! Handle is {0}", activeProcess.Handle);
+                        
                     }
-                    catch
+                    catch (Exception ex)
                     {
                     }
 
@@ -153,7 +166,9 @@ namespace WoWmapper.WorldOfWarcraft
                     {
                         if (Settings.Default.EnableAdvancedFeatures)
                             MemoryManager.Attach(activeProcess);
-
+                        var consolePortLuaFile = Path.Combine(Path.GetDirectoryName(activeProcess.MainModule.FileName), "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua");
+                        if (File.Exists(consolePortLuaFile))
+                            ConsolePortBindWriter.WriteBindFile(consolePortLuaFile);
 
                         Process = activeProcess;
                     }
@@ -229,6 +244,17 @@ namespace WoWmapper.WorldOfWarcraft
                     (IntPtr) KeyInterop.VirtualKeyFromKey(key), IntPtr.Zero);
                 if (sendResult != 0)
                     Logger.Write("SendMessage WM_KEYUP returned error code: {0}", sendResult);
+            }
+
+            public static void SendRightClick()
+            {
+                SendMessage(Process.MainWindowHandle, WM_RBUTTONDOWN, 0, 0);
+                SendMessage(Process.MainWindowHandle, WM_RBUTTONUP, 0, 0);
+            }
+            public static void SendLeftClick()
+            {
+                SendMessage(Process.MainWindowHandle, WM_LBUTTONDOWN, 0, 0);
+                SendMessage(Process.MainWindowHandle, WM_LBUTTONUP, 0, 0);
             }
         }
 

@@ -550,5 +550,53 @@ namespace WoWmapper.Properties {
                 this["InvertCameraVertical"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CursorAutoCancel {
+            get {
+                return ((bool)(this["CursorAutoCancel"]));
+            }
+            set {
+                this["CursorAutoCancel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CursorEnableWalk {
+            get {
+                return ((bool)(this["CursorEnableWalk"]));
+            }
+            set {
+                this["CursorEnableWalk"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Divide")]
+        public string CursorWalkHotkey {
+            get {
+                return ((string)(this["CursorWalkHotkey"]));
+            }
+            set {
+                this["CursorWalkHotkey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        public int CursorWalkThreshold {
+            get {
+                return ((int)(this["CursorWalkThreshold"]));
+            }
+            set {
+                this["CursorWalkThreshold"] = value;
+            }
+        }
     }
 }

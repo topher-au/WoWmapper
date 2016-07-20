@@ -16,11 +16,6 @@
             </Grid.RowDefinitions>
             <DockPanel>
                 <Button Margin="2"
-                        HorizontalAlignment="Left"
-                        Click="ButtonCPExport_Click">
-                    Export to ConsolePort
-                </Button>
-                <Button Margin="2"
                         HorizontalAlignment="Right"
                         Click="ButtonResetDefaults_Click">
                     <DockPanel>

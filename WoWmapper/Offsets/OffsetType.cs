@@ -20,5 +20,7 @@ namespace WoWmapper.Offsets
         PlayerLevel,
         PlayerHealthCurrent,
         PlayerHealthMax,
+        PlayerAOE,
+        PlayerTarget
     }
 }

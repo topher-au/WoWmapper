@@ -200,9 +200,11 @@ namespace WoWmapper
             // Initialize controllers
             BindingManager.LoadKeybinds();
 
+            
+            ControllerManager.Start();
             // Initialize process watcher
             ProcessWatcher.Start();
-            ControllerManager.Start();
+            
             HapticManager.Start();
             Keymapper.Start();
         }
@@ -218,7 +220,6 @@ namespace WoWmapper
             {
                 while (!_bindDialog.IsCanceled)
                 {
-                    Thread.Sleep(1);
                     Key? pressedKey = null;
                     foreach (Key key in Enum.GetValues(typeof(Key)))
                     {

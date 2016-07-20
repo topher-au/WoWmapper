@@ -66,7 +66,7 @@ namespace WoWmapper.Input
                     }
 
                     // Read memory if enabled and update haptics
-                    if (Settings.Default.EnableAdvancedFeatures && MemoryManager.Attached && MemoryManager.GetGameState() == GameState.LoggedIn)
+                    if (Settings.Default.EnableAdvancedFeatures && MemoryManager.Attached && ProcessWatcher.Process != null && MemoryManager.GetGameState() == GameState.LoggedIn)
                     {
                         var updatedPlayerInfo = MemoryManager.UpdatePlayerData();
 
@@ -142,17 +142,14 @@ namespace WoWmapper.Input
                                 setLightbar = true;
                             }
 
+                            // Handle mouselook cursor
                             var isMouseLooking = MemoryManager.GetMouselooking();
 
-                            if (isMouseLooking &&
+                            if (Settings.Default.CursorAutoCancel && isMouseLooking &&
                                 ProcessWatcher.GetForegroundWindow() != ProcessWatcher.Process.MainWindowHandle)
                             {
-                                Keymapper.DoMouseDown(MouseButtons.Right);
-                                Keymapper.DoMouseDown(MouseButtons.Right);
-                            }
-
-                            // Auto-center cursor
-                            if (Settings.Default.MouselookCenterCursor)
+                                ProcessWatcher.Interaction.SendRightClick();
+                            } else if (Settings.Default.MouselookCenterCursor)
                             {
                                 
                                 if (isMouseLooking && !wasMouseLooking)
