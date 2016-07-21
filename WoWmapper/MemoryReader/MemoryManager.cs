@@ -355,10 +355,16 @@ namespace WoWmapper.MemoryReader
 
             try
             {
+                var offset = OffsetManager.Offset.PlayerAOE;
+
+                var patternPtr = MemoryManager.Read<int>(offset, false);
+                var regPtr = MemoryManager.Read<int>(offset + 6, false);
+                var finalAddr = MemoryManager.Read<IntPtr>(offset + 4 + patternPtr, false) + regPtr;
+
                 var bPlayerAoe = new byte[1];
                 var bytesRead = 0;
 
-                var success = ReadProcessMemory(MemoryHandle, OffsetManager.Offset.PlayerAOE,
+                var success = ReadProcessMemory(MemoryHandle, finalAddr,
                     bPlayerAoe, bPlayerAoe.Length, ref bytesRead);
 
 

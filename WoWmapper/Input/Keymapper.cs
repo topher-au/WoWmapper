@@ -249,16 +249,16 @@ namespace WoWmapper.Input
                 ProcessKeyUp(ControllerButton.LStickRight);
             }
 
-            // Process walk
-            var walkState = MemoryManager.GetPlayerWalk();
-
-            var sqrX = x*x;
-            var sqrY = y*y;
-
-            var moveDistance = Math.Sqrt(sqrX + sqrY);
-
             if (Settings.Default.EnableAdvancedFeatures && Settings.Default.CursorEnableWalk)
             {
+                // Process walk
+                var walkState = MemoryManager.GetPlayerWalk();
+
+                var sqrX = x * x;
+                var sqrY = y * y;
+
+                var moveDistance = Math.Sqrt(sqrX + sqrY);
+
                 if (walkState && moveDistance < moveThreshold)
                 {
                     // No input from controller, disable walk
@@ -278,6 +278,7 @@ namespace WoWmapper.Input
                     ProcessWatcher.Interaction.SendKeyUp(Key.Divide);
                 }
             }
+
         }
 
         private static Vector2 ApplyMouseMath(float x, float y)
@@ -327,7 +328,7 @@ namespace WoWmapper.Input
             }
 
             // Check if player is casting targeted AOE
-            if (Settings.Default.EnableAdvancedFeatures && MemoryManager.GetPlayerAOE())
+            if (Settings.Default.EnableAdvancedFeatures && Settings.Default.CursorAoeTarget && MemoryManager.GetPlayerAOE())
             {
                 switch (Button)
                 {

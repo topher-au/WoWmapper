@@ -65,7 +65,7 @@ namespace Farplane.Memory
             {
                 Pattern =
                     "E8 ????????" + //- call WowT-64.exe+C09800
-                    "33 ff" + 
+                    "33 ff" +
                     "4C 8D 05 ????????" + //- lea r8,[WowT-64.exe+1A315A8] { [00000000] }
                     "48 8D 0D ????????" + //- lea rcx,[WowT-64.exe+172FCF0] { [7FF735EDAB08] }
                     "45 33 C9" + // xor r9d,r9d
@@ -145,7 +145,7 @@ namespace Farplane.Memory
                     "0F44 F8" +
                     "8d 50 0d" +
                     "89 1d ????????" +
-                    "89 5c 24 20" + 
+                    "89 5c 24 20" +
                     "89 7c 24 30",
                 ByteOffset = 8
             };
@@ -258,13 +258,15 @@ namespace Farplane.Memory
             var patternData = new OffsetBytePattern()
             {
                 Pattern =
-                    "74 12" + 
-                    "0f10 44 24 30" + 
-                    "0f11 43 08" +
-                    "48 8b 44 24 40" +
-                    "48 89 43 18" +
-                    "48 8B 05 ????????" , //- mov rax,[WowT-64.exe+16E4858] { [1E032B4C330] }
-                ByteOffset = 23
+                    "48 83 EC 28" + // - sub rsp,28 { 40 }
+                    "48 8B 05 ????????" + // - mov rax,[Wow-64.exe+14BC500] { [1B686458970] }
+                    "80 B8 ???????? 00" + // - cmp byte ptr [rax+00000C50],00 { 0 }
+                    "74 ??" + // - je Wow-64.exe+DE3AB
+                    "33 C0" + // - xor eax,eax
+                    "48 83 C4 28" + // - add rsp,28 { 40 }
+                    "C3", // - ret 
+
+                ByteOffset = 7
             };
 
             var patternOffset = FindPattern(patternData);
@@ -272,8 +274,7 @@ namespace Farplane.Memory
             if (patternOffset == IntPtr.Zero)
                 return IntPtr.Zero;
 
-            var patternPtr = MemoryManager.Read<int>(patternOffset, false);
-            return patternOffset + 4 + patternPtr;
+            return patternOffset;
         }
 
         public static IntPtr FindPlayerTarget()

@@ -598,5 +598,17 @@ namespace WoWmapper.Properties {
                 this["CursorWalkThreshold"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CursorAoeTarget {
+            get {
+                return ((bool)(this["CursorAoeTarget"]));
+            }
+            set {
+                this["CursorAoeTarget"] = value;
+            }
+        }
     }
 }
