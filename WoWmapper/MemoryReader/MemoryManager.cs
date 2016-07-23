@@ -33,7 +33,6 @@ namespace WoWmapper.MemoryReader
         public static Process Process = null; // A Process object that represents the current instance of the game
         public static IntPtr MemoryHandle = IntPtr.Zero; // The OpenProcess handle used to read memory from the game
         private static IntPtr _moduleBase = IntPtr.Zero;
-        private static IntPtr _playerBase = IntPtr.Zero;
         private static bool _attached = false;
         private static byte[] _playerData = null;
 
@@ -115,6 +114,7 @@ namespace WoWmapper.MemoryReader
         {
             var tLength = Marshal.SizeOf<T>();
             var tArray = new T[count];
+
             for (int i = 0; i < count; i++)
             {
                 var t = Read<T>(offset + tLength * i, isRelative);
@@ -123,62 +123,42 @@ namespace WoWmapper.MemoryReader
             return tArray;
         }
 
-        private static bool UpdatePlayerBase()
+        public static byte[] ReadBytes(IntPtr offset, int count, bool isRelative = true)
         {
-            try
-            {
-                var offsetPtr = Read<IntPtr>(OffsetManager.Offset.PlayerBase, false);
+            var readOffset = offset;
+            if (isRelative) readOffset += (int)_moduleBase;
 
-
-                var ptrBase =  offsetPtr + 16;
-
-                var bPlayerPointer = new byte[8];
-                var bytesRead = 0;
-
-                var success = ReadProcessMemory(MemoryHandle,
-                    ptrBase, bPlayerPointer,
-                    bPlayerPointer.Length, ref bytesRead);
-
-                if (!success) throw new InvalidOperationException("Unable to read player pointer");
-
-                _playerBase = (IntPtr) BitConverter.ToInt64(bPlayerPointer, 0);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _playerBase = IntPtr.Zero;
-                Logger.Write($"UpdatePlayerBase Exception: {ex}");
-                return false;
-            }
+            var readBuffer = new byte[count];
+            var bytesRead = 0;
+            var success = ReadProcessMemory(MemoryHandle,
+                readOffset, readBuffer, readBuffer.Length, ref bytesRead);
+            if (success)
+                return readBuffer;
+            return default(byte[]);
         }
 
-        public static bool UpdatePlayerData()
+        private static IntPtr _base;
+        public static PlayerInfo GetPlayerInfo()
         {
-            if (!_attached) return false;
-
-            // Update player base pointer
-
-                var update = UpdatePlayerBase();
-                if (!update) return false;
-            
+            if (!_attached) return null;
             try
             {
-                var bytesRead = 0;
-
-                var bPlayerInfo = new byte[PlayerDataLength];
-
-                var success = ReadProcessMemory(MemoryHandle, _playerBase, bPlayerInfo, PlayerDataLength, ref bytesRead);
-
-                if (!success) return false;
-
-                _playerData = bPlayerInfo;
-                return true;
+                if(_base == IntPtr.Zero)
+                    _base = Read<IntPtr>(OffsetManager.Offset.PlayerBase, false);
+                var playerData = ReadBytes(_base + 0xF0, 0x80, false);
+                if (playerData == null) return null;
+                var playerInfo = new PlayerInfo()
+                {
+                    CurrentHealth = BitConverter.ToUInt32(playerData, 0x00),
+                    MaxHealth = BitConverter.ToUInt32(playerData, 0x20),
+                    Level = (int)playerData[0x70]
+                };
+                return playerInfo;
             }
             catch (Exception ex)
             {
-                Logger.Write($"UpdatePlayerData Exception: {ex}");
-                _playerData = null;
-                return false;
+                Logger.Write($"GetPlayerInfo Exception: {ex}");
+                return null;
             }
         }
 
@@ -194,8 +174,8 @@ namespace WoWmapper.MemoryReader
                 var success = ReadProcessMemory(MemoryHandle, OffsetManager.Offset.GameState,
                     bGameState, 1, ref bytesRead);
 
-                if((GameState)bGameState[0] == GameState.LoggedOut) _playerBase = IntPtr.Zero;
-
+                if(success && bGameState[0] != (byte)GameState.LoggedIn) _base = IntPtr.Zero;
+                
                 return success ? (GameState) bGameState[0] : GameState.NotRunning;
             }
             catch (Exception ex)
@@ -296,31 +276,7 @@ namespace WoWmapper.MemoryReader
             return GameInfo.Classes.None;
         }
 
-        public static bool GetPlayerInfo(out PlayerInfo playerInfo)
-        {
-            if (_playerData == null)
-            {
-                var update = UpdatePlayerData();
-
-                if (!update)
-                {
-                    playerInfo = null;
-                    return false;
-                }
-            }
-            else
-            {
-                    playerInfo = new PlayerInfo()
-                    {
-                        CurrentHealth = BitConverter.ToUInt32(_playerData, 0xF0),
-                        MaxHealth = BitConverter.ToUInt32(_playerData, 0x110),
-                        Level = (int)_playerData[0x160]
-                    };
-                return true;
-            }
-            playerInfo = null;
-            return false;
-        }
+        
 
         public static bool GetPlayerWalk()
         {
@@ -356,19 +312,10 @@ namespace WoWmapper.MemoryReader
             try
             {
                 var offset = OffsetManager.Offset.PlayerAOE;
-
-                var patternPtr = MemoryManager.Read<int>(offset, false);
-                var regPtr = MemoryManager.Read<int>(offset + 6, false);
-                var finalAddr = MemoryManager.Read<IntPtr>(offset + 4 + patternPtr, false) + regPtr;
-
-                var bPlayerAoe = new byte[1];
-                var bytesRead = 0;
-
-                var success = ReadProcessMemory(MemoryHandle, finalAddr,
-                    bPlayerAoe, bPlayerAoe.Length, ref bytesRead);
-
-
-                return bPlayerAoe[0] == 1;
+                var aoeOffset = MemoryManager.Read<IntPtr>(offset, false) + 0xC60;
+                var aoeByte = Read<byte>(aoeOffset, false);
+                
+                return aoeByte == 1;
 
             }
             catch (Exception ex)

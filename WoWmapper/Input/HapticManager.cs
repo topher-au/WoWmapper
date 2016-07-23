@@ -48,7 +48,8 @@ namespace WoWmapper.Input
             {
                 var setLightbar = false;
                 var controller = ControllerManager.GetActiveController();
-                if (controller == null) continue;
+                
+                if (controller != null)
                 lock (controller)
                 {
                     var state = controller.GetControllerState();
@@ -68,12 +69,10 @@ namespace WoWmapper.Input
                     // Read memory if enabled and update haptics
                     if (Settings.Default.EnableAdvancedFeatures && MemoryManager.Attached && ProcessWatcher.Process != null && MemoryManager.GetGameState() == GameState.LoggedIn)
                     {
-                        var updatedPlayerInfo = MemoryManager.UpdatePlayerData();
+                        var playerInfo = MemoryManager.GetPlayerInfo();
 
-                        if (updatedPlayerInfo)
+                        if (playerInfo != null)
                         {
-                            PlayerInfo playerInfo;
-                            var success = MemoryManager.GetPlayerInfo(out playerInfo);
 
                             //var targetGuid = MemoryManager.GetTargetGuid();
                             //var mouseGuid = MemoryManager.GetMouseGuid();

@@ -17,6 +17,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WoWmapper.Controllers;
 using WoWmapper.Input;
+using WoWmapper.Properties;
+using WoWmapper.WorldOfWarcraft.AddOns;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace WoWmapper.Options
@@ -26,6 +28,7 @@ namespace WoWmapper.Options
     /// </summary>
     public partial class InputKeybinds : UserControl
     {
+        private bool _ready;
         public InputKeybinds()
         {
             InitializeComponent();
@@ -33,6 +36,7 @@ namespace WoWmapper.Options
             BindingManager.LoadProfile(new KeybindProfile());
             BindingManager.BindingsUpdated += UpdateBindList;
             ControllerManager.ControllerChanged += ControllerManagerOnControllerChanged;
+            _ready = true;
         }
 
         private void ControllerManagerOnControllerChanged()
@@ -79,10 +83,11 @@ namespace WoWmapper.Options
             UpdateBindList();
         }
 
-
-        private void ButtonCPExport_Click(object sender, RoutedEventArgs e)
+        private void CheckEnableExport_OnChecked(object sender, RoutedEventArgs e)
         {
+            if (!_ready) return;
             BindingManager.SaveKeybinds();
+            Settings.Default.Save();
         }
     }
 }

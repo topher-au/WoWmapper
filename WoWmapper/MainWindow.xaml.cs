@@ -386,28 +386,10 @@ namespace WoWmapper
                         textWoWStatus2.Text = playerName;
                         switch (gameState)
                         {
+
                             case GameState.LoggedIn:
-                                var playerInfo = new PlayerInfo();
-
-                                var success = MemoryManager.GetPlayerInfo(out playerInfo);
-
-                                if (success)
-                                {
-                                    // Color accent by class color
-                                    if (Settings.Default.AutoClassAccent)
-                                    {
-                                        var playerClass = MemoryManager.GetPlayerClass();
-                                        SetTheme(playerClass.ToString(), Settings.Default.AppTheme);
-                                    }
-                                    else
-                                    {
-                                        SetTheme(Settings.Default.AppAccent, Settings.Default.AppTheme);
-                                    }
-
-                                    textWoWStatus2.Text =
-                                        $"{MemoryManager.GetPlayerName()} [{playerInfo.Level}]: {playerInfo.CurrentHealth}/{playerInfo.MaxHealth}";
-
-                                }
+                                var name = MemoryManager.GetPlayerName();
+                               textWoWStatus2.Text = $"Logged in as {name}";
                                 break;
 
                             case GameState.LoggedOut:

@@ -20,6 +20,7 @@ WoWmapper.Keys = {
 }
  
 WoWmapper.Settings = {
+	id      = '{ID}',
 	type    = '{TYPE}',
     CP_M1   = '{T_M1}',
     CP_M2   = '{T_M2}',

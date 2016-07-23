@@ -15,6 +15,13 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <DockPanel>
+                <CheckBox Name="CheckEnableExport"
+                          Margin="5"
+                          Checked="CheckEnableExport_OnChecked"
+                          Content="Export to ConsolePort"
+                          IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                              Path=EnableExport}"
+                          Unchecked="CheckEnableExport_OnChecked" />
                 <Button Margin="2"
                         HorizontalAlignment="Right"
                         Click="ButtonResetDefaults_Click">

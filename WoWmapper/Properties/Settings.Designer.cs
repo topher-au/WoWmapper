@@ -610,5 +610,17 @@ namespace WoWmapper.Properties {
                 this["CursorAoeTarget"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableExport {
+            get {
+                return ((bool)(this["EnableExport"]));
+            }
+            set {
+                this["EnableExport"] = value;
+            }
+        }
     }
 }

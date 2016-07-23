@@ -117,7 +117,9 @@ namespace WoWmapper.WorldOfWarcraft
 
         private static void ResetProcess()
         {
+            
             MemoryManager.Close();
+            OffsetManager.Clear();
             Process?.Dispose();
             Process = null;
         }

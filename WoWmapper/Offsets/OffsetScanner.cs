@@ -64,35 +64,15 @@ namespace Farplane.Memory
             var patternData = new OffsetBytePattern()
             {
                 Pattern =
-                    "E8 ????????" + //- call WowT-64.exe+C09800
-                    "33 ff" +
-                    "4C 8D 05 ????????" + //- lea r8,[WowT-64.exe+1A315A8] { [00000000] }
-                    "48 8D 0D ????????" + //- lea rcx,[WowT-64.exe+172FCF0] { [7FF735EDAB08] }
-                    "45 33 C9" + // xor r9d,r9d
-                    "0FB6 D0" + // movzx edx,al
-                    "89 ?? 24 28" + // mov [rsp+28],ebp
-                    "48 89 ?? 24 20" + // mov [rsp+20],rbp
-                    "E8 ????????" + // call WowT-64.exe+3715B0
-                    "48 8B F8" + // mov rdi,rax
-                    "E8 ????????           " + // call WowT-64.exe+C0E3C0
-                    "45 33 C0              " + // xor r8d,r8d
-                    "0FB6 D0               " + // movzx edx,al
-                    "48 8B CF              " + // mov rcx,rdi
-                    "E8 ????????           " + // call WowT-64.exe+546A20
-                    "E9 ????????           " + // jmp WowT-64.exe+73DDDD
-                    "0F10 05 ????????      " + // movups xmm0,[WowT-64.exe+1A501F8] { [00000000] }
-                    "48 8D 54 24 ??        " + // lea rdx,[rsp+40]
-                    "45 33 C9              " + // xor r9d,r9d
-                    "45 33 C0              " + // xor r8d,r8d
-                    "48 8B ??              " + // mov rcx,rdi
-                    "0F11 44 24 ??         " + // movups [rsp+40],xmm0
-                    "E8 ????????           " + // call WowT-64.exe+747460
-                    "4C 8D 05 ????????     " + // lea r8,[WowT-64.exe+1160140] { ["ScriptEvents.cpp"] }
-                    "48 8D 4C 24 ??        " + // lea rcx,[rsp+40]
-                    "41 B9 280E0000        ", // mov r9d,00000E28 { 3624 }
+                    "CC48 83 EC 28" + // - sub rsp,28 { 40 }
+                    "E8 ????????" + // - call Wow-64.exe+A8A310
+                    "0FB6 C8" + // - movzx ecx,al
+                    "48 83 C4 28" + // - add rsp,28 { 40 }
+                    "E9 ????????CC", // - jmp Wow-64.exe+E5EB80
 
 
-                ByteOffset = 1
+
+                ByteOffset = 6
             };
 
             var patternOffset = FindPattern(patternData);
@@ -102,7 +82,7 @@ namespace Farplane.Memory
 
             var patternPtr = MemoryManager.Read<int>(patternOffset, false);
             var classPtr = MemoryManager.Read<int>(patternOffset + 4 + patternPtr + 3, false);
-            return patternOffset + 4 + patternPtr + 3 + classPtr + 4;
+            return patternOffset + 4 + patternPtr + 3 + classPtr + 4; // add 1 for class
         }
 
         public static IntPtr FindGameState()
@@ -142,11 +122,11 @@ namespace Farplane.Memory
             var patternData = new OffsetBytePattern()
             {
                 Pattern =
-                    "0F44 F8" +
+                    "0F44 ??" +
                     "8d 50 0d" +
                     "89 1d ????????" +
-                    "89 5c 24 20" +
-                    "89 7c 24 30",
+                    "89 ?? 24 ??" +
+                    "89 ?? 24 ??",
                 ByteOffset = 8
             };
 
@@ -202,7 +182,8 @@ namespace Farplane.Memory
                 return IntPtr.Zero;
 
             var patternPtr = MemoryManager.Read<int>(patternOffset, false);
-            return patternOffset + 4 + patternPtr;
+            var offsetPtr = MemoryManager.Read<IntPtr>(patternOffset + 4 + patternPtr, false);
+            return offsetPtr + 16;
         }
 
         public static IntPtr FindGameBuild()
@@ -227,8 +208,8 @@ namespace Farplane.Memory
             var patternData = new OffsetBytePattern()
             {
                 Pattern =
-                    "48 8B 35 ????????     " + // mov rsi,[WowT-64.exe+18C6E18] { [27A1C1574F0] }
-                    "8B DA                 " + // mov ebx,edx
+                    "48 8B ?? ????????     " + // mov rsi,[WowT-64.exe+18C6E18] { [27A1C1574F0] }
+                    "8B ??                 " + // mov ebx,edx
                     "48 8B F9              " + // mov rdi,rcx
                     "48 85 F6              " + // test rsi,rsi
                     "75 ??                 " + // jne WowT-64.exe+56CCF5
@@ -258,15 +239,12 @@ namespace Farplane.Memory
             var patternData = new OffsetBytePattern()
             {
                 Pattern =
-                    "48 83 EC 28" + // - sub rsp,28 { 40 }
                     "48 8B 05 ????????" + // - mov rax,[Wow-64.exe+14BC500] { [1B686458970] }
                     "80 B8 ???????? 00" + // - cmp byte ptr [rax+00000C50],00 { 0 }
                     "74 ??" + // - je Wow-64.exe+DE3AB
-                    "33 C0" + // - xor eax,eax
-                    "48 83 C4 28" + // - add rsp,28 { 40 }
-                    "C3", // - ret 
+                    "33 C0", // - xor eax,eax
 
-                ByteOffset = 7
+                ByteOffset = 3
             };
 
             var patternOffset = FindPattern(patternData);
@@ -274,7 +252,8 @@ namespace Farplane.Memory
             if (patternOffset == IntPtr.Zero)
                 return IntPtr.Zero;
 
-            return patternOffset;
+            var patternPtr = MemoryManager.Read<int>(patternOffset, false);
+            return patternOffset + 4 + patternPtr;
         }
 
         public static IntPtr FindPlayerTarget()

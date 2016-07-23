@@ -17,21 +17,6 @@ namespace WoWmapper.Offsets
         public static OffsetData Offset;
         public static bool OffsetsAvailable = false;
 
-        //public Dictionary<OffsetType, ulong> Offsets { get; set; }
-        //    = new Dictionary<OffsetType, ulong>() {
-        //        { OffsetType.GameBuild, 0x0FE21B4 },
-        //        { OffsetType.GameState, 22125182 },//
-        //        { OffsetType.PlayerName, 23162640 },//
-        //        { OffsetType.PlayerClass, 23163045 },//
-        //        { OffsetType.TargetGuid, 22126824 },//
-        //        { OffsetType.MouseGuid, 22126776 },
-        //        { OffsetType.MouseLook, 19605144 },
-        //        { OffsetType.PlayerBase, 21489280 }, 
-        //        { OffsetType.PlayerLevel, 344 },
-        //        { OffsetType.PlayerHealthCurrent, 240 },
-        //        { OffsetType.PlayerHealthMax, 268 }
-        //    };
-
         private static IntPtr GetOffset(OffsetType type)
         {
             switch (type)
@@ -86,6 +71,13 @@ namespace WoWmapper.Offsets
             }
         }
 
+        public static void Clear()
+        {
+            OffsetsAvailable = false;
+            OffsetScanner.Reset();
+            Offset = null;
+        }
+
         public static void InitializeOffsets()
         {
             OffsetsAvailable = false;
@@ -99,7 +91,6 @@ namespace WoWmapper.Offsets
                 MouseLook = GetOffset(OffsetType.MouseLook),
                 PlayerWalk = GetOffset(OffsetType.PlayerWalk),
                 PlayerAOE = GetOffset(OffsetType.PlayerAOE),
-                //PlayerTarget = GetOffset(OffsetType.PlayerTarget),
             };
             OffsetsAvailable = true;
         }

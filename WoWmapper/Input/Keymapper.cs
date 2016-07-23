@@ -323,6 +323,12 @@ namespace WoWmapper.Input
                     case ControllerButton.CenterMiddle:
                         ProcessWatcher.Interaction.SendKeyDown(Key.Escape);
                         break;
+                    case ControllerButton.StickLeft:
+                        DoMouseDown(MouseButtons.Left);
+                        break;
+                    case ControllerButton.StickRight:
+                        DoMouseDown(MouseButtons.Right);
+                        break;
                 }
                 return;
             }
@@ -385,16 +391,23 @@ namespace WoWmapper.Input
                     case ControllerButton.CenterMiddle:
                         ProcessWatcher.Interaction.SendKeyUp(Key.Escape);
                         break;
+                    case ControllerButton.StickLeft:
+                        DoMouseUp(MouseButtons.Left);
+                        break;
+                    case ControllerButton.StickRight:
+                        DoMouseUp(MouseButtons.Right);
+                        break;
                 }
                 return;
             }
 
             switch (Button)
             {
+                case ControllerButton.TouchLeft:
                 case ControllerButton.StickLeft:
                     DoMouseUp(MouseButtons.Left);
                     break;
-
+                case ControllerButton.TouchRight:
                 case ControllerButton.StickRight:
                     DoMouseUp(MouseButtons.Right);
                     break;

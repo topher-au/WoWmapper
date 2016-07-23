@@ -122,6 +122,7 @@ namespace WoWmapper.Input
             }
             bindDict.Add("TOGGLERUN", GetWoWStringName((Key)Enum.Parse(typeof(Key), Settings.Default.CursorWalkHotkey)));
 
+            bindDict.Add("ID", DateTime.Now.ToFileTimeUtc().ToString());
             return bindDict;
         }
 

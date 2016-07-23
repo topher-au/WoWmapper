@@ -22,8 +22,8 @@ namespace WoWmapper.WorldOfWarcraft
             Mage = 8,
             Warlock = 9,
             Druid = 11,
-            Monk = 12,
-            DemonHunter = 13
+            Monk = 10,
+            DemonHunter = 12
         }
 
         public static Dictionary<Classes, Color> RaidClassColors = new Dictionary<Classes, Color>()

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WoWmapper.Input;
+using WoWmapper.Properties;
 
 namespace WoWmapper.WorldOfWarcraft.AddOns
 {
@@ -15,12 +16,18 @@ namespace WoWmapper.WorldOfWarcraft.AddOns
         public static void WriteBindFile(string fileName)
         {
             var cpBinds = BindingManager.GetConsolePortBindDictionary();
-            var templateStream = Application.GetResourceStream(new Uri("pack://application:,,,/WorldOfWarcraft/AddOns/WoWmapper.lua"));
+            var templateStream =
+                Application.GetResourceStream(new Uri("pack://application:,,,/WorldOfWarcraft/AddOns/WoWmapper.lua"));
             var textTemplate = new StreamReader(templateStream.Stream);
 
             using (var outStream = new FileStream(fileName, FileMode.Create))
             using (var outWriter = new StreamWriter(outStream))
-
+            {
+                if (!Settings.Default.EnableExport)
+                {
+                    outWriter.WriteLine(string.Empty);
+                    return;
+                }
                 while (!textTemplate.EndOfStream)
                 {
                     // Parse lines from template
@@ -54,6 +61,7 @@ namespace WoWmapper.WorldOfWarcraft.AddOns
                         outWriter.WriteLine(textLine);
                     }
                 }
+            }
         }
     }
 }
