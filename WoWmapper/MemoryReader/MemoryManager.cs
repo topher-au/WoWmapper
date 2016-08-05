@@ -256,6 +256,7 @@ namespace WoWmapper.MemoryReader
         public static GameInfo.Classes GetPlayerClass()
         {
             if (!_attached) return GameInfo.Classes.None;
+            
 
             try
             {

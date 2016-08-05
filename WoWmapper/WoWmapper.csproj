@@ -99,6 +99,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\ShowWhenEnabled.cs" />
+    <Compile Include="Input\KeyInput.cs" />
     <Compile Include="MemoryReader\GameState.cs" />
     <Compile Include="Offsets\OffsetManager.cs" />
     <Compile Include="Offsets\OffsetType.cs" />

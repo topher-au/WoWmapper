@@ -1359,7 +1359,7 @@ namespace WoWmapper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Send keys to foreground window.
+        ///   Looks up a localized string similar to Simulate hardware keyboard.
         /// </summary>
         public static string WoWmapperSendForegroundKeys {
             get {

@@ -117,7 +117,6 @@ namespace WoWmapper.WorldOfWarcraft
 
         private static void ResetProcess()
         {
-            
             MemoryManager.Close();
             OffsetManager.Clear();
             Process?.Dispose();
@@ -157,7 +156,6 @@ namespace WoWmapper.WorldOfWarcraft
                                 proc => proc.HasExited == false && proc.MainWindowHandle != IntPtr.Zero);
                         if (activeProcess != null)
                             Logger.Write("Found WoW process! Handle is {0}", activeProcess.Handle);
-                        
                     }
                     catch (Exception ex)
                     {
@@ -168,7 +166,8 @@ namespace WoWmapper.WorldOfWarcraft
                     {
                         if (Settings.Default.EnableAdvancedFeatures)
                             MemoryManager.Attach(activeProcess);
-                        var consolePortLuaFile = Path.Combine(Path.GetDirectoryName(activeProcess.MainModule.FileName), "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua");
+                        var consolePortLuaFile = Path.Combine(Path.GetDirectoryName(activeProcess.MainModule.FileName),
+                            "Interface\\AddOns\\ConsolePort\\Controllers\\WoWmapper.lua");
                         if (File.Exists(consolePortLuaFile))
                             ConsolePortBindWriter.WriteBindFile(consolePortLuaFile);
 
@@ -198,18 +197,7 @@ namespace WoWmapper.WorldOfWarcraft
             {
                 if (Settings.Default.SendForegroundKeys)
                 {
-                    // Get foreground window and send message
-                    var hWndFg = GetForegroundWindow();
-                    if (hWndFg == IntPtr.Zero)
-                    {
-                        Logger.Write("Failed to get foreground window handle");
-                        return;
-                    }
-
-                    var foregroundResult = SendMessage(hWndFg, WM_KEYDOWN, (IntPtr) KeyInterop.VirtualKeyFromKey(key),
-                        IntPtr.Zero);
-                    if (foregroundResult != 0)
-                        Logger.Write("SendMessage WM_KEYDOWN returned error code: {0}", foregroundResult);
+                    KeyInput.SendKey(key, true);
                     return;
                 }
 
@@ -225,18 +213,7 @@ namespace WoWmapper.WorldOfWarcraft
             {
                 if (Settings.Default.SendForegroundKeys)
                 {
-                    // Get foreground window and send message
-                    var hWndFg = GetForegroundWindow();
-                    if (hWndFg == IntPtr.Zero)
-                    {
-                        Logger.Write("Failed to get foreground window handle");
-                        return;
-                    }
-
-                    var foregroundResult = SendMessage(hWndFg, WM_KEYUP, (IntPtr) KeyInterop.VirtualKeyFromKey(key),
-                        IntPtr.Zero);
-                    if (foregroundResult != 0)
-                        Logger.Write("SendMessage WM_KEYUP returned error code: {0}", foregroundResult);
+                    KeyInput.SendKey(key, false);
                     return;
                 }
 
@@ -250,13 +227,14 @@ namespace WoWmapper.WorldOfWarcraft
 
             public static void SendRightClick()
             {
-                SendMessage(Process.MainWindowHandle, WM_RBUTTONDOWN, 0, 0);
-                SendMessage(Process.MainWindowHandle, WM_RBUTTONUP, 0, 0);
+                KeyInput.SendMouse(MouseButton.Right, true);
+                KeyInput.SendMouse(MouseButton.Right, false);
             }
+
             public static void SendLeftClick()
             {
-                SendMessage(Process.MainWindowHandle, WM_LBUTTONDOWN, 0, 0);
-                SendMessage(Process.MainWindowHandle, WM_LBUTTONUP, 0, 0);
+                KeyInput.SendMouse(MouseButton.Left, true);
+                KeyInput.SendMouse(MouseButton.Left, false);
             }
         }
 
