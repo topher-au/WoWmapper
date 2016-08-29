@@ -8,23 +8,38 @@ enhanced gameplay with a controller.
 
 ## What do I need?
 
-- A system running Windows 7, 8, 10 or higher.
-- DirectX 9 or DirectX 10.
-- A compatible controller (DualShock 4 or Xbox compatible only)
-- World of Warcraft
+- A system running Windows 7, 8, 10 or higher
+- DirectX 9 or DirectX 10
+- A DualShock 4 or Xbox compatible controller
+- World of Warcraft retail edition (no support for old/modified clients)
 
 ## How much effort is required to set it up?
  
-Practically none at all. Once you have started WoWmapper, and loaded World of Warcraft, it will automatically export your configuration to ConsolePort, setting up
-the appropriate keybinds and modifier keys. Once in-game, you can simply load the default controller configuration for a quick and
-simple set up, or customize the controls further as you feel necessary.
+Practically none at all. Once you have started WoWmapper, and loaded World of Warcraft, it will automatically export your configuration to ConsolePort, setting up the appropriate keybinds and modifier keys. Once in-game, you can simply load the default controller configuration for a quick and simple set up, or customize the controls further as you feel necessary.
 
-## How do I change what the buttons do?
+## Configuration instructions
 
-To access your controller configuration in game, open the system menu and select Controller, or type
+**WoWmapper features an automatic configuration system that will set up your keybindings and icons in-game without any input. We recommend leaving WoWmapper's keybindings as their defaults and only changing the modifier layout.**
 
-```
-/cp binds
-```
+By default, temporary keybindings will be exported to ConsolePort that will not make any permanent changes to your standard keybindings. These bindings are controlled by ConsolePort and you can switch from controller to keyboard and mouse by simply disabling ConsolePort, and back again by re-enabling it. Additionally, WoWmapper will configure the button icons within ConsolePort to match the currently connected controller.
 
-into the chat box and press Enter.
+To change your controller layout, open the WoWmapper configuration and select *Key Bindings*. From here you can change which of the shoulder buttons will be used as modifiers, and select which button icons will be shown in WoWmapper and ConsolePort. Additionally, you may override the default WoWmapper bindings (this is not recommended).
+
+If you make any changes to the controller layout or bindings, you must type `/reload` in-game or restart World of Warcraft for the changes to take effect.
+
+## Non-Windows systems and WoWmapper alternatives
+
+If you're not running Windows, or WoWmapper isn't suitable for your setup, there are several alternatives available. These alternatives only provide base input mapping - no advanced features or haptic feedback.
+
+### Mac OS X
+- ControllerMate
+- Joystick Mapper
+
+### Windows alternatives
+
+- DS4Windows
+- Xpadder
+- JoyToKey
+- Keysticks
+
+Further instructions for configuring the above applications with ConsolePort can be found in the ConsolePort documentation
