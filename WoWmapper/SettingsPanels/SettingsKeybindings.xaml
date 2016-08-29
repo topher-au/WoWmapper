@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="WoWmapper.SettingsPanels.SettingsKeybindings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WoWmapper.SettingsPanels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:properties="clr-namespace:WoWmapper.Properties"
+             d:DesignHeight="421"
+             d:DesignWidth="313"
+             mc:Ignorable="d">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="215" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <DockPanel Margin="5">
+                <TextBlock VerticalAlignment="Center" FontSize="16">Current Style</TextBlock>
+                <ComboBox Name="ComboCurrentStyle"
+                          Width="150"
+                          HorizontalAlignment="Right"
+                          SelectedIndex="{Binding Source={x:Static properties:Settings.Default},
+                                                  Path=ModifierStyle}"
+                          SelectionChanged="ComboCurrentStyle_SelectionChanged">
+                    <ComboBoxItem>Default (L1+L2)</ComboBoxItem>
+                    <ComboBoxItem>Triggers (L2+R2)</ComboBoxItem>
+                    <ComboBoxItem>Reversed (R1+R2)</ComboBoxItem>
+                    <ComboBoxItem>Shoulders (L1+R1)</ComboBoxItem>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5,0">
+                <TextBlock VerticalAlignment="Center" FontSize="16">Button Icons</TextBlock>
+                <ComboBox Name="ComboButtonIcons"
+                          Width="150"
+                          HorizontalAlignment="Right"
+                          SelectedIndex="{Binding Source={x:Static properties:Settings.Default},
+                                                  Path=ButtonStyle}"
+                          SelectionChanged="ComboButtonIcons_OnSelectionChanged">
+                    <ComboBoxItem>Auto Detect</ComboBoxItem>
+                    <ComboBoxItem>PlayStation</ComboBoxItem>
+                    <ComboBoxItem>Xbox</ComboBoxItem>
+                </ComboBox>
+            </DockPanel>
+            <TextBlock Margin="5,7,5,0" FontSize="16">Binding Settings</TextBlock>
+            <Separator Margin="5" />
+            <TextBlock Name="TextSyncMessage"
+                       Margin="5,0"
+                       TextWrapping="Wrap">
+                WoWmapper will configure ConsolePort automatically. Type /reload to update changes in-game.
+            </TextBlock>
+            <TextBlock Margin="5">Disable ConsolePort to restore your original bindings.</TextBlock>
+            <CheckBox Name="CheckInputDirectKeyboard"
+                      Margin="10,5,5,5"
+                      Content="Send key binds directly to WoW"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                          Path=InputDirectKeyboard}"
+                      ToolTip="Sends key presses directly to the game window. Disabling this will instead simulate hardware key presses to the currently active window." />
+            <DockPanel>
+                <CheckBox Name="CheckCustomBindings"
+                          Margin="10,5,5,5"
+                          Checked="CheckCustomBinding_Changed"
+                          Content="Manually define key bindings"
+                          IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                              Path=CustomBindings}"
+                          ToolTip="Override the WoWmapper default bindings. It is recommended that you use the default bindings."
+                          Unchecked="CheckCustomBinding_Changed" />
+                <Button Name="ButtonResetBinds"
+                        Width="24"
+                        Height="24"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Right"
+                        Click="ButtonResetBinds_OnClick"
+                        Padding="3"
+                        ToolTip="Reload default bindings">
+                    <Image Source="../Resources/reloadbinds.png" />
+                </Button>
+            </DockPanel>
+        </StackPanel>
+
+        <ListView Name="ListKeybinds"
+                  Grid.Row="1"
+                  Margin="5,0,5,5"
+                  MouseDoubleClick="ListKeybinds_OnMouseDoubleClick"
+                  Visibility="Collapsed" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="WoWmapper.SettingsPanels.SettingsCamera"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WoWmapper.SettingsPanels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:properties="clr-namespace:WoWmapper.Properties"
+             d:DesignHeight="421"
+             d:DesignWidth="313"
+             mc:Ignorable="d">
+    <Grid Margin="5">
+        <StackPanel Margin="5">
+
+            <TextBlock FontSize="16">Deadzone</TextBlock>
+            <Separator Height="5" />
+            <TextBlock Margin="5" TextWrapping="Wrap">
+                The radius from the center of the axis which will not cause cursor movement.
+            </TextBlock>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <Slider Name="SliderDeadzone"
+                        Grid.Column="0"
+                        Maximum="100"
+                        Minimum="1"
+                        Value="{Binding Source={x:Static properties:Settings.Default},
+                                        Path=CursorDeadzone}" />
+                <TextBlock Grid.Column="1"
+                           Width="30"
+                           Text="{Binding ElementName=SliderDeadzone,
+                                          Path=Value}"
+                           TextAlignment="Center" />
+            </Grid>
+            <TextBlock FontSize="16">Speed</TextBlock>
+            <Separator Height="5" />
+            <TextBlock Margin="5" TextWrapping="Wrap">
+                The overall rate at which the cursor will move. Increase this to make the cursor move faster.
+            </TextBlock>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <Slider Name="SliderSpeed"
+                        Grid.Column="0"
+                        Maximum="30"
+                        Minimum="1"
+                        Value="{Binding Source={x:Static properties:Settings.Default},
+                                        Path=CursorSpeed}" />
+                <TextBlock Grid.Column="1"
+                           Width="30"
+                           Text="{Binding ElementName=SliderSpeed,
+                                          Path=Value}"
+                           TextAlignment="Center" />
+            </Grid>
+            <TextBlock FontSize="16">Curve</TextBlock>
+            <Separator Height="5" />
+            <TextBlock Margin="5" TextWrapping="Wrap">
+                The input curve of the analog stick. Increase this to speed up cursor movement when less input is applied.
+            </TextBlock>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="40" />
+                </Grid.ColumnDefinitions>
+                <Slider Name="SliderCurve"
+                        Grid.Column="0"
+                        Maximum="10"
+                        Minimum="1"
+                        Value="{Binding Source={x:Static properties:Settings.Default},
+                                        Path=CursorCurve}" />
+                <TextBlock Grid.Column="1"
+                           Width="30"
+                           Text="{Binding ElementName=SliderCurve,
+                                          Path=Value}"
+                           TextAlignment="Center" />
+            </Grid>
+            <TextBlock FontSize="16">Miscellaneous</TextBlock>
+            <Separator Height="5" />
+            <CheckBox Margin="5,5,0,0"
+                      Content="Send mouse clicks directly to WoW"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                          Path=InputDirectMouse}"
+                      ToolTip="Sends mouse clicks to directly to the game window, even when it is in the background. Enabling this will prevent you from interacting with other applications using the controller." />
+        </StackPanel>
+    </Grid>
+</UserControl>

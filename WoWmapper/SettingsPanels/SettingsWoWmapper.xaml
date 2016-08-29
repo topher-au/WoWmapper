@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="WoWmapper.SettingsPanels.SettingsWoWmapper"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WoWmapper.SettingsPanels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:p="clr-namespace:WoWmapper.Properties"
+             d:DesignHeight="421"
+             d:DesignWidth="313"
+             mc:Ignorable="d">
+    <Grid Margin="5">
+        <StackPanel>
+            <DockPanel Margin="5">
+                <TextBlock VerticalAlignment="Center" Text="Theme" />
+                <ComboBox Name="ComboTheme"
+                          Width="120"
+                          HorizontalAlignment="Right"
+                          SelectionChanged="ComboTheme_OnSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="5">
+                <TextBlock VerticalAlignment="Center" Text="Accent" />
+                <ComboBox Name="ComboAccent"
+                          Width="120"
+                          HorizontalAlignment="Right"
+                          SelectionChanged="ComboTheme_OnSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+
+            <CheckBox Name="CheckExportBindings"
+                      Margin="5"
+                      Checked="CheckExportBindings_OnChecked"
+                      Content="Automatically save bindings to ConsolePort"
+                      IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                          Path=ExportBindings}"
+                      Unchecked="CheckExportBindings_OnChecked" />
+            <CheckBox Name="CheckRunInBackground"
+                      Margin="5"
+                      Content="Close WoWmapper to the notification icon"
+                      IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                          Path=RunInBackground}" />
+            <CheckBox Name="CheckHideAtStartup"
+                      Margin="5"
+                      Content="Hide application window at startup"
+                      IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                          Path=HideAtStartup}" />
+            <CheckBox Name="CheckAutoUpdate"
+                      Margin="5"
+                      Content="Automatically download and install updates"
+                      IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                          Path=AutoUpdate}"
+                      Visibility="Collapsed" />
+
+            <Button Margin="5"
+                    Click="ButtonResetAll_Click"
+                    Content="Reset all settings" />
+        </StackPanel>
+    </Grid>
+</UserControl>
