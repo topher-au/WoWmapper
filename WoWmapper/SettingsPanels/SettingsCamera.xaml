@@ -9,7 +9,7 @@
              d:DesignWidth="313"
              mc:Ignorable="d">
     <Grid Margin="5">
-        <StackPanel Margin="5">
+        <StackPanel Margin="5,0">
 
             <TextBlock FontSize="16">Deadzone</TextBlock>
             <Separator Height="5" />
@@ -80,7 +80,7 @@
             <TextBlock FontSize="16">Miscellaneous</TextBlock>
             <Separator Height="5" />
             <CheckBox Margin="5,5,0,0"
-                      Content="Send mouse clicks directly to WoW"
+                      Content="Mouse clicks always interact with game window"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                           Path=InputDirectMouse}"
                       ToolTip="Sends mouse clicks to directly to the game window, even when it is in the background. Enabling this will prevent you from interacting with other applications using the controller." />

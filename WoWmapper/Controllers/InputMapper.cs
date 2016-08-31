@@ -51,7 +51,7 @@ namespace WoWmapper.Controllers
 
                 if (Settings.Default.EnableMemoryReading && ProcessManager.GameProcess != null)
                 {
-                    var mouselookState = MemoryManager.GetMouselookState();
+                    var mouselookState = MemoryManager.ReadMouselook();
                     var foregroundWindow = GetForegroundWindow();
                     if (foregroundWindow == ProcessManager.GameProcess.MainWindowHandle)
                         _setMouselook = false;
@@ -97,23 +97,28 @@ namespace WoWmapper.Controllers
             var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
             if (Settings.Default.MemoryAutoWalk && MemoryManager.IsAttached)
             {
-                if (strength < Settings.Default.WalkThreshold && 
-                    strength >= Settings.Default.MovementThreshold && 
-                    !MemoryManager.GetWalkState()) // Activate Walk
+                var moveState = MemoryManager.ReadMovementState();
+                if (moveState == 0 || moveState == 1)
                 {
-                    WoWInput.SendKeyDown(Key.Divide);
-                    WoWInput.SendKeyUp(Key.Divide);
-                    _stopWalk = false;
-                }
-                else if(strength >= Settings.Default.WalkThreshold && MemoryManager.GetWalkState()) // Deactivate walk
-                {
-                    WoWInput.SendKeyDown(Key.Divide);
-                    WoWInput.SendKeyUp(Key.Divide);
-                } else if (strength < Settings.Default.MovementThreshold && !_stopWalk && MemoryManager.GetWalkState()) // Deactivate walk
-                {
-                    WoWInput.SendKeyDown(Key.Divide);
-                    WoWInput.SendKeyUp(Key.Divide);
-                    _stopWalk = true;
+                    if (strength < Settings.Default.WalkThreshold &&
+                    strength >= Settings.Default.MovementThreshold &&
+                    moveState == 0) // Activate Walk
+                    {
+                        WoWInput.SendKeyDown(Key.Divide);
+                        WoWInput.SendKeyUp(Key.Divide);
+                        _stopWalk = false;
+                    }
+                    else if (strength >= Settings.Default.WalkThreshold && moveState == 1) // Deactivate walk, start run
+                    {
+                        WoWInput.SendKeyDown(Key.Divide);
+                        WoWInput.SendKeyUp(Key.Divide);
+                    }
+                    else if (strength < Settings.Default.MovementThreshold && !_stopWalk && moveState == 1) // Deactivate walk, stop moving
+                    {
+                        WoWInput.SendKeyDown(Key.Divide);
+                        WoWInput.SendKeyUp(Key.Divide);
+                        _stopWalk = true;
+                    }
                 }
             }
             if (sendLeft)
@@ -323,7 +328,7 @@ namespace WoWmapper.Controllers
             if (Properties.Settings.Default.EnableMemoryReading)
             {
                 // Process input if player is at character select
-                if (Properties.Settings.Default.MemoryOverrideMenu && MemoryManager.GetGameState() == 0)
+                if (Properties.Settings.Default.MemoryOverrideMenu && MemoryManager.ReadGameState() == 0)
                 {
                     ProcessCharacterMenu(button, state);
                     return;
@@ -331,8 +336,8 @@ namespace WoWmapper.Controllers
 
                 // Process input if player is casting targeted AoE
                 if (Properties.Settings.Default.MemoryOverrideAoeCast &&
-                    MemoryManager.GetGameState() == 1 &&
-                    MemoryManager.GetPlayerAoe() == true)
+                    MemoryManager.ReadGameState() == 1 &&
+                    MemoryManager.ReadAoeState() == true)
                 {
                     ProcessPlayerAoe(button, state);
                     return;

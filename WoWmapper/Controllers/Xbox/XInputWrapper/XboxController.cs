@@ -14,7 +14,7 @@ namespace J2i.Net.XInputWrapper
     {
         int _playerIndex;
         static bool keepRunning;
-        static int  updateFrequency;
+        static int updateFrequency;
         static int waitTime;
         static bool isRunning;
         static object SyncLock;
@@ -36,28 +36,28 @@ namespace J2i.Net.XInputWrapper
             set
             {
                 updateFrequency = value;
-                waitTime = 1000 / updateFrequency;
+                waitTime = 1000/updateFrequency;
             }
         }
 
         public XInputBatteryInformation BatteryInformationGamepad
         {
             get { return _batteryInformationGamepad; }
-            internal set  {  _batteryInformationGamepad = value;   }
+            internal set { _batteryInformationGamepad = value; }
         }
 
         public XInputBatteryInformation BatteryInformationHeadset
         {
             get { return _batterInformationHeadset; }
-            internal set  {  _batterInformationHeadset = value;   }
+            internal set { _batterInformationHeadset = value; }
         }
 
         public const int MAX_CONTROLLER_COUNT = 4;
         public const int FIRST_CONTROLLER_INDEX = 0;
-        public const int LAST_CONTROLLER_INDEX = MAX_CONTROLLER_COUNT-1;
+        public const int LAST_CONTROLLER_INDEX = MAX_CONTROLLER_COUNT - 1;
 
         static XboxController[] Controllers;
-        
+
 
         static XboxController()
         {
@@ -86,8 +86,10 @@ namespace J2i.Net.XInputWrapper
             }
             if (_xInput == null)
             {
-                Log.WriteLine("WoWmapper was unable to locate the XInput library on your system. Please ensure DirectX 9 or 10 is installed and try again.");
-                throw new DllNotFoundException("WoWmapper was unable to locate the XInput library on your system. Please ensure DirectX 9 or 10 is installed and try again.");
+                Log.WriteLine(
+                    "WoWmapper was unable to locate the XInput library on your system. Please ensure DirectX 9 or 10 is installed and try again.");
+                throw new DllNotFoundException(
+                    "WoWmapper was unable to locate the XInput library on your system. Please ensure DirectX 9 or 10 is installed and try again.");
             }
             Controllers = new XboxController[MAX_CONTROLLER_COUNT];
             SyncLock = new object();
@@ -102,7 +104,7 @@ namespace J2i.Net.XInputWrapper
 
         public static XboxController RetrieveController(int index)
         {
-                return Controllers[index];
+            return Controllers[index];
         }
 
         private XboxController(int playerIndex)
@@ -113,20 +115,22 @@ namespace J2i.Net.XInputWrapper
 
         public void UpdateBatteryState()
         {
-            XInputBatteryInformation headset = new XInputBatteryInformation(),
-            gamepad = new XInputBatteryInformation();
+            var gamepad = new XInputBatteryInformation();
 
-            _xInput.GetBatteryInformation(_playerIndex, (byte)BatteryDeviceType.BATTERY_DEVTYPE_GAMEPAD, ref gamepad);
-            _xInput.GetBatteryInformation(_playerIndex, (byte)BatteryDeviceType.BATTERY_DEVTYPE_HEADSET, ref headset);
+            _xInput.GetBatteryInformation(_playerIndex, (byte) BatteryDeviceType.BATTERY_DEVTYPE_GAMEPAD, ref gamepad);
 
-            BatteryInformationHeadset = headset;
             BatteryInformationGamepad = gamepad;
         }
 
         protected void OnStateChanged()
         {
             if (StateChanged != null)
-                StateChanged(this, new XboxControllerStateChangedEventArgs() { CurrentInputState = gamepadStateCurrent, PreviousInputState = gamepadStatePrev });
+                StateChanged(this,
+                    new XboxControllerStateChangedEventArgs()
+                    {
+                        CurrentInputState = gamepadStateCurrent,
+                        PreviousInputState = gamepadStatePrev
+                    });
         }
 
         public XInputCapabilities GetCapabilities()
@@ -136,80 +140,80 @@ namespace J2i.Net.XInputWrapper
             return capabilities;
         }
 
-
         #region Digital Button States
+
         public bool IsDPadUpPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_DPAD_UP); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_DPAD_UP); }
         }
 
         public bool IsDPadDownPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_DPAD_DOWN); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_DPAD_DOWN); }
         }
 
         public bool IsDPadLeftPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_DPAD_LEFT); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_DPAD_LEFT); }
         }
 
         public bool IsDPadRightPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_DPAD_RIGHT); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_DPAD_RIGHT); }
         }
 
         public bool IsAPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_A); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_A); }
         }
 
         public bool IsBPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_B); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_B); }
         }
 
         public bool IsXPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_X); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_X); }
         }
 
         public bool IsYPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_Y); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_Y); }
         }
 
 
         public bool IsBackPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_BACK); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_BACK); }
         }
 
 
         public bool IsStartPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_START); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_START); }
         }
 
 
         public bool IsLeftShoulderPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_LEFT_SHOULDER); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_LEFT_SHOULDER); }
         }
 
 
         public bool IsRightShoulderPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_RIGHT_SHOULDER); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_RIGHT_SHOULDER); }
         }
 
         public bool IsLeftStickPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_LEFT_THUMB); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_LEFT_THUMB); }
         }
 
         public bool IsRightStickPressed
         {
-            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int)ButtonFlags.XINPUT_GAMEPAD_RIGHT_THUMB); }
+            get { return gamepadStateCurrent.Gamepad.IsButtonPressed((int) ButtonFlags.XINPUT_GAMEPAD_RIGHT_THUMB); }
         }
 
         public bool IsGuidePressed
@@ -222,17 +226,19 @@ namespace J2i.Net.XInputWrapper
                 return (stateSecret.wButtons & 0x0400) == 0x0400;
             }
         }
+
         #endregion
 
         #region Analogue Input States
+
         public int LeftTrigger
         {
-            get { return (int)gamepadStateCurrent.Gamepad.bLeftTrigger;  }
+            get { return (int) gamepadStateCurrent.Gamepad.bLeftTrigger; }
         }
 
         public int RightTrigger
         {
-            get  {  return (int)gamepadStateCurrent.Gamepad.bRightTrigger; }
+            get { return (int) gamepadStateCurrent.Gamepad.bRightTrigger; }
         }
 
         public Point LeftThumbStick
@@ -264,6 +270,7 @@ namespace J2i.Net.XInputWrapper
         #endregion
 
         bool _isConnected;
+
         public bool IsConnected
         {
             get { return _isConnected; }
@@ -271,6 +278,7 @@ namespace J2i.Net.XInputWrapper
         }
 
         #region Polling
+
         public static void StartPolling()
         {
             if (!isRunning)
@@ -301,7 +309,7 @@ namespace J2i.Net.XInputWrapper
                 isRunning = true;
             }
             keepRunning = true;
-            while(keepRunning)
+            while (keepRunning)
             {
                 for (int i = FIRST_CONTROLLER_INDEX; i <= LAST_CONTROLLER_INDEX; ++i)
                 {
@@ -317,11 +325,11 @@ namespace J2i.Net.XInputWrapper
 
         public void UpdateState()
         {
-                int result = _xInput.GetState(_playerIndex, ref gamepadStateCurrent);
-                IsConnected = (result == 0);
+            int result = _xInput.GetState(_playerIndex, ref gamepadStateCurrent);
+            IsConnected = (result == 0);
 
             UpdateBatteryState();
-            if (gamepadStateCurrent.PacketNumber!=gamepadStatePrev.PacketNumber)
+            if (gamepadStateCurrent.PacketNumber != gamepadStatePrev.PacketNumber)
             {
                 OnStateChanged();
             }
@@ -329,13 +337,15 @@ namespace J2i.Net.XInputWrapper
 
             if (_stopMotorTimerActive && (DateTime.Now >= _stopMotorTime))
             {
-                XInputVibration stopStrength = new XInputVibration() { LeftMotorSpeed = 0, RightMotorSpeed = 0 };
+                XInputVibration stopStrength = new XInputVibration() {LeftMotorSpeed = 0, RightMotorSpeed = 0};
                 _xInput.SetState(_playerIndex, ref stopStrength);
             }
         }
+
         #endregion
 
         #region Motor Functions
+
         public void Vibrate(double leftMotor, double rightMotor)
         {
             Vibrate(leftMotor, rightMotor, TimeSpan.MinValue);
@@ -346,10 +356,14 @@ namespace J2i.Net.XInputWrapper
             leftMotor = Math.Max(0d, Math.Min(1d, leftMotor));
             rightMotor = Math.Max(0d, Math.Min(1d, rightMotor));
 
-            XInputVibration vibration = new XInputVibration() { LeftMotorSpeed = (ushort)(65535d * leftMotor), RightMotorSpeed = (ushort)(65535d * rightMotor) };
+            XInputVibration vibration = new XInputVibration()
+            {
+                LeftMotorSpeed = (ushort) (65535d*leftMotor),
+                RightMotorSpeed = (ushort) (65535d*rightMotor)
+            };
             Vibrate(vibration, length);
         }
-        
+
 
         public void Vibrate(XInputVibration strength)
         {
@@ -366,12 +380,12 @@ namespace J2i.Net.XInputWrapper
                 _stopMotorTimerActive = true;
             }
         }
+
         #endregion
-      
+
         public override string ToString()
         {
             return _playerIndex.ToString();
         }
-
     }
 }

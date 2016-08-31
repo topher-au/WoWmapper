@@ -9,34 +9,43 @@
              d:DesignWidth="313"
              mc:Ignorable="d">
     <Grid Margin="5">
-        <StackPanel>
-            <DockPanel Margin="5">
-                <TextBlock VerticalAlignment="Center" Text="Theme" />
-                <ComboBox Name="ComboTheme"
-                          Width="120"
-                          HorizontalAlignment="Right"
-                          SelectionChanged="ComboTheme_OnSelectionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </DockPanel>
-            <DockPanel Margin="5">
-                <TextBlock VerticalAlignment="Center" Text="Accent" />
-                <ComboBox Name="ComboAccent"
-                          Width="120"
-                          HorizontalAlignment="Right"
-                          SelectionChanged="ComboTheme_OnSelectionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </DockPanel>
+        <StackPanel Margin="5,0">
+            <TextBlock FontSize="16" Text="Application Style" />
+            <Separator Margin="0,5" />
+            <Grid Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Margin="5,0" Text="Theme" />
+                    <ComboBox Name="ComboTheme"
+                              Margin="5"
+                              SelectionChanged="ComboTheme_OnSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Margin="5,0" Text="Accent" />
+                    <ComboBox Name="ComboAccent"
+                              Margin="5"
+                              SelectionChanged="ComboTheme_OnSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
 
+
+            <TextBlock FontSize="16" Text="Settings" />
+            <Separator Margin="0,5" />
             <CheckBox Name="CheckExportBindings"
                       Margin="5"
                       Checked="CheckExportBindings_OnChecked"
@@ -60,10 +69,15 @@
                       IsChecked="{Binding Source={x:Static p:Settings.Default},
                                           Path=AutoUpdate}"
                       Visibility="Collapsed" />
-
-            <Button Margin="5"
+            <Button Margin="5,10"
                     Click="ButtonResetAll_Click"
                     Content="Reset all settings" />
         </StackPanel>
+        <TextBlock Name="TextVersion"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Foreground="{StaticResource DisabledMenuItemForeground}">
+            WoWmapper Version Information
+        </TextBlock>
     </Grid>
 </UserControl>

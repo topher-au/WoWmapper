@@ -35,9 +35,9 @@ namespace WoWmapper.Controllers
 
             while (_feedbackThread.ThreadState != ThreadState.Aborted)
             {
-                if (Properties.Settings.Default.EnableMemoryReading && MemoryManager.GetGameState() == 1 && ControllerManager.ActiveController != null)
+                if (Properties.Settings.Default.EnableMemoryReading && MemoryManager.ReadGameState() == 1 && ControllerManager.ActiveController != null)
                 {
-                    var playerHealth = MemoryManager.GetPlayerHealth();
+                    var playerHealth = MemoryManager.ReadPlayerHealth();
                     if (playerHealth != null)
                     {
                         // Check player health defecit

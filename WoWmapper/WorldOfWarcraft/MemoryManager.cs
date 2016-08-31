@@ -128,7 +128,7 @@ namespace WoWmapper.WorldOfWarcraft
             ProcessHandle = IntPtr.Zero;
         }
 
-        public static Tuple<long, long> GetPlayerHealth()
+        public static Tuple<long, long> ReadPlayerHealth()
         {
             if (!IsAttached) return null;
 
@@ -149,7 +149,7 @@ namespace WoWmapper.WorldOfWarcraft
             }
         }
 
-        public static bool GetMouselookState()
+        public static bool ReadMouselook()
         {
             if (!IsAttached) return false;
 
@@ -168,7 +168,7 @@ namespace WoWmapper.WorldOfWarcraft
             }
         }
 
-        public static byte GetGameState()
+        public static byte ReadGameState()
         {
             if (!IsAttached) return 0;
 
@@ -188,31 +188,31 @@ namespace WoWmapper.WorldOfWarcraft
             }
         }
 
-        public static bool GetWalkState()
+        public static int ReadMovementState()
         {
-            if (!IsAttached) return false;
+            if (!IsAttached) return 0;
 
             try
             {
                 var offset = Offsets.GetStaticOffset(Offset.WalkRunState, Process, true);
 
-                if (offset == IntPtr.Zero) return false; // Failed to locate offset
+                if (offset == IntPtr.Zero) return 0; // Failed to locate offset
 
                 var secondOffset = MemoryManager.ReadPointer(offset);
                 var finalOffset = MemoryManager.Read<IntPtr>(secondOffset) + 0x15e1;
 
                 var walkState = Read<byte>(finalOffset);
 
-                return (walkState & 1) == 1;
+                return walkState;
             }
             catch (Exception ex)
             {
                 Log.WriteLine(ex.Message);
-                return false;
+                return 0;
             }
         }
 
-        public static bool GetPlayerAoe()
+        public static bool ReadAoeState()
         {
             if (!IsAttached) return false;
 
@@ -237,7 +237,6 @@ namespace WoWmapper.WorldOfWarcraft
 
         public enum PlayerInfoOffset
         {
-            Level = 0x160,
             HealthCurrent = 0xF0,
             HealthMax = 0x110,
         }

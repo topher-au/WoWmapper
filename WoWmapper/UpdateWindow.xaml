@@ -46,7 +46,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
-            <StackPanel VerticalAlignment="Center">
+            <StackPanel Margin="5,0,0,0" VerticalAlignment="Center">
                 <TextBlock Margin="0,0,0,2" Text="Download in progress..." />
                 <ProgressBar Name="ProgressDownload" />
             </StackPanel>

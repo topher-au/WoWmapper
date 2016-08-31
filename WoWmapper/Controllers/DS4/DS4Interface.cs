@@ -29,6 +29,11 @@ namespace WoWmapper.Controllers.DS4
         {
             while (_active)
             {
+                if(ControllerManager.ActiveController != null)
+                    Thread.Sleep(2500);
+                else
+                    Thread.Sleep(500);
+                
                 // Check validity of connected controllers
                 var deadControllers = new List<IController>();
 
@@ -58,8 +63,6 @@ namespace WoWmapper.Controllers.DS4
                         Log.WriteLine($"DS4 connected: {ds4Devices[i].MacAddress}");
                     }
                 }
-
-                Thread.Sleep(100);
             }
 
         }

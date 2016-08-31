@@ -11,7 +11,13 @@
              mc:Ignorable="d">
     <Grid Margin="5">
         <StackPanel>
-            <StackPanel Name="StackWarning" Height="130">
+            <TextBlock Margin="5,0"
+                       FontSize="16"
+                       Text="Memory Reading" />
+            <Separator Margin="5" />
+            <StackPanel Name="StackWarning"
+                        Height="130"
+                        Margin="5,0">
                 <TextBlock Margin="5" TextWrapping="Wrap">
                     This feature reads information from World of Warcraft to assist with controller gameplay.
                 </TextBlock>
@@ -27,16 +33,16 @@
                     More information about this feature
                 </TextBlock>
             </StackPanel>
-            <StackPanel Name="StackContent">
+            <StackPanel Name="StackContent" Margin="0">
                 <CheckBox Name="CheckEnableMemoryReading"
-                          Margin="5"
+                          Margin="13,5"
                           Checked="HideWarning"
                           Content="Enable memory reading"
                           IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                               Path=EnableMemoryReading}"
                           Unchecked="ShowWarning" />
                 <Separator Margin="5" />
-                <TabControl IsEnabled="{Binding ElementName=CheckEnableMemoryReading, Path=IsChecked}" Padding="0,5,0,0">
+                <TabControl Margin="5,0" IsEnabled="{Binding ElementName=CheckEnableMemoryReading, Path=IsChecked}">
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="General">
                         <StackPanel>
                             <CheckBox Margin="5"
@@ -74,14 +80,14 @@
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Input Assist">
                         <StackPanel>
                             <CheckBox Margin="5"
-                                      Content="Center mouse cursor after mouselook"
+                                      Content="Auto-center mouse cursor after mouselook"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryAutoCenter}"
-                                      ToolTip="Moves the mouse cursor to the center of the screen after mouselook has been enabled for the specified period." />
+                                      ToolTip="Moves the mouse cursor to the center of the screen after mouselook has been active for the configured minimum duration." />
                             <StackPanel Margin="0,0,0,5"
                                         HorizontalAlignment="Right"
                                         Orientation="Horizontal">
-                                <TextBlock>Enable after</TextBlock>
+                                <TextBlock>Triggers after</TextBlock>
                                 <TextBlock Margin="2,0" Text="{Binding ElementName=SliderAutoCancelDelay, Path=Value}" />
                                 <TextBlock>ms</TextBlock>
                                 <Slider Name="SliderAutoCancelDelay"

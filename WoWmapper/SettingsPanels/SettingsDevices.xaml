@@ -10,11 +10,10 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <DataTemplate x:Key="ControllerDataTemplate">
-            <DockPanel>
+            <DockPanel Height="40">
                 <Image Width="24"
-                       Height="24"
-                       Margin="10,5"
-                       Source="{Binding Image}" />
+                       Height="24" Margin="5,0"
+                       Source="{Binding Image}" Stretch="Fill"/>
                 <TextBlock Width="80"
                            VerticalAlignment="Center"
                            Text="{Binding Type}" />
@@ -24,19 +23,23 @@
 
     </UserControl.Resources>
     <Grid Margin="5">
-        <StackPanel>
-            <TextBlock Margin="5,5,5,0" FontSize="16">Selected Device</TextBlock>
-            <Separator Margin="5" Foreground="{StaticResource WhiteColorBrush}" />
-            <ListViewItem Name="ListSelectedDevice"
-                          Margin="5,0"
-                          ContentTemplate="{StaticResource ControllerDataTemplate}" />
-            <TextBlock Margin="5" FontSize="16">Available Devices</TextBlock>
+        <StackPanel Margin="5,0">
+            <TextBlock Margin="0" FontSize="16">Selected Device</TextBlock>
+            <Separator Margin="0,5" Foreground="{StaticResource WhiteColorBrush}" />
+            <Grid Height="40">
+                <ListViewItem Name="ListSelectedDevice" ContentTemplate="{StaticResource ControllerDataTemplate}" />
+                <TextBlock Name="TextNoController"
+                           VerticalAlignment="Center"
+                           Text="No Active Controller"
+                           TextAlignment="Center" />
+            </Grid>
+            <TextBlock Margin="0,5" FontSize="16">Available Devices</TextBlock>
             <ListView Name="ListAvailableDevices"
                       MinHeight="40"
-                      Margin="5,0"
+                      Margin="0"
                       ItemTemplate="{StaticResource ControllerDataTemplate}"
                       MouseDoubleClick="ListAvailableDevices_OnMouseDoubleClick" />
-            <Button Margin="5"
+            <Button Margin="0,5"
                     HorizontalAlignment="Right"
                     Click="ButtonUseController_Click"
                     Content="Use Selected Controller" />

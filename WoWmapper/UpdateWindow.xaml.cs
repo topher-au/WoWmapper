@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -64,8 +65,14 @@ namespace WoWmapper
                 updateClient.DownloadFileCompleted += (sender, args) =>
                 {
                     if (args.Cancelled) return;
-                    var myName = Assembly.GetExecutingAssembly().GetName().Name;
-                    Process.Start("Updater.exe", $"update \"{myName}\" _update.zip");
+
+                    // Extract updater from downloaded archive
+                    var updateZip = ZipFile.OpenRead("_update.zip");
+                    var updater = updateZip.Entries.First(entry => entry.Name == "WoWmapper_Updater.exe");
+                    updater.ExtractToFile("WoWmapper_Updater.exe");
+
+                    // Start downloaded updater
+                    Process.Start("WoWmapper_Updater.exe", "_update.zip");
                     App.Current.Shutdown();
                 };
                 Closing += (sender, args) =>

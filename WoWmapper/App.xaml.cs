@@ -57,10 +57,21 @@ namespace WoWmapper
                 _notifyMenuExit
             }
         };
-        
+
+        private readonly string[] _deprecatedFiles = new string[]
+        {
+            "Updater.exe",
+            "Xceed.Wpf.Toolkit.dll",
+            "offsets.dat",
+            "bindings.dat"
+        };
+
         protected override async void OnStartup(StartupEventArgs e)
         {
-            
+            // Clean up deprecated files
+            foreach(var file in _deprecatedFiles)
+                if(File.Exists(file)) File.Delete(file);
+
             // Check if an existing instance of the application is running
             _mutex = new Mutex(false, "Global\\" + _appGuid);
             if (!_mutex.WaitOne(0, false))

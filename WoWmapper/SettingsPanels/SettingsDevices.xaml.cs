@@ -22,7 +22,7 @@ namespace WoWmapper.SettingsPanels
     /// </summary>
     public partial class SettingsDevices : UserControl
     {
-        private ImageSource _ds4Image = new BitmapImage(new Uri("pack://application:,,,/Resources/ds4.png"));
+        private ImageSource _ds4Image = new BitmapImage(new Uri("pack://application:,,,/Resources/ds4.png")) {DecodePixelWidth = 24, DecodePixelHeight = 24};
         private ImageSource _xinputImage = new BitmapImage(new Uri("pack://application:,,,/Resources/xinput.png"));
         private List<IController> _controllers;
 
@@ -39,14 +39,13 @@ namespace WoWmapper.SettingsPanels
         {
             if (controller == null)
             {
-                ListSelectedDevice.Content = new ControllerListItem()
-                {
-                    Image = null,
-                    Type = string.Empty,
-                    Name = "<No Controller>"
-                };
+                ListSelectedDevice.Visibility=Visibility.Hidden;
+                TextNoController.Visibility=Visibility.Visible;
                 return;
             }
+
+            ListSelectedDevice.Visibility = Visibility.Visible;
+            TextNoController.Visibility = Visibility.Hidden;
 
             ListSelectedDevice.Content = GetListItem(controller);
         }

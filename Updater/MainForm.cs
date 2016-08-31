@@ -21,11 +21,18 @@ namespace Updater
         public MainForm()
         {
             InitializeComponent();
+            
+            
             var args = Environment.GetCommandLineArgs();
-            if (args[1] != "update") Close();
-            if (!File.Exists(args[3])) Close();
-            _callingProcess = args[2];
-            _updateArchive = args[3];
+
+            var argFilename = args[1] == "update" ? args[3] : args[1];
+
+            if (!File.Exists(argFilename))
+            {
+                Environment.Exit(0);
+                return;
+            }
+            _updateArchive = argFilename;
             Show();
             
             ProcessUpdate();
@@ -38,7 +45,7 @@ namespace Updater
             {
                 while (true)
                 {
-                    var proc = Process.GetProcessesByName(_callingProcess);
+                    var proc = Process.GetProcessesByName("wowmapper.exe");
                     if (proc.Length == 0) break;
                 }
             });
@@ -48,7 +55,7 @@ namespace Updater
                 var update = ZipFile.OpenRead(_updateArchive);
                 foreach (var file in update.Entries)
                 {
-                    if (file.Name == "Updater.exe" || string.IsNullOrEmpty(Path.GetFileName(file.Name))) continue;
+                    if (file.Name == "WoWmapper_Updater.exe" || string.IsNullOrEmpty(Path.GetFileName(file.Name))) continue;
                     var destDir = Path.GetDirectoryName(file.FullName);
                     if (!string.IsNullOrEmpty(destDir) && !Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
                     try

@@ -51,6 +51,20 @@ namespace WoWmapper.SettingsPanels
             DoTransition();
 
             ready = true;
+
+            TextSyncMessage.Text = Settings.Default.ExportBindings
+                        ? "ConsolePort sync is enabled. Your settings will be automatically synced when changed. Restart WoW or type /reload in game to load changes."
+                        : "ConsolePort sync is disabled. You will need to manually configure the controller calibration within World of Warcraft before you can play.";
+
+            Settings.Default.SettingChanging += (sender, args) =>
+            {
+                if (args.SettingName == "ExportBindings")
+                {
+                    TextSyncMessage.Text = (bool) args.NewValue
+                        ? "ConsolePort sync is enabled. Your settings will be automatically synced when changed. Restart WoW or type /reload in game to load changes."
+                        : "ConsolePort sync is disabled. You will need to manually configure the controller calibration within World of Warcraft before you can play.";
+                }
+            };
         }
 
         private void CheckCustomBinding_Changed(object sender, RoutedEventArgs e)
@@ -81,8 +95,7 @@ namespace WoWmapper.SettingsPanels
 
             RefreshBinds();
         }
-
-        private int legionCounter = 0;
+        
         List<Keybind> _binds = new List<Keybind>();
 
         private void RefreshBinds()

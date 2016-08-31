@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,6 +36,8 @@ namespace WoWmapper.SettingsPanels
 
             ComboAccent.SelectedIndex = ComboAccent.Items.IndexOf(currentTheme.Item2);
             ComboTheme.SelectedIndex = ComboTheme.Items.IndexOf(currentTheme.Item1);
+
+            TextVersion.Text = $"WoWmapper Version {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
 
             _ready = true;
         }
