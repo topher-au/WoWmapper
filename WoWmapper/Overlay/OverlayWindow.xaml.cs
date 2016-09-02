@@ -168,7 +168,7 @@ namespace WoWmapper.Overlay
         public OverlayWindow()
         {
             InitializeComponent();
-
+            Visibility = Visibility.Hidden;
             _controller = new Thread(ControllerThread);
             _controller.Start();
         }
@@ -236,44 +236,46 @@ namespace WoWmapper.Overlay
                     {
                         var hWndFg = GetForegroundWindow();
                         var rect = ProcessManager.GetClientRectangle();
-
                         var topMost = Dispatcher.Invoke(() => Topmost);
-                        
-                            if (rect != _lastRect)
-                            {
-                                // Update overlay position
-                                Dispatcher.Invoke(() =>
-                                {
-                                    Left = rect.Left;
-                                    Top = rect.Top;
-                                    Width = rect.Width;
-                                    Height = rect.Height;
-                                    StackNotifications.HorizontalAlignment = Settings.Default.NotificationH == 0
-                                        ? HorizontalAlignment.Left
-                                        : HorizontalAlignment.Right;
-                                    StackNotifications.VerticalAlignment = Settings.Default.NotificationV == 0
-                                        ? VerticalAlignment.Top
-                                        : VerticalAlignment.Bottom;
-                                });
-                                _lastRect = rect;
-                            }
 
-                            if (hWndFg == ProcessManager.GameProcess.MainWindowHandle && !topMost)
+                        // If game window has moved or resized
+                        if (rect != _lastRect)
+                        {
+                            // Update overlay position
+                            Dispatcher.Invoke(() =>
                             {
-                                Dispatcher.Invoke(() =>
-                                {
-                                    Topmost = true;
-                                    Visibility = Visibility.Visible;
-                                });
-                            }
-                            else if (hWndFg != ProcessManager.GameProcess.MainWindowHandle && topMost)
+                                Left = rect.Left;
+                                Top = rect.Top;
+                                Width = rect.Width;
+                                Height = rect.Height;
+                            });
+                            _lastRect = rect;
+                        }
+
+                        // If game is foreground window and overlay is hidden, show it
+                        if (hWndFg == ProcessManager.GameProcess.MainWindowHandle && !topMost)
+                        {
+                            Dispatcher.Invoke(() =>
                             {
-                                Dispatcher.Invoke(() =>
-                                {
-                                    Topmost = false;
-                                    Visibility = Visibility.Hidden;
-                                });
-                            }
+                                Topmost = true;
+                                Visibility = Visibility.Visible;
+                                StackNotifications.HorizontalAlignment = Settings.Default.NotificationH == 0
+                                    ? HorizontalAlignment.Left
+                                    : HorizontalAlignment.Right;
+                                StackNotifications.VerticalAlignment = Settings.Default.NotificationV == 0
+                                    ? VerticalAlignment.Top
+                                    : VerticalAlignment.Bottom;
+                            });
+                        }
+                        // Otherwise hide the overlay
+                        else if (hWndFg != ProcessManager.GameProcess.MainWindowHandle && topMost)
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                Topmost = false;
+                                Visibility = Visibility.Hidden;
+                            });
+                        }
                     }
                     else
                     {
@@ -284,7 +286,10 @@ namespace WoWmapper.Overlay
                             Visibility = Visibility.Hidden;
                         });
                     }
-                } catch { }
+                }
+                catch
+                {
+                }
                 finally
                 {
                     Thread.Sleep(10);

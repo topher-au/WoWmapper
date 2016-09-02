@@ -87,12 +87,16 @@ namespace WoWmapper.ConsolePort
                     UniqueID = "CP_UPDATED"
                 });
                 new Task(() =>
-                { 
+                {
                     WoWInput.SendKeyDown(Key.LeftAlt, true);
+                    WoWInput.SendKeyDown(Key.LeftCtrl, true);
+                    WoWInput.SendKeyDown(Key.LeftShift, true);
                     Thread.Sleep(50);
                     WoWInput.SendKeyDown(Key.F12, true);
                     Thread.Sleep(50);
                     WoWInput.SendKeyUp(Key.F12, true);
+                    WoWInput.SendKeyUp(Key.LeftShift, true);
+                    WoWInput.SendKeyUp(Key.LeftCtrl, true);
                     WoWInput.SendKeyUp(Key.LeftAlt, true);
                 }).Start();
                 

@@ -8,11 +8,15 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using DS4Windows;
 using WoWmapper.Controllers.DS4;
 using WoWmapper.Controllers.Xbox;
 using WoWmapper.Keybindings;
 using WoWmapper.Overlay;
 using WoWmapper.Properties;
+using WoWmapper.WorldOfWarcraft;
+using Application = System.Windows.Application;
+using Cursor = System.Windows.Forms.Cursor;
 
 namespace WoWmapper.Controllers
 {
@@ -149,6 +153,14 @@ namespace WoWmapper.Controllers
             {
                 ActiveController.ButtonStateChanged += ActiveControllerOnButtonStateChanged;
                 Log.WriteLine("Selected controller: " + controller.Name);
+                var device = ActiveController.UnderlyingController as DS4Device;
+                if (device != null)
+                {
+                    var ds4 = device;
+                    ds4.Touchpad.TouchesMoved += DS4TouchpadMoved;
+                    ds4.Touchpad.TouchButtonDown += DS4TouchpadButtonDown;
+                    ds4.Touchpad.TouchButtonUp += DS4TouchpadButtonUp;
+                }
                 App.Overlay.PopupNotification(new OverlayNotification()
                 {
                     Header = "Controller selected",
@@ -162,6 +174,68 @@ namespace WoWmapper.Controllers
             ConsolePort.BindWriter.WriteBinds();
 
             MainWindow.UpdateButtonStyle();
+        }
+
+        private static void DS4TouchpadButtonUp(object sender, TouchpadEventArgs args)
+        {
+            if (!Settings.Default.EnableTouchpad) return;
+
+            // Ignore touchpad if disabled during mouselook
+            if (Settings.Default.MemoryTouchpadCursorOnly && MemoryManager.IsAttached)
+                if (MemoryManager.ReadMouselook())
+                    return;
+
+            switch (Settings.Default.TouchpadMode)
+            {
+                case 0:
+                    WoWInput.SendMouseUp(args.touches.Last().hwX < (1920/2) ? MouseButton.Left : MouseButton.Right);
+                    break;
+                case 1:
+                    WoWInput.SendKeyUp(args.touches.Last().hwX < (1920/2)
+                        ? BindManager.GetKey(GamepadButton.CenterLeft)
+                        : BindManager.GetKey(GamepadButton.CenterRight));
+                    break;
+            }
+        }
+
+        private static void DS4TouchpadButtonDown(object sender, TouchpadEventArgs args)
+        {
+            if (!Settings.Default.EnableTouchpad) return;
+
+            // Ignore touchpad if disabled during mouselook
+            if (Settings.Default.MemoryTouchpadCursorOnly && MemoryManager.IsAttached)
+                if (MemoryManager.ReadMouselook())
+                    return;
+
+            switch (Settings.Default.TouchpadMode)
+            {
+                case 0:
+                    WoWInput.SendMouseDown(args.touches.Last().hwX < (1920/2) ? MouseButton.Left : MouseButton.Right);
+                    break;
+                case 1:
+                    WoWInput.SendKeyDown(args.touches.Last().hwX < (1920/2)
+                        ? BindManager.GetKey(GamepadButton.CenterLeft)
+                        : BindManager.GetKey(GamepadButton.CenterRight));
+                    break;
+            }
+        }
+
+        private static void DS4TouchpadMoved(object sender, TouchpadEventArgs args)
+        {
+            if (!Settings.Default.EnableTouchpad) return;
+
+            // Ignore touchpad if disabled during mouselook
+            if (Settings.Default.MemoryTouchpadCursorOnly && MemoryManager.IsAttached)
+                if (MemoryManager.ReadMouselook())
+                    return;
+
+            var x = args.touches.Last().deltaX;
+            var y = args.touches.Last().deltaY;
+
+            var cur = Cursor.Position;
+            cur.X += x;
+            cur.Y += y;
+            Cursor.Position = cur;
         }
 
         public static Point GetLeftAxis()
@@ -258,14 +332,14 @@ namespace WoWmapper.Controllers
                             });
                             _lastBatteryWarn -= 5;
                         }
-                        else if (battery < 50 && battery < _lastBatteryWarn - 10)
+                        else if (battery < 40 && battery < _lastBatteryWarn - 10)
                         {
                             App.Overlay.PopupNotification(new OverlayNotification()
                             {
                                 Content = $"Your controller battery has reached {battery}%.",
                                 Header = "Battery low"
                             });
-                            _lastBatteryWarn -= 5;
+                            _lastBatteryWarn -= 10;
                         }
                         else if (battery > _lastBatteryWarn)
                         {

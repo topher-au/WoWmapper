@@ -1,6 +1,7 @@
 ﻿using DS4Windows;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
@@ -88,8 +89,6 @@ namespace WoWmapper.Controllers.DS4
             
             return 0;
         }
-
-
 
         public bool GetButtonState(GamepadButton button)
         {

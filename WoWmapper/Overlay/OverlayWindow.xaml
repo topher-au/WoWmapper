@@ -11,7 +11,6 @@
         BorderThickness="0"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        Visibility="Hidden"
         WindowStyle="None"
         mc:Ignorable="d">
     <Window.Background>

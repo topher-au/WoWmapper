@@ -150,6 +150,10 @@
                                     </StackPanel>
                                 </CheckBox>
                             </DockPanel>
+                            <CheckBox Margin="0,5"
+                                      Content="Disable touchpad while mouselook is active"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                                          Path=MemoryTouchpadCursorOnly}" />
                         </StackPanel>
                     </TabItem>
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Feedback">

@@ -17,7 +17,6 @@ WoWmapper.Keys = {
     CP_L_PULL   = "<CP_L_PULL>",
     CP_R_PULL   = "<CP_R_PULL>",
 	TOGGLERUN   = "<TOGGLERUN>",
-    WM_UPDATE   = '<WM_UPDATE>',
 }
  
 WoWmapper.Settings = {

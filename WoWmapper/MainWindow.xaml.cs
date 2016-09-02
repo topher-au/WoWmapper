@@ -113,14 +113,7 @@ namespace WoWmapper
             _uiTimer.Start();
 
             ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
-
-            MoveWindowAnimation = new DoubleAnimation
-            {
-                BeginTime = TimeSpan.FromMilliseconds(0),
-                Duration = TimeSpan.FromMilliseconds(250)
-            };
-
-            MoveWindowAnimation.Completed += (sender, args) => { Left = MoveWindowAnimation.To.Value; };
+           
 
             // Initialize animations
             ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
@@ -150,15 +143,15 @@ namespace WoWmapper
                 From = 1,
                 To = 0,
                 BeginTime = TimeSpan.FromMilliseconds(0),
-                Duration = TimeSpan.FromMilliseconds(125)
+                Duration = TimeSpan.FromMilliseconds(250)
             };
 
             FadeInAnimation = new DoubleAnimation()
             {
                 From = 0,
                 To = 1,
-                BeginTime = TimeSpan.FromMilliseconds(125),
-                Duration = TimeSpan.FromMilliseconds(250),
+                BeginTime = TimeSpan.FromMilliseconds(250),
+                Duration = TimeSpan.FromMilliseconds(500),
             };
 
 

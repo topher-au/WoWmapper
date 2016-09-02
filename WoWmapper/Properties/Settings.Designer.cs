@@ -490,5 +490,41 @@ namespace WoWmapper.Properties {
                 this["NotificationV"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableTouchpad {
+            get {
+                return ((bool)(this["EnableTouchpad"]));
+            }
+            set {
+                this["EnableTouchpad"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MemoryTouchpadCursorOnly {
+            get {
+                return ((bool)(this["MemoryTouchpadCursorOnly"]));
+            }
+            set {
+                this["MemoryTouchpadCursorOnly"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TouchpadMode {
+            get {
+                return ((int)(this["TouchpadMode"]));
+            }
+            set {
+                this["TouchpadMode"] = value;
+            }
+        }
     }
 }

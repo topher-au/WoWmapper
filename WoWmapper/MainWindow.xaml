@@ -27,18 +27,18 @@
     <controls:MetroWindow.Resources>
         <Storyboard x:Key="ExpandWindow">
             <DoubleAnimation Name="ExpandLeftAnimation"
-                             Duration="0:0:0.25"
+                             Duration="0:0:0.5"
                              Storyboard.TargetProperty="Left" />
-            <DoubleAnimation Duration="0:0:0.25"
+            <DoubleAnimation Duration="0:0:0.5"
                              From="300"
                              Storyboard.TargetProperty="Width"
                              To="500" />
         </Storyboard>
         <Storyboard x:Key="ShrinkWindow">
             <DoubleAnimation Name="ShrinkLeftAnimation"
-                             Duration="0:0:0.25"
+                             Duration="0:0:0.5"
                              Storyboard.TargetProperty="Left" />
-            <DoubleAnimation Duration="0:0:0.25"
+            <DoubleAnimation Duration="0:0:0.5"
                              From="500"
                              Storyboard.TargetProperty="Width"
                              To="300" />
@@ -55,7 +55,6 @@
         </Storyboard>
     </controls:MetroWindow.Resources>
     <Grid>
-
         <settings:SettingsPanel x:Name="PanelSettings"
                                 Opacity="0"
                                 Visibility="Collapsed" />

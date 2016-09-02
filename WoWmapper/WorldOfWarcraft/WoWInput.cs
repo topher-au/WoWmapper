@@ -46,9 +46,7 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static void SendKeyDown(Key key, bool forceDirect = false)
         {
-            if (_process == null) return;
-
-            if (Properties.Settings.Default.InputDirectKeyboard || forceDirect)
+            if ((Properties.Settings.Default.InputDirectKeyboard || forceDirect) && _process != null)
             {
                 // Send direct key messages to WoW window
                 PostMessage(new HandleRef(null, _process.MainWindowHandle), WM_KEYDOWN,
@@ -63,9 +61,7 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static void SendKeyUp(Key key, bool forceDirect = false)
         {
-            if (_process == null) return;
-
-            if (Properties.Settings.Default.InputDirectKeyboard || forceDirect)
+            if ((Properties.Settings.Default.InputDirectKeyboard || forceDirect) && _process != null)
             {
                 // Send direct key messages to WoW window
                 PostMessage(new HandleRef(null, _process.MainWindowHandle), WM_KEYUP,
@@ -86,9 +82,9 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static void SendMouseDown(MouseButton button, bool forceDirect = false)
         {
-            if (_process == null) return;
             
-            if (Properties.Settings.Default.InputDirectMouse || forceDirect)
+            
+            if ((Properties.Settings.Default.InputDirectMouse || forceDirect) && _process != null)
             {
                 // Send direct mouse click messages to WoW window
                 uint mouseMessage = 0;
@@ -118,9 +114,7 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static void SendMouseUp(MouseButton button, bool forceDirect = false)
         {
-            if (_process == null) return;
-            
-            if (Properties.Settings.Default.InputDirectMouse || forceDirect)
+            if ((Properties.Settings.Default.InputDirectMouse || forceDirect) && _process != null)
             {
                 // Send direct mouse click messages to WoW window
                 uint mouseMessage = 0;

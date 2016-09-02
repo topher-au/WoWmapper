@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
+using DS4Windows;
 using WoWmapper.Keybindings;
 using WoWmapper.Overlay;
 using WoWmapper.Properties;

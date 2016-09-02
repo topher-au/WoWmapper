@@ -23,7 +23,8 @@
                       Content="Enable WoWmapper in-game overlay"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                           Path=EnableOverlay}" />
-            <TabControl Margin="5" IsEnabled="{Binding ElementName=CheckEnableOverlay, Path=IsChecked}">
+            <Separator Height="5" />
+            <TabControl IsEnabled="{Binding ElementName=CheckEnableOverlay, Path=IsChecked}">
                 <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Notifications">
                     <StackPanel>
                         <Grid>
