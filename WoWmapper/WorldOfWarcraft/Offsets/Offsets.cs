@@ -21,24 +21,11 @@ namespace WoWmapper.WorldOfWarcraft
             _sigScan.Size = 0;
         }
 
-        public static void ClearCache()
+        public static IntPtr GetStaticOffset(Offset offset, Process process)
         {
-            _cachedOffsets.Clear();
-        }
-
-        public static IntPtr GetStaticOffset(Offset offset, Process process, bool cacheOffset = false)
-        {
-            if (cacheOffset)
-            {
-                // Attempt to load offset from cache
-                try
-                {
-                    return _cachedOffsets.First(o => o.Key == offset).Value;
-                }
-                catch
-                {
-                }
-            }
+            // Try to load cached offset
+            var cachedOffset = _cachedOffsets.FirstOrDefault(o => o.Key == offset).Value;
+            if (cachedOffset != IntPtr.Zero) return cachedOffset;
 
             // Read offset pointer
             var outOffset = IntPtr.Zero;
@@ -47,19 +34,28 @@ namespace WoWmapper.WorldOfWarcraft
                 case Offset.GameState:
                 {
                     var firstOffset = FindOffset(offset, process);
-                    outOffset = MemoryManager.ReadPointer(firstOffset, 1);
+                    if (firstOffset != IntPtr.Zero)
+                        outOffset = MemoryManager.ReadPointer(firstOffset, 1);
+                    else
+                        outOffset = IntPtr.Zero;
                     break;
                 }
                 case Offset.PlayerBase:
                 {
                     var firstOffset = FindOffset(offset, process);
-                    outOffset = MemoryManager.ReadPointer(firstOffset);
+                    if (firstOffset != IntPtr.Zero)
+                        outOffset = MemoryManager.ReadPointer(firstOffset);
+                    else
+                        outOffset = IntPtr.Zero;
                     break;
                 }
                 case Offset.MouselookState:
                 {
                     var firstOffset = FindOffset(offset, process);
-                    outOffset = MemoryManager.ReadPointer(firstOffset, 4);
+                    if (firstOffset != IntPtr.Zero)
+                        outOffset = MemoryManager.ReadPointer(firstOffset, 4);
+                    else
+                        outOffset = IntPtr.Zero;
                     break;
                 }
                 case Offset.WalkRunState:
@@ -74,9 +70,7 @@ namespace WoWmapper.WorldOfWarcraft
                 }
             }
 
-            // Add offset to cache
-            if (cacheOffset)
-                _cachedOffsets.Add(offset, outOffset);
+            _cachedOffsets.Add(offset, outOffset);
 
             return outOffset;
         }
@@ -176,7 +170,7 @@ namespace WoWmapper.WorldOfWarcraft
                 Offset = Offset.PlayerAoeState,
                 Pattern =
                     "48 8B 05 ????????" + //     - mov rax,[WowB-64.exe+16F0D78] { [1E49AE0B100] }
-                    "80 B8 ??0C0000 00" , //     - cmp byte ptr [rax+00000C60],00 { 0 }
+                    "80 B8 ??0C0000 00", //     - cmp byte ptr [rax+00000C60],00 { 0 }
 
                 ByteOffset = 3
             }

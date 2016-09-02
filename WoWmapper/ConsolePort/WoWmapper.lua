@@ -17,13 +17,14 @@ WoWmapper.Keys = {
     CP_L_PULL   = "<CP_L_PULL>",
     CP_R_PULL   = "<CP_R_PULL>",
 	TOGGLERUN   = "<TOGGLERUN>",
+    WM_UPDATE   = '<WM_UPDATE>',
 }
  
 WoWmapper.Settings = {
-	id      = '<ID>',
-	type    = '<TYPE>',
-    CP_M1   = '<T_M1>',
-    CP_M2   = '<T_M2>',
-    CP_T1   = '<T_T1>',
-    CP_T2   = '<T_T2>',
+	id        = '<ID>',
+	type      = '<TYPE>',
+    CP_M1     = '<T_M1>',
+    CP_M2     = '<T_M2>',
+    CP_T1     = '<T_T1>',
+    CP_T2     = '<T_T2>',
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace WoWmapper.Controllers.DS4
@@ -61,24 +62,30 @@ namespace WoWmapper.Controllers.DS4
 
         public int GetAxis(GamepadAxis axis)
         {
-            var cState = Ds4.getCurrentState();
-
-            switch (axis)
+            lock (Ds4)
             {
-                case GamepadAxis.StickLeftX:
-                    return cState.LX-127;
+                try
+                {
+                    var cState = Ds4.getCurrentState();
 
-                case GamepadAxis.StickLeftY:
-                    return cState.LY-127;
-                case GamepadAxis.StickRightX:
-                    return cState.RX-127;
-                case GamepadAxis.StickRightY:
-                    return cState.RY-127;
-                case GamepadAxis.TriggerLeft:
-                    return cState.L2;
-                case GamepadAxis.TriggerRight:
-                    return cState.R2;
+                    switch (axis)
+                    {
+                        case GamepadAxis.StickLeftX:
+                            return cState.LX - 127;
+                        case GamepadAxis.StickLeftY:
+                            return cState.LY - 127;
+                        case GamepadAxis.StickRightX:
+                            return cState.RX - 127;
+                        case GamepadAxis.StickRightY:
+                            return cState.RY - 127;
+                        case GamepadAxis.TriggerLeft:
+                            return cState.L2;
+                        case GamepadAxis.TriggerRight:
+                            return cState.R2;
+                    }
+                } catch { }
             }
+            
             return 0;
         }
 
@@ -106,7 +113,10 @@ namespace WoWmapper.Controllers.DS4
 
         public void Stop()
         {
+            Ds4.LeftHeavySlowRumble = 0;
+            Ds4.RightLightFastRumble = 0;
             _running = false;
+            
         }
 
         #endregion Public Methods
@@ -212,6 +222,8 @@ namespace WoWmapper.Controllers.DS4
                     SendButtonEvent(GamepadButton.RightStick, true);
                 if (!(cState.R3 & pState.R3) && _buttonStates[(int) GamepadButton.RightStick])
                     SendButtonEvent(GamepadButton.RightStick, false);
+
+                Ds4.FlushHID();
 
                 Thread.Sleep(1);
             }

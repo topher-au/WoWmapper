@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="WoWmapper.SettingsPanels.SettingsOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WoWmapper.SettingsPanels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:properties="clr-namespace:WoWmapper.Properties"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid Margin="5">
+        <StackPanel Margin="5,0">
+            <TextBlock FontSize="16" Text="Overlay" />
+            <Separator Height="5" />
+            <TextBlock Margin="5,0,5,5"
+                       FontWeight="SemiBold"
+                       TextWrapping="Wrap">
+                This feature will only work when playing in windowed and windowed fullscreen modes.
+            </TextBlock>
+            <CheckBox Name="CheckEnableOverlay"
+                      Margin="5"
+                      Content="Enable WoWmapper in-game overlay"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                          Path=EnableOverlay}" />
+            <TabControl Margin="5" IsEnabled="{Binding ElementName=CheckEnableOverlay, Path=IsChecked}">
+                <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Notifications">
+                    <StackPanel>
+                        <Grid>
+                            <TextBlock Margin="5,5" Text="Position" />
+                            <ComboBox Width="80"
+                                      Margin="85,0"
+                                      HorizontalAlignment="Right"
+                                      SelectedIndex="{Binding Source={x:Static properties:Settings.Default},
+                                                              Path=NotificationV}">
+                                <ComboBoxItem Name="PopupTop">Top</ComboBoxItem>
+                                <ComboBoxItem Name="PopupBottom">Bottom</ComboBoxItem>
+                            </ComboBox>
+                            <ComboBox Width="80"
+                                      HorizontalAlignment="Right"
+                                      SelectedIndex="{Binding Source={x:Static properties:Settings.Default},
+                                                              Path=NotificationH}">
+                                <ComboBoxItem Name="PopupLeft">Left</ComboBoxItem>
+                                <ComboBoxItem Name="PopupRight">Right</ComboBoxItem>
+                            </ComboBox>
+                        </Grid>
+                        <StackPanel Margin="5,10">
+                            <CheckBox Margin="0,5"
+                                      Content="Notify on controller connect/disconnect"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                                          Path=EnableOverlayConnection}" />
+                            <CheckBox Margin="0,5"
+                                      Content="Notify on low battery"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                                          Path=EnableOverlayBattery}" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

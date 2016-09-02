@@ -17,6 +17,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Octokit;
 using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
+using WoWmapper.Overlay;
 using WoWmapper.WorldOfWarcraft;
 using Application = System.Windows.Application;
 using MessageBox = System.Windows.MessageBox;
@@ -31,7 +32,7 @@ namespace WoWmapper
     {
         public delegate void ShowKeybindDialogHandler(GamepadButton button);
         public static event ShowKeybindDialogHandler ShowKeybindDialogEvent;
-
+        
         private bool _settingsOpen = false;
 
         private readonly DoubleAnimation FadeInAnimation;
@@ -41,9 +42,8 @@ namespace WoWmapper
         private readonly Storyboard ExpandStoryboard;
         private readonly Storyboard ShrinkStoryboard;
 
-        private readonly Timer UiTimer = new Timer() {AutoReset = true, Interval = 250};
-        private double finalLeft = 0;
-        private bool updateFinished;
+        private readonly Timer _uiTimer = new Timer() {AutoReset = true, Interval = 250};
+        private double _finalLeft = 0;
 
         public delegate void ButtonStyleChangedHandler();
         public static event ButtonStyleChangedHandler ButtonStyleChanged;
@@ -63,7 +63,9 @@ namespace WoWmapper
                 e.Cancel = true;
                 Hide();
             }
-            UiTimer.Stop();
+            _uiTimer.Stop();
+            if(App.Overlay != null)
+                App.Overlay.CloseOverlay();
             base.OnClosing(e);
         }
 
@@ -107,15 +109,15 @@ namespace WoWmapper
             InitializeComponent();
             if(Properties.Settings.Default.DisableDonationButton) DonateButton.Visibility=Visibility.Collapsed;
             // Set up UI timer
-            UiTimer.Elapsed += UiTimer_Elapsed;
-            UiTimer.Start();
+            _uiTimer.Elapsed += UiTimer_Elapsed;
+            _uiTimer.Start();
 
             ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
 
             MoveWindowAnimation = new DoubleAnimation
             {
                 BeginTime = TimeSpan.FromMilliseconds(0),
-                Duration = TimeSpan.FromMilliseconds(500)
+                Duration = TimeSpan.FromMilliseconds(250)
             };
 
             MoveWindowAnimation.Completed += (sender, args) => { Left = MoveWindowAnimation.To.Value; };
@@ -128,7 +130,7 @@ namespace WoWmapper
                 BeginAnimation(WidthProperty, null);
                 BeginAnimation(LeftProperty, null);
                 Width = 500;
-                Left = finalLeft;
+                Left = _finalLeft;
                 StackContent.Visibility = Visibility.Collapsed;
             };
 
@@ -139,7 +141,7 @@ namespace WoWmapper
                 BeginAnimation(WidthProperty, null);
                 BeginAnimation(LeftProperty, null);
                 Width = 300;
-                Left = finalLeft;
+                Left = _finalLeft;
                 PanelSettings.Visibility = Visibility.Collapsed;
             };
 
@@ -148,15 +150,15 @@ namespace WoWmapper
                 From = 1,
                 To = 0,
                 BeginTime = TimeSpan.FromMilliseconds(0),
-                Duration = TimeSpan.FromMilliseconds(200)
+                Duration = TimeSpan.FromMilliseconds(125)
             };
 
             FadeInAnimation = new DoubleAnimation()
             {
                 From = 0,
                 To = 1,
-                BeginTime = TimeSpan.FromMilliseconds(300),
-                Duration = TimeSpan.FromMilliseconds(200),
+                BeginTime = TimeSpan.FromMilliseconds(125),
+                Duration = TimeSpan.FromMilliseconds(250),
             };
 
 
@@ -165,7 +167,9 @@ namespace WoWmapper
             CheckUpdates();
 
             ShowKeybindDialogEvent += OnShowKeybindDialog;
-            
+            Show();
+            Focus();
+
         }
 
         public static void ShowKeybindDialog(GamepadButton button)
@@ -296,10 +300,10 @@ namespace WoWmapper
             {
                 // Hide settings
                 StackContent.Visibility = Visibility.Visible;
-                finalLeft = Left + 100;
+                _finalLeft = Left + 100;
                 var expand = (Storyboard) Resources["ShrinkWindow"];
                 (expand.Children[0] as DoubleAnimation).From = Left;
-                (expand.Children[0] as DoubleAnimation).To = finalLeft;
+                (expand.Children[0] as DoubleAnimation).To = _finalLeft;
                 BeginStoryboard(expand);
 
                 StackContent.BeginAnimation(OpacityProperty, FadeInAnimation);
@@ -310,10 +314,10 @@ namespace WoWmapper
             {
                 // Show settings
                 PanelSettings.Visibility = Visibility.Visible;
-                finalLeft = Left - 100;
+                _finalLeft = Left - 100;
                 var expand = (Storyboard) Resources["ExpandWindow"];
                 (expand.Children[0] as DoubleAnimation).From = Left;
-                (expand.Children[0] as DoubleAnimation).To = finalLeft;
+                (expand.Children[0] as DoubleAnimation).To = _finalLeft;
                 BeginStoryboard(expand);
 
                 StackContent.BeginAnimation(OpacityProperty, FadeOutAnimation);

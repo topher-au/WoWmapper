@@ -48,7 +48,7 @@ namespace WoWmapper.WorldOfWarcraft
         {
             if (_process == null) return;
 
-            if (Properties.Settings.Default.InputDirectKeyboard)
+            if (Properties.Settings.Default.InputDirectKeyboard || forceDirect)
             {
                 // Send direct key messages to WoW window
                 PostMessage(new HandleRef(null, _process.MainWindowHandle), WM_KEYDOWN,
@@ -65,7 +65,7 @@ namespace WoWmapper.WorldOfWarcraft
         {
             if (_process == null) return;
 
-            if (Properties.Settings.Default.InputDirectKeyboard)
+            if (Properties.Settings.Default.InputDirectKeyboard || forceDirect)
             {
                 // Send direct key messages to WoW window
                 PostMessage(new HandleRef(null, _process.MainWindowHandle), WM_KEYUP,
@@ -88,7 +88,7 @@ namespace WoWmapper.WorldOfWarcraft
         {
             if (_process == null) return;
             
-            if (Properties.Settings.Default.InputDirectMouse)
+            if (Properties.Settings.Default.InputDirectMouse || forceDirect)
             {
                 // Send direct mouse click messages to WoW window
                 uint mouseMessage = 0;
@@ -120,7 +120,7 @@ namespace WoWmapper.WorldOfWarcraft
         {
             if (_process == null) return;
             
-            if (Properties.Settings.Default.InputDirectMouse)
+            if (Properties.Settings.Default.InputDirectMouse || forceDirect)
             {
                 // Send direct mouse click messages to WoW window
                 uint mouseMessage = 0;

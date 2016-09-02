@@ -9,16 +9,17 @@
              mc:Ignorable="d">
     <Grid Margin="5,5,5,5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160" />
+            <ColumnDefinition Width="150" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <TreeView Name="TreeSettings"
                   Grid.Column="0"
                   SelectedItemChanged="TreeSettings_OnSelectedItemChanged">
             <TreeViewItem Header="WoWmapper" Selected="WoWmapper_OnSelected" />
-            <TreeViewItem Header="Connected Devices" Selected="Devices_Selected" />
-            <TreeViewItem Header="Key Bindings" Selected="Keybindings_Selected" />
-            <TreeViewItem Header="Camera and Cursor" Selected="Camera_Selected" />
+            <TreeViewItem Header="Controllers" Selected="Devices_Selected" />
+            <TreeViewItem Header="Keybindings" Selected="Keybindings_Selected" />
+            <TreeViewItem Header="Analog Inputs" Selected="Camera_Selected" />
+            <TreeViewItem Header="Overlay" Selected="Overlay_OnSelected" />
             <TreeViewItem Header="Memory Reading" Selected="MemoryReading_Selected" />
         </TreeView>
         <GroupBox Name="GroupSettings"

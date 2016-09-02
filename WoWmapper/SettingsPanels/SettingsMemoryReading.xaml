@@ -7,7 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:properties="clr-namespace:WoWmapper.Properties"
              d:DesignHeight="421"
-             d:DesignWidth="313"
+             d:DesignWidth="323"
              mc:Ignorable="d">
     <Grid Margin="5">
         <StackPanel>
@@ -45,7 +45,7 @@
                 <TabControl Margin="5,0" IsEnabled="{Binding ElementName=CheckEnableMemoryReading, Path=IsChecked}">
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="General">
                         <StackPanel>
-                            <CheckBox Margin="5"
+                            <CheckBox Margin="0,5"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryOverrideMenu}"
                                       ToolTip="Allows you to navigate character selection quickly without using the cursor.">
@@ -70,16 +70,21 @@
                                            Source="../Controllers/DS4/Buttons/CP_R_DOWN.png" />
                                 </StackPanel>
                             </CheckBox>
-                            <CheckBox Margin="5"
+                            <CheckBox Margin="0,5"
                                       Content="Cancel mouselook when alt-tabbed"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryAutoCancel}"
                                       ToolTip="Automatically cancels mouselook in-game when the game window loses focus." />
+                            <CheckBox Margin="0,5"
+                                      Content="Show cursor position on overlay during mouselook"
+                                      IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                                          Path=EnableOverlayCrosshair}"
+                                      ToolTip="Shows a crosshair on the overlay that indicates the cursor position while mouselooking." />
                         </StackPanel>
                     </TabItem>
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Input Assist">
                         <StackPanel>
-                            <CheckBox Margin="5"
+                            <CheckBox Margin="0,5"
                                       Content="Auto-center mouse cursor after mouselook"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryAutoCenter}"
@@ -87,7 +92,7 @@
                             <StackPanel Margin="0,0,0,5"
                                         HorizontalAlignment="Right"
                                         Orientation="Horizontal">
-                                <TextBlock>Triggers after</TextBlock>
+                                <TextBlock>Trigger after</TextBlock>
                                 <TextBlock Margin="2,0" Text="{Binding ElementName=SliderAutoCancelDelay, Path=Value}" />
                                 <TextBlock>ms</TextBlock>
                                 <Slider Name="SliderAutoCancelDelay"
@@ -99,7 +104,7 @@
                                                         Path=MemoryAutoCenterDelay}" />
                             </StackPanel>
                             <DockPanel>
-                                <CheckBox Margin="5"
+                                <CheckBox Margin="0,5"
                                           IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                               Path=MemoryAutoWalk}"
                                           ToolTip="Automatically toggle the walk hotkey when the analog stick is tilted below the defined threshold.">
@@ -125,7 +130,7 @@
                                                         Path=WalkThreshold}" />
                             </DockPanel>
                             <DockPanel>
-                                <CheckBox Margin="5"
+                                <CheckBox Margin="0,5"
                                           IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                               Path=MemoryOverrideAoeCast}"
                                           ToolTip="Confirm and cancel casting targeted AoE spells using buttons instead of mouse clicks.">
@@ -149,12 +154,12 @@
                     </TabItem>
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Feedback">
                         <StackPanel>
-                            <CheckBox Margin="5"
+                            <CheckBox Margin="0,5"
                                       Content="Vibrate controller when taking damage"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryVibrationDamage}"
                                       ToolTip="Vibrates the controller based on the amount of damage your character is taking." />
-                            <CheckBox Margin="5"
+                            <CheckBox Margin="0,5"
                                       Content="Vibrate controller when receiving healing"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryVibrationHealing}"

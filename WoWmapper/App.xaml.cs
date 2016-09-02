@@ -21,6 +21,7 @@ using System.Windows.Media.Animation;
 using MahApps.Metro;
 using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
+using WoWmapper.Overlay;
 using WoWmapper.WorldOfWarcraft;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
@@ -34,6 +35,7 @@ namespace WoWmapper
     /// </summary>
     public partial class App : Application
     {
+        public static OverlayWindow Overlay = new OverlayWindow();
         private const string DefaultTheme = "BaseLight";
         private const string DefaultAccent = "Purple";
 
@@ -46,8 +48,34 @@ namespace WoWmapper
         
         public App()
         {
-                
+            // Check if an existing instance of the application is running
+            _mutex = new Mutex(false, "Global\\" + _appGuid);
+            if (!_mutex.WaitOne(0, false))
+            {
+                // Instance already running
+                MessageBox.Show("Another instance of WoWmapper is already open", "Already running", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                Environment.Exit(0);
+                return;
+            }
+
+            Current.DispatcherUnhandledException += (a, b) =>
+            {
+                Log.WriteLine($"Exception occured!\n{b.Exception.Message}\n\nStack trace:\n{b.Exception.StackTrace}");
+                MessageBox.Show("Whoops! Looks like something went wrong, sorry about that!\n\n" +
+                                "Here's the error message:\n" +
+                                b.Exception.Message +
+                                "\nIf logging is enabled, check log.txt for detailed information.",
+                                "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
+            };
+
+            WoWmapper.Properties.Settings.Default.PropertyChanged += (sender, args) =>
+            {
+                WoWmapper.Properties.Settings.Default.Save();
+            };
         }
+
         private static readonly ContextMenu _notifyMenu = new ContextMenu()
         {
             Items =
@@ -66,39 +94,14 @@ namespace WoWmapper
             "bindings.dat"
         };
 
-        protected override async void OnStartup(StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             // Clean up deprecated files
             foreach(var file in _deprecatedFiles)
                 if(File.Exists(file)) File.Delete(file);
 
-            // Check if an existing instance of the application is running
-            _mutex = new Mutex(false, "Global\\" + _appGuid);
-            if (!_mutex.WaitOne(0, false))
-            {
-                // Instance already running
-                MessageBox.Show("Another instance of WoWmapper is already open", "Already running", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                Current.Shutdown();
-                return;
-            }
-
-            Current.DispatcherUnhandledException += (a, b) =>
-            {
-                MessageBox.Show("Whoops! Looks like something went wrong, sorry about that!\n\n" +
-                                "Here's the error message:\n" +
-                                b.Exception.Message + "\n" + 
-                                b.Exception.StackTrace,
-                                "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-            };
-
-            base.OnStartup(e);
-
-            WoWmapper.Properties.Settings.Default.PropertyChanged += (sender, args) =>
-            {
-                WoWmapper.Properties.Settings.Default.Save();
-            };
-
+            SetTheme();
+            
             // Check application settings and upgrade
             var settingsVersion = new Version(WoWmapper.Properties.Settings.Default.SettingsVersion);
             if (Assembly.GetExecutingAssembly().GetName().Version > settingsVersion)
@@ -107,8 +110,6 @@ namespace WoWmapper
                 WoWmapper.Properties.Settings.Default.SettingsVersion =
                     Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
-
-            SetTheme();
             
             // Start up threads
             BindManager.LoadBindings();
@@ -119,6 +120,8 @@ namespace WoWmapper
 
             // Scan for controllers
             ControllerManager.RefreshControllers();
+
+            base.OnStartup(e);
 
             // Create system tray icon
             _notifyIcon.Icon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
@@ -177,6 +180,7 @@ namespace WoWmapper
 
         protected override void OnExit(ExitEventArgs e)
         {
+            Overlay?.CloseOverlay();
             // Shut down threads
             ProcessManager.Stop();
             InputMapper.Stop();

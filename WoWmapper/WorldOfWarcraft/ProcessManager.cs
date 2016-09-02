@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using ThreadState = System.Threading.ThreadState;
 
 namespace WoWmapper.WorldOfWarcraft
@@ -15,33 +16,43 @@ namespace WoWmapper.WorldOfWarcraft
     internal static class ProcessManager
     {
         #region Natives
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetWindowRect(HandleRef hWnd, out RECT lpRect);
+        static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll")]
+        static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
-            public int Left;        // x position of upper-left corner
-            public int Top;         // y position of upper-left corner
-            public int Right;       // x position of lower-right corner
-            public int Bottom;      // y position of lower-right corner
+            public int Left; // x position of upper-left corner
+            public int Top; // y position of upper-left corner
+            public int Right; // x position of lower-right corner
+            public int Bottom; // y position of lower-right corner
         }
+
         #endregion
 
-        private static readonly string[] WoWProcessNames = new[] { "wow", "wow-64", "wowt", "wowt-64", "wowb", "wowb-64"};
+        private static readonly string[] WoWProcessNames = new[] {"wow", "wow-64", "wowt", "wowt-64", "wowb", "wowb-64"};
         private static bool _threadRunning = false;
         private static readonly Thread ProcessThread = new Thread(ProcessThreadMethod);
 
         public static Process GameProcess { get; private set; }
         public static bool GameRunning => GameProcess != null;
 
-        public static Rectangle GetWindowRectangle()
+        public static Rectangle GetClientRectangle()
         {
-            var windowRect = new RECT();
-            GetWindowRect(new HandleRef(null, GameProcess.MainWindowHandle), out windowRect);
+            RECT clientRect, windowRect;
+            GetClientRect(GameProcess.MainWindowHandle, out clientRect);
+            GetWindowRect(GameProcess.MainWindowHandle, out windowRect);
 
-            var outRectangle = new Rectangle(windowRect.Left, windowRect.Top, windowRect.Right-windowRect.Left, windowRect.Bottom-windowRect.Top);
+            var borderWidth = (windowRect.Right - windowRect.Left - clientRect.Right)/2;
+            var titleHeight = (windowRect.Bottom - windowRect.Top) - clientRect.Bottom - borderWidth;
+
+            var outRectangle = new Rectangle(windowRect.Left + borderWidth, windowRect.Top + titleHeight,
+                clientRect.Right, clientRect.Bottom);
             return outRectangle;
         }
 
@@ -71,7 +82,12 @@ namespace WoWmapper.WorldOfWarcraft
                 if (GameProcess == null)
                 {
                     // Acquire a list of all processes
-                    var wowProcess = Process.GetProcesses().FirstOrDefault(process => WoWProcessNames.Contains(process.ProcessName.ToLower()) && process.HasExited == false);
+                    var wowProcess =
+                        Process.GetProcesses()
+                            .FirstOrDefault(
+                                process =>
+                                    WoWProcessNames.Contains(process.ProcessName.ToLower()) &&
+                                    process.HasExited == false);
                     if (wowProcess != null)
                     {
                         try
@@ -79,13 +95,10 @@ namespace WoWmapper.WorldOfWarcraft
                             Log.WriteLine($"Process found: [{wowProcess.Id}] {wowProcess.ProcessName}");
 
                             GameProcess = wowProcess;
-                            
 
 
                             if (Properties.Settings.Default.EnableMemoryReading) // Attach memory reader
                                 MemoryManager.Attach(wowProcess);
-
-                            
                         }
                         catch
                         {
@@ -107,13 +120,13 @@ namespace WoWmapper.WorldOfWarcraft
             _threadRunning = true;
             ProcessThread.Start();
         }
+
         internal static void Stop()
         {
             Log.WriteLine("Process watcher shutting down");
             MemoryManager.Detach();
             _threadRunning = false;
             ProcessThread.Abort();
-            
         }
     }
 

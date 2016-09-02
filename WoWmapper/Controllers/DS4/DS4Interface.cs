@@ -29,11 +29,6 @@ namespace WoWmapper.Controllers.DS4
         {
             while (_active)
             {
-                if(ControllerManager.ActiveController != null)
-                    Thread.Sleep(2500);
-                else
-                    Thread.Sleep(500);
-                
                 // Check validity of connected controllers
                 var deadControllers = new List<IController>();
 
@@ -50,6 +45,8 @@ namespace WoWmapper.Controllers.DS4
                 if(deadControllers.Count > 0)
                     Controllers.RemoveAll(c => deadControllers.Contains(c));
 
+                if (!_active) break;
+
                 // Update controller list
                 DS4Devices.findControllers();
                 var ds4Devices = DS4Devices.getDS4Controllers().ToArray();
@@ -63,6 +60,11 @@ namespace WoWmapper.Controllers.DS4
                         Log.WriteLine($"DS4 connected: {ds4Devices[i].MacAddress}");
                     }
                 }
+
+                if (ControllerManager.ActiveController != null)
+                    Thread.Sleep(2500);
+                else
+                    Thread.Sleep(1000);
             }
 
         }
@@ -72,11 +74,12 @@ namespace WoWmapper.Controllers.DS4
             Log.WriteLine("DualShock 4 interface shutting down");
             _active = false;
 
+            DS4Devices.stopControllers();
+
             foreach (var c in Controllers)
             {
                 c.Stop();
             }
-            DS4Devices.stopControllers();
         }
     }
 

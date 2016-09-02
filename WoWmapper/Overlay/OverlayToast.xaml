@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="WoWmapper.Overlay.OverlayToast"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WoWmapper.Overlay"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="400"
+             mc:Ignorable="d">
+    <Grid>
+        <Image Name="ImageBackgroundBottom"
+               Margin="0,10"
+               Source="Images/BackgroundBottom.png" />
+        <Image Name="ImageBackground"
+               Height="395"
+               VerticalAlignment="Top"
+               Source="Images/Background.png"
+               Stretch="UniformToFill" />
+        <StackPanel Name="PanelContent">
+            <TextBlock Name="NotificationText"
+                       Margin="60,70,60,0"
+                       VerticalAlignment="Top"
+                       FontSize="16"
+                       Foreground="LightGray"
+                       SizeChanged="NotificationText_OnSizeChanged"
+                       TextWrapping="Wrap">
+                Raise your eyes to the skies and observe!
+                Today our world's destruction has been averted in defiance of our very makers!
+                Algalon the Observer, herald of the titans has been defeated by our brave comrades in the depths of the titan city of Ulduar.
+                Algalon was sent here to judge the fate of our world.
+                Cold logic deemed this world was not worth saving. Cold logic, however, does not account for the power of free will. It's up to each of us to prove this is a world worth saving.
+                That our lives... that our lives are worth living.
+            </TextBlock>
+        </StackPanel>
+
+        <Image Width="400"
+               Margin="0,12"
+               VerticalAlignment="Top"
+               Source="Images/BackgroundIcon.png" />
+        <Image Name="ImageIcon"
+               Width="42"
+               Height="42"
+               Margin="50,12"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top" />
+        <Image Width="400"
+               VerticalAlignment="Top"
+               Source="Images/Header.png" />
+
+        <TextBlock Name="NotificationHeader"
+                   Margin="105,21"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="16"
+                   Foreground="White"
+                   Text="Citizens of Dalaran!" />
+
+    </Grid>
+</UserControl>

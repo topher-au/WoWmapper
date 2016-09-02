@@ -11,6 +11,8 @@ using System.Windows.Threading;
 using WoWmapper.Controllers.DS4;
 using WoWmapper.Controllers.Xbox;
 using WoWmapper.Keybindings;
+using WoWmapper.Overlay;
+using WoWmapper.Properties;
 
 namespace WoWmapper.Controllers
 {
@@ -29,6 +31,7 @@ namespace WoWmapper.Controllers
 
         private static Thread _watcherThread = new Thread(ControllerWatcher);
         private static bool _threadRunning;
+        private static int _lastBatteryWarn = 100;
 
         #endregion
 
@@ -126,8 +129,9 @@ namespace WoWmapper.Controllers
 
             foreach (var controller in controllerList)
             {
-                if (!Controllers.Contains(controller) && controller != null)
+                lock (Controllers)
                 {
+                    if (controller == null || Controllers.Contains(controller) || !controller.IsAlive()) continue;
                     Controllers.Add(controller);
                     if (ControllersChanged != null)
                         Application.Current.Dispatcher.Invoke(ControllersChanged);
@@ -145,6 +149,11 @@ namespace WoWmapper.Controllers
             {
                 ActiveController.ButtonStateChanged += ActiveControllerOnButtonStateChanged;
                 Log.WriteLine("Selected controller: " + controller.Name);
+                App.Overlay.PopupNotification(new OverlayNotification()
+                {
+                    Header = "Controller selected",
+                    Content = $"Controller {controller.Name} is now the active controller.",
+                });
             }
 
             if (ActiveControllerChanged != null)
@@ -189,55 +198,83 @@ namespace WoWmapper.Controllers
         {
             while (_threadRunning)
             {
-                // Check validity of connected controllers
-                var deadControllers = new List<IController>();
-
-                foreach (var controller in Controllers)
+                lock (Controllers)
                 {
-                    if (controller.IsAlive()) continue;
-                    
-                    deadControllers.Add(controller);
-                }
+                    // Check validity of connected controllers
+                    var deadControllers = Controllers.Where(controller => !controller.IsAlive()).ToList();
 
-                if (deadControllers.Contains(ActiveController))
-                {
-                    SetController(null);
-                    Application.Current.Dispatcher.Invoke(() => { ActiveControllerChanged?.Invoke(null); });
-                }
-
-
-                // Remove disconnected devices
-                for (int i = 0; i < deadControllers.Count; i++)
-                {
-                    deadControllers[i].Stop();
-                    Controllers.Remove(deadControllers[i]);
-                    deadControllers[i] = null;
-                }
-
-                if (deadControllers.Count > 0)
-                {
-                    if (ControllersChanged != null)
-                        Application.Current.Dispatcher.Invoke(ControllersChanged);
-                }
-
-
-                if (ActiveController == null)
-                {
-                    RefreshControllers();
-                    if (Controllers.Count > 0)
+                    if (deadControllers.Contains(ActiveController))
                     {
-                        try
+                        SetController(null);
+                        Application.Current.Dispatcher.Invoke(() => { ActiveControllerChanged?.Invoke(null); });
+                    }
+
+                    // Remove disconnected devices
+                    for (int i = 0; i < deadControllers.Count; i++)
+                    {
+                        deadControllers[i].Stop();
+                        Controllers.Remove(deadControllers[i]);
+                        App.Overlay.PopupNotification(new OverlayNotification()
                         {
-                            var firstActive = Controllers.First(device => device.IsAlive());
-                            SetController(firstActive);
+                            Header = "Controller disconnected",
+                            Content = $"Controller {deadControllers[i].Name} was disconnected.",
+                        });
+                        deadControllers[i] = null;
+                    }
+
+                    if (deadControllers.Count > 0)
+                    {
+                        if (ControllersChanged != null)
+                            Application.Current.Dispatcher.Invoke(ControllersChanged);
+                    }
+
+                    if (ActiveController == null)
+                    {
+                        _lastBatteryWarn = 100;
+                        RefreshControllers();
+                        if (Controllers.Count > 0)
+                        {
+                            try
+                            {
+                                var firstActive = Controllers.First(device => device.IsAlive());
+                                SetController(firstActive);
+                            }
+                            catch
+                            {
+                            }
                         }
-                        catch
+                    }
+
+                    if (Settings.Default.EnableOverlayBattery && ActiveController != null)
+                    {
+                        var battery = ActiveController.BatteryLevel;
+                        if (battery < 20 && battery < _lastBatteryWarn - 5)
                         {
+                            App.Overlay.PopupNotification(new OverlayNotification()
+                            {
+                                Content =
+                                    $"Your controller battery has reached {battery}%. Plug in now to avoid unexpected interruption.",
+                                Header = "Battery critically low"
+                            });
+                            _lastBatteryWarn -= 5;
+                        }
+                        else if (battery < 50 && battery < _lastBatteryWarn - 10)
+                        {
+                            App.Overlay.PopupNotification(new OverlayNotification()
+                            {
+                                Content = $"Your controller battery has reached {battery}%.",
+                                Header = "Battery low"
+                            });
+                            _lastBatteryWarn -= 5;
+                        }
+                        else if (battery > _lastBatteryWarn)
+                        {
+                            _lastBatteryWarn = battery;
                         }
                     }
                 }
 
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
             }
         }
 

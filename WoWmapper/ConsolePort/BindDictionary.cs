@@ -73,9 +73,9 @@ namespace WoWmapper.ConsolePort
             {
                 _dict.Add("TYPE", "XBOX");
             }
-
-
+            
             _dict.Add("TOGGLERUN", "NUMPADDIVIDE");
+            _dict.Add("WM_UPDATE", "ALT-F12");
             _dict.Add("ID", Properties.Settings.Default.BindingsModified.ToFileTimeUtc().ToString());
         }
 

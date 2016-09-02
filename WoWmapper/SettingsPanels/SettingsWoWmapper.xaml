@@ -49,7 +49,7 @@
             <CheckBox Name="CheckExportBindings"
                       Margin="5"
                       Checked="CheckExportBindings_OnChecked"
-                      Content="Automatically save bindings to ConsolePort"
+                      Content="Automatically sync settings to ConsolePort"
                       IsChecked="{Binding Source={x:Static p:Settings.Default},
                                           Path=ExportBindings}"
                       Unchecked="CheckExportBindings_OnChecked" />
@@ -63,6 +63,11 @@
                       Content="Hide application window at startup"
                       IsChecked="{Binding Source={x:Static p:Settings.Default},
                                           Path=HideAtStartup}" />
+            <CheckBox Name="CheckEnableLogging"
+                      Margin="5"
+                      Content="Output log file to WoWmapper folder"
+                      IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                          Path=EnableLogging}" />
             <CheckBox Name="CheckAutoUpdate"
                       Margin="5"
                       Content="Automatically download and install updates"

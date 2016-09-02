@@ -124,6 +124,7 @@ namespace WoWmapper.WorldOfWarcraft
         public static void Detach()
         {
             Log.WriteLine("Closing OpenProcess handle {0}", ProcessHandle.ToString());
+            Offsets.Clear();
             CloseHandle(ProcessHandle);
             ProcessHandle = IntPtr.Zero;
         }
@@ -134,8 +135,9 @@ namespace WoWmapper.WorldOfWarcraft
 
             try
             {
-                var offset = Offsets.GetStaticOffset(Offset.PlayerBase, Process, true);
+                var offset = Offsets.GetStaticOffset(Offset.PlayerBase, Process);
                 if (offset == IntPtr.Zero) return null; // Failed to locate offset
+
                 var playerBase = Read<IntPtr>(offset);
                 var playerBase2 = Read<IntPtr>(playerBase + 0x10);
                 var currentHealth = Read<long>(playerBase2 + (int) PlayerInfoOffset.HealthCurrent);
@@ -155,7 +157,7 @@ namespace WoWmapper.WorldOfWarcraft
 
             try
             {
-                var offset = Offsets.GetStaticOffset(Offset.MouselookState, Process, true);
+                var offset = Offsets.GetStaticOffset(Offset.MouselookState, Process);
                 if (offset == IntPtr.Zero) return false; // Failed to locate offset
                 var mouselookState = Read<byte>(offset);
 
@@ -174,7 +176,7 @@ namespace WoWmapper.WorldOfWarcraft
 
             try
             {
-                var offset = Offsets.GetStaticOffset(Offset.GameState, Process, true);
+                var offset = Offsets.GetStaticOffset(Offset.GameState, Process);
                 if (offset == IntPtr.Zero) return 0; // Failed to locate offset
 
                 var gameState = Read<byte>(offset);
@@ -194,9 +196,8 @@ namespace WoWmapper.WorldOfWarcraft
 
             try
             {
-                var offset = Offsets.GetStaticOffset(Offset.WalkRunState, Process, true);
-
-                if (offset == IntPtr.Zero) return 0; // Failed to locate offset
+                var offset = Offsets.GetStaticOffset(Offset.WalkRunState, Process);
+                if (offset == IntPtr.Zero) return -1; // Failed to locate offset
 
                 var secondOffset = MemoryManager.ReadPointer(offset);
                 var finalOffset = MemoryManager.Read<IntPtr>(secondOffset) + 0x15e1;
@@ -218,7 +219,7 @@ namespace WoWmapper.WorldOfWarcraft
 
             try
             {
-                var offset = Offsets.GetStaticOffset(Offset.PlayerAoeState, Process, true);
+                var offset = Offsets.GetStaticOffset(Offset.PlayerAoeState, Process);
                 if (offset == IntPtr.Zero) return false; // Failed to locate offset
 
                 var baseOffset = offset + Read<int>(offset) + 4;

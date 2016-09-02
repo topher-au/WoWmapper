@@ -253,18 +253,6 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ClientGuid {
-            get {
-                return ((string)(this["ClientGuid"]));
-            }
-            set {
-                this["ClientGuid"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool InputDirectKeyboard {
             get {
@@ -386,12 +374,12 @@ namespace WoWmapper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableTelemetry {
+        public bool EnableLogging {
             get {
-                return ((bool)(this["EnableTelemetry"]));
+                return ((bool)(this["EnableLogging"]));
             }
             set {
-                this["EnableTelemetry"] = value;
+                this["EnableLogging"] = value;
             }
         }
         
@@ -428,6 +416,78 @@ namespace WoWmapper.Properties {
             }
             set {
                 this["BindingsModified"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableOverlay {
+            get {
+                return ((bool)(this["EnableOverlay"]));
+            }
+            set {
+                this["EnableOverlay"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableOverlayCrosshair {
+            get {
+                return ((bool)(this["EnableOverlayCrosshair"]));
+            }
+            set {
+                this["EnableOverlayCrosshair"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableOverlayConnection {
+            get {
+                return ((bool)(this["EnableOverlayConnection"]));
+            }
+            set {
+                this["EnableOverlayConnection"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableOverlayBattery {
+            get {
+                return ((bool)(this["EnableOverlayBattery"]));
+            }
+            set {
+                this["EnableOverlayBattery"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int NotificationH {
+            get {
+                return ((int)(this["NotificationH"]));
+            }
+            set {
+                this["NotificationH"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int NotificationV {
+            get {
+                return ((int)(this["NotificationV"]));
+            }
+            set {
+                this["NotificationV"] = value;
             }
         }
     }

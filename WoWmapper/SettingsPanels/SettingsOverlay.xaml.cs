@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WoWmapper.SettingsPanels
 {
     /// <summary>
-    /// Interaction logic for SettingsMovement.xaml
+    /// Interaction logic for SettingsOverlay.xaml
     /// </summary>
-    public partial class SettingsCamera : UserControl
+    public partial class SettingsOverlay : UserControl
     {
-        public SettingsCamera()
+        public SettingsOverlay()
         {
             InitializeComponent();
         }

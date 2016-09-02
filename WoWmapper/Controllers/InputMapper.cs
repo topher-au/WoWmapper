@@ -6,9 +6,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WoWmapper.Keybindings;
+using WoWmapper.Overlay;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
 using Cursor = System.Windows.Forms.Cursor;
@@ -21,9 +24,12 @@ namespace WoWmapper.Controllers
         private static readonly bool[] _keyStates = new bool[Enum.GetNames(typeof (GamepadButton)).Length];
         private static bool _threadRunning = false;
         private static readonly HapticFeedback HapticFeedback = new HapticFeedback();
-        private static int _mouselook;
+        private static DateTime _mouselookStarted;
         private static bool _setMouselook = false;
         private static bool _stopWalk = false;
+        private static int _cursorX;
+        private static int _cursorY;
+        private static bool _crosshairShowing;
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
@@ -57,28 +63,74 @@ namespace WoWmapper.Controllers
                         _setMouselook = false;
 
                     // Cancel mouselook when alt-tabbed
-                    if (Settings.Default.MemoryAutoCancel && !_setMouselook && mouselookState && foregroundWindow != ProcessManager.GameProcess.MainWindowHandle)
+                    if (Settings.Default.MemoryAutoCancel && !_setMouselook && mouselookState &&
+                        foregroundWindow != ProcessManager.GameProcess.MainWindowHandle)
                     {
                         WoWInput.SendMouseClick(MouseButton.Right, true);
                         _setMouselook = true;
                     }
 
-                    // Auto-center cursor after mouselook if WoW has focus
-                    if (Settings.Default.MemoryAutoCenter && foregroundWindow == ProcessManager.GameProcess?.MainWindowHandle)
+                    // Show/hide the overlay crosshair
+                    if (Settings.Default.EnableOverlayCrosshair)
                     {
-                        var delay = Settings.Default.MemoryAutoCenterDelay/5;
-                        
-                        if (!mouselookState && _mouselook == delay)
+                        // Show crosshair after mouselooking for 100ms
+                        mouselookState = MemoryManager.ReadMouselook();
+                        if (mouselookState && DateTime.Now >= _mouselookStarted + TimeSpan.FromMilliseconds(100) &&
+                            !_crosshairShowing)
                         {
-                            var windowRect = ProcessManager.GetWindowRectangle();
+                            _crosshairShowing = true;
+                            App.Overlay.SetCrosshairState(true, _cursorX, _cursorY);
+                        } // Otherwise hide crosshair
+                        else if (!mouselookState)
+                        {
+                            _crosshairShowing = false;
+                            App.Overlay.SetCrosshairState(false);
+                        }
+                    }
+                    else
+                    {
+                        _crosshairShowing = false;
+                        App.Overlay.SetCrosshairState(false);
+                    }
+
+                    // Check if mouselook is inactive
+                    if (!MemoryManager.ReadMouselook())
+                    {
+                        // Update last known cursor position
+                        var cursor = Cursor.Position;
+                        _cursorX = cursor.X;
+                        _cursorY = cursor.Y;
+
+                        // Check if we need to re-center the mouse cursor
+                        if (Settings.Default.MemoryAutoCenter &&
+                            foregroundWindow == ProcessManager.GameProcess.MainWindowHandle &&
+                            _mouselookStarted != DateTime.MinValue &&
+                            DateTime.Now >=
+                            _mouselookStarted + TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay))
+                        {
+                            var windowRect = ProcessManager.GetClientRectangle();
                             Cursor.Position = new System.Drawing.Point(
                                 windowRect.X + windowRect.Width/2,
                                 windowRect.Y + windowRect.Height/2);
                         }
-                        if (mouselookState && _mouselook < delay)
-                            _mouselook++;
-                        else if (!mouselookState)
-                            _mouselook = 0;
+
+                        // Reset auto-center cooldown timer
+                        _mouselookStarted = DateTime.MinValue;
+                    }
+
+                    // Check if mouselook is active
+                    if (MemoryManager.ReadMouselook())
+                    {
+                        // If so, start the cooldown timer
+                        if (_mouselookStarted == DateTime.MinValue)
+                            _mouselookStarted = DateTime.Now;
+
+                        // If the timer has elapsed but mouselook is active, temporarily hide the crosshair
+                        else if (Settings.Default.EnableOverlayCrosshair &&
+                                 Settings.Default.MemoryAutoCenter &&
+                                 DateTime.Now >= _mouselookStarted +
+                                 TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay))
+                            App.Overlay.SetCrosshairState(false);
                     }
                 }
 
@@ -101,8 +153,8 @@ namespace WoWmapper.Controllers
                 if (moveState == 0 || moveState == 1)
                 {
                     if (strength < Settings.Default.WalkThreshold &&
-                    strength >= Settings.Default.MovementThreshold &&
-                    moveState == 0) // Activate Walk
+                        strength >= Settings.Default.MovementThreshold &&
+                        moveState == 0) // Activate Walk
                     {
                         WoWInput.SendKeyDown(Key.Divide);
                         WoWInput.SendKeyUp(Key.Divide);
@@ -113,7 +165,8 @@ namespace WoWmapper.Controllers
                         WoWInput.SendKeyDown(Key.Divide);
                         WoWInput.SendKeyUp(Key.Divide);
                     }
-                    else if (strength < Settings.Default.MovementThreshold && !_stopWalk && moveState == 1) // Deactivate walk, stop moving
+                    else if (strength < Settings.Default.MovementThreshold && !_stopWalk && moveState == 1)
+                        // Deactivate walk, stop moving
                     {
                         WoWInput.SendKeyDown(Key.Divide);
                         WoWInput.SendKeyUp(Key.Divide);
@@ -325,6 +378,14 @@ namespace WoWmapper.Controllers
 
         private static void ActiveController_ButtonStateChanged(GamepadButton button, bool state)
         {
+            if (button == GamepadButton.CenterLeft && state)
+                App.Overlay.PopupNotification(new OverlayNotification()
+                {
+                    Header = "Citizens of Dalaran!",
+                    Content =
+                        "Raise your eyes to the skies and observe! Today our world's destruction has been averted in defiance of our very makers! Algalon the Observer, herald of the titans has been defeated by our brave comrades in the depths of the titan city of Ulduar. Algalon was sent here to judge the fate of our world. Cold logic deemed this world was not worth saving.Cold logic, however, does not account for the power of free will.It's up to each of us to prove this is a world worth saving. That our lives...that our lives are worth living.",
+                });
+
             if (Properties.Settings.Default.EnableMemoryReading)
             {
                 // Process input if player is at character select

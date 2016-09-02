@@ -45,7 +45,7 @@ namespace WoWmapper.Controllers
                         var currentHealth = playerHealth.Item1;
                         var healthLost = lastHealth - currentHealth;
 
-                        if (Settings.Default.MemoryVibrationDamage && healthLost > 0)
+                        if (Settings.Default.MemoryVibrationDamage && healthLost > 0 && maxHealth <= lastMax && maxHealth > 0)
                         {
                             // Player has taken damage
                             var damagePercent = (float)healthLost / lastHealth;

@@ -173,7 +173,7 @@ namespace WoWmapper.Controllers.Xbox
 
         public void SendRumble(byte left, byte right, int duration)
         {
-            _controller.Vibrate(left, right, TimeSpan.FromMilliseconds(duration));
+            _controller.Vibrate((double)left / 255, (double)right/255, TimeSpan.FromMilliseconds(duration));
         }
 
         public void Stop()

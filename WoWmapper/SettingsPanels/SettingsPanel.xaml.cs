@@ -25,8 +25,9 @@ namespace WoWmapper.SettingsPanels
         private static readonly SettingsDevices SettingsDevices = new SettingsDevices();
         private static readonly SettingsKeybindings SettingsKeybindings = new SettingsKeybindings();
 
-        private static readonly SettingsCamera SettingsCamera = new SettingsCamera();
+        private static readonly SettingsAnalog SettingsAnalog = new SettingsAnalog();
 
+        private static readonly SettingsOverlay SettingsOverlay = new SettingsOverlay();
         private static readonly SettingsMemoryReading SettingsMemoryReading = new SettingsMemoryReading();
         private string _panelHeader;
         private object _panelContent;
@@ -83,14 +84,20 @@ namespace WoWmapper.SettingsPanels
 
         private void Camera_Selected(object sender, RoutedEventArgs e)
         {
-            _panelHeader = "Camera and Cursor";
-            _panelContent = SettingsCamera;
+            _panelHeader = "Analog Inputs";
+            _panelContent = SettingsAnalog;
         }
 
         private void MemoryReading_Selected(object sender, RoutedEventArgs e)
         {
             _panelHeader = "Memory Reading";
             _panelContent = SettingsMemoryReading;
+        }
+
+        private void Overlay_OnSelected(object sender, RoutedEventArgs e)
+        {
+            _panelHeader = "Overlay";
+            _panelContent = SettingsOverlay;
         }
     }
 }

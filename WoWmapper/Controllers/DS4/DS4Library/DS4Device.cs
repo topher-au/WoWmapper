@@ -302,15 +302,20 @@ namespace DS4Windows
             lock (outputReport)
             {
                 int lastError = 0;
-                while (true)
+                while (hDevice.IsOpen)
                 {
                     if (writeOutput())
                     {
                         lastError = 0;
-                        if (testRumble.IsRumbleSet()) // repeat test rumbles periodically; rumble has auto-shut-off in the DS4 firmware
-                            Monitor.Wait(outputReport, 10000); // DS4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
+                        if (testRumble.IsRumbleSet())
+                            // repeat test rumbles periodically; rumble has auto-shut-off in the DS4 firmware
+                            Monitor.Wait(outputReport, 10000);
+                                // DS4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
                         else
+                        {
                             Monitor.Wait(outputReport);
+                        }
+                            
                     }
                     else
                     {
