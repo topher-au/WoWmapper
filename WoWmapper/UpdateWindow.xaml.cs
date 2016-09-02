@@ -69,7 +69,7 @@ namespace WoWmapper
                     // Extract updater from downloaded archive
                     var updateZip = ZipFile.OpenRead("_update.zip");
                     var updater = updateZip.Entries.First(entry => entry.Name == "WoWmapper_Updater.exe");
-                    updater.ExtractToFile("WoWmapper_Updater.exe");
+                    updater.ExtractToFile("WoWmapper_Updater.exe", true);
 
                     // Start downloaded updater
                     Process.Start("WoWmapper_Updater.exe", "_update.zip");

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
+using System.Threading;
 
 namespace Updater
 {
@@ -49,6 +50,9 @@ namespace Updater
                     if (proc.Length == 0) break;
                 }
             });
+
+            await Task.Run(() => Thread.Sleep(2000));
+
             LabelUpdateStatus.Text = "Extracting files...";
             await Task.Run(() =>
             {
