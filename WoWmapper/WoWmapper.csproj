@@ -121,8 +121,8 @@
     <Compile Include="Controllers\Vector2.cs" />
     <Compile Include="Controllers\Xbox\IXInput.cs" />
     <Compile Include="Controllers\Xbox\XboxData.cs" />
-    <Compile Include="Controllers\Xbox\XInput9.cs" />
     <Compile Include="Controllers\Xbox\XInput10.cs" />
+    <Compile Include="Controllers\Xbox\XInput9.cs" />
     <Compile Include="Controllers\Xbox\XInputController.cs" />
     <Compile Include="Controllers\Xbox\XInputInterface.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\Point.cs" />

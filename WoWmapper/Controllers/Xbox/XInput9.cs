@@ -4,29 +4,21 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using J2i.Net.XInputWrapper;
 
 namespace WoWmapper.Controllers.Xbox
 {
     public class XInput9 : IXInput
     {
-        [DllImport("xinput1_3.dll")]
+        [DllImport("xinput9_1_0.dll")]
         private static extern int XInputGetState(int dwUserIndex, ref XInputState pState);
 
-        [DllImport("xinput1_3.dll", EntryPoint = "#100")]
-        private static extern int XInputGetStateSecret(int playerIndex, out XInputStateSecret struc);
-
-        [DllImport("xinput1_3.dll")]
+        [DllImport("xinput9_1_0.dll")]
         private static extern int XInputSetState(int dwUserIndex, ref XInputVibration pVibration);
 
-        [DllImport("xinput1_3.dll")]
+        [DllImport("xinput9_1_0.dll")]
         private static extern int XInputGetCapabilities(int dwUserIndex, int dwFlags,
             ref XInputCapabilities pCapabilities);
-
-        [DllImport("xinput1_3.dll")]
-        public static extern int XInputGetBatteryInformation(int dwUserIndex, byte devType,
-            ref XInputBatteryInformation pBatteryInformation);
 
         public int GetState(int dwUserIndex, ref XInputState pState)
         {
@@ -35,7 +27,8 @@ namespace WoWmapper.Controllers.Xbox
 
         public int GetStateSecret(int dwUserIndex, out XInputStateSecret pStateSecret)
         {
-            return XInputGetStateSecret(dwUserIndex, out pStateSecret);
+            pStateSecret = new XInputStateSecret();
+            return 0;
         }
 
         public int SetState(int dwUserIndex, ref XInputVibration pVibration)
@@ -50,7 +43,8 @@ namespace WoWmapper.Controllers.Xbox
 
         public int GetBatteryInformation(int dwUserIndex, byte devType, ref XInputBatteryInformation pBatteryInformation)
         {
-            return XInputGetBatteryInformation(dwUserIndex, devType, ref pBatteryInformation);
+            // This method is not available in this version of XInput
+            return -1;
         }
     }
 }

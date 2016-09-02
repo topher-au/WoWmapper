@@ -26,8 +26,8 @@ namespace WoWmapper.Controllers
 
         public static IController ActiveController;
         public static readonly List<IController> Controllers = new List<IController>();
-        public static readonly DS4Interface DS4 = new DS4Interface();
-        public static readonly XInputInterface XInput = new XInputInterface();
+        public static DS4Interface DS4;
+        public static XInputInterface XInput;
 
         #endregion
 
@@ -62,6 +62,8 @@ namespace WoWmapper.Controllers
         public static void Start()
         {
             _threadRunning = true;
+            DS4 = new DS4Interface();
+            XInput = new XInputInterface();
             _watcherThread.Start();
         }
 
@@ -270,6 +272,7 @@ namespace WoWmapper.Controllers
 
         private static void ControllerWatcher()
         {
+            Log.WriteLine("Starting controller monitor thread...");
             while (_threadRunning)
             {
                 lock (Controllers)
