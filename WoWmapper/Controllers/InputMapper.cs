@@ -378,14 +378,6 @@ namespace WoWmapper.Controllers
 
         private static void ActiveController_ButtonStateChanged(GamepadButton button, bool state)
         {
-            if (button == GamepadButton.CenterLeft && state)
-                App.Overlay.PopupNotification(new OverlayNotification()
-                {
-                    Header = "Citizens of Dalaran!",
-                    Content =
-                        "Raise your eyes to the skies and observe! Today our world's destruction has been averted in defiance of our very makers! Algalon the Observer, herald of the titans has been defeated by our brave comrades in the depths of the titan city of Ulduar. Algalon was sent here to judge the fate of our world. Cold logic deemed this world was not worth saving.Cold logic, however, does not account for the power of free will.It's up to each of us to prove this is a world worth saving. That our lives...that our lives are worth living.",
-                });
-
             if (Properties.Settings.Default.EnableMemoryReading)
             {
                 // Process input if player is at character select
