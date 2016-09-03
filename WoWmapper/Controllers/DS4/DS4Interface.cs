@@ -51,20 +51,25 @@ namespace WoWmapper.Controllers.DS4
                 DS4Devices.findControllers();
                 var ds4Devices = DS4Devices.getDS4Controllers().ToArray();
 
-                for (var i = 0; i < ds4Devices.Length; i++)
+                if (ds4Devices.Length > 0)
                 {
-                    if (ds4Devices[i] != null && Controllers.Count(controller => controller.UnderlyingController == ds4Devices[i]) == 0)
+                    for (var i = 0; i < ds4Devices.Length; i++)
                     {
-                        var controller = new DS4Controller(ds4Devices[i]);
-                        Controllers.Add(controller);
-                        Log.WriteLine($"DS4 connected: {ds4Devices[i].MacAddress}");
+                        if (ds4Devices[i] != null &&
+                            Controllers.Count(controller => controller.UnderlyingController == ds4Devices[i]) == 0)
+                        {
+                            var controller = new DS4Controller(ds4Devices[i]);
+                            Controllers.Add(controller);
+                            Log.WriteLine($"DS4 connected: {ds4Devices[i].MacAddress}");
+                        }
                     }
-                }
 
-                if (ControllerManager.ActiveController != null)
                     Thread.Sleep(2500);
+                }
                 else
-                    Thread.Sleep(1000);
+                {
+                    Thread.Sleep(5000);
+                }
             }
 
         }

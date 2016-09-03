@@ -219,8 +219,9 @@ namespace WoWmapper.Overlay
                         StackNotifications.Children.Add(popupNotification);
                     });
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log.WriteLine($"Exception occured during popup creation: {ex.Message}");
                 }
         }
 
@@ -287,8 +288,9 @@ namespace WoWmapper.Overlay
                         });
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Log.WriteLine($"Exception occured during overlay update: {ex.Message}");
                 }
                 finally
                 {
