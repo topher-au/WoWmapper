@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WoWmapper.SettingsPanels"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:properties="clr-namespace:WoWmapper.Properties"
-             d:DesignHeight="421"
+             d:DesignHeight="500"
              d:DesignWidth="323"
              mc:Ignorable="d">
     <Grid Margin="5">
@@ -129,31 +129,36 @@
                                         Value="{Binding Source={x:Static properties:Settings.Default},
                                                         Path=WalkThreshold}" />
                             </DockPanel>
-                            <DockPanel>
-                                <CheckBox Margin="0,5"
-                                          IsChecked="{Binding Source={x:Static properties:Settings.Default},
-                                                              Path=MemoryOverrideAoeCast}"
-                                          ToolTip="Confirm and cancel casting targeted AoE spells using buttons instead of mouse clicks.">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center">Confirm AoE cast with</TextBlock>
-                                        <Image Name="ImageAoeConfirm"
-                                               Width="18"
-                                               Height="18"
-                                               Margin="2,0"
-                                               Source="../Controllers/DS4/Buttons/CP_R_DOWN.png" />
-                                        <TextBlock VerticalAlignment="Center">and cancel with</TextBlock>
-                                        <Image Name="ImageAoeCancel"
-                                               Width="18"
-                                               Height="18"
-                                               Margin="2,0"
-                                               Source="../Controllers/DS4/Buttons/CP_R_RIGHT.png" />
-                                    </StackPanel>
-                                </CheckBox>
-                            </DockPanel>
                             <CheckBox Margin="0,5"
                                       Content="Disable touchpad while mouselook is active"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=MemoryTouchpadCursorOnly}" />
+                            <DockPanel>
+                                <CheckBox Margin="0,5"
+                                          Content="Override buttons when casting AoE spells"
+                                          IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                                              Path=MemoryOverrideAoeCast}"
+                                          ToolTip="Confirm and cancel casting targeted AoE spells using buttons instead of mouse clicks." />
+
+                            </DockPanel>
+                            <StackPanel Width="240"
+                                        Margin="22,0"
+                                        HorizontalAlignment="Left">
+                                <DockPanel Margin="2">
+                                    <TextBlock VerticalAlignment="Center" Text="Cast Spell" />
+                                    <ComboBox Name="ComboAoeConfirm"
+                                              Width="150"
+                                              HorizontalAlignment="Right"
+                                              SelectionChanged="AoeOverride_Changed" />
+                                </DockPanel>
+                                <DockPanel Margin="2">
+                                    <TextBlock VerticalAlignment="Center" Text="Cancel" />
+                                    <ComboBox Name="ComboAoeCancel"
+                                              Width="150"
+                                              HorizontalAlignment="Right"
+                                              SelectionChanged="AoeOverride_Changed" />
+                                </DockPanel>
+                            </StackPanel>
                         </StackPanel>
                     </TabItem>
                     <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Feedback">

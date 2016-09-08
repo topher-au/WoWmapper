@@ -22,6 +22,7 @@ using MahApps.Metro;
 using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
 using WoWmapper.Overlay;
+using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
 using Application = System.Windows.Application;
 using ContextMenu = System.Windows.Controls.ContextMenu;
@@ -35,7 +36,8 @@ namespace WoWmapper
     /// </summary>
     public partial class App : Application
     {
-        public static OverlayWindow Overlay = new OverlayWindow();
+        internal static WMOverlay Overlay = new WMOverlay();
+
         private const string DefaultTheme = "BaseLight";
         private const string DefaultAccent = "Purple";
 
@@ -118,8 +120,7 @@ namespace WoWmapper
             ProcessManager.Start();
             InputMapper.Start();
 
-            // Scan for controllers
-            ControllerManager.RefreshControllers();
+            if(Settings.Default.EnableOverlay) Overlay.Start();
 
             base.OnStartup(e);
 
@@ -180,11 +181,11 @@ namespace WoWmapper
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Overlay?.CloseOverlay();
             // Shut down threads
             ProcessManager.Stop();
             InputMapper.Stop();
             ControllerManager.Stop();
+            Overlay.Stop();
 
 
             // Save settings

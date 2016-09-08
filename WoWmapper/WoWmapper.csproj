@@ -118,6 +118,7 @@
     <Compile Include="Controllers\HapticFeedback.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\InputMapper.cs" />
+    <Compile Include="Controllers\UsbNotifier.cs" />
     <Compile Include="Controllers\Vector2.cs" />
     <Compile Include="Controllers\Xbox\IXInput.cs" />
     <Compile Include="Controllers\Xbox\XboxData.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Overlay\OverlayWindow.xaml.cs">
       <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Overlay\WMOverlay.cs" />
     <Compile Include="SettingsPanels\FolderSelectDialog\FolderSelectDialog.cs" />
     <Compile Include="SettingsPanels\FolderSelectDialog\Reflector.cs" />
     <Compile Include="SettingsPanels\SettingsDevices.xaml.cs">

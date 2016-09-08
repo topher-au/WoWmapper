@@ -26,7 +26,6 @@ namespace WoWmapper.Controllers.DS4
         public DS4Controller(DS4Device underlyingDevice)
         {
             UnderlyingController = underlyingDevice;
-            Log.WriteLine("New controller created");
             _running = true;
             _monitorThread = new Thread(MonitorThread);
             _monitorThread.Start();

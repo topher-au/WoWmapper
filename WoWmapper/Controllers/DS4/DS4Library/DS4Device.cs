@@ -313,7 +313,7 @@ namespace DS4Windows
                                 // DS4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
                         else
                         {
-                            Monitor.Wait(outputReport);
+                            Monitor.Wait(outputReport,1000);
                         }
                             
                     }

@@ -40,7 +40,7 @@ namespace WoWmapper.Controllers.DS4
                 {
                     if (controller.IsAlive()) continue;
 
-                    Log.WriteLine($"XInput disconnected: {controller.Name}");
+                    Log.WriteLine($"XInput device {controller.Name} was disconnected.");
                     controller.Stop();
                     deadControllers.Add(controller);
                 }
@@ -55,19 +55,19 @@ namespace WoWmapper.Controllers.DS4
                     
                     var controller = XboxController.RetrieveController(i);
                     if (!controller.IsConnected || Controllers.Any(device => device.UnderlyingController == controller)) continue;
-
-                    Controllers.Add(new XInputController(i));
+                    var xdevice = new XInputController(i);
+                    Log.WriteLine($"XInput device {xdevice.Name} was connected.");
+                    Controllers.Add(xdevice);
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(2000);
             }
 
         }
 
         public void Shutdown()
         {
-            
-            Log.WriteLine("XInput interface shutting down");
+            Log.WriteLine("Shutting down XInput controllers...");
             XboxController.StopPolling();
             _active = false;
 

@@ -70,8 +70,11 @@ namespace WoWmapper.SettingsPanels
         private void CheckCustomBinding_Changed(object sender, RoutedEventArgs e)
         {
             if (!IsLoaded) return;
-            Properties.Settings.Default.BindingsModified = DateTime.Now;
+
+            BindManager.ResetDefaults(Settings.Default.ModifierStyle);
+            Settings.Default.BindingsModified = DateTime.Now;
             BindWriter.WriteBinds();
+            RefreshBinds();
 
             DoTransition();
         }
@@ -161,8 +164,9 @@ namespace WoWmapper.SettingsPanels
 
         private void ButtonResetBinds_OnClick(object sender, RoutedEventArgs e)
         {
-            BindManager.ResetDefaults(Properties.Settings.Default.ModifierStyle);
-            Properties.Settings.Default.BindingsModified = DateTime.Now;
+            BindManager.ResetDefaults(Settings.Default.ModifierStyle);
+            Settings.Default.BindingsModified = DateTime.Now;
+            BindWriter.WriteBinds();
             RefreshBinds();
         }
 
@@ -170,7 +174,7 @@ namespace WoWmapper.SettingsPanels
         {
             if (!IsLoaded) return;
             DoTransition();
-            Properties.Settings.Default.BindingsModified = DateTime.Now;
+            Settings.Default.BindingsModified = DateTime.Now;
             BindWriter.WriteBinds();
             MainWindow.UpdateButtonStyle();
         }
@@ -178,7 +182,7 @@ namespace WoWmapper.SettingsPanels
         private void ComboCurrentStyle_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!IsLoaded) return;
-            Properties.Settings.Default.BindingsModified = DateTime.Now;
+            Settings.Default.BindingsModified = DateTime.Now;
             BindManager.ResetDefaults(ComboCurrentStyle.SelectedIndex);
             BindWriter.WriteBinds();
             DoTransition();

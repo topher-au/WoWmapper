@@ -219,6 +219,10 @@ namespace WoWmapper.Overlay
                         StackNotifications.Children.Add(popupNotification);
                     });
                 }
+                catch (ThreadAbortException)
+                {
+                    
+                }
                 catch (Exception ex)
                 {
                     Log.WriteLine($"Exception occured during popup creation: {ex.Message}");
@@ -260,12 +264,6 @@ namespace WoWmapper.Overlay
                             {
                                 Topmost = true;
                                 Visibility = Visibility.Visible;
-                                StackNotifications.HorizontalAlignment = Settings.Default.NotificationH == 0
-                                    ? HorizontalAlignment.Left
-                                    : HorizontalAlignment.Right;
-                                StackNotifications.VerticalAlignment = Settings.Default.NotificationV == 0
-                                    ? VerticalAlignment.Top
-                                    : VerticalAlignment.Bottom;
                             });
                         }
                         // Otherwise hide the overlay
@@ -288,13 +286,17 @@ namespace WoWmapper.Overlay
                         });
                     }
                 }
+                catch (ThreadAbortException)
+                {
+
+                }
                 catch (Exception ex)
                 {
                     Log.WriteLine($"Exception occured during overlay update: {ex.Message}");
                 }
                 finally
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(100);
                 }
         }
     }

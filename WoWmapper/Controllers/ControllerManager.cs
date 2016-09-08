@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using DS4Windows;
+using J2i.Net.XInputWrapper;
 using WoWmapper.Controllers.DS4;
 using WoWmapper.Controllers.Xbox;
 using WoWmapper.Keybindings;
@@ -17,6 +19,7 @@ using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
 using Application = System.Windows.Application;
 using Cursor = System.Windows.Forms.Cursor;
+using Point = System.Windows.Point;
 
 namespace WoWmapper.Controllers
 {
@@ -28,7 +31,7 @@ namespace WoWmapper.Controllers
         public static readonly List<IController> Controllers = new List<IController>();
         public static DS4Interface DS4;
         public static XInputInterface XInput;
-
+        public static bool IsXInput9 => XboxController.IsXInput9;
         #endregion
 
         #region Private Fields
@@ -38,6 +41,10 @@ namespace WoWmapper.Controllers
         private static int _lastBatteryWarn = 100;
 
         #endregion
+        [DllImport("user32.dll")]
+        static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        static IntPtr HWND_MESSAGE = new IntPtr(-3);
 
         #region Public Delegates
 
@@ -58,13 +65,25 @@ namespace WoWmapper.Controllers
         #endregion
 
         #region Public Methods
-
         public static void Start()
         {
             _threadRunning = true;
             DS4 = new DS4Interface();
             XInput = new XInputInterface();
             _watcherThread.Start();
+            UsbNotifier.Register();
+            UsbNotifier.DeviceConnected += UsbNotifierOnDeviceConnected;
+            UsbNotifier.DeviceDisconnected += UsbNotifierOnDeviceDisconnected;
+        }
+
+        private static void UsbNotifierOnDeviceDisconnected()
+        {
+            DS4.Scan();
+        }
+
+        private static void UsbNotifierOnDeviceConnected()
+        {
+            DS4.Scan();
         }
 
         public static void Stop()
@@ -72,6 +91,7 @@ namespace WoWmapper.Controllers
             _threadRunning = false;
             DS4.Shutdown();
             XInput.Shutdown();
+            UsbNotifier.Unregister();
         }
 
         public static BitmapImage GetButtonIcon(GamepadButton button)
@@ -325,24 +345,25 @@ namespace WoWmapper.Controllers
                     if (Settings.Default.EnableOverlayBattery && ActiveController != null)
                     {
                         var battery = ActiveController.BatteryLevel;
-                        if (battery < 20 && battery < _lastBatteryWarn - 5)
+                        if (battery < 20 && battery < _lastBatteryWarn - 10)
                         {
                             App.Overlay.PopupNotification(new OverlayNotification()
                             {
                                 Content =
                                     $"Your controller battery has reached {battery}%. Plug in now to avoid unexpected interruption.",
-                                Header = "Battery critically low"
+                                Header = "Battery critically low", UniqueID = "LOW_BATTERY"
                             });
-                            _lastBatteryWarn -= 5;
+                            _lastBatteryWarn = battery - 10;
                         }
                         else if (battery < 40 && battery < _lastBatteryWarn - 10)
                         {
                             App.Overlay.PopupNotification(new OverlayNotification()
                             {
                                 Content = $"Your controller battery has reached {battery}%.",
-                                Header = "Battery low"
+                                Header = "Battery low",
+                                UniqueID = "LOW_BATTERY"
                             });
-                            _lastBatteryWarn -= 10;
+                            _lastBatteryWarn = battery - 10;
                         }
                         else if (battery > _lastBatteryWarn)
                         {

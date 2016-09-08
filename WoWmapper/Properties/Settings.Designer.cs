@@ -469,7 +469,7 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int NotificationH {
             get {
                 return ((int)(this["NotificationH"]));
@@ -481,7 +481,7 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int NotificationV {
             get {
                 return ((int)(this["NotificationV"]));
@@ -524,6 +524,30 @@ namespace WoWmapper.Properties {
             }
             set {
                 this["TouchpadMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RFaceDown")]
+        public global::WoWmapper.Controllers.GamepadButton MemoryAoeConfirm {
+            get {
+                return ((global::WoWmapper.Controllers.GamepadButton)(this["MemoryAoeConfirm"]));
+            }
+            set {
+                this["MemoryAoeConfirm"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RFaceRight")]
+        public global::WoWmapper.Controllers.GamepadButton MemoryAoeCancel {
+            get {
+                return ((global::WoWmapper.Controllers.GamepadButton)(this["MemoryAoeCancel"]));
+            }
+            set {
+                this["MemoryAoeCancel"] = value;
             }
         }
     }

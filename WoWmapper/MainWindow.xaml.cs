@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -31,8 +33,9 @@ namespace WoWmapper
     public partial class MainWindow : MetroWindow
     {
         public delegate void ShowKeybindDialogHandler(GamepadButton button);
+
         public static event ShowKeybindDialogHandler ShowKeybindDialogEvent;
-        
+
         private bool _settingsOpen = false;
 
         private readonly DoubleAnimation FadeInAnimation;
@@ -46,13 +49,14 @@ namespace WoWmapper
         private double _finalLeft = 0;
 
         public delegate void ButtonStyleChangedHandler();
+
         public static event ButtonStyleChangedHandler ButtonStyleChanged;
 
         private Release _latest;
 
         public static void UpdateButtonStyle()
         {
-            if(ButtonStyleChanged != null)
+            if (ButtonStyleChanged != null)
                 Application.Current.Dispatcher.Invoke(ButtonStyleChanged);
         }
 
@@ -64,9 +68,8 @@ namespace WoWmapper
                 Hide();
             }
             _uiTimer.Stop();
-            if(App.Overlay != null)
-                App.Overlay.CloseOverlay();
             base.OnClosing(e);
+            App.Current.Shutdown(0);
         }
 
         public async void CheckUpdates()
@@ -85,7 +88,8 @@ namespace WoWmapper
                     TextUpdateStatus1.Text = $"Version {latestVersion} is available now!";
                     TextUpdateStatus1.Cursor = Cursors.Hand;
                     TextUpdateStatus1.TextDecorations.Add(TextDecorations.Underline);
-                    ImageUpdateIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/update-available.png"));
+                    ImageUpdateIcon.Source =
+                        new BitmapImage(new Uri("pack://application:,,,/Resources/update-available.png"));
                 }
                 else
                 {
@@ -99,7 +103,7 @@ namespace WoWmapper
                 ImageUpdateIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/update-failed.png"));
                 TextUpdateStatus1.ToolTip = ex.Message;
             }
-            
+
             ImageUpdateIcon.RenderTransform = null;
             ImageUpdateIcon.Triggers.Clear();
         }
@@ -107,13 +111,13 @@ namespace WoWmapper
         public MainWindow()
         {
             InitializeComponent();
-            if(Properties.Settings.Default.DisableDonationButton) DonateButton.Visibility=Visibility.Collapsed;
+            if (Properties.Settings.Default.DisableDonationButton) DonateButton.Visibility = Visibility.Collapsed;
             // Set up UI timer
             _uiTimer.Elapsed += UiTimer_Elapsed;
             _uiTimer.Start();
 
             ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
-           
+
 
             // Initialize animations
             ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
@@ -162,7 +166,6 @@ namespace WoWmapper
             ShowKeybindDialogEvent += OnShowKeybindDialog;
             Show();
             Focus();
-
         }
 
         public static void ShowKeybindDialog(GamepadButton button)
@@ -183,7 +186,7 @@ namespace WoWmapper
             KeyDown += OnKeyDown;
             _keybindDialogController =
                 await
-                    this.ShowProgressAsync($"Keybinding", $"Press a button on your keyboard to send for {buttonName}",
+                    this.ShowProgressAsync($"Rebind {buttonName}", $"Press a button on your keyboard. Some special keys may not be recognized by the WoW client.",
                         true);
 
             _keybindDialogController.Canceled += KeybindDialogControllerOnCanceled;
@@ -213,10 +216,23 @@ namespace WoWmapper
             _keybindDialogController.Closed -= KeybindDialogControllerOnClosed;
         }
 
+        private List<Key> _ignoreKeys = new List<Key>()
+        {
+            Key.Escape,
+            Key.LeftAlt,
+            Key.RightAlt,
+            Key.LeftCtrl,
+            Key.RightCtrl,
+            Key.LeftShift,
+            Key.RightShift,
+            Key.LWin,
+            Key.RWin
+        };
+
         private async void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
             if (_keybindDialogController == null) return;
-
+            
             // Handle keyboard input for keybinding dialog
             if (keyEventArgs.Key == Key.Escape)
             {
@@ -224,10 +240,16 @@ namespace WoWmapper
             }
             else
             {
-                _keybindKey = keyEventArgs.Key;
+                if(keyEventArgs.SystemKey != Key.None)
+                    _keybindKey = keyEventArgs.SystemKey;
+                else
+                    _keybindKey = keyEventArgs.Key;
             }
-            
-            await _keybindDialogController.CloseAsync();
+
+            if (_ignoreKeys.Contains(_keybindKey)) return;
+
+            if(_keybindDialogController.IsOpen)
+                await _keybindDialogController.CloseAsync();
         }
 
         private void UiTimer_Elapsed(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -268,6 +290,17 @@ namespace WoWmapper
                 }
 
                 TextControllerStatus2.Text = $"Battery is at {battery}%";
+
+                if (activeDevice.Type == GamepadType.Xbox && ControllerManager.IsXInput9)
+                {
+                    TextControllerStatus3.Text =
+                        "Your system is using the DirectX 9 Xinput library. You will not be able to use the Xbox Guide button.";
+                    TextControllerStatus3.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    TextControllerStatus3.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
@@ -321,13 +354,14 @@ namespace WoWmapper
 
         private void DonateButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.RightShift) && Keyboard.IsKeyDown(Key.RightAlt) && e.ChangedButton == MouseButton.Right)
+            if (Keyboard.IsKeyDown(Key.RightShift) && Keyboard.IsKeyDown(Key.RightAlt) &&
+                e.ChangedButton == MouseButton.Right)
             {
                 Properties.Settings.Default.DisableDonationButton = true;
                 DonateButton.Visibility = Visibility.Collapsed;
                 return;
             }
-                
+
             Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PKPJ97Q429QJC");
         }
 

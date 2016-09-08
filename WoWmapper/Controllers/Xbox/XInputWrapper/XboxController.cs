@@ -20,7 +20,8 @@ namespace J2i.Net.XInputWrapper
         static object SyncLock;
         static Thread pollingThread;
         private static IXInput _xInput;
-
+        private static bool _isXinput9;
+        public static bool IsXInput9 => _isXinput9;
         bool _stopMotorTimerActive;
         DateTime _stopMotorTime;
         XInputBatteryInformation _batteryInformationGamepad;
@@ -78,6 +79,7 @@ namespace J2i.Net.XInputWrapper
                     Log.WriteLine("Loading XInput 9 wrapper...");
                     _xInput = new XInput9();
                     Log.WriteLine("XInput 9 wrapper loaded.");
+                    _isXinput9 = true;
                 }
                 catch (Exception ex)
                 {

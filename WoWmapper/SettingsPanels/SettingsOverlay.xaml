@@ -20,28 +20,36 @@
             </TextBlock>
             <CheckBox Name="CheckEnableOverlay"
                       Margin="5"
+                      Checked="CheckEnableOverlay_OnChecked"
                       Content="Enable WoWmapper in-game overlay"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
-                                          Path=EnableOverlay}" />
+                                          Path=EnableOverlay}"
+                      Unchecked="CheckEnableOverlay_OnUnchecked" />
             <Separator Height="5" />
             <TabControl IsEnabled="{Binding ElementName=CheckEnableOverlay, Path=IsChecked}">
                 <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Notifications">
                     <StackPanel>
                         <Grid>
                             <TextBlock Margin="5,5" Text="Position" />
-                            <ComboBox Width="80"
+                            <ComboBox Name="ComboVertical"
+                                      Width="80"
                                       Margin="85,0"
                                       HorizontalAlignment="Right"
                                       SelectedIndex="{Binding Source={x:Static properties:Settings.Default},
-                                                              Path=NotificationV}">
+                                                              Path=NotificationV}"
+                                      SelectionChanged="Alignment_Changed">
                                 <ComboBoxItem Name="PopupTop">Top</ComboBoxItem>
+                                <ComboBoxItem Name="PopupMiddle">Middle</ComboBoxItem>
                                 <ComboBoxItem Name="PopupBottom">Bottom</ComboBoxItem>
                             </ComboBox>
-                            <ComboBox Width="80"
+                            <ComboBox Name="ComboHorizontal"
+                                      Width="80"
                                       HorizontalAlignment="Right"
                                       SelectedIndex="{Binding Source={x:Static properties:Settings.Default},
-                                                              Path=NotificationH}">
+                                                              Path=NotificationH}"
+                                      SelectionChanged="Alignment_Changed">
                                 <ComboBoxItem Name="PopupLeft">Left</ComboBoxItem>
+                                <ComboBoxItem Name="PopupCenter">Center</ComboBoxItem>
                                 <ComboBoxItem Name="PopupRight">Right</ComboBoxItem>
                             </ComboBox>
                         </Grid>
@@ -55,7 +63,9 @@
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=EnableOverlayBattery}" />
                         </StackPanel>
-
+                        <Button Margin="5"
+                                Click="TestNotification_Click"
+                                Content="Show Test Notification" />
                     </StackPanel>
                 </TabItem>
             </TabControl>

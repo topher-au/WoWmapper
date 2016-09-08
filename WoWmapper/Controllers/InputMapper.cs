@@ -72,26 +72,21 @@ namespace WoWmapper.Controllers
                     }
 
                     // Show/hide the overlay crosshair
-                    if (Settings.Default.EnableOverlayCrosshair)
+                    if (Settings.Default.EnableOverlay && Settings.Default.EnableOverlayCrosshair)
                     {
                         // Show crosshair after mouselooking for 100ms
                         mouselookState = MemoryManager.ReadMouselook();
                         if (mouselookState && DateTime.Now >= _mouselookStarted + TimeSpan.FromMilliseconds(100) &&
-                            !_crosshairShowing)
+                            !App.Overlay.CrosshairVisible && !_crosshairShowing)
                         {
-                            _crosshairShowing = true;
                             App.Overlay.SetCrosshairState(true, _cursorX, _cursorY);
+                            _crosshairShowing = true;
                         } // Otherwise hide crosshair
-                        else if (!mouselookState)
+                        else if (!mouselookState && _crosshairShowing)
                         {
-                            _crosshairShowing = false;
                             App.Overlay.SetCrosshairState(false);
+                            _crosshairShowing = false;
                         }
-                    }
-                    else
-                    {
-                        _crosshairShowing = false;
-                        App.Overlay.SetCrosshairState(false);
                     }
 
                     // Check if mouselook is inactive
@@ -130,12 +125,13 @@ namespace WoWmapper.Controllers
                         else if (Settings.Default.EnableOverlayCrosshair &&
                                  Settings.Default.MemoryAutoCenter &&
                                  DateTime.Now >= _mouselookStarted +
-                                 TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay))
+                                 TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay) && _crosshairShowing && App.Overlay.CrosshairVisible)
+                        {
                             App.Overlay.SetCrosshairState(false);
+                        }
                     }
                 }
-
-
+                
                 Thread.Sleep(5);
             }
         }
@@ -327,19 +323,11 @@ namespace WoWmapper.Controllers
 
         private static void ProcessPlayerAoe(GamepadButton button, bool state)
         {
-            switch (button)
-            {
-                case GamepadButton.RFaceDown:
-                    if (state && !_keyStates[(int) button])
-                        WoWInput.SendMouseClick(MouseButton.Left);
-                    break;
-                case GamepadButton.RFaceRight:
-                    if (state && !_keyStates[(int) button])
-                        WoWInput.SendMouseClick(MouseButton.Right);
-                    break;
-            }
-
-            if (button != GamepadButton.RFaceDown && button != GamepadButton.RFaceRight)
+            if(button == Settings.Default.MemoryAoeConfirm)
+                WoWInput.SendMouseClick(MouseButton.Left);
+            else if (button == Settings.Default.MemoryAoeCancel)
+                WoWInput.SendMouseClick(MouseButton.Right);
+            else
                 ProcessInput(button, state);
         }
 

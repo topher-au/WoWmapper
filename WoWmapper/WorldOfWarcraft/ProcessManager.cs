@@ -61,24 +61,6 @@ namespace WoWmapper.WorldOfWarcraft
             // Process watcher thread
             while (ProcessThread.ThreadState == ThreadState.Running)
             {
-                if (GameProcess != null)
-                {
-                    // Attach/detach memory reader as necessary
-                    if (Properties.Settings.Default.EnableMemoryReading && !MemoryManager.IsAttached)
-                        MemoryManager.Attach(GameProcess);
-
-                    if (!Properties.Settings.Default.EnableMemoryReading && MemoryManager.IsAttached)
-                        MemoryManager.Detach();
-
-                    // Test process validity
-                    if (GameProcess.HasExited)
-                    {
-                        Log.WriteLine($"Process invalidated: [{GameProcess.Id}] {GameProcess.ProcessName} ");
-                        GameProcess.Dispose();
-                        GameProcess = null;
-                    }
-                }
-
                 if (GameProcess == null)
                 {
                     // Acquire a list of all processes
@@ -90,24 +72,36 @@ namespace WoWmapper.WorldOfWarcraft
                                     process.HasExited == false);
                     if (wowProcess != null)
                     {
-                        try
-                        {
-                            Log.WriteLine($"Process found: [{wowProcess.Id}] {wowProcess.ProcessName}");
+                        GameProcess = wowProcess;
 
-                            GameProcess = wowProcess;
+                        Log.WriteLine($"Found game process: [{GameProcess.Id}: {GameProcess.ProcessName}]");
+                            
+                        if (Properties.Settings.Default.EnableMemoryReading) // Attach memory reader
+                            MemoryManager.Attach(wowProcess);
 
-
-                            if (Properties.Settings.Default.EnableMemoryReading) // Attach memory reader
-                                MemoryManager.Attach(wowProcess);
-                        }
-                        catch
-                        {
-                            MemoryManager.Detach();
-                            GameProcess = null;
-                        }
                         // Attempt to export bindings
                         ConsolePort.BindWriter.WriteBinds();
                     }
+                }
+
+                if (GameProcess != null)
+                {
+                    // Test process validity
+                    if (GameProcess.HasExited)
+                    {
+                        Log.WriteLine($"Process [{GameProcess.Id}: {GameProcess.ProcessName}] has exited");
+
+                        GameProcess.Dispose();
+                        GameProcess = null;
+                        continue;
+                    }
+
+                    // Attach/detach memory reader as necessary
+                    if (Properties.Settings.Default.EnableMemoryReading && !MemoryManager.IsAttached)
+                        MemoryManager.Attach(GameProcess);
+
+                    if (!Properties.Settings.Default.EnableMemoryReading && MemoryManager.IsAttached)
+                        MemoryManager.Detach();
                 }
 
                 Thread.Sleep(500);

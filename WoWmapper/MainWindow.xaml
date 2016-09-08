@@ -60,13 +60,16 @@
                                 Visibility="Collapsed" />
         <StackPanel x:Name="StackContent"
                     Width="250"
-                    Margin="20,10,20,20"
+                    Margin="20,10,20,0"
                     HorizontalAlignment="Left">
             <TextBlock FontSize="20"><Run Text="Controller" /></TextBlock>
             <Separator Height="2" />
             <StackPanel Margin="20,5,0,10">
                 <TextBlock Name="TextControllerStatus1" Margin="2"><Run Text="Controller connection status" /></TextBlock>
                 <TextBlock Name="TextControllerStatus2" Margin="2"><Run Text="Controller battery status" /></TextBlock>
+                <TextBlock Name="TextControllerStatus3"
+                           Margin="2"
+                           Foreground="Red" Visibility="Collapsed"><Run Text="Controller status warning" /></TextBlock>
             </StackPanel>
             <TextBlock FontSize="20"><Run Text="World of Warcraft" /></TextBlock>
             <Separator Height="2" />

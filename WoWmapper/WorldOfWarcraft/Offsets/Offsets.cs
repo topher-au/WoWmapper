@@ -23,9 +23,13 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static IntPtr GetStaticOffset(Offset offset, Process process)
         {
+            
+
             // Try to load cached offset
             var cachedOffset = _cachedOffsets.FirstOrDefault(o => o.Key == offset).Value;
             if (cachedOffset != IntPtr.Zero) return cachedOffset;
+
+            Log.WriteLine($"Searching for byte pattern \'{offset}\' within [{process.ProcessName}]");
 
             // Read offset pointer
             var outOffset = IntPtr.Zero;
@@ -70,8 +74,13 @@ namespace WoWmapper.WorldOfWarcraft
                 }
             }
 
-            _cachedOffsets.Add(offset, outOffset);
+            if(outOffset == IntPtr.Zero)
+                Log.WriteLine($"No matching pattern found for \'{offset}\'! Functionality may be reduced!");
+            else
+                Log.WriteLine($"Matched pattern for \'{offset}\' at memory location 0x{outOffset.ToString("X2")}");
 
+            _cachedOffsets.Add(offset, outOffset);
+            
             return outOffset;
         }
 
