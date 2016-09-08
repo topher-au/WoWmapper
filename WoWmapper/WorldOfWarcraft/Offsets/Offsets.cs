@@ -23,65 +23,66 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static IntPtr GetStaticOffset(Offset offset, Process process)
         {
-            
-
-            // Try to load cached offset
-            var cachedOffset = _cachedOffsets.FirstOrDefault(o => o.Key == offset).Value;
-            if (cachedOffset != IntPtr.Zero) return cachedOffset;
-
-            Log.WriteLine($"Searching for byte pattern \'{offset}\' within [{process.ProcessName}]");
-
-            // Read offset pointer
-            var outOffset = IntPtr.Zero;
-            switch (offset)
+            lock (_cachedOffsets)
             {
-                case Offset.GameState:
+                // Try to load cached offset
+                var cachedOffset = _cachedOffsets.FirstOrDefault(o => o.Key == offset).Value;
+                if (cachedOffset != IntPtr.Zero) return cachedOffset;
+
+                Log.WriteLine($"Searching for byte pattern \'{offset}\' within [{process.ProcessName}]");
+
+                // Read offset pointer
+                var outOffset = IntPtr.Zero;
+                switch (offset)
                 {
-                    var firstOffset = FindOffset(offset, process);
-                    if (firstOffset != IntPtr.Zero)
-                        outOffset = MemoryManager.ReadPointer(firstOffset, 1);
-                    else
-                        outOffset = IntPtr.Zero;
-                    break;
+                    case Offset.GameState:
+                        {
+                            var firstOffset = FindOffset(offset, process);
+                            if (firstOffset != IntPtr.Zero)
+                                outOffset = MemoryManager.ReadPointer(firstOffset, 1);
+                            else
+                                outOffset = IntPtr.Zero;
+                            break;
+                        }
+                    case Offset.PlayerBase:
+                        {
+                            var firstOffset = FindOffset(offset, process);
+                            if (firstOffset != IntPtr.Zero)
+                                outOffset = MemoryManager.ReadPointer(firstOffset);
+                            else
+                                outOffset = IntPtr.Zero;
+                            break;
+                        }
+                    case Offset.MouselookState:
+                        {
+                            var firstOffset = FindOffset(offset, process);
+                            if (firstOffset != IntPtr.Zero)
+                                outOffset = MemoryManager.ReadPointer(firstOffset, 4);
+                            else
+                                outOffset = IntPtr.Zero;
+                            break;
+                        }
+                    case Offset.WalkRunState:
+                        {
+                            outOffset = FindOffset(offset, process);
+                            break;
+                        }
+                    case Offset.PlayerAoeState:
+                        {
+                            outOffset = FindOffset(offset, process);
+                            break;
+                        }
                 }
-                case Offset.PlayerBase:
-                {
-                    var firstOffset = FindOffset(offset, process);
-                    if (firstOffset != IntPtr.Zero)
-                        outOffset = MemoryManager.ReadPointer(firstOffset);
-                    else
-                        outOffset = IntPtr.Zero;
-                    break;
-                }
-                case Offset.MouselookState:
-                {
-                    var firstOffset = FindOffset(offset, process);
-                    if (firstOffset != IntPtr.Zero)
-                        outOffset = MemoryManager.ReadPointer(firstOffset, 4);
-                    else
-                        outOffset = IntPtr.Zero;
-                    break;
-                }
-                case Offset.WalkRunState:
-                {
-                    outOffset = FindOffset(offset, process);
-                    break;
-                }
-                case Offset.PlayerAoeState:
-                {
-                    outOffset = FindOffset(offset, process);
-                    break;
-                }
+
+                if (outOffset == IntPtr.Zero)
+                    Log.WriteLine($"No matching pattern found for \'{offset}\'! Functionality may be reduced!");
+                else
+                    Log.WriteLine($"Matched pattern for \'{offset}\' at memory location 0x{outOffset.ToString("X2")}");
+
+                _cachedOffsets.Add(offset, outOffset);
+                
+                return outOffset;
             }
-
-            if(outOffset == IntPtr.Zero)
-                Log.WriteLine($"No matching pattern found for \'{offset}\'! Functionality may be reduced!");
-            else
-                Log.WriteLine($"Matched pattern for \'{offset}\' at memory location 0x{outOffset.ToString("X2")}");
-
-            _cachedOffsets.Add(offset, outOffset);
-            
-            return outOffset;
         }
 
         private static IntPtr FindOffset(Offset offset, Process process)

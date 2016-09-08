@@ -237,7 +237,7 @@ namespace WoWmapper.Overlay
                 try
                 {
                     // If the game has focus, attempt to position overlay
-                    if (ProcessManager.GameProcess != null)
+                    if (ProcessManager.GameProcess != null && ProcessManager.GameProcess.MainWindowHandle != IntPtr.Zero)
                     {
                         var hWndFg = GetForegroundWindow();
                         var rect = ProcessManager.GetClientRectangle();

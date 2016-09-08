@@ -63,25 +63,35 @@ namespace WoWmapper.WorldOfWarcraft
             {
                 if (GameProcess == null)
                 {
-                    // Acquire a list of all processes
-                    var wowProcess =
-                        Process.GetProcesses()
-                            .FirstOrDefault(
-                                process =>
-                                    WoWProcessNames.Contains(process.ProcessName.ToLower()) &&
-                                    process.HasExited == false);
-                    if (wowProcess != null)
+                    try
                     {
-                        GameProcess = wowProcess;
+                        // Acquire a list of all processes
+                        var wowProcess =
+                            Process.GetProcesses()
+                                .FirstOrDefault(
+                                    process =>
+                                        WoWProcessNames.Contains(process.ProcessName.ToLower()) &&
+                                        process.HasExited == false);
 
-                        Log.WriteLine($"Found game process: [{GameProcess.Id}: {GameProcess.ProcessName}]");
-                            
-                        if (Properties.Settings.Default.EnableMemoryReading) // Attach memory reader
-                            MemoryManager.Attach(wowProcess);
+                        if (wowProcess != null)
+                        {
+                            GameProcess = wowProcess;
 
-                        // Attempt to export bindings
-                        ConsolePort.BindWriter.WriteBinds();
+                            Log.WriteLine($"Found game process: [{GameProcess.Id}: {GameProcess.ProcessName}]");
+
+                            // Attempt to export bindings
+                            ConsolePort.BindWriter.WriteBinds();
+
+                            if (Properties.Settings.Default.EnableMemoryReading) // Attach memory reader
+                                MemoryManager.Attach(wowProcess);
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        Log.WriteLine($"Exception occurred: {ex.Message}");
+                    }
+                    
+                    
                 }
 
                 if (GameProcess != null)
@@ -110,14 +120,12 @@ namespace WoWmapper.WorldOfWarcraft
 
         internal static void Start()
         {
-            Log.WriteLine("Process watcher starting up");
             _threadRunning = true;
             ProcessThread.Start();
         }
 
         internal static void Stop()
         {
-            Log.WriteLine("Process watcher shutting down");
             MemoryManager.Detach();
             _threadRunning = false;
             ProcessThread.Abort();

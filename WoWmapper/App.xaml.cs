@@ -50,15 +50,19 @@ namespace WoWmapper
         
         public App()
         {
-            // Check if an existing instance of the application is running
-            _mutex = new Mutex(false, "Global\\" + _appGuid);
-            if (!_mutex.WaitOne(0, false))
+            var eargs = Environment.GetCommandLineArgs();
+            if (!eargs.Contains("--ignore-mutex"))
             {
-                // Instance already running
-                MessageBox.Show("Another instance of WoWmapper is already open", "Already running", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                Environment.Exit(0);
-                return;
+                // Check if an existing instance of the application is running
+                _mutex = new Mutex(false, "Global\\" + _appGuid);
+                if (!_mutex.WaitOne(0, false))
+                {
+                    // Instance already running
+                    MessageBox.Show("Another instance of WoWmapper is already open", "Already running", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    Environment.Exit(0);
+                    return;
+                }
             }
 
             Current.DispatcherUnhandledException += (a, b) =>
@@ -106,11 +110,20 @@ namespace WoWmapper
             
             // Check application settings and upgrade
             var settingsVersion = new Version(WoWmapper.Properties.Settings.Default.SettingsVersion);
-            if (Assembly.GetExecutingAssembly().GetName().Version > settingsVersion)
+            if (settingsVersion < new Version(7,1,0))
             {
-                WoWmapper.Properties.Settings.Default.Upgrade();
-                WoWmapper.Properties.Settings.Default.SettingsVersion =
-                    Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                Log.WriteLine("Settings outdated, resetting.");
+                var upgrade =
+                    MessageBox.Show(
+                        "Changes in the WoWmapper configuration require your settings to be reset. If you do not reset your configuration now, WoWmapper may behave unpredictably.\n\nReset configuration now?",
+                        "Settings outdated", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                if (upgrade == MessageBoxResult.Yes)
+                {
+
+                    Settings.Default.Upgrade();
+                    Settings.Default.SettingsVersion =
+                        Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                }
             }
             
             // Start up threads

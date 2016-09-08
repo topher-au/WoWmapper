@@ -14,7 +14,7 @@
         WindowStyle="None"
         mc:Ignorable="d">
     <Window.Background>
-        <SolidColorBrush Opacity="0" Color="White" />
+        <SolidColorBrush Color="Transparent" />
     </Window.Background>
     <Grid>
         <StackPanel Name="StackNotifications"

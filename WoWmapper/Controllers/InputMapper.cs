@@ -56,7 +56,7 @@ namespace WoWmapper.Controllers
                 ProcessCursor(axisCursor);
 
 
-                if (Settings.Default.EnableMemoryReading && ProcessManager.GameProcess != null)
+                if (Settings.Default.EnableMemoryReading && ProcessManager.GameProcess != null && MemoryManager.ReadGameState() == 1)
                 {
                     var mouselookState = MemoryManager.ReadMouselook();
                     var foregroundWindow = GetForegroundWindow();
@@ -144,7 +144,7 @@ namespace WoWmapper.Controllers
             var sendDown = axis.Y > Properties.Settings.Default.MovementThreshold;
 
             var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
-            if (Settings.Default.MemoryAutoWalk && MemoryManager.IsAttached)
+            if (Settings.Default.MemoryAutoWalk && MemoryManager.IsAttached && MemoryManager.ReadGameState() == 1)
             {
                 var moveState = MemoryManager.ReadMovementState();
                 if (moveState == 0 || moveState == 1)
