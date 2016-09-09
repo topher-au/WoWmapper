@@ -110,7 +110,7 @@ namespace WoWmapper
             
             // Check application settings and upgrade
             var settingsVersion = new Version(WoWmapper.Properties.Settings.Default.SettingsVersion);
-            if (settingsVersion < new Version(7,1,0))
+            if (settingsVersion > new Version(0,0,0,0) && settingsVersion < new Version(7,1,0))
             {
                 Log.WriteLine("Settings outdated, resetting.");
                 var upgrade =
