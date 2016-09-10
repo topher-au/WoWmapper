@@ -14,6 +14,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro;
 using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
 using WoWmapper.Properties;
@@ -34,6 +35,10 @@ namespace WoWmapper.SettingsPanels
         {
             InitializeComponent();
             MainWindow.ButtonStyleChanged += ButtonStyleChanged;
+            ThemeManager.IsThemeChanged += (sender, args) =>
+            {
+                ButtonStyleChanged();
+            };
             ButtonStyleChanged();
             _ready = true;
         }
@@ -80,7 +85,7 @@ namespace WoWmapper.SettingsPanels
 
             _binds.RemoveAll(bind => shoulders.Contains(bind.BindType));
             _binds.RemoveAll(bind => bind.BindType.ToString().StartsWith("LeftStick"));
-
+            var foreColor = (Brush)ThemeManager.DetectAppStyle().Item1.Resources["BlackColorBrush"];
             foreach (var bind in _binds)
             {
                 foreach (ComboBox box in new[] {ComboAoeConfirm, ComboAoeCancel})
@@ -102,7 +107,7 @@ namespace WoWmapper.SettingsPanels
                                 {
                                     Text = ControllerManager.GetButtonName(bind.BindType),
                                     VerticalAlignment = VerticalAlignment.Center,
-                                    Margin=new Thickness(5,0,0,0),
+                                    Margin=new Thickness(5,0,0,0), Foreground=foreColor
                                 }
                             }
                         }

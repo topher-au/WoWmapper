@@ -149,7 +149,7 @@
                                     <ComboBox Name="ComboAoeConfirm"
                                               Width="150"
                                               HorizontalAlignment="Right"
-                                              SelectionChanged="AoeOverride_Changed" />
+                                              SelectionChanged="AoeOverride_Changed"/>
                                 </DockPanel>
                                 <DockPanel Margin="2">
                                     <TextBlock VerticalAlignment="Center" Text="Cancel" />
