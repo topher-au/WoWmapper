@@ -247,6 +247,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\discord.png" />
     <Resource Include="Resources\update-available.png" />
     <Resource Include="Resources\update-failed.png" />
     <Resource Include="Resources\update-ok.png" />

@@ -34,13 +34,16 @@ namespace WoWmapper.SettingsPanels
 
         public SettingsPanel()
         {
-
             InitializeComponent();
 
-            var defaultTreeViewItem = TreeSettings.Items[0] as TreeViewItem;
+            try
+            {
+                var defaultTreeViewItem = TreeSettings.Items[0] as TreeViewItem;
 
-            if (defaultTreeViewItem != null)
-                defaultTreeViewItem.IsSelected = true;
+                if (defaultTreeViewItem != null)
+                    defaultTreeViewItem.IsSelected = true;
+            } catch { }
+            
         }
         private void TreeSettings_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {

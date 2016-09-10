@@ -58,74 +58,90 @@
         <settings:SettingsPanel x:Name="PanelSettings"
                                 Opacity="0"
                                 Visibility="Collapsed" />
-        <StackPanel x:Name="StackContent"
-                    Width="250"
-                    Margin="20,10,20,0"
-                    HorizontalAlignment="Left">
-            <TextBlock FontSize="20"><Run Text="Controller" /></TextBlock>
-            <Separator Height="2" />
-            <StackPanel Margin="20,5,0,10">
-                <TextBlock Name="TextControllerStatus1" Margin="2"><Run Text="Controller connection status" /></TextBlock>
-                <TextBlock Name="TextControllerStatus2" Margin="2"><Run Text="Controller battery status" /></TextBlock>
-                <TextBlock Name="TextControllerStatus3"
-                           Margin="2"
-                           Foreground="Red"
-                           Visibility="Collapsed"><Run Text="Controller status warning" /></TextBlock>
+        <Grid x:Name="StackContent" Margin="20,10,20,0" Width="260" HorizontalAlignment="Left">
+            <StackPanel VerticalAlignment="Top">
+                <TextBlock FontSize="20"><Run Text="Controller" /></TextBlock>
+                <Separator Height="2" />
+                <StackPanel Margin="20,5,0,10">
+                    <TextBlock Name="TextControllerStatus1" Margin="2"><Run Text="Controller connection status" /></TextBlock>
+                    <TextBlock Name="TextControllerStatus2" Margin="2"><Run Text="Controller battery status" /></TextBlock>
+                    <TextBlock Name="TextControllerStatus3"
+                               Margin="2"
+                               Foreground="Red"
+                               Visibility="Collapsed"><Run Text="Controller status warning" /></TextBlock>
+                </StackPanel>
+                <TextBlock FontSize="20"><Run Text="World of Warcraft" /></TextBlock>
+                <Separator Height="2" />
+                <StackPanel Margin="20,5,0,10">
+                    <TextBlock Name="TextWoWStatus1" Margin="2"><Run Text="Game process status" /></TextBlock>
+                    <TextBlock Name="TextWoWStatus2" Margin="2"><Run Text="Memory reading status" /></TextBlock>
+                </StackPanel>
+                <TextBlock FontSize="20"><Run Text="Updates" /></TextBlock>
+                <Separator Height="2" />
+                <DockPanel Margin="20,5,5,5">
+                    <TextBlock Name="TextUpdateStatus1"
+                               Margin="2,5"
+                               VerticalAlignment="Center"
+                               MouseDown="TextUpdateStatus1_OnMouseDown"><Run Text="Checking for updates..." /></TextBlock>
+                    <Image Name="ImageUpdateIcon"
+                           Width="16"
+                           Height="16"
+                           Margin="5,0"
+                           HorizontalAlignment="Right"
+                           RenderTransformOrigin="0.47,0.41"
+                           Source="Resources/update-check.png">
+                        <Image.RenderTransform>
+                            <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5" />
+                        </Image.RenderTransform>
+                        <Image.Triggers>
+                            <EventTrigger RoutedEvent="Image.Loaded">
+                                <BeginStoryboard Storyboard="{StaticResource RotateImage}" />
+                            </EventTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </DockPanel>
+                <StackPanel Name="PanelDonate"
+                            Width="260"
+                            HorizontalAlignment="Left">
+                    <Separator Height="10" />
+                    <TextBlock Width="200"
+                               Margin="2"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap">
+                        Thankyou for using WoWmapper!
+                    </TextBlock>
+                    <TextBlock Width="200"
+                               Margin="5"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap">
+                        If you like it, please consider making a donation towards development.
+                    </TextBlock>
+                    <Image Name="DonateButton"
+                           Width="130"
+                           HorizontalAlignment="Center"
+                           Cursor="Hand"
+                           MouseDown="DonateButton_MouseDown"
+                           Source="Resources/donate.png" />
+                </StackPanel>
             </StackPanel>
-            <TextBlock FontSize="20"><Run Text="World of Warcraft" /></TextBlock>
-            <Separator Height="2" />
-            <StackPanel Margin="20,5,0,10">
-                <TextBlock Name="TextWoWStatus1" Margin="2"><Run Text="Game process status" /></TextBlock>
-                <TextBlock Name="TextWoWStatus2" Margin="2"><Run Text="Memory reading status" /></TextBlock>
-            </StackPanel>
-            <TextBlock FontSize="20"><Run Text="Updates" /></TextBlock>
-            <Separator Height="2" />
-            <DockPanel Margin="20,5,5,5">
-                <TextBlock Name="TextUpdateStatus1"
-                           Margin="2,5"
-                           VerticalAlignment="Center"
-                           MouseDown="TextUpdateStatus1_OnMouseDown"><Run Text="Checking for updates..." /></TextBlock>
-                <Image Name="ImageUpdateIcon"
-                       Width="16"
-                       Height="16"
-                       Margin="5,0"
-                       HorizontalAlignment="Right"
-                       RenderTransformOrigin="0.47,0.41"
-                       Source="Resources/update-check.png">
-                    <Image.RenderTransform>
-                        <RotateTransform Angle="0" CenterX="0.5" CenterY="0.5" />
-                    </Image.RenderTransform>
-                    <Image.Triggers>
-                        <EventTrigger RoutedEvent="Image.Loaded">
-                            <BeginStoryboard Storyboard="{StaticResource RotateImage}" />
-                        </EventTrigger>
-                    </Image.Triggers>
-                </Image>
-            </DockPanel>
-            <StackPanel Name="PanelDonate"
-                        Width="260"
-                        HorizontalAlignment="Left">
-                <Separator Height="10" />
-                <TextBlock Width="200"
-                           Margin="2"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap">
-                    Thankyou for using WoWmapper!
-                </TextBlock>
-                <TextBlock Width="200"
-                           Margin="5"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap">
-                    If you like it, please consider making a donation towards development.
-                </TextBlock>
-                <Image Name="DonateButton"
-                       Width="160"
+            <DockPanel Margin="10"
                        HorizontalAlignment="Center"
-                       Cursor="Hand"
-                       MouseDown="DonateButton_MouseDown"
-                       Source="Resources/donate.png" />
-            </StackPanel>
-        </StackPanel>
+                       VerticalAlignment="Bottom">
+                <Image Height="32"
+                       Margin="5,0"
+                       Source="Resources/discord.png" />
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Center">Join us on Discord!</TextBlock>
+                    <TextBlock Cursor="Hand"
+                               Foreground="CornflowerBlue"
+                               MouseDown="DiscordLink_MouseDown"
+                               TextDecorations="Underline">
+                        https://discord.gg/8cyyCgc
+                    </TextBlock>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+
     </Grid>
 
 </controls:MetroWindow>

@@ -79,6 +79,8 @@
                                       Content="Show cursor position on overlay during mouselook"
                                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                                           Path=EnableOverlayCrosshair}"
+                                      IsEnabled="{Binding Source={x:Static properties:Settings.Default},
+                                                          Path=EnableOverlay}"
                                       ToolTip="Shows a crosshair on the overlay that indicates the cursor position while mouselooking." />
                         </StackPanel>
                     </TabItem>
@@ -149,7 +151,7 @@
                                     <ComboBox Name="ComboAoeConfirm"
                                               Width="150"
                                               HorizontalAlignment="Right"
-                                              SelectionChanged="AoeOverride_Changed"/>
+                                              SelectionChanged="AoeOverride_Changed" />
                                 </DockPanel>
                                 <DockPanel Margin="2">
                                     <TextBlock VerticalAlignment="Center" Text="Cancel" />

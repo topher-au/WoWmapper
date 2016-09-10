@@ -1,58 +1,133 @@
-﻿using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Octokit;
 using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
-using WoWmapper.Overlay;
+using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
 using Application = System.Windows.Application;
-using MessageBox = System.Windows.MessageBox;
-using Timer = System.Timers.Timer;
 
 namespace WoWmapper
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        public delegate void ButtonStyleChangedHandler();
         public delegate void ShowKeybindDialogHandler(GamepadButton button);
 
-        public static event ShowKeybindDialogHandler ShowKeybindDialogEvent;
-
-        private bool _settingsOpen = false;
-
+        private readonly Timer _uiTimer = new Timer {AutoReset = true, Interval = 250};
+        
         private readonly DoubleAnimation FadeInAnimation;
         private readonly DoubleAnimation FadeOutAnimation;
         private readonly DoubleAnimation MoveWindowAnimation;
-
-        private readonly Storyboard ExpandStoryboard;
         private readonly Storyboard ShrinkStoryboard;
+        private readonly Storyboard ExpandStoryboard;
+        private double _finalLeft;
 
-        private readonly Timer _uiTimer = new Timer() {AutoReset = true, Interval = 250};
-        private double _finalLeft = 0;
+        private readonly List<Key> _ignoreKeys = new List<Key>
+        {
+            Key.Escape,
+            Key.LeftAlt,
+            Key.RightAlt,
+            Key.LeftCtrl,
+            Key.RightCtrl,
+            Key.LeftShift,
+            Key.RightShift,
+            Key.LWin,
+            Key.RWin
+        };
 
-        public delegate void ButtonStyleChangedHandler();
+        private GamepadButton _keybindButton;
 
-        public static event ButtonStyleChangedHandler ButtonStyleChanged;
+        private ProgressDialogController _keybindDialogController;
+        private Key _keybindKey = Key.None;
 
         private Release _latest;
+
+        private bool _settingsOpen;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // Hide donation panel if it's been deactivated
+            if (Settings.Default.DisableDonationButton) DonateButton.Visibility = Visibility.Hidden;
+
+            // Begin interface update timer
+            _uiTimer.Elapsed += UiTimer_Elapsed;
+            _uiTimer.Start();
+            
+            // Initialize window animations
+            ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
+            ShrinkStoryboard = (Storyboard)Resources["ShrinkWindow"];
+
+            ExpandStoryboard.Completed += (sender, args) =>
+            {
+                BeginAnimation(WidthProperty, null);
+                BeginAnimation(LeftProperty, null);
+                Width = 500;
+                Left = _finalLeft;
+                StackContent.Visibility = Visibility.Collapsed;
+            };
+            
+            ShrinkStoryboard.Completed += (sender, args) =>
+            {
+                BeginAnimation(WidthProperty, null);
+                BeginAnimation(LeftProperty, null);
+                Width = 300;
+                Left = _finalLeft;
+                PanelSettings.Visibility = Visibility.Collapsed;
+            };
+
+            FadeOutAnimation = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                BeginTime = TimeSpan.FromMilliseconds(0),
+                Duration = TimeSpan.FromMilliseconds(250)
+            };
+
+            FadeInAnimation = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                BeginTime = TimeSpan.FromMilliseconds(250),
+                Duration = TimeSpan.FromMilliseconds(500)
+            };
+
+
+            
+
+            CheckUpdates();
+
+           
+
+            if (Settings.Default.HideAtStartup && Settings.Default.RunInBackground)
+                Hide();
+            else
+                Show();
+            
+            ShowKeybindDialogEvent += OnShowKeybindDialog;
+            Focus();
+        }
+
+        public static event ShowKeybindDialogHandler ShowKeybindDialogEvent;
+
+        public static event ButtonStyleChangedHandler ButtonStyleChanged;
 
         public static void UpdateButtonStyle()
         {
@@ -62,22 +137,22 @@ namespace WoWmapper
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (Properties.Settings.Default.RunInBackground)
+            if (Settings.Default.RunInBackground)
             {
                 e.Cancel = true;
                 Hide();
             }
             _uiTimer.Stop();
             base.OnClosing(e);
-            App.Current.Shutdown(0);
+            Application.Current.Shutdown(0);
         }
 
         public async void CheckUpdates()
         {
             try
             {
-                var octoApi = new Octokit.ApiConnection(new Connection(new ProductHeaderValue("WoWmapper")));
-                var octoRelease = new Octokit.ReleasesClient(octoApi);
+                var octoApi = new ApiConnection(new Connection(new ProductHeaderValue("WoWmapper")));
+                var octoRelease = new ReleasesClient(octoApi);
                 var wmReleases = await octoRelease.GetAll("topher-au", "wowmapper");
                 var latestStable = wmReleases.First(release => release.Prerelease == false);
                 var latestVersion = new Version(latestStable.TagName);
@@ -108,74 +183,10 @@ namespace WoWmapper
             ImageUpdateIcon.Triggers.Clear();
         }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            if (Properties.Settings.Default.DisableDonationButton) DonateButton.Visibility = Visibility.Collapsed;
-            // Set up UI timer
-            _uiTimer.Elapsed += UiTimer_Elapsed;
-            _uiTimer.Start();
-
-            ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
-
-
-            // Initialize animations
-            ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
-
-            ExpandStoryboard.Completed += (sender, args) =>
-            {
-                BeginAnimation(WidthProperty, null);
-                BeginAnimation(LeftProperty, null);
-                Width = 500;
-                Left = _finalLeft;
-                StackContent.Visibility = Visibility.Collapsed;
-            };
-
-            ShrinkStoryboard = (Storyboard) Resources["ShrinkWindow"];
-
-            ShrinkStoryboard.Completed += (sender, args) =>
-            {
-                BeginAnimation(WidthProperty, null);
-                BeginAnimation(LeftProperty, null);
-                Width = 300;
-                Left = _finalLeft;
-                PanelSettings.Visibility = Visibility.Collapsed;
-            };
-
-            FadeOutAnimation = new DoubleAnimation()
-            {
-                From = 1,
-                To = 0,
-                BeginTime = TimeSpan.FromMilliseconds(0),
-                Duration = TimeSpan.FromMilliseconds(250)
-            };
-
-            FadeInAnimation = new DoubleAnimation()
-            {
-                From = 0,
-                To = 1,
-                BeginTime = TimeSpan.FromMilliseconds(250),
-                Duration = TimeSpan.FromMilliseconds(500),
-            };
-
-
-            if (Properties.Settings.Default.HideAtStartup && Properties.Settings.Default.RunInBackground) Hide();
-
-            CheckUpdates();
-
-            ShowKeybindDialogEvent += OnShowKeybindDialog;
-            Show();
-            Focus();
-        }
-
         public static void ShowKeybindDialog(GamepadButton button)
         {
             ShowKeybindDialogEvent?.Invoke(button);
         }
-
-        private ProgressDialogController _keybindDialogController;
-        private Key _keybindKey = Key.None;
-        private GamepadButton _keybindButton;
 
         private async void OnShowKeybindDialog(GamepadButton button)
         {
@@ -186,7 +197,8 @@ namespace WoWmapper
             KeyDown += OnKeyDown;
             _keybindDialogController =
                 await
-                    this.ShowProgressAsync($"Rebind {buttonName}", $"Press a button on your keyboard. Some special keys may not be recognized by the WoW client.",
+                    this.ShowProgressAsync($"Rebind {buttonName}",
+                        $"Press a button on your keyboard. Some special keys may not be recognized by the WoW client.",
                         true);
 
             _keybindDialogController.Canceled += KeybindDialogControllerOnCanceled;
@@ -207,32 +219,15 @@ namespace WoWmapper
                 BindManager.SetKey(_keybindButton, _keybindKey);
                 Console.WriteLine(_keybindKey.ToString());
             }
-            else
-            {
-                // Keybind dialog was canceled
-            }
 
             _keybindDialogController.Canceled -= KeybindDialogControllerOnCanceled;
             _keybindDialogController.Closed -= KeybindDialogControllerOnClosed;
         }
 
-        private List<Key> _ignoreKeys = new List<Key>()
-        {
-            Key.Escape,
-            Key.LeftAlt,
-            Key.RightAlt,
-            Key.LeftCtrl,
-            Key.RightCtrl,
-            Key.LeftShift,
-            Key.RightShift,
-            Key.LWin,
-            Key.RWin
-        };
-
         private async void OnKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
             if (_keybindDialogController == null) return;
-            
+
             // Handle keyboard input for keybinding dialog
             if (keyEventArgs.Key == Key.Escape)
             {
@@ -240,7 +235,7 @@ namespace WoWmapper
             }
             else
             {
-                if(keyEventArgs.SystemKey != Key.None)
+                if (keyEventArgs.SystemKey != Key.None)
                     _keybindKey = keyEventArgs.SystemKey;
                 else
                     _keybindKey = keyEventArgs.Key;
@@ -248,7 +243,7 @@ namespace WoWmapper
 
             if (_ignoreKeys.Contains(_keybindKey)) return;
 
-            if(_keybindDialogController.IsOpen)
+            if (_keybindDialogController.IsOpen)
                 await _keybindDialogController.CloseAsync();
         }
 
@@ -270,7 +265,7 @@ namespace WoWmapper
 
         private void UpdateUi()
         {
-            PanelDonate.Visibility = Properties.Settings.Default.DisableDonationButton
+            PanelDonate.Visibility = Settings.Default.DisableDonationButton
                 ? Visibility.Collapsed
                 : Visibility.Visible;
 
@@ -312,7 +307,7 @@ namespace WoWmapper
                 ? "World of Warcraft is running"
                 : "World of Warcraft is not running";
 
-            if (Properties.Settings.Default.EnableMemoryReading)
+            if (Settings.Default.EnableMemoryReading)
                 TextWoWStatus2.Text = MemoryManager.IsAttached
                     ? "Memory reading is enabled"
                     : "Memory reading is unavailable";
@@ -357,8 +352,8 @@ namespace WoWmapper
             if (Keyboard.IsKeyDown(Key.RightShift) && Keyboard.IsKeyDown(Key.RightAlt) &&
                 e.ChangedButton == MouseButton.Right)
             {
-                Properties.Settings.Default.DisableDonationButton = true;
-                DonateButton.Visibility = Visibility.Collapsed;
+                Settings.Default.DisableDonationButton = true;
+                DonateButton.Visibility = Visibility.Hidden;
                 return;
             }
 
@@ -370,6 +365,11 @@ namespace WoWmapper
             if (_latest == null) return;
             var updateForm = new UpdateWindow(_latest) {Owner = this};
             updateForm.ShowDialog();
+        }
+
+        private void DiscordLink_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start("https://discord.gg/8cyyCgc");
         }
     }
 }
