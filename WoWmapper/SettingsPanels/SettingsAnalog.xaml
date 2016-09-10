@@ -123,7 +123,7 @@
                       ToolTip="Enable or disable the DualShock 4 touchpad." />
             <DockPanel Margin="5">
                 <TextBlock Margin="0,5" Text="Touchpad Buttons" />
-                <ComboBox HorizontalAlignment="Right" SelectedIndex="{Binding Source={x:Static properties:Settings.Default}, Path=TouchpadMode}">
+                <ComboBox Width="140" HorizontalAlignment="Right" SelectedIndex="{Binding Source={x:Static properties:Settings.Default}, Path=TouchpadMode}">
                     <ComboBoxItem>Left/Right Click</ComboBoxItem>
                     <ComboBoxItem>Share/Options</ComboBoxItem>
                 </ComboBox>
