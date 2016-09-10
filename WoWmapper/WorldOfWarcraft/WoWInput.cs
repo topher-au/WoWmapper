@@ -55,7 +55,7 @@ namespace WoWmapper.WorldOfWarcraft
             else
             {
                 // Simulate hardware inputs
-                KeyInput.SendKey(key, true);
+                HardwareInput.SendKey(key, true);
             }
         }
 
@@ -70,7 +70,7 @@ namespace WoWmapper.WorldOfWarcraft
             else
             {
                 // Simulate hardware inputs
-                KeyInput.SendKey(key, false);
+                HardwareInput.SendKey(key, false);
             }
         }
 
@@ -82,64 +82,12 @@ namespace WoWmapper.WorldOfWarcraft
 
         public static void SendMouseDown(MouseButton button, bool forceDirect = false)
         {
-            
-            
-            if ((Properties.Settings.Default.InputDirectMouse || forceDirect) && _process != null)
-            {
-                // Send direct mouse click messages to WoW window
-                uint mouseMessage = 0;
-
-                switch (button)
-                {
-                    case MouseButton.Left:
-                        mouseMessage = WM_LBUTTONDOWN;
-                        break;
-                    case MouseButton.Right:
-                        mouseMessage = WM_RBUTTONDOWN;
-                        break;
-                }
-
-                var lparamCoords = Cursor.Position.X |
-                                   (Cursor.Position.Y << 16);
-
-                PostMessage(new HandleRef(null, _process.MainWindowHandle), mouseMessage,
-                    (IntPtr)lparamCoords, IntPtr.Zero);
-            }
-            else
-            {
-                // Simulate hardware inputs
-                KeyInput.SendMouse(button, true);
-            }
+            HardwareInput.SendClick(button, true);
         }
 
         public static void SendMouseUp(MouseButton button, bool forceDirect = false)
         {
-            if ((Properties.Settings.Default.InputDirectMouse || forceDirect) && _process != null)
-            {
-                // Send direct mouse click messages to WoW window
-                uint mouseMessage = 0;
-
-                switch (button)
-                {
-                    case MouseButton.Left:
-                        mouseMessage = WM_LBUTTONUP;
-                        break;
-                    case MouseButton.Right:
-                        mouseMessage = WM_RBUTTONUP;
-                        break;
-                }
-
-                var lparamCoords = Cursor.Position.X |
-                                   (Cursor.Position.Y << 16);
-
-                PostMessage(new HandleRef(null, _process.MainWindowHandle), mouseMessage,
-                    (IntPtr)lparamCoords, IntPtr.Zero);
-            }
-            else
-            {
-                // Simulate hardware inputs
-                KeyInput.SendMouse(button, false);
-            }
+            HardwareInput.SendClick(button, false);
         }
     }
 }

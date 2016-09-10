@@ -21,7 +21,7 @@ namespace WoWmapper.Controllers.Xbox
             get
             {
                 if (_controller != null)
-                    return _controller.BatteryInformationGamepad.BatteryLevel;
+                    return (byte)(((double)_controller.BatteryInformationGamepad.BatteryLevel / 3) * 100);
                 return 0;
             }
         }

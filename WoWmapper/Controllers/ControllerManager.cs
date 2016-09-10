@@ -67,6 +67,7 @@ namespace WoWmapper.Controllers
         #region Public Methods
         public static void Start()
         {
+            Log.WriteLine("Controller manager starting up...");
             _threadRunning = true;
             DS4 = new DS4Interface();
             XInput = new XInputInterface();
@@ -78,16 +79,19 @@ namespace WoWmapper.Controllers
 
         private static void UsbNotifierOnDeviceDisconnected()
         {
+            Log.WriteLine("USB device disconnected");
             DS4.Scan();
         }
 
         private static void UsbNotifierOnDeviceConnected()
         {
+            Log.WriteLine("USB device connected");
             DS4.Scan();
         }
 
         public static void Stop()
         {
+            Log.WriteLine("Controller manager shutting down...");
             _threadRunning = false;
             DS4.Shutdown();
             XInput.Shutdown();
@@ -290,9 +294,10 @@ namespace WoWmapper.Controllers
             ControllerButtonStateChanged?.Invoke(button, state);
         }
 
+        private static bool _showedBatteryLow;
+        private static bool _showedBatteryCritical;
         private static void ControllerWatcher()
         {
-            Log.WriteLine("Starting controller monitor thread...");
             while (_threadRunning)
             {
                 lock (Controllers)
@@ -342,37 +347,43 @@ namespace WoWmapper.Controllers
                         }
                     }
 
-                    if (Settings.Default.EnableOverlayBattery && ActiveController != null)
+                    if (Settings.Default.EnableOverlay && Settings.Default.EnableOverlayBattery && ActiveController != null)
                     {
                         var battery = ActiveController.BatteryLevel;
-                        if (battery < 20 && battery < _lastBatteryWarn - 10)
+                        if (battery > _lastBatteryWarn)
                         {
-                            App.Overlay.PopupNotification(new OverlayNotification()
+                            _lastBatteryWarn = 100;
+                            if (battery > 35) _showedBatteryCritical = false;
+                            if (battery > 45) _showedBatteryLow = false;
+                        }
+                        else if (battery <= _lastBatteryWarn - 10) // If battery has dropped by 10%
+                        {
+                            if (battery <= 40 && !_showedBatteryLow)
                             {
-                                Content =
+                                App.Overlay.PopupNotification(new OverlayNotification()
+                                {
+                                    Content = $"Your controller battery has reached {battery}%.",
+                                    Header = "Battery low",
+                                    UniqueID = "LOW_BATTERY",
+                                });
+                                _showedBatteryLow = true;
+                            } else if (battery <= 30 && !_showedBatteryCritical)
+                            {
+                                App.Overlay.PopupNotification(new OverlayNotification()
+                                {
+                                    Content =
                                     $"Your controller battery has reached {battery}%. Plug in now to avoid unexpected interruption.",
-                                Header = "Battery critically low", UniqueID = "LOW_BATTERY"
-                            });
-                            _lastBatteryWarn = battery - 10;
-                        }
-                        else if (battery < 40 && battery < _lastBatteryWarn - 10)
-                        {
-                            App.Overlay.PopupNotification(new OverlayNotification()
-                            {
-                                Content = $"Your controller battery has reached {battery}%.",
-                                Header = "Battery low",
-                                UniqueID = "LOW_BATTERY"
-                            });
-                            _lastBatteryWarn = battery - 10;
-                        }
-                        else if (battery > _lastBatteryWarn)
-                        {
-                            _lastBatteryWarn = battery;
+                                    Header = "Battery critically low",
+                                    UniqueID = "LOW_BATTERY",
+                                });
+                                _showedBatteryCritical = true;
+                            }
+                            _lastBatteryWarn -= 10;
                         }
                     }
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
             }
         }
 

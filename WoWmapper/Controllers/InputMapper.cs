@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
-using DS4Windows;
+using WoWmapper.Input;
 using WoWmapper.Keybindings;
-using WoWmapper.Overlay;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
 using Cursor = System.Windows.Forms.Cursor;
@@ -23,31 +15,31 @@ namespace WoWmapper.Controllers
     {
         private static readonly Thread _inputThread = new Thread(InputWatcherThread);
         private static readonly bool[] _keyStates = new bool[Enum.GetNames(typeof (GamepadButton)).Length];
-        private static bool _threadRunning = false;
+        private static bool _threadRunning;
         private static readonly HapticFeedback HapticFeedback = new HapticFeedback();
         private static DateTime _mouselookStarted;
-        private static bool _setMouselook = false;
-        private static bool _stopWalk = false;
+        private static bool _setMouselook;
+        private static bool _stopWalk;
         private static int _cursorX;
         private static int _cursorY;
         private static bool _crosshairShowing;
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
 
         static InputMapper()
         {
             ControllerManager.ControllerButtonStateChanged += ActiveController_ButtonStateChanged;
         }
 
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
         private static void InputWatcherThread()
         {
             while (_threadRunning)
             {
-                var axisMovement = Properties.Settings.Default.SwapSticks
+                var axisMovement = Settings.Default.SwapSticks
                     ? ControllerManager.GetRightAxis()
                     : ControllerManager.GetLeftAxis();
-                var axisCursor = Properties.Settings.Default.SwapSticks
+                var axisCursor = Settings.Default.SwapSticks
                     ? ControllerManager.GetLeftAxis()
                     : ControllerManager.GetRightAxis();
 
@@ -56,7 +48,8 @@ namespace WoWmapper.Controllers
                 ProcessCursor(axisCursor);
 
 
-                if (Settings.Default.EnableMemoryReading && ProcessManager.GameProcess != null && MemoryManager.ReadGameState() == 1)
+                if (Settings.Default.EnableMemoryReading && ProcessManager.GameProcess != null &&
+                    MemoryManager.ReadGameState() == 1)
                 {
                     var mouselookState = MemoryManager.ReadMouselook();
                     var foregroundWindow = GetForegroundWindow();
@@ -125,23 +118,24 @@ namespace WoWmapper.Controllers
                         else if (Settings.Default.EnableOverlayCrosshair &&
                                  Settings.Default.MemoryAutoCenter &&
                                  DateTime.Now >= _mouselookStarted +
-                                 TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay) && _crosshairShowing && App.Overlay.CrosshairVisible)
+                                 TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay) && _crosshairShowing &&
+                                 App.Overlay.CrosshairVisible)
                         {
                             App.Overlay.SetCrosshairState(false);
                         }
                     }
                 }
-                
+
                 Thread.Sleep(5);
             }
         }
 
         private static void ProcessMovement(Point axis)
         {
-            var sendLeft = -axis.X > Properties.Settings.Default.MovementThreshold;
-            var sendRight = axis.X > Properties.Settings.Default.MovementThreshold;
-            var sendUp = -axis.Y > Properties.Settings.Default.MovementThreshold;
-            var sendDown = axis.Y > Properties.Settings.Default.MovementThreshold;
+            var sendLeft = -axis.X > Settings.Default.MovementThreshold;
+            var sendRight = axis.X > Settings.Default.MovementThreshold;
+            var sendUp = -axis.Y > Settings.Default.MovementThreshold;
+            var sendDown = axis.Y > Settings.Default.MovementThreshold;
 
             var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
             if (Settings.Default.MemoryAutoWalk && MemoryManager.IsAttached && MemoryManager.ReadGameState() == 1)
@@ -175,7 +169,7 @@ namespace WoWmapper.Controllers
             {
                 if (!_keyStates[(int) GamepadButton.LeftStickLeft])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickLeft));
+                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickLeft));
                     _keyStates[(int) GamepadButton.LeftStickLeft] = true;
                 }
             }
@@ -183,7 +177,7 @@ namespace WoWmapper.Controllers
             {
                 if (_keyStates[(int) GamepadButton.LeftStickLeft])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickLeft));
+                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickLeft));
                     _keyStates[(int) GamepadButton.LeftStickLeft] = false;
                 }
             }
@@ -192,7 +186,7 @@ namespace WoWmapper.Controllers
             {
                 if (!_keyStates[(int) GamepadButton.LeftStickRight])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickRight));
+                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickRight));
                     _keyStates[(int) GamepadButton.LeftStickRight] = true;
                 }
             }
@@ -200,7 +194,7 @@ namespace WoWmapper.Controllers
             {
                 if (_keyStates[(int) GamepadButton.LeftStickRight])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickRight));
+                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickRight));
                     _keyStates[(int) GamepadButton.LeftStickRight] = false;
                 }
             }
@@ -209,7 +203,7 @@ namespace WoWmapper.Controllers
             {
                 if (!_keyStates[(int) GamepadButton.LeftStickUp])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickUp));
+                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickUp));
                     _keyStates[(int) GamepadButton.LeftStickUp] = true;
                 }
             }
@@ -217,7 +211,7 @@ namespace WoWmapper.Controllers
             {
                 if (_keyStates[(int) GamepadButton.LeftStickUp])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickUp));
+                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickUp));
                     _keyStates[(int) GamepadButton.LeftStickUp] = false;
                 }
             }
@@ -226,7 +220,7 @@ namespace WoWmapper.Controllers
             {
                 if (!_keyStates[(int) GamepadButton.LeftStickDown])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickDown));
+                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickDown));
                     _keyStates[(int) GamepadButton.LeftStickDown] = true;
                 }
             }
@@ -234,7 +228,7 @@ namespace WoWmapper.Controllers
             {
                 if (_keyStates[(int) GamepadButton.LeftStickDown])
                 {
-                    WorldOfWarcraft.WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickDown));
+                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickDown));
                     _keyStates[(int) GamepadButton.LeftStickDown] = false;
                 }
             }
@@ -243,32 +237,36 @@ namespace WoWmapper.Controllers
         private static void ProcessCursor(Point axis)
         {
             var axisInput = new Vector2(axis.X, axis.Y);
-            if (axisInput.Magnitude > Properties.Settings.Default.CursorDeadzone)
+            if (axisInput.Magnitude > Settings.Default.CursorDeadzone)
             {
                 axisInput = Vector2.Normalize(axisInput)*
-                            ((axisInput.Magnitude - Properties.Settings.Default.CursorDeadzone)/
-                             (127 - Properties.Settings.Default.CursorDeadzone));
+                            ((axisInput.Magnitude - Settings.Default.CursorDeadzone)/
+                             (127 - Settings.Default.CursorDeadzone));
 
-                double curve = (0.05*Properties.Settings.Default.CursorCurve);
+                var curve = 0.05*Settings.Default.CursorCurve;
 
-                var xSpeed = (axisInput.X < 0 ? -axisInput.X : axisInput.X)*Properties.Settings.Default.CursorSpeed;
-                var ySpeed = (axisInput.Y < 0 ? -axisInput.Y : axisInput.Y)*Properties.Settings.Default.CursorSpeed;
+                var xSpeed = (axisInput.X < 0 ? -axisInput.X : axisInput.X)*Settings.Default.CursorSpeed;
+                var ySpeed = (axisInput.Y < 0 ? -axisInput.Y : axisInput.Y)*Settings.Default.CursorSpeed;
 
-                double xMath = Math.Pow(curve*xSpeed, 2) + (curve*xSpeed);
-                double yMath = Math.Pow(curve*ySpeed, 2) + (curve*ySpeed);
+                var xMath = Math.Pow(curve*xSpeed, 2) + curve*xSpeed;
+                var yMath = Math.Pow(curve*ySpeed, 2) + curve*ySpeed;
 
                 var mouseMovement = new Vector2(xMath, yMath);
 
                 if (axis.X < 0) mouseMovement.X = -mouseMovement.X;
                 if (axis.Y < 0) mouseMovement.Y = -mouseMovement.Y;
 
-                var modX = 1;
-                var modY = 1;
-
-                var m = Cursor.Position;
-                m.X += (int) mouseMovement.X*modX;
-                m.Y += (int) mouseMovement.Y*modY;
-                Cursor.Position = m;
+                if (Settings.Default.InputHardwareMouse)
+                {
+                    HardwareInput.MoveMouse((int) mouseMovement.X, (int) mouseMovement.Y);
+                }
+                else
+                {
+                    var m = Cursor.Position;
+                    m.X += (int) mouseMovement.X;
+                    m.Y += (int) mouseMovement.Y;
+                    Cursor.Position = m;
+                }
             }
         }
 
@@ -323,7 +321,7 @@ namespace WoWmapper.Controllers
 
         private static void ProcessPlayerAoe(GamepadButton button, bool state)
         {
-            if(button == Settings.Default.MemoryAoeConfirm)
+            if (button == Settings.Default.MemoryAoeConfirm)
                 WoWInput.SendMouseClick(MouseButton.Left);
             else if (button == Settings.Default.MemoryAoeCancel)
                 WoWInput.SendMouseClick(MouseButton.Right);
@@ -367,19 +365,19 @@ namespace WoWmapper.Controllers
 
         private static void ActiveController_ButtonStateChanged(GamepadButton button, bool state)
         {
-            if (Properties.Settings.Default.EnableMemoryReading)
+            if (Settings.Default.EnableMemoryReading)
             {
                 // Process input if player is at character select
-                if (Properties.Settings.Default.MemoryOverrideMenu && MemoryManager.ReadGameState() == 0)
+                if (Settings.Default.MemoryOverrideMenu && MemoryManager.ReadGameState() == 0)
                 {
                     ProcessCharacterMenu(button, state);
                     return;
                 }
 
                 // Process input if player is casting targeted AoE
-                if (Properties.Settings.Default.MemoryOverrideAoeCast &&
+                if (Settings.Default.MemoryOverrideAoeCast &&
                     MemoryManager.ReadGameState() == 1 &&
-                    MemoryManager.ReadAoeState() == true)
+                    MemoryManager.ReadAoeState())
                 {
                     ProcessPlayerAoe(button, state);
                     return;

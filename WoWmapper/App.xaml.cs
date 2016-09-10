@@ -47,23 +47,15 @@ namespace WoWmapper
         private static readonly NotifyIcon _notifyIcon = new NotifyIcon();
         private static readonly MenuItem _notifyMenuOpen = new MenuItem {Header = "WoWmapper"};
         private static readonly MenuItem _notifyMenuExit = new MenuItem {Header = "Exit"};
-        
+
+        public readonly string[] Args;
+
         public App()
         {
-            var eargs = Environment.GetCommandLineArgs();
-            if (!eargs.Contains("--ignore-mutex"))
-            {
-                // Check if an existing instance of the application is running
-                _mutex = new Mutex(false, "Global\\" + _appGuid);
-                if (!_mutex.WaitOne(0, false))
-                {
-                    // Instance already running
-                    MessageBox.Show("Another instance of WoWmapper is already open", "Already running", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                    Environment.Exit(0);
-                    return;
-                }
-            }
+            var commandLineArgs = Environment.GetCommandLineArgs();
+            commandLineArgs.ToList().RemoveAt(0);
+            Args = commandLineArgs.ToArray();
+
 
             Current.DispatcherUnhandledException += (a, b) =>
             {
@@ -102,15 +94,24 @@ namespace WoWmapper
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Clean up deprecated files
-            foreach(var file in _deprecatedFiles)
-                if(File.Exists(file)) File.Delete(file);
-
+            if (!Args.Contains("--ignore-mutex")) // parameter to ignore existing instances
+            {
+                // Check if an existing instance of the application is running
+                _mutex = new Mutex(false, "Global\\" + _appGuid);
+                if (!_mutex.WaitOne(0, false))
+                {
+                    // Instance already running
+                    MessageBox.Show("Another instance of WoWmapper is already open", "Already running", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    Environment.Exit(0);
+                    return;
+                }
+            }
             SetTheme();
             
             // Check application settings and upgrade
-            var settingsVersion = new Version(WoWmapper.Properties.Settings.Default.SettingsVersion);
-            if (settingsVersion > new Version(0,0,0,0) && settingsVersion < new Version(7,1,0))
+            var settingsVersion = new Version(Settings.Default.SettingsVersion);
+            if (settingsVersion > new Version(0,0,0,0) && settingsVersion < new Version(7,1,0)) // Last reset at 7.1.0
             {
                 Log.WriteLine("Settings outdated, resetting.");
                 var upgrade =
@@ -129,7 +130,6 @@ namespace WoWmapper
             // Start up threads
             BindManager.LoadBindings();
             ControllerManager.Start();
-
             ProcessManager.Start();
             InputMapper.Start();
 

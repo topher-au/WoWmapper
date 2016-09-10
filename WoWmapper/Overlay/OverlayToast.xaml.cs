@@ -27,6 +27,7 @@ namespace WoWmapper.Overlay
         private readonly int _fadeIn;
         private readonly int _fadeOut;
         public OverlayNotification BaseNotification { get; private set; }
+        public event EventHandler NotificationCompleted;
 
         public OverlayToast(OverlayNotification notification)
         {
@@ -75,7 +76,7 @@ namespace WoWmapper.Overlay
         public void FadeOut()
         {
             var fadeOut = new DoubleAnimation(PopupOpacity, 0, TimeSpan.FromMilliseconds(_fadeOut));
-            fadeOut.Completed += (sender, args) => { Visibility = Visibility.Collapsed; };
+            fadeOut.Completed += (sender, args) => { Visibility = Visibility.Collapsed; NotificationCompleted?.Invoke(this, null);};
 
             this.BeginAnimation(OpacityProperty, fadeOut);
         }

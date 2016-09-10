@@ -62,7 +62,7 @@
     <Setting Name="InputDirectKeyboard" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="InputDirectMouse" Type="System.Boolean" Scope="User">
+    <Setting Name="InputHardwareMouse" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MemoryOverrideMenu" Type="System.Boolean" Scope="User">

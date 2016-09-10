@@ -216,6 +216,11 @@ namespace WoWmapper.Overlay
                                     toast => (toast as OverlayToast)?.BaseNotification.UniqueID == notification.UniqueID))
                             return;
                         var popupNotification = new OverlayToast(notification);
+                        popupNotification.NotificationCompleted += (sender, args) =>
+                        {
+                            StackNotifications.Children.Remove(popupNotification);
+                            popupNotification = null;
+                        };
                         StackNotifications.Children.Add(popupNotification);
                     });
                 }

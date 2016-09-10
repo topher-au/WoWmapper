@@ -174,7 +174,7 @@
     <Compile Include="UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WorldOfWarcraft\KeyInput.cs" />
+    <Compile Include="WorldOfWarcraft\HardwareInput.cs" />
     <Compile Include="WorldOfWarcraft\WoWInput.cs" />
     <Compile Include="WorldOfWarcraft\MemoryManager.cs" />
     <Compile Include="WorldOfWarcraft\Offsets\Offsets.cs" />

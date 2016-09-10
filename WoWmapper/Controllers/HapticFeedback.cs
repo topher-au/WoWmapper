@@ -72,6 +72,7 @@ namespace WoWmapper.Controllers
                             ControllerManager.SendRumble(leftStrength, rightStrength, duration);
                         }
                         lastHealth = currentHealth;
+                        lastMax = maxHealth;
 
                         // Lightbar control
                         //var ds4 = ControllerManager.ActiveController.UnderlyingController as DS4Device;

@@ -131,10 +131,10 @@
             <TextBlock Margin="0,5,0,0" FontSize="16">Miscellaneous</TextBlock>
             <Separator Height="5" />
             <CheckBox Margin="5,5,0,0"
-                      Content="Mouse clicks always interact with game window"
+                      Content="Simulate hardware mouse input"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
-                                          Path=InputDirectMouse}"
-                      ToolTip="Sends mouse clicks to directly to the game window, even when it is in the background. Enabling this will prevent you from interacting with other applications using the controller." />
+                                          Path=InputHardwareMouse}"
+                      ToolTip="Simulate a hardware mouse. This may resolve some issues related mouse movement." />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -69,7 +69,8 @@
                 <TextBlock Name="TextControllerStatus2" Margin="2"><Run Text="Controller battery status" /></TextBlock>
                 <TextBlock Name="TextControllerStatus3"
                            Margin="2"
-                           Foreground="Red" Visibility="Collapsed"><Run Text="Controller status warning" /></TextBlock>
+                           Foreground="Red"
+                           Visibility="Collapsed"><Run Text="Controller status warning" /></TextBlock>
             </StackPanel>
             <TextBlock FontSize="20"><Run Text="World of Warcraft" /></TextBlock>
             <Separator Height="2" />

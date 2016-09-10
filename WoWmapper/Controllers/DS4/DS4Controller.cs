@@ -103,6 +103,7 @@ namespace WoWmapper.Controllers.DS4
         {
             Task.Run(() =>
             {
+                Log.WriteLine($"Sending rumble: {left}/{right} for {duration}ms");
                 Ds4.setRumble(left, right);
                 Thread.Sleep(duration);
                 Ds4.setRumble(0, 0);
@@ -127,7 +128,7 @@ namespace WoWmapper.Controllers.DS4
             {
                 var ds4 = UnderlyingController as DS4Device;
                 if (ds4 == null) continue;
-                BatteryLevel = (byte) ds4.Battery;
+                BatteryLevel = (byte) (ds4.Battery > 100 ? 100 : ds4.Battery);
 
                 var cState = ds4.getCurrentState();
                 var pState = ds4.getPreviousState();

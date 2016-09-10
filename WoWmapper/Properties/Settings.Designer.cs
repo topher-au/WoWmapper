@@ -266,12 +266,12 @@ namespace WoWmapper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool InputDirectMouse {
+        public bool InputHardwareMouse {
             get {
-                return ((bool)(this["InputDirectMouse"]));
+                return ((bool)(this["InputHardwareMouse"]));
             }
             set {
-                this["InputDirectMouse"] = value;
+                this["InputHardwareMouse"] = value;
             }
         }
         
