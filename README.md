@@ -10,6 +10,7 @@ enhanced gameplay with a controller.
 
 - A system running Windows 7, 8, 10 or higher
 - DirectX 9 or DirectX 10
+- Microsoft .NET Framework 4.5.2
 - A DualShock 4 or Xbox compatible controller
 - World of Warcraft retail edition (no support for old/modified clients)
 
