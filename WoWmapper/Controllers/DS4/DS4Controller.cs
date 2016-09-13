@@ -62,31 +62,27 @@ namespace WoWmapper.Controllers.DS4
 
         public int GetAxis(GamepadAxis axis)
         {
-            lock (Ds4)
-            {
-                try
-                {
-                    var cState = Ds4.getCurrentState();
+            if (Ds4 == null || !IsAlive()) return 0;
 
-                    switch (axis)
-                    {
-                        case GamepadAxis.StickLeftX:
-                            return cState.LX - 127;
-                        case GamepadAxis.StickLeftY:
-                            return cState.LY - 127;
-                        case GamepadAxis.StickRightX:
-                            return cState.RX - 127;
-                        case GamepadAxis.StickRightY:
-                            return cState.RY - 127;
-                        case GamepadAxis.TriggerLeft:
-                            return cState.L2;
-                        case GamepadAxis.TriggerRight:
-                            return cState.R2;
-                    }
-                } catch { }
+            var cState = Ds4.getCurrentState();
+
+            switch (axis)
+            {
+                case GamepadAxis.StickLeftX:
+                    return cState.LX - 127;
+                case GamepadAxis.StickLeftY:
+                    return cState.LY - 127;
+                case GamepadAxis.StickRightX:
+                    return cState.RX - 127;
+                case GamepadAxis.StickRightY:
+                    return cState.RY - 127;
+                case GamepadAxis.TriggerLeft:
+                    return cState.L2;
+                case GamepadAxis.TriggerRight:
+                    return cState.R2;
+                default:
+                    return 0;
             }
-            
-            return 0;
         }
 
         public bool GetButtonState(GamepadButton button)
@@ -103,7 +99,6 @@ namespace WoWmapper.Controllers.DS4
         {
             Task.Run(() =>
             {
-                Log.WriteLine($"Sending rumble: {left}/{right} for {duration}ms");
                 Ds4.setRumble(left, right);
                 Thread.Sleep(duration);
                 Ds4.setRumble(0, 0);
@@ -221,8 +216,6 @@ namespace WoWmapper.Controllers.DS4
                     SendButtonEvent(GamepadButton.RightStick, true);
                 if (!(cState.R3 & pState.R3) && _buttonStates[(int) GamepadButton.RightStick])
                     SendButtonEvent(GamepadButton.RightStick, false);
-
-                Ds4.FlushHID();
 
                 Thread.Sleep(1);
             }

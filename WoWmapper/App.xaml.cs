@@ -56,22 +56,20 @@ namespace WoWmapper
             commandLineArgs.ToList().RemoveAt(0);
             Args = commandLineArgs.ToArray();
 
+            Current.Dispatcher.UnhandledException += Dispatcher_UnhandledException;
 
-            Current.DispatcherUnhandledException += (a, b) =>
+            Settings.Default.PropertyChanged += (sender, args) =>
             {
-                Log.WriteLine($"Exception occured!\n{b.Exception.Message}\n\nStack trace:\n{b.Exception.StackTrace}");
-                MessageBox.Show("Whoops! Looks like something went wrong, sorry about that!\n\n" +
-                                "Here's the error message:\n" +
-                                b.Exception.Message +
-                                "\nIf logging is enabled, check log.txt for detailed information.",
-                                "Unhandled Exception", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(0);
+                Settings.Default.Save();
             };
+        }
 
-            WoWmapper.Properties.Settings.Default.PropertyChanged += (sender, args) =>
-            {
-                WoWmapper.Properties.Settings.Default.Save();
-            };
+        private void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log.WriteLine($"Exception occurred: {e.Exception}\n" +
+                            "Stack trace:\n" + e.Exception.StackTrace);
+            MessageBox.Show($"An exception occurred:\n{e.Exception}\n\nSee the log file for more details.", "Exception occurred", MessageBoxButton.OK, MessageBoxImage.Error);
+            Environment.Exit(64);
         }
 
         private static readonly ContextMenu _notifyMenu = new ContextMenu()
@@ -107,6 +105,7 @@ namespace WoWmapper
                     return;
                 }
             }
+
             SetTheme();
             
             // Check application settings and upgrade

@@ -43,7 +43,7 @@ internal static class UsbNotifier
         Marshal.StructureToPtr(dbi, buffer, true);
 
         _notificationHandle = RegisterDeviceNotification(new WindowInteropHelper(_notificationWindow).Handle, buffer, 0);
-        Log.WriteLine($"Registered for USB events with handle [{_notificationHandle}]");
+        Log.WriteLine($"Registered for USB events with handle [{_notificationHandle.ToString("X2")}]");
     }
 
     private static async void NotificationDeviceConnected()

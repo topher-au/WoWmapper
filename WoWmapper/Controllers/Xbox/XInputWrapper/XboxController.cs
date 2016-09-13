@@ -66,6 +66,9 @@ namespace J2i.Net.XInputWrapper
             {
                 Log.WriteLine("Loading XInput 10 wrapper...");
                 _xInput = new XInput10();
+                // Make call to test for dll error
+                XInputState state = default(XInputState);
+                var iState = _xInput.GetState(0, ref state);
                 Log.WriteLine("XInput 10 wrapper loaded.");
             }
             catch (Exception ex)
@@ -78,6 +81,9 @@ namespace J2i.Net.XInputWrapper
                 {
                     Log.WriteLine("Loading XInput 9 wrapper...");
                     _xInput = new XInput9();
+                    // Make call to test for dll error
+                    XInputState state = default(XInputState);
+                    var iState = _xInput.GetState(0, ref state);
                     Log.WriteLine("XInput 9 wrapper loaded.");
                     _isXinput9 = true;
                 }
