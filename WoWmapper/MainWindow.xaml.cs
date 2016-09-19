@@ -27,15 +27,8 @@ namespace WoWmapper
     public partial class MainWindow : MetroWindow
     {
         public delegate void ButtonStyleChangedHandler();
-        public delegate void ShowKeybindDialogHandler(GamepadButton button);
 
-        private readonly Timer _uiTimer = new Timer {AutoReset = true, Interval = 1000};
-        
-        private readonly DoubleAnimation FadeInAnimation;
-        private readonly DoubleAnimation FadeOutAnimation;
-        private readonly Storyboard ShrinkStoryboard;
-        private readonly Storyboard ExpandStoryboard;
-        private double _finalLeft;
+        public delegate void ShowKeybindDialogHandler(GamepadButton button);
 
         private readonly List<Key> _ignoreKeys = new List<Key>
         {
@@ -49,6 +42,14 @@ namespace WoWmapper
             Key.LWin,
             Key.RWin
         };
+
+        private readonly Timer _uiTimer = new Timer {AutoReset = true, Interval = 1000};
+        private readonly Storyboard ExpandStoryboard;
+
+        private readonly DoubleAnimation FadeInAnimation;
+        private readonly DoubleAnimation FadeOutAnimation;
+        private readonly Storyboard ShrinkStoryboard;
+        private double _finalLeft;
 
         private GamepadButton _keybindButton;
 
@@ -69,10 +70,10 @@ namespace WoWmapper
             // Begin interface update timer
             _uiTimer.Elapsed += UiTimer_Elapsed;
             _uiTimer.Start();
-            
+
             // Initialize window animations
             ExpandStoryboard = (Storyboard) Resources["ExpandWindow"];
-            ShrinkStoryboard = (Storyboard)Resources["ShrinkWindow"];
+            ShrinkStoryboard = (Storyboard) Resources["ShrinkWindow"];
 
             ExpandStoryboard.Completed += (sender, args) =>
             {
@@ -82,7 +83,7 @@ namespace WoWmapper
                 Left = _finalLeft;
                 StackContent.Visibility = Visibility.Collapsed;
             };
-            
+
             ShrinkStoryboard.Completed += (sender, args) =>
             {
                 BeginAnimation(WidthProperty, null);
@@ -97,29 +98,26 @@ namespace WoWmapper
                 From = 1,
                 To = 0,
                 BeginTime = TimeSpan.FromMilliseconds(0),
-                Duration = TimeSpan.FromMilliseconds(250)
+                Duration = TimeSpan.FromMilliseconds(230)
             };
 
             FadeInAnimation = new DoubleAnimation
             {
                 From = 0,
                 To = 1,
-                BeginTime = TimeSpan.FromMilliseconds(250),
-                Duration = TimeSpan.FromMilliseconds(500)
+                BeginTime = TimeSpan.FromMilliseconds(270),
+                Duration = TimeSpan.FromMilliseconds(250)
             };
 
 
-            
-
             CheckUpdates();
 
-           
 
             if (Settings.Default.HideAtStartup && Settings.Default.RunInBackground)
                 Hide();
             else
                 Show();
-            
+
             ShowKeybindDialogEvent += OnShowKeybindDialog;
             Focus();
         }
@@ -275,17 +273,13 @@ namespace WoWmapper
                 var battery = activeDevice.BatteryLevel > 100 ? 100 : activeDevice.BatteryLevel;
 
                 if (activeDevice.Type == GamepadType.PlayStation)
-                {
                     TextControllerStatus1.Text = $"DualShock 4 connected";
-                }
                 else
-                {
                     TextControllerStatus1.Text = $"Xinput controller connected";
-                }
 
                 TextControllerStatus2.Text = $"Battery is at {battery}%";
 
-                if (activeDevice.Type == GamepadType.Xbox && ControllerManager.IsXInput9)
+                if ((activeDevice.Type == GamepadType.Xbox) && ControllerManager.IsXInput9)
                 {
                     TextControllerStatus3.Text =
                         "Your system is using the DirectX 9 Xinput library. You will not be able to use the Xbox Guide button.";
@@ -349,7 +343,7 @@ namespace WoWmapper
         private void DonateButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (Keyboard.IsKeyDown(Key.RightShift) && Keyboard.IsKeyDown(Key.RightAlt) &&
-                e.ChangedButton == MouseButton.Right)
+                (e.ChangedButton == MouseButton.Right))
             {
                 Settings.Default.DisableDonationButton = true;
                 DonateButton.Visibility = Visibility.Hidden;

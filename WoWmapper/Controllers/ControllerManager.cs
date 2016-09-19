@@ -92,7 +92,6 @@ namespace WoWmapper.Controllers
             _threadRunning = false;
             DS4.Shutdown();
             XInput.Shutdown();
-            UsbNotifier.Unregister();
         }
 
         public static BitmapImage GetButtonIcon(GamepadButton button)
