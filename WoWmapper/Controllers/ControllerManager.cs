@@ -72,9 +72,6 @@ namespace WoWmapper.Controllers
             DS4 = new DS4Interface();
             XInput = new XInputInterface();
             _watcherThread.Start();
-            UsbNotifier.Register();
-            UsbNotifier.DeviceConnected += UsbNotifierOnDeviceConnected;
-            UsbNotifier.DeviceDisconnected += UsbNotifierOnDeviceDisconnected;
         }
 
         private static void UsbNotifierOnDeviceDisconnected()
@@ -151,6 +148,8 @@ namespace WoWmapper.Controllers
         public static void RefreshControllers()
         {
             var controllerList = new List<IController>();
+
+            DS4.Scan();
 
             if (DS4 != null)
                 controllerList.AddRange(DS4.Controllers);

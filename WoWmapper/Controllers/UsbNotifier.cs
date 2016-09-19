@@ -39,9 +39,16 @@ internal static class UsbNotifier
         };
 
         dbi.Size = Marshal.SizeOf(dbi);
-        IntPtr buffer = Marshal.AllocHGlobal(dbi.Size);
-        Marshal.StructureToPtr(dbi, buffer, true);
-
+        IntPtr buffer = Marshal.AllocHGlobal(dbi.Size); ;
+        try
+        {
+            Marshal.StructureToPtr(dbi, buffer, true);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(buffer);
+        }
+        
         _notificationHandle = RegisterDeviceNotification(new WindowInteropHelper(_notificationWindow).Handle, buffer, 0);
         Log.WriteLine($"Registered for USB events with handle [{_notificationHandle.ToString("X2")}]");
     }

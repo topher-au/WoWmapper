@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WoWmapper.WorldOfWarcraft
 {
@@ -86,7 +82,7 @@ namespace WoWmapper.WorldOfWarcraft
             if (isWow64) // Process is Wow64
             {
                 ignoreHandle = process.Handle;
-                Log.WriteLine($"Failed to attach: Process {process.ProcessName} is 32-bit");
+                Log.WriteLine($"Memory reader failed to attach: Process {process.ProcessName} is 32-bit");
                 return false;
             }
 

@@ -29,11 +29,10 @@ namespace WoWmapper
         public delegate void ButtonStyleChangedHandler();
         public delegate void ShowKeybindDialogHandler(GamepadButton button);
 
-        private readonly Timer _uiTimer = new Timer {AutoReset = true, Interval = 250};
+        private readonly Timer _uiTimer = new Timer {AutoReset = true, Interval = 1000};
         
         private readonly DoubleAnimation FadeInAnimation;
         private readonly DoubleAnimation FadeOutAnimation;
-        private readonly DoubleAnimation MoveWindowAnimation;
         private readonly Storyboard ShrinkStoryboard;
         private readonly Storyboard ExpandStoryboard;
         private double _finalLeft;

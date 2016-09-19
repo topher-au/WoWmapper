@@ -251,6 +251,9 @@ namespace WoWmapper.Controllers
                 var xMath = Math.Pow(curve*xSpeed, 2) + curve*xSpeed;
                 var yMath = Math.Pow(curve*ySpeed, 2) + curve*ySpeed;
 
+                xMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
+                yMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
+
                 var mouseMovement = new Vector2(xMath, yMath);
 
                 if (axis.X < 0) mouseMovement.X = -mouseMovement.X;
@@ -321,12 +324,20 @@ namespace WoWmapper.Controllers
 
         private static void ProcessPlayerAoe(GamepadButton button, bool state)
         {
-            if (button == Settings.Default.MemoryAoeConfirm)
-                WoWInput.SendMouseClick(MouseButton.Left);
-            else if (button == Settings.Default.MemoryAoeCancel)
-                WoWInput.SendMouseClick(MouseButton.Right);
-            else
-                ProcessInput(button, state);
+            if (!_keyStates[(int) button])
+            {
+                if (button == Settings.Default.MemoryAoeConfirm)
+                {
+                    WoWInput.SendMouseClick(MouseButton.Left);
+                    return;
+                } 
+                if (button == Settings.Default.MemoryAoeCancel)
+                {
+                    WoWInput.SendMouseClick(MouseButton.Right);
+                    return;
+                }
+            }
+            ProcessInput(button, state);
         }
 
         private static void ProcessInput(GamepadButton button, bool state)
