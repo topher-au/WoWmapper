@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,45 +61,10 @@ namespace J2i.Net.XInputWrapper
         static XboxController[] Controllers;
 
 
+
         static XboxController()
         {
-            try
-            {
-                Log.WriteLine("Loading XInput 10 wrapper...");
-                _xInput = new XInput10();
-                // Make call to test for dll error
-                XInputState state = default(XInputState);
-                var iState = _xInput.GetState(0, ref state);
-                Log.WriteLine("XInput 10 wrapper loaded.");
-            }
-            catch (Exception ex)
-            {
-                Log.WriteLine("Failed to load XInput 10 wrapper!");
-            }
-            if (_xInput == null)
-            {
-                try
-                {
-                    Log.WriteLine("Loading XInput 9 wrapper...");
-                    _xInput = new XInput9();
-                    // Make call to test for dll error
-                    XInputState state = default(XInputState);
-                    var iState = _xInput.GetState(0, ref state);
-                    Log.WriteLine("XInput 9 wrapper loaded.");
-                    _isXinput9 = true;
-                }
-                catch (Exception ex)
-                {
-                    Log.WriteLine("Failed to load XInput 9 wrapper!");
-                }
-            }
-            if (_xInput == null)
-            {
-                Log.WriteLine(
-                    "WoWmapper was unable to locate the XInput library on your system. Please ensure DirectX 9 or 10 is installed and try again.");
-                throw new DllNotFoundException(
-                    "WoWmapper was unable to locate the XInput library on your system. Please ensure DirectX 9 or 10 is installed and try again.");
-            }
+            _xInput=new XInput10();
             Controllers = new XboxController[MAX_CONTROLLER_COUNT];
             SyncLock = new object();
             for (int i = FIRST_CONTROLLER_INDEX; i <= LAST_CONTROLLER_INDEX; ++i)
