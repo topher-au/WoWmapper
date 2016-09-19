@@ -251,8 +251,8 @@ namespace WoWmapper.Controllers
                 var xMath = Math.Pow(curve*xSpeed, 2) + curve*xSpeed;
                 var yMath = Math.Pow(curve*ySpeed, 2) + curve*ySpeed;
 
-                xMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
-                yMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
+                //xMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
+                //yMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
 
                 var mouseMovement = new Vector2(xMath, yMath);
 
