@@ -21,7 +21,7 @@ namespace WoWmapper.Controllers.DS4
 
         public void Scan()
         {
-            Log.WriteLine("Searching for DS4 controllers...");
+            //Log.WriteLine("Searching for DS4 controllers...");
             // Update controller list
             DS4Devices.findControllers();
 

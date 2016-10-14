@@ -7,6 +7,7 @@ using WoWmapper.Input;
 using WoWmapper.Keybindings;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
+using WoWmapper.WoWInfoReader;
 using Cursor = System.Windows.Forms.Cursor;
 
 namespace WoWmapper.Controllers
@@ -48,16 +49,15 @@ namespace WoWmapper.Controllers
                 ProcessCursor(axisCursor);
 
 
-                if (Settings.Default.EnableMemoryReading && ProcessManager.GameProcess != null &&
-                    MemoryManager.ReadGameState() == 1)
+                if (ProcessManager.GameProcess != null &&
+                    WoWReader.IsAttached && WoWReader.GameState)
                 {
-                    var mouselookState = MemoryManager.ReadMouselook();
                     var foregroundWindow = GetForegroundWindow();
                     if (foregroundWindow == ProcessManager.GameProcess.MainWindowHandle)
                         _setMouselook = false;
 
                     // Cancel mouselook when alt-tabbed
-                    if (Settings.Default.MemoryAutoCancel && !_setMouselook && mouselookState &&
+                    if (Settings.Default.MemoryAutoCancel && !_setMouselook && WoWReader.MouselookState &&
                         foregroundWindow != ProcessManager.GameProcess.MainWindowHandle)
                     {
                         WoWInput.SendMouseClick(MouseButton.Right, true);
@@ -68,22 +68,22 @@ namespace WoWmapper.Controllers
                     if (Settings.Default.EnableOverlay && Settings.Default.EnableOverlayCrosshair)
                     {
                         // Show crosshair after mouselooking for 100ms
-                        mouselookState = MemoryManager.ReadMouselook();
-                        if (mouselookState && DateTime.Now >= _mouselookStarted + TimeSpan.FromMilliseconds(100) &&
+                        if (WoWReader.MouselookState && DateTime.Now >= _mouselookStarted + TimeSpan.FromMilliseconds(200) &&
                             !App.Overlay.CrosshairVisible && !_crosshairShowing)
                         {
                             App.Overlay.SetCrosshairState(true, _cursorX, _cursorY);
                             _crosshairShowing = true;
                         } // Otherwise hide crosshair
-                        else if (!mouselookState && _crosshairShowing)
+                        else if (!WoWReader.MouselookState && _crosshairShowing)
                         {
                             App.Overlay.SetCrosshairState(false);
                             _crosshairShowing = false;
                         }
                     }
 
+
                     // Check if mouselook is inactive
-                    if (!MemoryManager.ReadMouselook())
+                    if (!WoWReader.MouselookState)
                     {
                         // Update last known cursor position
                         var cursor = Cursor.Position;
@@ -108,7 +108,7 @@ namespace WoWmapper.Controllers
                     }
 
                     // Check if mouselook is active
-                    if (MemoryManager.ReadMouselook())
+                    if (WoWReader.MouselookState)
                     {
                         // If so, start the cooldown timer
                         if (_mouselookStarted == DateTime.MinValue)
@@ -138,9 +138,11 @@ namespace WoWmapper.Controllers
             var sendDown = axis.Y > Settings.Default.MovementThreshold;
 
             var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
-            if (Settings.Default.MemoryAutoWalk && MemoryManager.IsAttached && MemoryManager.ReadGameState() == 1)
+            if (Settings.Default.MemoryAutoWalk && 
+                WoWReader.IsAttached && 
+                WoWReader.GameState)
             {
-                var moveState = MemoryManager.ReadMovementState();
+                var moveState = WoWReader.MovementState;
                 if (moveState == 0 || moveState == 1)
                 {
                     if (strength < Settings.Default.WalkThreshold &&
@@ -379,16 +381,15 @@ namespace WoWmapper.Controllers
             if (Settings.Default.EnableMemoryReading)
             {
                 // Process input if player is at character select
-                if (Settings.Default.MemoryOverrideMenu && MemoryManager.ReadGameState() == 0)
+                if (Settings.Default.MemoryOverrideMenu && WoWReader.IsAttached && !WoWReader.GameState)
                 {
                     ProcessCharacterMenu(button, state);
                     return;
                 }
 
                 // Process input if player is casting targeted AoE
-                if (Settings.Default.MemoryOverrideAoeCast &&
-                    MemoryManager.ReadGameState() == 1 &&
-                    MemoryManager.ReadAoeState())
+                if (WoWReader.GameState && Settings.Default.MemoryOverrideAoeCast &&
+                    WoWReader.AoeState)
                 {
                     ProcessPlayerAoe(button, state);
                     return;

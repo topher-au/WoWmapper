@@ -74,6 +74,17 @@
                       IsChecked="{Binding Source={x:Static p:Settings.Default},
                                           Path=AutoUpdate}"
                       Visibility="Collapsed" />
+            <DockPanel>
+                <CheckBox Name="CheckOverrideXinput" Content="Override Xinput library" Margin="5" IsChecked="{Binding Source={x:Static p:Settings.Default},
+                                          Path=XinputOverride}" Checked="CheckOverrideXinput_OnChecked"/>
+                <ComboBox SelectedIndex="{Binding Source={x:Static p:Settings.Default},
+                                          Path=XinputDll}" HorizontalAlignment="Right" IsEnabled="{Binding Source={x:Static p:Settings.Default},
+                                          Path=XinputOverride}" Width="120">
+                    <ComboBoxItem Content="xinput1_4.dll" />
+                    <ComboBoxItem Content="xinput1_3.dll" />
+                    <ComboBoxItem Content="xinput9_1_0.dll" />
+                </ComboBox>
+            </DockPanel>
             <Button Margin="5,10"
                     Click="ButtonResetAll_Click"
                     Content="Reset all settings" />

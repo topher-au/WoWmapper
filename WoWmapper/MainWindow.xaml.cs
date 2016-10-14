@@ -17,6 +17,7 @@ using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
+using WoWmapper.WoWInfoReader;
 using Application = System.Windows.Application;
 
 namespace WoWmapper
@@ -301,7 +302,7 @@ namespace WoWmapper
                 : "World of Warcraft is not running";
 
             if (Settings.Default.EnableMemoryReading)
-                TextWoWStatus2.Text = MemoryManager.IsAttached
+                TextWoWStatus2.Text = WoWReader.IsAttached
                     ? "Memory reading is enabled"
                     : "Memory reading is unavailable";
             else

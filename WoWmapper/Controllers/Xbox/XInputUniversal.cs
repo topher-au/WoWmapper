@@ -1,22 +1,58 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using J2i.Net.XInputWrapper;
+using WoWmapper.Properties;
 
 namespace WoWmapper.Controllers.Xbox
 {
-    public class XInput10 : IXInput
+    public class XInputUniversal : IXInput
     {
         private readonly int dllIndex = -1;
 
-        public XInput10()
+        public XInputUniversal()
         {
-            var x14exists = LibraryExists("xinput1_4.dll");
-            var x13exists = LibraryExists("xinput1_3.dll");
-            var x9exists = LibraryExists("xinput9_1_0.dll");
+            if (Settings.Default.XinputOverride)
+            {
+                dllIndex = Settings.Default.XinputDll;
+                switch (dllIndex)
+                {
+                    case 0:
+                        Log.WriteLine("Forcing Xinput library: xinput1_4.dll");
+                        break;
+                    case 1:
+                        Log.WriteLine("Forcing Xinput library: xinput1_3.dll");
+                        break;
+                    case 2:
+                        Log.WriteLine("Forcing Xinput library: xinput9_1_0.dll");
+                        break;
+                }
+            }
+            else
+            {
+                Log.WriteLine("Attempting to auto-detect Xinput library...");
+                var x14exists = LibraryExists("xinput1_4.dll");
+                var x13exists = LibraryExists("xinput1_3.dll");
+                var x9exists = LibraryExists("xinput9_1_0.dll");
 
-            if (x14exists) dllIndex = 0;
-            else if (x13exists) dllIndex = 1;
-            else if (x9exists) dllIndex = 2;
+
+                if (x14exists)
+                {
+                    Log.WriteLine("Found xinput1_4.dll!");
+                    dllIndex = 0;
+                }
+                else if (x13exists)
+                {
+                    Log.WriteLine("Found xinput1_3.dll!");
+                    dllIndex = 1;
+                }
+                else if (x9exists)
+                {
+                    Log.WriteLine("Found xinput9_1_0.dll!");
+                    dllIndex = 2;
+                }
+                else
+                    Log.WriteLine("Unable to find a compatible Xinput library on this system. Xinput will not function.");
+            }
         }
 
         public int GetState(int dwUserIndex, ref XInputState pState)

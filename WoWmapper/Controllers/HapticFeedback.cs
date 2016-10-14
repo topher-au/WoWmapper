@@ -9,6 +9,7 @@ using DS4Windows;
 using WoWmapper.Controllers.DS4;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
+using WoWmapper.WoWInfoReader;
 
 namespace WoWmapper.Controllers
 {
@@ -35,9 +36,11 @@ namespace WoWmapper.Controllers
 
             while (_feedbackThread.ThreadState != ThreadState.Aborted)
             {
-                if (Properties.Settings.Default.EnableMemoryReading && MemoryManager.ReadGameState() == 1 && ControllerManager.ActiveController != null)
+                if (WoWReader.IsAttached && 
+                    WoWReader.GameState && 
+                    ControllerManager.ActiveController != null)
                 {
-                    var playerHealth = MemoryManager.ReadPlayerHealth();
+                    var playerHealth = WoWReader.PlayerHealth;
                     if (playerHealth != null)
                     {
                         // Check player health defecit

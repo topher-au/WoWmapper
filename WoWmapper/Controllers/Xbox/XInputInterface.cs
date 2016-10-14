@@ -21,7 +21,6 @@ namespace WoWmapper.Controllers.DS4
 
         public XInputInterface()
         {
-            
             Log.WriteLine("XInput interface starting up");
             XboxController.StartPolling();
             _active = true;

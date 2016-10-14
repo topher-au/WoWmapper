@@ -64,7 +64,7 @@ namespace J2i.Net.XInputWrapper
 
         static XboxController()
         {
-            _xInput=new XInput10();
+            _xInput=new XInputUniversal();
             Controllers = new XboxController[MAX_CONTROLLER_COUNT];
             SyncLock = new object();
             for (int i = FIRST_CONTROLLER_INDEX; i <= LAST_CONTROLLER_INDEX; ++i)

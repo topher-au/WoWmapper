@@ -550,5 +550,29 @@ namespace WoWmapper.Properties {
                 this["MemoryAoeCancel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool XinputOverride {
+            get {
+                return ((bool)(this["XinputOverride"]));
+            }
+            set {
+                this["XinputOverride"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int XinputDll {
+            get {
+                return ((int)(this["XinputDll"]));
+            }
+            set {
+                this["XinputDll"] = value;
+            }
+        }
     }
 }

@@ -7,42 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
 
-// 
-// sigScan C# Implementation - Written by atom0s [aka Wiccaan] 
-// Class Version: 2.0.0 
-// 
-// [ CHANGE LOG ] ------------------------------------------------------------------------- 
-// 
-//      2.0.0 
-//          - Updated to no longer require unsafe or fixed code. 
-//          - Removed unneeded methods and code. 
-// 
-//      1.0.0 
-//          - First version written and release. 
-// 
-// [ CREDITS ] ---------------------------------------------------------------------------- 
-// 
-// sigScan is based on the FindPattern code written by 
-// dom1n1k and Patrick at GameDeception.net 
-// 
-// Full credit to them for the purpose of this code. I, atom0s, simply 
-// take credit for converting it to C#. 
-// 
-// [ USAGE ] ------------------------------------------------------------------------------ 
-// 
-// Examples: 
-// 
-//      SigScan _sigScan = new SigScan(); 
-//      _sigScan.Process = someProc; 
-//      _sigScan.Address = new IntPtr(0x123456); 
-//      _sigScan.Size = 0x1000; 
-//      IntPtr pAddr = _sigScan.FindPattern(new byte[]{ 0xFF, 0xFF, 0xFF, 0xFF, 0x51, 0x55, 0xFC, 0x11 }, "xxxx?xx?", 12); 
-// 
-//      SigScan _sigScan = new SigScan(someProc, new IntPtr(0x123456), 0x1000); 
-//      IntPtr pAddr = _sigScan.FindPattern(new byte[]{ 0xFF, 0xFF, 0xFF, 0xFF, 0x51, 0x55, 0xFC, 0x11 }, "xxxx?xx?", 12); 
-// 
-// ---------------------------------------------------------------------------------------- 
-namespace WoWmapper.WorldOfWarcraft
+namespace WoWmapper.WoWInfoReader
 {
     public class SigScan
     {

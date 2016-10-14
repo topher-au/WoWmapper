@@ -118,12 +118,10 @@
     <Compile Include="Controllers\HapticFeedback.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\InputMapper.cs" />
-    <Compile Include="Controllers\UsbNotifier.cs" />
     <Compile Include="Controllers\Vector2.cs" />
     <Compile Include="Controllers\Xbox\IXInput.cs" />
     <Compile Include="Controllers\Xbox\XboxData.cs" />
-    <Compile Include="Controllers\Xbox\XInput10.cs" />
-    <Compile Include="Controllers\Xbox\XInput9.cs" />
+    <Compile Include="Controllers\Xbox\XInputUniversal.cs" />
     <Compile Include="Controllers\Xbox\XInputController.cs" />
     <Compile Include="Controllers\Xbox\XInputInterface.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\Point.cs" />
@@ -136,6 +134,9 @@
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputKeystroke.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputState.cs" />
     <Compile Include="Controllers\Xbox\XInputWrapper\XInputVibration.cs" />
+    <Compile Include="DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Keybindings\BindManager.cs" />
     <Compile Include="Keybindings\Defaults.cs" />
     <Compile Include="Keybindings\Keybind.cs" />
@@ -175,11 +176,15 @@
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorldOfWarcraft\HardwareInput.cs" />
+    <Compile Include="WoWInfoReader\OffsetPattern.cs" />
+    <Compile Include="WoWInfoReader\SigScan.cs" />
+    <Compile Include="WoWInfoReader\WoWReader.cs" />
     <Compile Include="WorldOfWarcraft\WoWInput.cs" />
-    <Compile Include="WorldOfWarcraft\MemoryManager.cs" />
-    <Compile Include="WorldOfWarcraft\Offsets\Offsets.cs" />
-    <Compile Include="WorldOfWarcraft\Offsets\SigScan.cs" />
     <Compile Include="WorldOfWarcraft\ProcessManager.cs" />
+    <Page Include="DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

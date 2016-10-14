@@ -66,5 +66,12 @@ namespace WoWmapper.SettingsPanels
         {
             BindWriter.WriteBinds();
         }
+
+        private void CheckOverrideXinput_OnChecked(object sender, RoutedEventArgs e)
+        {
+            if (!_ready) return;
+            MessageBox.Show("Please restart WoWmapper for changes to this setting to take effect.", "Notice",
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }

@@ -108,24 +108,6 @@ namespace WoWmapper
 
             SetTheme();
             
-            // Check application settings and upgrade
-            var settingsVersion = new Version(Settings.Default.SettingsVersion);
-            if (settingsVersion > new Version(0,0,0,0) && settingsVersion < new Version(7,1,0)) // Last reset at 7.1.0
-            {
-                Log.WriteLine("Settings outdated, resetting.");
-                var upgrade =
-                    MessageBox.Show(
-                        "Changes in the WoWmapper configuration require your settings to be reset. If you do not reset your configuration now, WoWmapper may behave unpredictably.\n\nReset configuration now?",
-                        "Settings outdated", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-                if (upgrade == MessageBoxResult.Yes)
-                {
-
-                    Settings.Default.Upgrade();
-                    Settings.Default.SettingsVersion =
-                        Assembly.GetExecutingAssembly().GetName().Version.ToString();
-                }
-            }
-            
             // Start up threads
             BindManager.LoadBindings();
             ControllerManager.Start();
