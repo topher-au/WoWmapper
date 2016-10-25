@@ -7,21 +7,11 @@ namespace WoWmapper.WoWInfoReader
         public static OffsetPattern GameState = new OffsetPattern
         {
             Pattern =
-                    "40 53" + // push rbx
-                    "48 83 EC 50" + // sub rsp,50 { 80 }
-                    "0FB6 05 ????????" + // movzx eax,byte ptr [WowT-64.exe+1A36E50] { [00000000] }
-                    "0FB6 DA" + // movzx ebx,dl
-                    "84 C0" + // test al,al
-                    "74 04" + // je WowT-64.exe+C08718
-                    "84 D2" + // test dl,dl
-                    "74 5D" + // je WowT-64.exe+C08775
                     "80 3D ???????? 00" + // cmp byte ptr [WowT-64.exe+1A36E51],00 { [0] }
-                    "74 54" + // je WowT-64.exe+C08775
+                    "74 ??" + // je WowT-64.exe+C08775
                     "84 DB" + // test bl,bl
-                    "88 0D ????????" + // mov [WowT-64.exe+1A36E52],cl { [0] }
-                    "0FB6 C0" + // movzx eax,al
-                    "B9 01000000", // mov ecx,00000001 { 1 }
-            Offset = 26
+                    "88 0D ????????" , // mov [WowT-64.exe+1A36E52],cl { [0] }
+            Offset = 2
         };
 
         public static OffsetPattern PlayerBase = new OffsetPattern
