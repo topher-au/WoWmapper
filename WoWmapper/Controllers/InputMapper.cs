@@ -53,12 +53,12 @@ namespace WoWmapper.Controllers
                     WoWReader.IsAttached && WoWReader.GameState)
                 {
                     var foregroundWindow = GetForegroundWindow();
-                    if (foregroundWindow == ProcessManager.GameProcess.MainWindowHandle)
+                    if (foregroundWindow == ProcessManager.GameProcess?.MainWindowHandle)
                         _setMouselook = false;
 
                     // Cancel mouselook when alt-tabbed
                     if (Settings.Default.MemoryAutoCancel && !_setMouselook && WoWReader.MouselookState &&
-                        foregroundWindow != ProcessManager.GameProcess.MainWindowHandle)
+                        foregroundWindow != ProcessManager.GameProcess?.MainWindowHandle)
                     {
                         WoWInput.SendMouseClick(MouseButton.Right, true);
                         _setMouselook = true;
@@ -92,7 +92,7 @@ namespace WoWmapper.Controllers
 
                         // Check if we need to re-center the mouse cursor
                         if (Settings.Default.MemoryAutoCenter &&
-                            foregroundWindow == ProcessManager.GameProcess.MainWindowHandle &&
+                            foregroundWindow == ProcessManager.GameProcess?.MainWindowHandle &&
                             _mouselookStarted != DateTime.MinValue &&
                             DateTime.Now >=
                             _mouselookStarted + TimeSpan.FromMilliseconds(Settings.Default.MemoryAutoCenterDelay))

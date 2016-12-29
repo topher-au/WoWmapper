@@ -338,7 +338,6 @@
     <Resource Include="Controllers\DS4\Buttons\CP_X_CENTER.png" />
     <Resource Include="Controllers\DS4\Buttons\CP_X_LEFT.png" />
     <Resource Include="Controllers\DS4\Buttons\CP_X_RIGHT.png" />
-    <Content Include="Controllers\DS4\HidLibrary\LICENSE.htm" />
     <Resource Include="Resources\reloadbinds.png" />
     <Resource Include="Resources\wowmapper.ico" />
     <Resource Include="Resources\xinput.png" />

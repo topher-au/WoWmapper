@@ -137,11 +137,11 @@ namespace DS4Windows
             if (fileStream != null)
                 fileStream.Close();
             fileStream = null;
-            //Console.WriteLine("Close fs");
+            Console.WriteLine("Close fs");
             if (safeReadHandle != null && !safeReadHandle.IsInvalid)
             {
                 safeReadHandle.Close();
-                //Console.WriteLine("Close sh");
+                Console.WriteLine("Close sh");
 
             }
             safeReadHandle = null;

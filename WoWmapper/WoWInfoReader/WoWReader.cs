@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -132,6 +133,7 @@ namespace WoWmapper.WoWInfoReader
             }
         }
 
+        private static byte lastState = 0;
         private static bool ReadGameState()
         {
             if (!IsAttached) return false;
@@ -139,8 +141,13 @@ namespace WoWmapper.WoWInfoReader
             try
             {
                 var gameState = Read<byte>(_offsetGameState);
-
-                return gameState == 1;
+                if(gameState != 0 && gameState != 1) Log.WriteLine("GameState unexpected value: {gameState}");
+                if (lastState != gameState)
+                {
+                    Log.WriteLine($"GameState changed: {gameState}");
+                    lastState = gameState;
+                }
+                return gameState != 0;
             }
             catch (Exception ex)
             {

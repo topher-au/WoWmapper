@@ -239,7 +239,7 @@ namespace DS4Windows
         {
             if (ds4Input == null)
             {
-                //Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> start");
+                Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> start");
                 sendOutputReport(true); // initialize the output report
                 ds4Output = new Thread(performDs4Output);
                 ds4Output.Name = "DS4 Output thread: " + Mac;
@@ -248,8 +248,8 @@ namespace DS4Windows
                 ds4Input.Name = "DS4 Input thread: " + Mac;
                 ds4Input.Start();
             }
-            //else
-                //Console.WriteLine("Thread already running for DS4: " + Mac);
+            else
+                Console.WriteLine("Thread already running for DS4: " + Mac);
         }
 
         public void StopUpdate()
@@ -302,27 +302,22 @@ namespace DS4Windows
             lock (outputReport)
             {
                 int lastError = 0;
-                while (hDevice.IsOpen)
+                while (true)
                 {
                     if (writeOutput())
                     {
                         lastError = 0;
-                        if (testRumble.IsRumbleSet())
-                            // repeat test rumbles periodically; rumble has auto-shut-off in the DS4 firmware
-                            Monitor.Wait(outputReport, 10000);
-                                // DS4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
+                        if (testRumble.IsRumbleSet()) // repeat test rumbles periodically; rumble has auto-shut-off in the DS4 firmware
+                            Monitor.Wait(outputReport, 10000); // DS4 firmware stops it after 5 seconds, so let the motors rest for that long, too.
                         else
-                        {
-                            Monitor.Wait(outputReport,1000);
-                        }
-                            
+                            Monitor.Wait(outputReport);
                     }
                     else
                     {
                         int thisError = Marshal.GetLastWin32Error();
                         if (lastError != thisError)
                         {
-                            //Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered write failure: " + thisError);
+                            Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered write failure: " + thisError);
                             lastError = thisError;
                         }
                     }
@@ -384,7 +379,7 @@ namespace DS4Windows
                     }
                     else
                     {
-                        //Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
+                        Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
                         sendOutputReport(true); // Kick Windows into noticing the disconnection.
                         StopOutputUpdate();
                         IsDisconnecting = true;
@@ -400,7 +395,7 @@ namespace DS4Windows
                     readTimeout.Enabled = false;
                     if (res != HidDevice.ReadStatus.Success)
                     {
-                        //Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
+                        Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> disconnect due to read failure: " + Marshal.GetLastWin32Error());
                         StopOutputUpdate();
                         IsDisconnecting = true;
                         if (Removal != null)
@@ -478,7 +473,7 @@ namespace DS4Windows
                     if (inputReport[30] != priorInputReport30)
                     {
                         priorInputReport30 = inputReport[30];
-                        //Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> power subsystem octet: 0x" + inputReport[30].ToString("x02"));
+                        Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> power subsystem octet: 0x" + inputReport[30].ToString("x02"));
                     }
                 }
                 catch { currerror = "Index out of bounds: battery"; }
@@ -579,7 +574,7 @@ namespace DS4Windows
                     {
                         if (!writeOutput())
                         {
-                            //Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered synchronous write failure: " + Marshal.GetLastWin32Error());
+                            Console.WriteLine(MacAddress.ToString() + " " + System.DateTime.UtcNow.ToString("o") + "> encountered synchronous write failure: " + Marshal.GetLastWin32Error());
                             ds4Output.Abort();
                             ds4Output.Join();
                         }
@@ -607,7 +602,7 @@ namespace DS4Windows
         {
             if (Mac != null)
             {
-                //Console.WriteLine("Trying to disconnect BT device " + Mac);
+                Console.WriteLine("Trying to disconnect BT device " + Mac);
                 IntPtr btHandle = IntPtr.Zero;
                 int IOCTL_BTH_DISCONNECT_DEVICE = 0x41000c;
 
@@ -635,7 +630,7 @@ namespace DS4Windows
 
                 }
                 NativeMethods.BluetoothFindRadioClose(searchHandle);
-                //Console.WriteLine("Disconnect successful: " + success);
+                Console.WriteLine("Disconnect successful: " + success);
                 success = true; // XXX return value indicates failure, but it still works?
                 if(success)
                 {
