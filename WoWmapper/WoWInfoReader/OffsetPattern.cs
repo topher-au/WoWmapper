@@ -17,12 +17,12 @@ namespace WoWmapper.WoWInfoReader
         public static OffsetPattern PlayerBase = new OffsetPattern
         {
             Pattern =
-                "48 83 EC 40           " + // sub rsp,40 { 64 }
+                "48 83 EC ??           " + // sub rsp,40 { 64 }
                 "48 8B 3D ????????     " + // mov rdi,[WowT-64.exe+18AD618] { [197D75CEC30] }
-                "48 8B E9              " + // mov rbp,rcx
-                "48 85 FF              " + // test rdi,rdi
-                "75 2E                 " + // jne WowT-64.exe+7CE11D
-                "48 8D 4C 24 30        ", // lea rcx,[rsp+30]
+                "48 ????              " + // mov rbp,rcx
+                "48 ????              " + // test rdi,rdi
+                "75 ??                 " + // jne WowT-64.exe+7CE11D
+                "48 8D 4C 24 ??        ", // lea rcx,[rsp+30]
             Offset = 7
         };
 

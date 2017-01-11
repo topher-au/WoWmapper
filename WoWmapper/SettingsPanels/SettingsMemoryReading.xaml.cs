@@ -18,6 +18,7 @@ using MahApps.Metro;
 using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
 using WoWmapper.Properties;
+using WoWmapper.WoWInfoReader;
 
 namespace WoWmapper.SettingsPanels
 {
@@ -140,11 +141,56 @@ namespace WoWmapper.SettingsPanels
             StackWarning.BeginAnimation(HeightProperty, expandStack);
         }
 
+        private void ButtonRefreshValues_Click(object sender, RoutedEventArgs e)
+        {
+            ListDebug.Items.Clear();
+            var health = WoWReader.PlayerHealth;
+            ListDebug.Items.Add(new DebugItem()
+            {
+                Name = "PlayerBase",
+                Address = WoWReader.offsetPlayerBase.ToString("X2"),
+                Value = $"{health.Item1}/{health.Item2}"
+            });
+            ListDebug.Items.Add(new DebugItem()
+            {
+                Name = "GameState",
+                Address = WoWReader.offsetGameState.ToString("X2"),
+                Value = WoWReader.GameState.ToString()
+            });
+            ListDebug.Items.Add(new DebugItem()
+            {
+                Name = "MouselookState",
+                Address = WoWReader.offsetMouselookState.ToString("X2"),
+                Value = WoWReader.MouselookState.ToString()
+            });
+            ListDebug.Items.Add(new DebugItem()
+            {
+                Name = "WalkState",
+                Address = WoWReader.offsetWalkState.ToString("X2"),
+                Value = WoWReader.MovementState.ToString()
+            });
+            ListDebug.Items.Add(new DebugItem()
+            {
+                Name = "AoeState",
+                Address = WoWReader.offsetAoeState.ToString("X2"),
+                Value = WoWReader.AoeState.ToString()
+            });
+        }
+
         private void AoeOverride_Changed(object sender, SelectionChangedEventArgs e)
         {
             if (!_ready) return;
             Settings.Default.MemoryAoeCancel = _buttons[ComboAoeCancel.SelectedIndex];
             Settings.Default.MemoryAoeConfirm = _buttons[ComboAoeConfirm.SelectedIndex];
         }
+
+        public class DebugItem
+        {
+            public string Name { get; set; }
+            public string Address { get; set; }
+            public string Value { get; set; }
+        }
     }
+
+   
 }

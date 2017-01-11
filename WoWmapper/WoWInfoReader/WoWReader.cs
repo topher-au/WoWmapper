@@ -12,11 +12,11 @@ namespace WoWmapper.WoWInfoReader
     public static class WoWReader
     {
         private static IntPtr _handle;
-        private static IntPtr _offsetAoeState;
-        private static IntPtr _offsetGameState;
-        private static IntPtr _offsetMouselookState;
-        private static IntPtr _offsetPlayerBase;
-        private static IntPtr _offsetWalkState;
+        public static IntPtr offsetAoeState;
+        public static IntPtr offsetGameState;
+        public static IntPtr offsetMouselookState;
+        public static IntPtr offsetPlayerBase;
+        public static IntPtr offsetWalkState;
         private static Process _process;
         private static bool _offsetsLoaded;
 
@@ -56,9 +56,19 @@ namespace WoWmapper.WoWInfoReader
             LoadOffsets(wowProcess);
         }
 
+        public static void Clear()
+        {
+            offsetMouselookState = IntPtr.Zero;
+            offsetWalkState = IntPtr.Zero;
+            offsetAoeState = IntPtr.Zero;
+            offsetGameState  = IntPtr.Zero;
+            offsetPlayerBase = IntPtr.Zero;
+            _offsetsLoaded = false;
+        }
+
         public static void Close()
         {
-            _offsetsLoaded = false;
+            Clear();
             CloseHandle(_handle);
             _handle = IntPtr.Zero;
             _process = null;
@@ -69,42 +79,51 @@ namespace WoWmapper.WoWInfoReader
             var scanner = new SigScan(process, process.MainModule.BaseAddress,
                 process.MainModule.ModuleMemorySize);
 
-            var offsetGameState = scanner.FindPattern(OffsetPattern.GameState.Pattern, OffsetPattern.GameState.Offset);
-            if (offsetGameState == IntPtr.Zero) throw new Exception("Unable to match pattern for GameState");
-            _offsetGameState = ReadPointer(offsetGameState, 1);
+            try
+            {
+                offsetGameState = scanner.FindPattern(OffsetPattern.GameState.Pattern, OffsetPattern.GameState.Offset);
+                if (offsetGameState == IntPtr.Zero) throw new Exception("Unable to match pattern for GameState");
+                offsetGameState = ReadPointer(offsetGameState, 1);
 
-            var offsetAoeState = scanner.FindPattern(OffsetPattern.AoeState.Pattern);
-            if (offsetAoeState == IntPtr.Zero) throw new Exception("Unable to match pattern for AoeState");
-            _offsetAoeState = offsetAoeState + OffsetPattern.AoeState.Offset;
+                offsetAoeState = scanner.FindPattern(OffsetPattern.AoeState.Pattern);
+                if (offsetAoeState == IntPtr.Zero) throw new Exception("Unable to match pattern for AoeState");
+                offsetAoeState = offsetAoeState + OffsetPattern.AoeState.Offset;
 
-            var offsetMouselookState = scanner.FindPattern(OffsetPattern.MouselookState.Pattern);
-            if (offsetMouselookState == IntPtr.Zero) throw new Exception("Unable to match pattern for MouselookState");
-            _offsetMouselookState = ReadPointer(offsetMouselookState + OffsetPattern.MouselookState.Offset, 4);
+                offsetMouselookState = scanner.FindPattern(OffsetPattern.MouselookState.Pattern);
+                if (offsetMouselookState == IntPtr.Zero)
+                    throw new Exception("Unable to match pattern for MouselookState");
+                offsetMouselookState = ReadPointer(offsetMouselookState + OffsetPattern.MouselookState.Offset, 4);
 
-            var offsetWalkState = scanner.FindPattern(OffsetPattern.WalkState.Pattern);
-            if (offsetWalkState == IntPtr.Zero) throw new Exception("Unable to match pattern for WalkState");
-            _offsetWalkState = offsetWalkState + OffsetPattern.WalkState.Offset;
+                offsetWalkState = scanner.FindPattern(OffsetPattern.WalkState.Pattern);
+                if (offsetWalkState == IntPtr.Zero) throw new Exception("Unable to match pattern for WalkState");
+                offsetWalkState = offsetWalkState + OffsetPattern.WalkState.Offset;
 
-            var offsetPlayerBase = scanner.FindPattern(OffsetPattern.PlayerBase.Pattern);
-            if (offsetPlayerBase == IntPtr.Zero) throw new Exception("Unable to match pattern for PlayerBase");
-            _offsetPlayerBase = ReadPointer(offsetPlayerBase + OffsetPattern.PlayerBase.Offset);
+                offsetPlayerBase = scanner.FindPattern(OffsetPattern.PlayerBase.Pattern);
+                if (offsetPlayerBase == IntPtr.Zero) throw new Exception("Unable to match pattern for PlayerBase");
+                offsetPlayerBase = ReadPointer(offsetPlayerBase + OffsetPattern.PlayerBase.Offset);
 
-            _offsetsLoaded = true;
-
-            Log.WriteLine($"Offset scan was successful!\n" +
-                          $"GameState:      {_offsetGameState.ToString("X2")}\n" +
-                          $"AoeState:       {_offsetAoeState.ToString("X2")}\n" +
-                          $"MouselookState: {_offsetMouselookState.ToString("X2")}\n" +
-                          $"WalkState:      {_offsetWalkState.ToString("X2")}\n" +
-                          $"PlayerBase:     {_offsetPlayerBase.ToString("X2")}\n");
+                _offsetsLoaded = true;
+                
+                Log.WriteLine($"Offset scan was successful!\n" +
+                              $"GameState:      {offsetGameState.ToString("X2")}\n" +
+                              $"AoeState:       {offsetAoeState.ToString("X2")}\n" +
+                              $"MouselookState: {offsetMouselookState.ToString("X2")}\n" +
+                              $"WalkState:      {offsetWalkState.ToString("X2")}\n" +
+                              $"PlayerBase:     {offsetPlayerBase.ToString("X2")}\n");
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine("Offset scan failed: " + ex.Message);
+            }
+            
         }
 
         private static Tuple<long, long> ReadPlayerHealth()
         {
-            if (!IsAttached) return null;
+            if (!IsAttached || !_offsetsLoaded) return null;
             try
             {
-                var playerBase = Read<IntPtr>(_offsetPlayerBase);
+                var playerBase = Read<IntPtr>(offsetPlayerBase);
                 var playerBase2 = Read<IntPtr>(playerBase + 0x10);
                 var currentHealth = Read<long>(playerBase2 + 0xF0);
                 var maxHealth = Read<long>(playerBase2 + 0x110);
@@ -119,10 +138,10 @@ namespace WoWmapper.WoWInfoReader
 
         private static bool ReadMouselook()
         {
-            if (!IsAttached) return false;
+            if (!IsAttached || !_offsetsLoaded) return false;
             try
             {
-                var mouselookState = Read<byte>(_offsetMouselookState);
+                var mouselookState = Read<byte>(offsetMouselookState);
 
                 return (mouselookState & 1) == 1;
             }
@@ -136,11 +155,11 @@ namespace WoWmapper.WoWInfoReader
         private static byte lastState = 0;
         private static bool ReadGameState()
         {
-            if (!IsAttached) return false;
+            if (!IsAttached || !_offsetsLoaded) return false;
 
             try
             {
-                var gameState = Read<byte>(_offsetGameState);
+                var gameState = Read<byte>(offsetGameState);
                 if(gameState != 0 && gameState != 1) Log.WriteLine("GameState unexpected value: {gameState}");
                 if (lastState != gameState)
                 {
@@ -158,10 +177,10 @@ namespace WoWmapper.WoWInfoReader
 
         private static int ReadMovementState()
         {
-            if (!IsAttached) return 0;
+            if (!IsAttached || !_offsetsLoaded) return 0;
             try
             {
-                var secondOffset = ReadPointer(_offsetWalkState);
+                var secondOffset = ReadPointer(offsetWalkState);
                 var finalOffset = Read<IntPtr>(secondOffset) + 0x15e1;
 
                 var walkState = Read<byte>(finalOffset);
@@ -177,12 +196,12 @@ namespace WoWmapper.WoWInfoReader
 
         private static bool ReadAoeState()
         {
-            if (!IsAttached) return false;
+            if (!IsAttached || !_offsetsLoaded) return false;
             try
             {
-                var baseOffset = _offsetAoeState + Read<int>(_offsetAoeState) + 4;
+                var baseOffset = offsetAoeState + Read<int>(offsetAoeState) + 4;
                 var bigOffset = Read<IntPtr>(baseOffset);
-                var smallOffset = Read<int>(_offsetAoeState + 6);
+                var smallOffset = Read<int>(offsetAoeState + 6);
                 var aoeState = Read<byte>(bigOffset + smallOffset);
 
                 return aoeState == 1;

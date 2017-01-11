@@ -183,6 +183,20 @@
                                       Visibility="Collapsed" />
                         </StackPanel>
                     </TabItem>
+                    <TabItem controls:ControlsHelper.HeaderFontSize="16" Header="Debug">
+                        <StackPanel>
+                            <Button Content="Refresh Values" Margin="0,5" Name="ButtonRefreshValues" Click="ButtonRefreshValues_Click"/>
+                            <ListView Name="ListDebug">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="Name" Width="100"  DisplayMemberBinding="{Binding Name}"/>
+                                        <GridViewColumn Header="Address" Width="100" DisplayMemberBinding="{Binding Address}"/>
+                                        <GridViewColumn Header="Value" Width="90" DisplayMemberBinding="{Binding Value}"/>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </TabItem>
                 </TabControl>
             </StackPanel>
         </StackPanel>
