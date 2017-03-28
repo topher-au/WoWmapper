@@ -50,20 +50,11 @@ namespace WoWmapper.WoWInfoReader
         public static OffsetPattern WalkState = new OffsetPattern
         {
             Pattern =
-                "48 8B 35 ????????     " + // mov rsi,[WowT-64.exe+18C6E18] { [27A1C1574F0] }
-                "8B DA                 " + // mov ebx,edx
-                "48 8B F9              " + // mov rdi,rcx
-                "48 85 F6              " + // test rsi,rsi
-                "75 ??                 " + // jne WowT-64.exe+56CCF5
-                "48 8D 4C 24 40        " + // lea rcx,[rsp+40]
-                "E8 ????????           " + // call WowT-64.exe+4E5810
-                "4C 8D 05 ????????     " + // lea r8,[WowT-64.exe+113F930] 
-                "8D 56 10              " + // lea edx,[rsi+10]
-                "48 8D 4C 24 40        " + // lea rcx,[rsp+40]
-                "41 B9 DB000000        " + // mov r9d,000000DB { 219 }
-                "E8 ????????           " + // call WowT-64.exe+4E6330
-                "48 8B F0              ", // mov rsi,rax
-            Offset = 3
+                "0F10 04 C8"+//            - movups xmm0,[rax+rcx*8]
+                "48 8B 0D F0B8ED00"+//     - mov rcx,[Wow-64.exe+14B0010] { [253FA5EE050] }
+                "49 6B C5 34"+//           - imul rax,r13,34
+                "0F11 45 48",//            - movups [rbp+48],xmm0
+            Offset = 7
         };
 
         public string Pattern { get; set; }

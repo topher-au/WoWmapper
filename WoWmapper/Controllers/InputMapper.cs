@@ -138,7 +138,7 @@ namespace WoWmapper.Controllers
             var sendDown = axis.Y > Settings.Default.MovementThreshold;
 
             var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
-            if (Settings.Default.MemoryAutoWalk && 
+            if (false && Settings.Default.MemoryAutoWalk &&  // AUTO WALK DISABLED
                 WoWReader.IsAttached && 
                 WoWReader.GameState)
             {

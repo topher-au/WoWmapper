@@ -106,10 +106,10 @@
                                                         Path=MemoryAutoCenterDelay}" />
                             </StackPanel>
                             <DockPanel>
-                                <CheckBox Margin="0,5"
-                                          IsChecked="{Binding Source={x:Static properties:Settings.Default},
-                                                              Path=MemoryAutoWalk}"
+                                <CheckBox Margin="0,5" IsEnabled="False"
                                           ToolTip="Automatically toggle the walk hotkey when the analog stick is tilted below the defined threshold.">
+                                    <!--IsChecked="{Binding Source={x:Static properties:Settings.Default},
+                                                              Path=MemoryAutoWalk}"-->
                                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                         <TextBlock>
                                             Auto-toggle run/walk at
@@ -128,8 +128,9 @@
                                         Maximum="120"
                                         Minimum="35"
                                         SmallChange="1"
-                                        Value="{Binding Source={x:Static properties:Settings.Default},
-                                                        Path=WalkThreshold}" />
+                                        IsEnabled="False"/>
+                                <!-- Value="{Binding Source={x:Static properties:Settings.Default},
+                                                        Path=WalkThreshold}"  -->
                             </DockPanel>
                             <CheckBox Margin="0,5"
                                       Content="Disable touchpad while mouselook is active"
