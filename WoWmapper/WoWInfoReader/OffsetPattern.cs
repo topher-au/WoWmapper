@@ -7,11 +7,11 @@ namespace WoWmapper.WoWInfoReader
         public static OffsetPattern GameState = new OffsetPattern
         {
             Pattern =
+                    "90000000" +
                     "80 3D ???????? 00" + // cmp byte ptr [WowT-64.exe+1A36E51],00 { [0] }
-                    "74 ??" + // je WowT-64.exe+C08775
-                    "84 DB" + // test bl,bl
-                    "88 0D ????????" , // mov [WowT-64.exe+1A36E52],cl { [0] }
-            Offset = 2
+                    "0F85 ????????" + // je WowT-64.exe+C08775
+                    "48 89 58 ??",
+            Offset = 6
         };
 
         public static OffsetPattern PlayerBase = new OffsetPattern
@@ -50,11 +50,14 @@ namespace WoWmapper.WoWInfoReader
         public static OffsetPattern WalkState = new OffsetPattern
         {
             Pattern =
-                "0F10 04 C8"+//            - movups xmm0,[rax+rcx*8]
-                "48 8B 0D F0B8ED00"+//     - mov rcx,[Wow-64.exe+14B0010] { [253FA5EE050] }
-                "49 6B C5 34"+//           - imul rax,r13,34
-                "0F11 45 48",//            - movups [rbp+48],xmm0
-            Offset = 7
+                "48 8B 35 ????????     " + // mov rsi,[WowT-64.exe+18C6E18] { [27A1C1574F0] }
+                "8B DA                 " + // mov ebx,edx
+                "48 8B F9              " + // mov rdi,rcx
+                "48 85 F6              " + // test rsi,rsi
+                "75 ??                 " + // jne WowT-64.exe+56CCF5
+                "48 8D 4C 24 40        " + // lea rcx,[rsp+40]
+                "E8 ????????           ",//  call WowT-64.exe+4E5810
+            Offset = 3
         };
 
         public string Pattern { get; set; }

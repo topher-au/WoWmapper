@@ -138,7 +138,7 @@ namespace WoWmapper.Controllers
             var sendDown = axis.Y > Settings.Default.MovementThreshold;
 
             var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
-            if (false && Settings.Default.MemoryAutoWalk &&  // AUTO WALK DISABLED
+            if (Settings.Default.MemoryAutoWalk &&  // AUTO WALK DISABLED
                 WoWReader.IsAttached && 
                 WoWReader.GameState)
             {
@@ -260,6 +260,12 @@ namespace WoWmapper.Controllers
 
                 if (axis.X < 0) mouseMovement.X = -mouseMovement.X;
                 if (axis.Y < 0) mouseMovement.Y = -mouseMovement.Y;
+
+                if (Settings.Default.MemoryInvertTurn && WoWReader.MouselookState)
+                {
+                    // Invert left/right while mouselooking (if enabled)
+                    mouseMovement.X *= -1;
+                }
 
                 if (Settings.Default.InputHardwareMouse)
                 {

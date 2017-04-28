@@ -94,9 +94,9 @@ namespace WoWmapper.WoWInfoReader
                     throw new Exception("Unable to match pattern for MouselookState");
                 offsetMouselookState = ReadPointer(offsetMouselookState + OffsetPattern.MouselookState.Offset, 4);
 
-                //offsetWalkState = scanner.FindPattern(OffsetPattern.WalkState.Pattern);
-                //if (offsetWalkState == IntPtr.Zero) throw new Exception("Unable to match pattern for WalkState");
-                //offsetWalkState = offsetWalkState + OffsetPattern.WalkState.Offset;
+                offsetWalkState = scanner.FindPattern(OffsetPattern.WalkState.Pattern);
+                if (offsetWalkState == IntPtr.Zero) throw new Exception("Unable to match pattern for WalkState");
+                offsetWalkState = offsetWalkState + OffsetPattern.WalkState.Offset;
 
                 offsetPlayerBase = scanner.FindPattern(OffsetPattern.PlayerBase.Pattern);
                 if (offsetPlayerBase == IntPtr.Zero) throw new Exception("Unable to match pattern for PlayerBase");
@@ -108,7 +108,7 @@ namespace WoWmapper.WoWInfoReader
                               $"GameState:      {offsetGameState.ToString("X2")}\n" +
                               $"AoeState:       {offsetAoeState.ToString("X2")}\n" +
                               $"MouselookState: {offsetMouselookState.ToString("X2")}\n" +
-                              //$"WalkState:      {offsetWalkState.ToString("X2")}\n" +
+                              $"WalkState:      {offsetWalkState.ToString("X2")}\n" +
                               $"PlayerBase:     {offsetPlayerBase.ToString("X2")}\n");
             }
             catch (Exception ex)
@@ -177,12 +177,11 @@ namespace WoWmapper.WoWInfoReader
 
         private static int ReadMovementState()
         {
-            return 0;
             if (!IsAttached || !_offsetsLoaded) return 0;
             try
             {
                 var secondOffset = ReadPointer(offsetWalkState);
-                var finalOffset = Read<IntPtr>(secondOffset)+0x58;
+                var finalOffset = Read<IntPtr>(secondOffset)+0x1599;
 
                 var walkState = Read<byte>(finalOffset);
 
