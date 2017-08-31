@@ -17,7 +17,6 @@ using WoWmapper.Keybindings;
 using WoWmapper.Overlay;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
-using WoWmapper.WoWInfoReader;
 using Application = System.Windows.Application;
 using Cursor = System.Windows.Forms.Cursor;
 using Point = System.Windows.Point;
@@ -205,14 +204,6 @@ namespace WoWmapper.Controllers
         {
             if (!Settings.Default.EnableTouchpad) return;
 
-            // Ignore touchpad if disabled during mouselook
-            // Ignore touchpad if disabled during mouselook
-            if (Settings.Default.MemoryTouchpadCursorOnly &&
-                WoWReader.IsAttached &&
-                WoWReader.GameState &&
-                WoWReader.MouselookState)
-                return;
-
             switch (Settings.Default.TouchpadMode)
             {
                 case 0:
@@ -230,14 +221,6 @@ namespace WoWmapper.Controllers
         {
             if (!Settings.Default.EnableTouchpad) return;
 
-            // Ignore touchpad if disabled during mouselook
-            // Ignore touchpad if disabled during mouselook
-            if (Settings.Default.MemoryTouchpadCursorOnly &&
-                WoWReader.IsAttached &&
-                WoWReader.GameState &&
-                WoWReader.MouselookState)
-                return;
-
             switch (Settings.Default.TouchpadMode)
             {
                 case 0:
@@ -254,13 +237,6 @@ namespace WoWmapper.Controllers
         private static void DS4TouchpadMoved(object sender, TouchpadEventArgs args)
         {
             if (!Settings.Default.EnableTouchpad) return;
-
-            // Ignore touchpad if disabled during mouselook
-            if (Settings.Default.MemoryTouchpadCursorOnly && 
-                WoWReader.IsAttached &&
-                WoWReader.GameState && 
-                WoWReader.MouselookState)
-                    return;
 
             var x = args.touches.Last().deltaX;
             var y = args.touches.Last().deltaY;

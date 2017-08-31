@@ -20,7 +20,6 @@
             <TreeViewItem Header="Keybindings" Selected="Keybindings_Selected" />
             <TreeViewItem Header="Analog Inputs" Selected="Camera_Selected" />
             <TreeViewItem Header="Overlay" Selected="Overlay_OnSelected" />
-            <TreeViewItem Header="Memory Reading" Selected="MemoryReading_Selected" />
         </TreeView>
         <GroupBox Name="GroupSettings"
                   Grid.Column="1"

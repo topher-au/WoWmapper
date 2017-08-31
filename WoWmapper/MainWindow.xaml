@@ -74,7 +74,6 @@
                 <Separator Height="2" />
                 <StackPanel Margin="20,5,0,10">
                     <TextBlock Name="TextWoWStatus1" Margin="2"><Run Text="Game process status" /></TextBlock>
-                    <TextBlock Name="TextWoWStatus2" Margin="2"><Run Text="Memory reading status" /></TextBlock>
                 </StackPanel>
                 <TextBlock FontSize="20"><Run Text="Updates" /></TextBlock>
                 <Separator Height="2" />
@@ -108,20 +107,9 @@
                                Margin="2"
                                TextAlignment="Center"
                                TextWrapping="Wrap">
-                        Thankyou for using WoWmapper!
+                        Thank you for using WoWmapper!
                     </TextBlock>
-                    <TextBlock Width="200"
-                               Margin="5"
-                               TextAlignment="Center"
-                               TextWrapping="Wrap">
-                        If you like it, please consider making a donation towards development.
-                    </TextBlock>
-                    <Image Name="DonateButton"
-                           Width="130"
-                           HorizontalAlignment="Center"
-                           Cursor="Hand"
-                           MouseDown="DonateButton_MouseDown"
-                           Source="Resources/donate.png" />
+                    <TextBlock TextAlignment="Center" Margin="6">Good luck, and happy adventuring!</TextBlock>
                 </StackPanel>
             </StackPanel>
             <DockPanel Margin="10"
