@@ -145,6 +145,8 @@ namespace WoWmapper
         {
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
                 var octoApi = new ApiConnection(new Connection(new ProductHeaderValue("WoWmapper")));
                 var octoRelease = new ReleasesClient(octoApi);
                 var wmReleases = await octoRelease.GetAll("topher-au", "wowmapper");
