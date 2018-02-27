@@ -115,7 +115,6 @@
     <Compile Include="Controllers\DS4\HidLibrary\HidDeviceCapabilities.cs" />
     <Compile Include="Controllers\DS4\HidLibrary\HidDevices.cs" />
     <Compile Include="Controllers\DS4\HidLibrary\NativeMethods.cs" />
-    <Compile Include="Controllers\HapticFeedback.cs" />
     <Compile Include="Controllers\IController.cs" />
     <Compile Include="Controllers\InputMapper.cs" />
     <Compile Include="Controllers\Vector2.cs" />
@@ -166,9 +165,6 @@
     <Compile Include="SettingsPanels\SettingsPanel.xaml.cs">
       <DependentUpon>SettingsPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SettingsPanels\SettingsMemoryReading.xaml.cs">
-      <DependentUpon>SettingsMemoryReading.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SettingsPanels\SettingsWoWmapper.xaml.cs">
       <DependentUpon>SettingsWoWmapper.xaml</DependentUpon>
     </Compile>
@@ -176,9 +172,6 @@
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WorldOfWarcraft\HardwareInput.cs" />
-    <Compile Include="WoWInfoReader\OffsetPattern.cs" />
-    <Compile Include="WoWInfoReader\SigScan.cs" />
-    <Compile Include="WoWInfoReader\WoWReader.cs" />
     <Compile Include="WorldOfWarcraft\WoWInput.cs" />
     <Compile Include="WorldOfWarcraft\ProcessManager.cs" />
     <Page Include="DebugWindow.xaml">
@@ -222,10 +215,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsPanels\SettingsPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SettingsPanels\SettingsMemoryReading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

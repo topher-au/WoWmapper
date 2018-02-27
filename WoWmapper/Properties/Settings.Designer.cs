@@ -12,7 +12,7 @@ namespace WoWmapper.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,18 +20,6 @@ namespace WoWmapper.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DisableDonationButton {
-            get {
-                return ((bool)(this["DisableDonationButton"]));
-            }
-            set {
-                this["DisableDonationButton"] = value;
             }
         }
         
@@ -133,18 +121,6 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("70")]
-        public int WalkThreshold {
-            get {
-                return ((int)(this["WalkThreshold"]));
-            }
-            set {
-                this["WalkThreshold"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool HideAtStartup {
             get {
@@ -218,18 +194,6 @@ namespace WoWmapper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableMemoryReading {
-            get {
-                return ((bool)(this["EnableMemoryReading"]));
-            }
-            set {
-                this["EnableMemoryReading"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool SwapSticks {
             get {
                 return ((bool)(this["SwapSticks"]));
@@ -277,90 +241,6 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryOverrideMenu {
-            get {
-                return ((bool)(this["MemoryOverrideMenu"]));
-            }
-            set {
-                this["MemoryOverrideMenu"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryOverrideAoeCast {
-            get {
-                return ((bool)(this["MemoryOverrideAoeCast"]));
-            }
-            set {
-                this["MemoryOverrideAoeCast"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryAutoWalk {
-            get {
-                return ((bool)(this["MemoryAutoWalk"]));
-            }
-            set {
-                this["MemoryAutoWalk"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryAutoCenter {
-            get {
-                return ((bool)(this["MemoryAutoCenter"]));
-            }
-            set {
-                this["MemoryAutoCenter"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryAutoCancel {
-            get {
-                return ((bool)(this["MemoryAutoCancel"]));
-            }
-            set {
-                this["MemoryAutoCancel"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryVibrationDamage {
-            get {
-                return ((bool)(this["MemoryVibrationDamage"]));
-            }
-            set {
-                this["MemoryVibrationDamage"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryLightbar {
-            get {
-                return ((bool)(this["MemoryLightbar"]));
-            }
-            set {
-                this["MemoryLightbar"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int ButtonStyle {
             get {
@@ -380,30 +260,6 @@ namespace WoWmapper.Properties {
             }
             set {
                 this["EnableLogging"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public int MemoryAutoCenterDelay {
-            get {
-                return ((int)(this["MemoryAutoCenterDelay"]));
-            }
-            set {
-                this["MemoryAutoCenterDelay"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryVibrationHealing {
-            get {
-                return ((bool)(this["MemoryVibrationHealing"]));
-            }
-            set {
-                this["MemoryVibrationHealing"] = value;
             }
         }
         
@@ -505,18 +361,6 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MemoryTouchpadCursorOnly {
-            get {
-                return ((bool)(this["MemoryTouchpadCursorOnly"]));
-            }
-            set {
-                this["MemoryTouchpadCursorOnly"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int TouchpadMode {
             get {
@@ -524,30 +368,6 @@ namespace WoWmapper.Properties {
             }
             set {
                 this["TouchpadMode"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RFaceDown")]
-        public global::WoWmapper.Controllers.GamepadButton MemoryAoeConfirm {
-            get {
-                return ((global::WoWmapper.Controllers.GamepadButton)(this["MemoryAoeConfirm"]));
-            }
-            set {
-                this["MemoryAoeConfirm"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("RFaceRight")]
-        public global::WoWmapper.Controllers.GamepadButton MemoryAoeCancel {
-            get {
-                return ((global::WoWmapper.Controllers.GamepadButton)(this["MemoryAoeCancel"]));
-            }
-            set {
-                this["MemoryAoeCancel"] = value;
             }
         }
         

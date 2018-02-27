@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WoWmapper.WoWInfoReader;
 using ThreadState = System.Threading.ThreadState;
 
 namespace WoWmapper.WorldOfWarcraft
@@ -82,9 +81,6 @@ namespace WoWmapper.WorldOfWarcraft
 
                             // Attempt to export bindings
                             ConsolePort.BindWriter.WriteBinds();
-
-                            if (Properties.Settings.Default.EnableMemoryReading) // Attach memory reader
-                                WoWReader.Open(wowProcess);
                         }
                     }
                     catch (Exception ex)
@@ -104,13 +100,6 @@ namespace WoWmapper.WorldOfWarcraft
                         GameProcess = null;
                         continue;
                     }
-
-                    // Attach/detach memory reader as necessary
-                    if (Properties.Settings.Default.EnableMemoryReading && !WoWReader.IsAttached)
-                        WoWReader.Open(GameProcess);
-
-                    if (!Properties.Settings.Default.EnableMemoryReading && WoWReader.IsAttached)
-                        WoWReader.Close();
                 }
 
                 Thread.Sleep(500);
@@ -125,7 +114,6 @@ namespace WoWmapper.WorldOfWarcraft
 
         internal static void Stop()
         {
-            WoWReader.Close();
             _threadRunning = false;
             ProcessThread.Abort();
         }

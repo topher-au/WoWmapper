@@ -17,7 +17,6 @@ using WoWmapper.Controllers;
 using WoWmapper.Keybindings;
 using WoWmapper.Properties;
 using WoWmapper.WorldOfWarcraft;
-using WoWmapper.WoWInfoReader;
 using Application = System.Windows.Application;
 
 namespace WoWmapper
@@ -64,9 +63,6 @@ namespace WoWmapper
         public MainWindow()
         {
             InitializeComponent();
-
-            // Hide donation panel if it's been deactivated
-            if (Settings.Default.DisableDonationButton) DonateButton.Visibility = Visibility.Hidden;
 
             // Begin interface update timer
             _uiTimer.Elapsed += UiTimer_Elapsed;
@@ -265,10 +261,6 @@ namespace WoWmapper
 
         private void UpdateUi()
         {
-            PanelDonate.Visibility = Settings.Default.DisableDonationButton
-                ? Visibility.Collapsed
-                : Visibility.Visible;
-
             var activeDevice = ControllerManager.ActiveController;
 
             if (activeDevice != null) // Controller connected
@@ -302,13 +294,6 @@ namespace WoWmapper
             TextWoWStatus1.Text = ProcessManager.GameRunning
                 ? "World of Warcraft is running"
                 : "World of Warcraft is not running";
-
-            if (Settings.Default.EnableMemoryReading)
-                TextWoWStatus2.Text = WoWReader.IsAttached
-                    ? "Memory reading is enabled"
-                    : "Memory reading is unavailable";
-            else
-                TextWoWStatus2.Text = "Memory reading is disabled";
         }
 
         private void ButtonSettings_Click(object sender, RoutedEventArgs e)
@@ -348,8 +333,6 @@ namespace WoWmapper
             if (Keyboard.IsKeyDown(Key.RightShift) && Keyboard.IsKeyDown(Key.RightAlt) &&
                 (e.ChangedButton == MouseButton.Right))
             {
-                Settings.Default.DisableDonationButton = true;
-                DonateButton.Visibility = Visibility.Hidden;
                 return;
             }
 
