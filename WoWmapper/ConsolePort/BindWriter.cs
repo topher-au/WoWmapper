@@ -33,7 +33,7 @@ namespace WoWmapper.ConsolePort
             if (!Settings.Default.ExportBindings)
             {
                 Log.WriteLine("Clearing ConsolePort bindings at {0}", luaFile);
-                File.WriteAllText(luaFile, string.Empty);
+                File.WriteAllText(luaFile, "return");
                 return;
             }
 
