@@ -16,12 +16,6 @@ namespace WoWmapper.Controllers
         private static readonly Thread _inputThread = new Thread(InputWatcherThread);
         private static readonly bool[] _keyStates = new bool[Enum.GetNames(typeof (GamepadButton)).Length];
         private static bool _threadRunning;
-        private static DateTime _mouselookStarted;
-        private static bool _setMouselook;
-        private static bool _stopWalk;
-        private static int _cursorX;
-        private static int _cursorY;
-        private static bool _crosshairShowing;
 
         static InputMapper()
         {

@@ -137,7 +137,11 @@
                       Content="Simulate hardware mouse input"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default},
                                           Path=InputHardwareMouse}"
-                      ToolTip="Simulate a hardware mouse. This may resolve some issues related mouse movement." />
+                      ToolTip="Simulate a hardware mouse. This may resolve some issues related to mouse movement." />
+            <CheckBox Margin="5"
+                      Content="Swap sticks"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=SwapSticks}"
+                      ToolTip="Sets right stick to control mouse/camera, and left stick to control movement." />
         </StackPanel>
     </Grid>
 </UserControl>
