@@ -60,6 +60,8 @@ namespace WoWmapper.Controllers
         LeftStickDown,
         LeftStickLeft,
         LeftStickRight,
+        LeftStickHorz,
+        LeftStickVert,
         TouchpadClick,
     }
 

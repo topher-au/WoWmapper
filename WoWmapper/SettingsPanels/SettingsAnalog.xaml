@@ -142,6 +142,10 @@
                       Content="Swap sticks"
                       IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=SwapSticks}"
                       ToolTip="Sets right stick to control mouse/camera, and left stick to control movement." />
+            <CheckBox Margin="5"
+                      Content="Orthodox movement controls"
+                      IsChecked="{Binding Source={x:Static properties:Settings.Default},Path=SimpleRadial}"
+                      ToolTip="Reduces the movement stick to four directions, by disabling vertical/horizontal dominance." />
         </StackPanel>
     </Grid>
 </UserControl>

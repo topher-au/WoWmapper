@@ -251,6 +251,12 @@
     </EmbeddedResource>
     <Resource Include="Overlay\Images\Header.png" />
     <Resource Include="Overlay\Images\Background.png" />
+    <Resource Include="Controllers\Shared\CP_L_DOWN.png" />
+    <Resource Include="Controllers\Shared\CP_L_LEFT.png" />
+    <Resource Include="Controllers\Shared\CP_L_RIGHT.png" />
+    <Resource Include="Controllers\Shared\CP_L_UP.png" />
+    <Resource Include="Controllers\Shared\CP_RADIAL_HORZ.png" />
+    <Resource Include="Controllers\Shared\CP_RADIAL_VERT.png" />
     <Content Include="Overlay\Images\BackgroundIcon.png" />
     <Resource Include="Overlay\Images\Rhonin.png" />
     <Resource Include="Overlay\Images\BackgroundBottom.png" />
@@ -291,11 +297,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\update-check.png" />
-    <Resource Include="Controllers\Xbox\Buttons\CP_L_DOWN.png" />
     <Resource Include="Controllers\Xbox\Buttons\CP_L_GRIP.png" />
-    <Resource Include="Controllers\Xbox\Buttons\CP_L_LEFT.png" />
-    <Resource Include="Controllers\Xbox\Buttons\CP_L_RIGHT.png" />
-    <Resource Include="Controllers\Xbox\Buttons\CP_L_UP.png" />
     <Resource Include="Controllers\Xbox\Buttons\CP_R_DOWN.png" />
     <Resource Include="Controllers\Xbox\Buttons\CP_R_GRIP.png" />
     <Resource Include="Controllers\Xbox\Buttons\CP_R_LEFT.png" />
@@ -310,10 +312,6 @@
     <Resource Include="Controllers\Xbox\Buttons\CP_X_CENTER.png" />
     <Resource Include="Controllers\Xbox\Buttons\CP_X_LEFT.png" />
     <Resource Include="Controllers\Xbox\Buttons\CP_X_RIGHT.png" />
-    <Resource Include="Controllers\DS4\Buttons\CP_L_DOWN.png" />
-    <Resource Include="Controllers\DS4\Buttons\CP_L_LEFT.png" />
-    <Resource Include="Controllers\DS4\Buttons\CP_L_RIGHT.png" />
-    <Resource Include="Controllers\DS4\Buttons\CP_L_UP.png" />
     <Resource Include="Controllers\DS4\Buttons\CP_R_DOWN.png" />
     <Resource Include="Controllers\DS4\Buttons\CP_R_LEFT.png" />
     <Resource Include="Controllers\DS4\Buttons\CP_R_RIGHT.png" />

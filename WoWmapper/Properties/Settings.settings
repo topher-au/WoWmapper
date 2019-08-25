@@ -44,11 +44,14 @@
     <Setting Name="CursorCurve" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4</Value>
     </Setting>
+    <Setting Name="MovementThreshold" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
     <Setting Name="SwapSticks" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MovementThreshold" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">40</Value>
+    <Setting Name="SimpleRadial" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="InputDirectKeyboard" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

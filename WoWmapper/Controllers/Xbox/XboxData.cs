@@ -39,35 +39,43 @@ namespace WoWmapper.Controllers.Xbox
             },
             {
                 GamepadButton.LFaceUp,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_UP.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_UP.png"))
             },
             {
                 GamepadButton.LFaceDown,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_DOWN.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_DOWN.png"))
             },
             {
                 GamepadButton.LFaceLeft,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_LEFT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_LEFT.png"))
             },
             {
                 GamepadButton.LFaceRight,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_RIGHT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_RIGHT.png"))
             },
                         {
                 GamepadButton.LeftStickUp,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_UP.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_UP.png"))
             },
             {
                 GamepadButton.LeftStickDown,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_DOWN.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_DOWN.png"))
             },
             {
                 GamepadButton.LeftStickLeft,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_LEFT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_LEFT.png"))
             },
             {
                 GamepadButton.LeftStickRight,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_L_RIGHT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_RIGHT.png"))
+            },
+            {
+                GamepadButton.LeftStickHorz,
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_RADIAL_HORZ.png"))
+            },
+            {
+                GamepadButton.LeftStickVert,
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_RADIAL_VERT.png"))
             },
             {
                 GamepadButton.ShoulderLeft,
@@ -108,7 +116,8 @@ namespace WoWmapper.Controllers.Xbox
             {
                 GamepadButton.TouchpadClick,
                 new BitmapImage(new Uri("pack://application:,,,/Controllers/Xbox/Buttons/CP_R_UP.png"))
-            },        };
+            },
+        };
 
         private static Dictionary<GamepadButton, string> ButtonNames = new Dictionary<GamepadButton, string>
         {
@@ -116,21 +125,29 @@ namespace WoWmapper.Controllers.Xbox
             {GamepadButton.RFaceDown, "A"},
             {GamepadButton.RFaceLeft, "X"},
             {GamepadButton.RFaceRight, "B"},
+
             {GamepadButton.LFaceUp, "D-pad Up"},
             {GamepadButton.LFaceDown, "D-pad Down"},
             {GamepadButton.LFaceLeft, "D-pad Left"},
             {GamepadButton.LFaceRight, "D-pad Right"},
+
             {GamepadButton.LeftStickUp, "Move Forward"},
             {GamepadButton.LeftStickDown, "Move Backward"},
             {GamepadButton.LeftStickLeft, "Move Left"},
             {GamepadButton.LeftStickRight, "Move Right"},
+
+            {GamepadButton.LeftStickHorz, "Horizontal Mod"},
+            {GamepadButton.LeftStickVert, "Vertical Mod"},
+
             {GamepadButton.ShoulderLeft, "Left Bumper"},
             {GamepadButton.ShoulderRight, "Right Bumper"},
             {GamepadButton.TriggerLeft, "Left Trigger"},
             {GamepadButton.TriggerRight, "Right Trigger"},
+
             {GamepadButton.CenterLeft, "Back"},
             {GamepadButton.CenterRight, "Start"},
             {GamepadButton.CenterMiddle, "Guide"},
+
             {GamepadButton.LeftStick, "Left Stick"},
             {GamepadButton.RightStick, "Right Stick"},
             {GamepadButton.TouchpadClick, "Touchpad"},
