@@ -202,6 +202,18 @@ namespace WoWmapper.Properties {
                 this["SwapSticks"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SimpleRadial {
+            get {
+                return ((bool)(this["SimpleRadial"]));
+            }
+            set {
+                this["SimpleRadial"] = value;
+            }
+        }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

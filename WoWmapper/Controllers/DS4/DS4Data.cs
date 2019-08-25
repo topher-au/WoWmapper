@@ -39,35 +39,43 @@ namespace WoWmapper.Controllers.DS4
             },
             {
                 GamepadButton.LFaceUp,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_UP.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_UP.png"))
             },
             {
                 GamepadButton.LFaceDown,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_DOWN.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_DOWN.png"))
             },
             {
                 GamepadButton.LFaceLeft,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_LEFT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_LEFT.png"))
             },
             {
                 GamepadButton.LFaceRight,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_RIGHT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_RIGHT.png"))
             },
-                        {
+            {
                 GamepadButton.LeftStickUp,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_UP.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_UP.png"))
             },
             {
                 GamepadButton.LeftStickDown,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_DOWN.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_DOWN.png"))
             },
             {
                 GamepadButton.LeftStickLeft,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_LEFT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_LEFT.png"))
             },
             {
                 GamepadButton.LeftStickRight,
-                new BitmapImage(new Uri("pack://application:,,,/Controllers/DS4/Buttons/CP_L_RIGHT.png"))
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_L_RIGHT.png"))
+            },
+            {
+                GamepadButton.LeftStickHorz,
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_RADIAL_HORZ.png"))
+            },
+            {
+                GamepadButton.LeftStickVert,
+                new BitmapImage(new Uri("pack://application:,,,/Controllers/Shared/CP_RADIAL_VERT.png"))
             },
             {
                 GamepadButton.ShoulderLeft,
@@ -117,21 +125,29 @@ namespace WoWmapper.Controllers.DS4
             {GamepadButton.RFaceDown, "Cross"},
             {GamepadButton.RFaceLeft, "Square"},
             {GamepadButton.RFaceRight, "Circle"},
+
             {GamepadButton.LFaceUp, "D-pad Up"},
             {GamepadButton.LFaceDown, "D-pad Down"},
             {GamepadButton.LFaceLeft, "D-pad Left"},
             {GamepadButton.LFaceRight, "D-pad Right"},
+
             {GamepadButton.LeftStickUp, "Move Forward"},
             {GamepadButton.LeftStickDown, "Move Backward"},
             {GamepadButton.LeftStickLeft, "Move Left"},
             {GamepadButton.LeftStickRight, "Move Right"},
+
+            {GamepadButton.LeftStickHorz, "Horizontal Mod"},
+            {GamepadButton.LeftStickVert, "Vertical Mod"},
+
             {GamepadButton.ShoulderLeft, "L1"},
             {GamepadButton.ShoulderRight, "R1"},
             {GamepadButton.TriggerLeft, "L2"},
             {GamepadButton.TriggerRight, "R2"},
+
             {GamepadButton.CenterLeft, "Share"},
             {GamepadButton.CenterRight, "Options"},
             {GamepadButton.CenterMiddle, "PS"},
+
             {GamepadButton.LeftStick, "L3"},
             {GamepadButton.RightStick, "R3"},
             {GamepadButton.TouchpadClick, "Touchpad"},

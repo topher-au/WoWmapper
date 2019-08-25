@@ -37,7 +37,6 @@ namespace WoWmapper.Controllers
                     : ControllerManager.GetRightAxis();
 
                 ProcessMovement(axisMovement);
-
                 ProcessCursor(axisCursor);
 
                 Thread.Sleep(5);
@@ -46,79 +45,31 @@ namespace WoWmapper.Controllers
 
         private static void ProcessMovement(Point axis)
         {
-            var sendLeft = -axis.X > Settings.Default.MovementThreshold;
-            var sendRight = axis.X > Settings.Default.MovementThreshold;
-            var sendUp = -axis.Y > Settings.Default.MovementThreshold;
-            var sendDown = axis.Y > Settings.Default.MovementThreshold;
+            //var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
+            var threshold = Settings.Default.MovementThreshold;
 
-            var strength = Math.Sqrt(axis.X*axis.X + axis.Y*axis.Y);
+            var left  = -axis.X > threshold;
+            var right =  axis.X > threshold;
+            var up    = -axis.Y > threshold;
+            var down  =  axis.Y > threshold;
 
-            if (sendLeft)
-            {
-                if (!_keyStates[(int) GamepadButton.LeftStickLeft])
-                {
-                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickLeft));
-                    _keyStates[(int) GamepadButton.LeftStickLeft] = true;
-                }
-            }
-            else
-            {
-                if (_keyStates[(int) GamepadButton.LeftStickLeft])
-                {
-                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickLeft));
-                    _keyStates[(int) GamepadButton.LeftStickLeft] = false;
-                }
-            }
+            ProcessButton(GamepadButton.LeftStickLeft, left);
+            ProcessButton(GamepadButton.LeftStickRight, right);
+            ProcessButton(GamepadButton.LeftStickUp, up);
+            ProcessButton(GamepadButton.LeftStickDown, down);
 
-            if (sendRight)
-            {
-                if (!_keyStates[(int) GamepadButton.LeftStickRight])
-                {
-                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickRight));
-                    _keyStates[(int) GamepadButton.LeftStickRight] = true;
-                }
-            }
-            else
-            {
-                if (_keyStates[(int) GamepadButton.LeftStickRight])
-                {
-                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickRight));
-                    _keyStates[(int) GamepadButton.LeftStickRight] = false;
-                }
-            }
+            if (!Settings.Default.SimpleRadial) {
+                var absX = Math.Abs(axis.X);
+                var absY = Math.Abs(axis.Y);
 
-            if (sendUp)
-            {
-                if (!_keyStates[(int) GamepadButton.LeftStickUp])
-                {
-                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickUp));
-                    _keyStates[(int) GamepadButton.LeftStickUp] = true;
-                }
-            }
-            else
-            {
-                if (_keyStates[(int) GamepadButton.LeftStickUp])
-                {
-                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickUp));
-                    _keyStates[(int) GamepadButton.LeftStickUp] = false;
-                }
-            }
+                var horz = left || right;
+                var vert = up   || down;
 
-            if (sendDown)
-            {
-                if (!_keyStates[(int) GamepadButton.LeftStickDown])
-                {
-                    WoWInput.SendKeyDown(BindManager.GetKey(GamepadButton.LeftStickDown));
-                    _keyStates[(int) GamepadButton.LeftStickDown] = true;
-                }
-            }
-            else
-            {
-                if (_keyStates[(int) GamepadButton.LeftStickDown])
-                {
-                    WoWInput.SendKeyUp(BindManager.GetKey(GamepadButton.LeftStickDown));
-                    _keyStates[(int) GamepadButton.LeftStickDown] = false;
-                }
+                var sendHorz = horz && vert && absX > absY * 1.5;
+                var sendVert = horz && vert && absY > absX * 1.5;
+            
+                ProcessButton(GamepadButton.LeftStickHorz, sendHorz);
+                ProcessButton(GamepadButton.LeftStickVert, sendVert);
             }
         }
 
@@ -230,19 +181,21 @@ namespace WoWmapper.Controllers
             }
 
             // Do other buttons
+            ProcessButton(button, state);
+        }
+
+        private static bool ProcessButton(GamepadButton button, bool state)
+        {
             if (_keyStates[(int) button] != state)
             {
                 if (state)
-                {
                     WoWInput.SendKeyDown(BindManager.GetKey(button));
-                }
                 else
-                {
                     WoWInput.SendKeyUp(BindManager.GetKey(button));
-                }
-            }
 
-            _keyStates[(int) button] = state;
+                _keyStates[(int) button] = state;
+            }
+            return state;
         }
 
         private static void ActiveController_ButtonStateChanged(GamepadButton button, bool state)

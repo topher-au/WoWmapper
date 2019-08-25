@@ -80,6 +80,9 @@ namespace WoWmapper.Keybindings
                 new Keybind {BindType = GamepadButton.LeftStickLeft, Key = Key.A},
                 new Keybind {BindType = GamepadButton.LeftStickDown, Key = Key.S},
                 new Keybind {BindType = GamepadButton.LeftStickRight, Key = Key.D},
+
+                new Keybind {BindType = GamepadButton.LeftStickHorz, Key = Key.H},
+                new Keybind {BindType = GamepadButton.LeftStickVert, Key = Key.V},
             };
         }
     }
