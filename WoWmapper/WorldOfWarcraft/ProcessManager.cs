@@ -35,7 +35,7 @@ namespace WoWmapper.WorldOfWarcraft
 
         #endregion
 
-        private static readonly string[] WoWProcessNames = new[] {"wow", "wow-64", "wowt", "wowt-64", "wowb", "wowb-64"};
+        private static readonly string[] WoWProcessNames = new[] {"wow", "wow-64", "wowt", "wowt-64", "wowb", "wowb-64", "wowclassic"};
         private static bool _threadRunning = false;
         private static readonly Thread ProcessThread = new Thread(ProcessThreadMethod);
 
