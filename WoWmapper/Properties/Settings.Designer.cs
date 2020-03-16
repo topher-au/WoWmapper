@@ -241,18 +241,6 @@ namespace WoWmapper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool InputHardwareMouse {
-            get {
-                return ((bool)(this["InputHardwareMouse"]));
-            }
-            set {
-                this["InputHardwareMouse"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int ButtonStyle {
             get {

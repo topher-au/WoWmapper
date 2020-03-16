@@ -16,6 +16,7 @@ namespace WoWmapper.Controllers
         private static readonly Thread _inputThread = new Thread(InputWatcherThread);
         private static readonly bool[] _keyStates = new bool[Enum.GetNames(typeof (GamepadButton)).Length];
         private static bool _threadRunning;
+        //private static bool characterRunning = true;
 
         static InputMapper()
         {
@@ -58,6 +59,17 @@ namespace WoWmapper.Controllers
             ProcessButton(GamepadButton.LeftStickUp, up);
             ProcessButton(GamepadButton.LeftStickDown, down);
 
+            /*if (strength < 70 && characterRunning) {
+                characterRunning = false;
+                WoWInput.SendKeyDown(Key.Divide);
+                WoWInput.SendKeyUp(Key.Divide);
+            }
+            else if (strength >= 70 && !characterRunning) {
+                characterRunning = true;
+                WoWInput.SendKeyDown(Key.Divide);
+                WoWInput.SendKeyUp(Key.Divide);
+            }*/
+
             if (!Settings.Default.SimpleRadial) {
                 var absX = Math.Abs(axis.X);
                 var absY = Math.Abs(axis.Y);
@@ -90,26 +102,12 @@ namespace WoWmapper.Controllers
                 var xMath = Math.Pow(curve*xSpeed, 2) + curve*xSpeed;
                 var yMath = Math.Pow(curve*ySpeed, 2) + curve*ySpeed;
 
-                //xMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
-                //yMath *= MemoryManager.ReadAoeState() ? 0.5 : 1;
-
                 var mouseMovement = new Vector2(xMath, yMath);
 
                 if (axis.X < 0) mouseMovement.X = -mouseMovement.X;
                 if (axis.Y < 0) mouseMovement.Y = -mouseMovement.Y;
                 
-
-                if (Settings.Default.InputHardwareMouse)
-                {
-                    HardwareInput.MoveMouse((int) mouseMovement.X, (int) mouseMovement.Y);
-                }
-                else
-                {
-                    var m = Cursor.Position;
-                    m.X += (int) mouseMovement.X;
-                    m.Y += (int) mouseMovement.Y;
-                    Cursor.Position = m;
-                }
+                HardwareInput.MoveMouse((int) mouseMovement.X, (int) mouseMovement.Y);
             }
         }
 
