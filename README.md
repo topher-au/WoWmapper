@@ -1,3 +1,6 @@
+# WoWmapper
+**NOTE:** WoWmapper has been discontinued, and is no longer necessary for any official versions of the game. The game now delivers all the features of WoWmapper and more, natively. Do NOT use with ConsolePort on official servers, it will detriment your experience significantly.
+
 ## What is WoWmapper
 
 WoWmapper is part of a project aimed at bringing true controller functionality to World of Warcraft.
